@@ -32,6 +32,9 @@
                                 <state key="normal" title="Custom Order">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="pushCustomOrder:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="nZA-0F-XRg"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJJ-pb-W6k">
                                 <rect key="frame" x="113" y="248" width="94" height="30"/>
@@ -51,6 +54,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="lightwait" id="Wwg-ez-9O6"/>
+                    <connections>
+                        <segue destination="6dS-Q1-6q2" kind="push" identifier="customOrderSegue" id="fsX-EK-ZPT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -91,7 +97,34 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HwU-q0-q3x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1146" y="-203"/>
+            <point key="canvasLocation" x="1146" y="-623"/>
+        </scene>
+        <!--Custom Order View Controller - lightwait-->
+        <scene sceneID="Faa-kB-0ed">
+            <objects>
+                <viewController id="6dS-Q1-6q2" customClass="CustomOrderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7uH-bU-bPC"/>
+                        <viewControllerLayoutGuide type="bottom" id="FHU-lW-HRq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="19y-OM-0zf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Custom Order" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jWB-3r-FA7">
+                                <rect key="frame" x="106" y="107" width="109" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="lightwait" id="rzy-IJ-Gko"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gyc-Tb-Iec" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1146" y="110"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hDe-UO-qvL">
@@ -143,7 +176,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AG7-Ff-rE6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1146" y="361"/>
+            <point key="canvasLocation" x="1146" y="797"/>
         </scene>
     </scenes>
     <resources>

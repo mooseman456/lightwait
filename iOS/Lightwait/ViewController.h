@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <CLLocationManagerDelegate>
+{
+    bool isOnCampus;
+}
+
+- (IBAction)pushCustomOrder:(id)sender;
 
 @end
