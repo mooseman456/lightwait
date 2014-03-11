@@ -20,7 +20,9 @@ CLLocationManager *_locationManager;
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    [self initializeLocationManager];
+    // Defaults to yes - FOR TESTING PURPOSES ONLY
+    isOnCampus = YES;
+    //[self initializeLocationManager];
 }
 
 - (void)didReceiveMemoryWarning
@@ -28,7 +30,7 @@ CLLocationManager *_locationManager;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+/*
 - (void)initializeLocationManager
 {
     // Check to ensure location services are enabled
@@ -92,10 +94,10 @@ CLLocationManager *_locationManager;
     else
         isOnCampus = FALSE;
 }
-
+*/
 - (IBAction)pushCustomOrder:(id)sender
 {
-    [self initializeLocationManager];
+    //[self initializeLocationManager];
     if (isOnCampus == TRUE)
         [self performSegueWithIdentifier:@"customOrderSegue" sender:self];
     else

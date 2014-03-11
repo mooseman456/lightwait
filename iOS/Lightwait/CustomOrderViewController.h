@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomOrderViewController : UIViewController
+@interface CustomOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+{
+    NSArray *sampleMenuChoices;
+    NSArray *headerArray;
+    NSString *headerString;
+}
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
