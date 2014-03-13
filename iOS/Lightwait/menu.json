@@ -1,0 +1,24 @@
+{
+    "menu": {
+        "pizza" : [
+            { "name" : "Cheese"},
+            { "name" : "Pepperoni"},
+            { "name" : "Sausage"},
+        ],
+        "wraps": [
+            { "name" : "Barbecue Chicken"},
+            { "name" : "Turkey Wrap"},
+            { "name" : "Buffalo Chicken"},
+        ],
+        "sides": [
+            { "name" : "Bluberry Yogurt"},
+            { "name" : "Strawberry Yogurt"},
+            { "name" : "Fruit Cup"},
+            { "name" : "Chips"}
+        ],
+        "desserts": [
+            { "name" : "Carnival Cookies"},
+            { "name" : "Brownie"}
+        ]
+    }
+}
