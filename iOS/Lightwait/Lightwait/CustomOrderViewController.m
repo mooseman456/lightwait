@@ -88,11 +88,12 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    // Calculate the current page number
+    // Calculate the page number the user scrolled to
     CGFloat pageWidth = scrollView.frame.size.width;
     CGFloat contentOffset = self.scrollView.contentOffset.x;
     int currentPageNumber = floor((contentOffset - pageWidth / 2) / pageWidth) + 1;
     
+    // Set the indicator
     self.pageIndicator.currentPage=currentPageNumber;
 }
 
@@ -103,8 +104,10 @@
     // Calculate the location of the next page
     int nextPage = (int)(contentOffset/self.scrollView.frame.size.width) + 1;
     
+    // Scroll the page to the right
     [self.scrollView scrollRectToVisible:CGRectMake(nextPage*self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
     
+    // Increment the indicator
     self.pageIndicator.currentPage +=1;
 }
 
@@ -115,8 +118,10 @@
     // Calculate the location of the previous page
     int prevPage = (int)(contentOffset/self.scrollView.frame.size.width) - 1;
     
+    // Scroll the page to the left
     [self.scrollView scrollRectToVisible:CGRectMake(prevPage*self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
     
+    // Decrement the indicator
     self.pageIndicator.currentPage -=1;
 }
 
