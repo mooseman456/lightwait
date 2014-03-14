@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5CE90C6B-274E-49CD-B757-D799F452EB63</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Lightwait</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>A09766D6-37F1-43A0-AECD-02D4BCACA381</key>
+		<string>https://github.com/moosemn456/lightwait.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iOS/Lightwait/Lightwait.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>A09766D6-37F1-43A0-AECD-02D4BCACA381</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/moosemn456/lightwait.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>A09766D6-37F1-43A0-AECD-02D4BCACA381</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A09766D6-37F1-43A0-AECD-02D4BCACA381</string>
+			<key>IDESourceControlWCCName</key>
+			<string>lightwait</string>
+		</dict>
+	</array>
+</dict>
+</plist>
