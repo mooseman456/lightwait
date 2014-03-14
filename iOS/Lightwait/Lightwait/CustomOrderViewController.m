@@ -44,6 +44,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - UIScrollView Delegate
+
 - (void)createPagingScrollView
 {
     // Creates a table page for each menu category
@@ -83,6 +85,40 @@
     self.scrollView.showsHorizontalScrollIndicator = FALSE;
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // Calculate the current page number
+    CGFloat pageWidth = scrollView.frame.size.width;
+    CGFloat contentOffset = self.scrollView.contentOffset.x;
+    int currentPageNumber = floor((contentOffset - pageWidth / 2) / pageWidth) + 1;
+    
+    self.pageIndicator.currentPage=currentPageNumber;
+}
+
+- (void)scrollToNextPage
+{
+    CGFloat contentOffset = self.scrollView.contentOffset.x;
+    
+    // Calculate the location of the next page
+    int nextPage = (int)(contentOffset/self.scrollView.frame.size.width) + 1;
+    
+    [self.scrollView scrollRectToVisible:CGRectMake(nextPage*self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
+    
+    self.pageIndicator.currentPage +=1;
+}
+
+- (void)scrollToPreviousPage
+{
+    CGFloat contentOffset = self.scrollView.contentOffset.x;
+    
+    // Calculate the location of the previous page
+    int prevPage = (int)(contentOffset/self.scrollView.frame.size.width) - 1;
+    
+    [self.scrollView scrollRectToVisible:CGRectMake(prevPage*self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
+    
+    self.pageIndicator.currentPage -=1;
+}
+
 #pragma mark - UITableView Datasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -113,7 +149,6 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSLog(@"%@", headerString);
     return headerString;
 }
 
@@ -121,7 +156,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [self scrollToNextPage];
 }
 
 #pragma mark - Actions
@@ -134,35 +169,6 @@
 - (IBAction)pushPreviousPage:(id)sender
 {
     [self scrollToPreviousPage];
-}
-
-- (void)scrollToNextPage
-{
-    CGFloat contentOffset = self.scrollView.contentOffset.x;
-    
-    // Calculate the location of the next page
-    int nextPage = (int)(contentOffset/self.scrollView.frame.size.width) + 1 ;
-    
-    [self.scrollView scrollRectToVisible:CGRectMake(nextPage*self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
-    
-    [self updatePageIndicator:nextPage];
-}
-
-- (void)scrollToPreviousPage
-{
-    CGFloat contentOffset = self.scrollView.contentOffset.x;
-    
-    // Calculate the location of the previous page
-    int prevPage = (int)(contentOffset/self.scrollView.frame.size.width) - 1;
-    
-    [self.scrollView scrollRectToVisible:CGRectMake(prevPage*self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
-    
-    [self updatePageIndicator:prevPage];
-}
-
-- (void)updatePageIndicator:(int)pageNumber
-{
-    self.pageIndicator.currentPage=pageNumber;
 }
 
 @end
