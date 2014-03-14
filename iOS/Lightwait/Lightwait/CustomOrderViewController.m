@@ -34,6 +34,7 @@
     
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
+    self.pageIndicator.enabled=NO;
     
     [self createPagingScrollView];
 }
