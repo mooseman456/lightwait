@@ -45,7 +45,7 @@
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
-    
+
     [self initializeOrderDictionary];
     [self createPagingScrollView];
 }
@@ -77,7 +77,9 @@
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.tag=i;
-        if (i == 3) {
+        
+        // If the table is the toppings table, allow multiple selections
+        if (i == [headerArray indexOfObject:@"Toppings"]) {
             tableView.allowsMultipleSelection=TRUE;
         }
         
