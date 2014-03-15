@@ -10,9 +10,14 @@
 
 @interface CustomOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 {
-    NSArray *sampleMenuChoices;
     NSArray *headerArray;
-    NSString *headerString;
+    NSArray *meatArray;
+    NSArray *breadArray;
+    NSArray *cheeseArray;
+    NSArray *toppingsArray;
+    NSArray *sauceArray;
+    NSArray *friesArray;
+    NSArray *totalArray;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

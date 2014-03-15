@@ -28,9 +28,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    sampleMenuChoices = [[NSArray alloc] initWithObjects:@"Hot and Spicy", @"Island", @"Favorite", nil];
-    
     headerArray = [[NSArray alloc] initWithObjects:@"Meat", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
+    meatArray = [[NSArray alloc] initWithObjects:@"Hamburger", @"Double Hamburger", @"Chicken", @"Turkey", nil];
+    breadArray = [[NSArray alloc] initWithObjects:@"White", @"Wheat", @"Texas Toast", nil];
+    cheeseArray = [[NSArray alloc] initWithObjects:@"Cheddar", @"Pepperjack", @"None", nil];
+    toppingsArray = [[NSArray alloc] initWithObjects:@"Bacon", @"Jalapenos", @"Lettuce", @"Onions", @"None", nil];
+    sauceArray = [[NSArray alloc] initWithObjects:@"Chipotle", @"Bistro", @"None", nil];
+    friesArray = [[NSArray alloc] initWithObjects:@"Fries", @"No Fries", nil];
+    totalArray = [[NSArray alloc] initWithObjects:meatArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
     
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
@@ -52,9 +57,6 @@
     // Creates a table page for each menu category
     for (int i = 0; i < [headerArray count]; i++)
     {
-        // Updates the header to the next string in the array
-        headerString = [headerArray objectAtIndex:i];
-        
         //Creates a new frame that will contain the table
         CGRect frame;
         
@@ -68,6 +70,7 @@
         UITableView *tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
         tableView.delegate = self;
         tableView.dataSource = self;
+        tableView.tag=i;
         
         // Sets the view of each page and background color
         [self.scrollView addSubview:tableView];
@@ -134,7 +137,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [sampleMenuChoices count];
+    return [[totalArray objectAtIndex:tableView.tag] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -148,14 +151,14 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.textLabel.text = [sampleMenuChoices objectAtIndex:[indexPath row]];
+    cell.textLabel.text = [[totalArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]];
     
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return headerString;
+    return [headerArray objectAtIndex:tableView.tag];
 }
 
 #pragma mark UITableView Delegate
