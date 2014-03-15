@@ -11,5 +11,6 @@
 @interface JSONConverter : NSObject
 
 + (NSString *)convertNSMutableDictionaryToJSON:(NSMutableDictionary *)dictionary;
++ (NSMutableDictionary *)convertJSONToNSDictionary:(NSString *)json;
 
 @end

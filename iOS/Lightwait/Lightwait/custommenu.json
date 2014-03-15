@@ -1,0 +1,34 @@
+{
+    "Meat": [
+        "Hamburger",
+        "Double Hamburger",
+        "Chicken",
+        "Turkey"
+    ],
+    "Sauce": [
+        "Chipotle",
+        "Bistro",
+        "None"
+    ],
+    "Fries": [
+        "Fries",
+        "No Fries"
+    ],
+    "Bread": [
+        "White",
+        "Wheat",
+        "Texas Toast"
+    ],
+    "Toppings": [
+        "Bacon",
+        "Jalapenos",
+        "Lettuce",
+        "Onions",
+        "None"
+    ],
+    "Cheese": [
+        "Cheddar",
+        "Pepperjack",
+        "None"
+    ]
+}

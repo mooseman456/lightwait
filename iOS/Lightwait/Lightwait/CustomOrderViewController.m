@@ -30,14 +30,19 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    NSString *jsonString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"custommenu" ofType:@"json"]
+                                                     encoding:NSUTF8StringEncoding
+                                                        error:nil];
+    NSDictionary *menuDictionary = [JSONConverter convertJSONToNSDictionary:jsonString];
+    
     // Hard-coded menu data
     headerArray = [[NSArray alloc] initWithObjects:@"Meat", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
-    meatArray = [[NSArray alloc] initWithObjects:@"Hamburger", @"Double Hamburger", @"Chicken", @"Turkey", nil];
-    breadArray = [[NSArray alloc] initWithObjects:@"White", @"Wheat", @"Texas Toast", nil];
-    cheeseArray = [[NSArray alloc] initWithObjects:@"Cheddar", @"Pepperjack", @"None", nil];
-    toppingsArray = [[NSArray alloc] initWithObjects:@"Bacon", @"Jalapenos", @"Lettuce", @"Onions", @"None", nil];
-    sauceArray = [[NSArray alloc] initWithObjects:@"Chipotle", @"Bistro", @"None", nil];
-    friesArray = [[NSArray alloc] initWithObjects:@"Fries", @"No Fries", nil];
+    meatArray = [menuDictionary objectForKey:@"Meat"];
+    breadArray = [menuDictionary objectForKey:@"Bread"];
+    cheeseArray = [menuDictionary objectForKey:@"Cheese"];
+    toppingsArray = [menuDictionary objectForKey:@"Toppings"];
+    sauceArray = [menuDictionary objectForKey:@"Sauce"];
+    friesArray = [menuDictionary objectForKey:@"Fries"];
     menuDataArray = [[NSArray alloc] initWithObjects:meatArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
     selectedToppings = [[NSMutableArray alloc] init];
     
@@ -234,6 +239,7 @@
     // If the user is on the last page and selected all required items
     if (self.pageIndicator.currentPage == 5 && [self checkForCompleteOrder]) {
         [self showAlert:@"Order" message:[JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]];
+        NSLog(@"%@", [JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]);
     }
     else {
         // Scroll to the previous page and then set the right button label

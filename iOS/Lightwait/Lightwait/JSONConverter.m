@@ -10,7 +10,7 @@
 
 @implementation JSONConverter
 
-+ (NSString *)convertNSMutableDictionaryToJSON:(NSMutableDictionary *)dictionary
++ (NSString*)convertNSMutableDictionaryToJSON:(NSMutableDictionary *)dictionary
 {
     // Initialize an error
     NSError *error;
@@ -26,6 +26,23 @@
         NSString *errorString = [@"JSON error: " stringByAppendingString:[error localizedDescription]];
         NSLog(@"%@", errorString);
         return errorString;
+    }
+}
+
++ (NSDictionary*)convertJSONToNSDictionary:(NSString *)jsonString
+{
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    
+    NSDictionary *menuDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+    
+     // If NSDictionary, return it - else return an error
+    if(menuDictionary) {
+        return menuDictionary;
+    }
+    else {
+        NSLog(@"%@",error);
+        return NULL;
     }
 }
 
