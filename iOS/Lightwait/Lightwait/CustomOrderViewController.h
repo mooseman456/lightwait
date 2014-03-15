@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSONConverter.h"
 
 @interface CustomOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 {
@@ -17,13 +18,16 @@
     NSArray *toppingsArray;
     NSArray *sauceArray;
     NSArray *friesArray;
-    NSArray *totalArray;
+    NSArray *menuDataArray;
+    NSMutableArray *selectedToppings;
+    NSMutableDictionary *orderDictionary;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightButton;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageIndicator;
 
-- (IBAction)pushNextPage:(id)sender;
-- (IBAction)pushPreviousPage:(id)sender;
+- (IBAction)pushLeftButton:(id)sender;
+- (IBAction)pushRightButton:(id)sender;
 
 @end

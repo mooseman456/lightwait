@@ -129,7 +129,7 @@
                                 <items>
                                     <barButtonItem title="Previous" id="OVe-7W-5E4">
                                         <connections>
-                                            <action selector="pushPreviousPage:" destination="7lg-Ef-jQT" id="xmE-dz-8g0"/>
+                                            <action selector="pushLeftButton:" destination="7lg-Ef-jQT" id="83T-v0-qDv"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ZFP-bF-PJa"/>
@@ -144,7 +144,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="bGf-qd-xzl"/>
                                     <barButtonItem title="Next" id="TIj-b9-gvF">
                                         <connections>
-                                            <action selector="pushNextPage:" destination="7lg-Ef-jQT" id="uVU-TN-bju"/>
+                                            <action selector="pushRightButton:" destination="7lg-Ef-jQT" id="SIJ-5l-8Xc"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -169,6 +169,7 @@
                     <navigationItem key="navigationItem" title="Custom Order" id="fGZ-9O-H0f"/>
                     <connections>
                         <outlet property="pageIndicator" destination="ryt-PU-swc" id="iHQ-0S-ntC"/>
+                        <outlet property="rightButton" destination="TIj-b9-gvF" id="EI1-NL-OjC"/>
                         <outlet property="scrollView" destination="u30-v0-Qm5" id="uzR-KZ-USY"/>
                     </connections>
                 </viewController>

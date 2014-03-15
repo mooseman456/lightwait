@@ -14,6 +14,8 @@
 
 @implementation CustomOrderViewController
 
+#pragma mark - View Lifecycle
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,6 +30,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    // Hard-coded menu data
     headerArray = [[NSArray alloc] initWithObjects:@"Meat", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
     meatArray = [[NSArray alloc] initWithObjects:@"Hamburger", @"Double Hamburger", @"Chicken", @"Turkey", nil];
     breadArray = [[NSArray alloc] initWithObjects:@"White", @"Wheat", @"Texas Toast", nil];
@@ -35,12 +38,15 @@
     toppingsArray = [[NSArray alloc] initWithObjects:@"Bacon", @"Jalapenos", @"Lettuce", @"Onions", @"None", nil];
     sauceArray = [[NSArray alloc] initWithObjects:@"Chipotle", @"Bistro", @"None", nil];
     friesArray = [[NSArray alloc] initWithObjects:@"Fries", @"No Fries", nil];
-    totalArray = [[NSArray alloc] initWithObjects:meatArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
+    menuDataArray = [[NSArray alloc] initWithObjects:meatArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
+    selectedToppings = [[NSMutableArray alloc] init];
     
+    // Set the properties of the page indicator
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
     
+    [self initializeOrderDictionary];
     [self createPagingScrollView];
 }
 
@@ -71,6 +77,9 @@
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.tag=i;
+        if (i == 3) {
+            tableView.allowsMultipleSelection=TRUE;
+        }
         
         // Sets the view of each page and background color
         [self.scrollView addSubview:tableView];
@@ -98,6 +107,8 @@
     
     // Set the indicator
     self.pageIndicator.currentPage=currentPageNumber;
+    
+    [self updateRightButton];
 }
 
 - (void)scrollToNextPage
@@ -128,20 +139,33 @@
     self.pageIndicator.currentPage -=1;
 }
 
+- (void)scrollToPage:(int)pageNumber
+{
+    // Scroll to the page number
+    [self.scrollView scrollRectToVisible:CGRectMake(pageNumber*self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
+    
+    // Set the indicator
+    self.pageIndicator.currentPage = pageNumber;
+}
+
 #pragma mark - UITableView Datasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    // Each table has one section
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[totalArray objectAtIndex:tableView.tag] count];
+    // Retrieve the table tag and then set the number of rows
+    // to the count of items in the array
+    return [[menuDataArray objectAtIndex:tableView.tag] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // Initialize each cell
     static NSString *cellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -151,7 +175,9 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.textLabel.text = [[totalArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]];
+    // Use the table's tag to retrieve the index of the array within menuDataArray, then set the
+    // cell's title to be the object at the index of the table's row
+    cell.textLabel.text = [[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]];
     
     return cell;
 }
@@ -165,19 +191,111 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self scrollToNextPage];
+    // If not selecting from the toppings page, only one selection allowed
+    if (tableView.allowsMultipleSelection == FALSE) {
+        // Add the selected item as the object and the type of item for the key
+        [orderDictionary setObject:[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] forKey:[headerArray objectAtIndex:tableView.tag]];
+        [self scrollToNextPage];
+    }
+    else {
+        // Add the toppings to an array and add it to the order dictionary
+        [selectedToppings addObject:[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]]];
+        [orderDictionary setObject:selectedToppings forKey:[headerArray objectAtIndex:tableView.tag]];
+    }
+    
+    [self updateRightButton];
 }
 
-#pragma mark - Actions
-
-- (IBAction)pushNextPage:(id)sender
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self scrollToNextPage];
+    // If deselecting from the toppings page
+    if (tableView.allowsMultipleSelection == TRUE) {
+        // Remove the deselected item from the toppings array
+        [selectedToppings removeObject:[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]]];
+        
+        // Re-add the updated array to the dictionary
+        [orderDictionary setObject:selectedToppings forKey:[headerArray objectAtIndex:tableView.tag]];
+    }
 }
 
-- (IBAction)pushPreviousPage:(id)sender
+#pragma mark - Buttons
+
+- (IBAction)pushLeftButton:(id)sender
 {
+    // Scroll to the previous page and then set the right button label
     [self scrollToPreviousPage];
+    [self updateRightButton];
+}
+
+- (IBAction)pushRightButton:(id)sender
+{
+    // If the user is on the last page and selected all required items
+    if (self.pageIndicator.currentPage == 5 && [self checkForCompleteOrder]) {
+        [self showAlert:@"Order" message:[JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]];
+    }
+    else {
+        // Scroll to the previous page and then set the right button label
+        [self scrollToNextPage];
+        [self updateRightButton];
+    }
+}
+
+- (void)updateRightButton
+{
+    // Check to see if the user is on the last page - TRUE when selecting fries
+    // Update the next button to equal done if true or next if false
+    if (self.pageIndicator.currentPage == 5) {
+        self.rightButton.title = @"Done";
+    }
+    else {
+        self.rightButton.title = @"Next";
+    }
+}
+
+#pragma mark - Miscellaneous
+
+- (void)initializeOrderDictionary
+{
+    // Initialize order dictionary
+    orderDictionary = [[NSMutableDictionary alloc] init];
+    
+    // Set values that can be none to none so that the user does not have to
+    // should they not want a particular item
+    // Set meat and bread to null so that they can later be checked if they
+    // were selected or not
+    [orderDictionary setObject:[NSNull null] forKey:@"Meat"];
+    [orderDictionary setObject:[NSNull null] forKey:@"Bread"];
+    [orderDictionary setObject:@"None" forKey:@"Cheese"];
+    [orderDictionary setObject:@"None" forKey:@"Toppings"];
+    [orderDictionary setObject:@"None" forKey:@"Sauce"];
+    [orderDictionary setObject:@"No Fries" forKey:@"Fries"];
+}
+
+- (BOOL)checkForCompleteOrder
+{
+    // Check if either meat or bread are null
+    // If either are true, alert the user and then scroll to that page
+    // Otherwise, the order is complete
+    if ([[orderDictionary objectForKey:@"Meat"] isEqual: [NSNull null]]) {
+        [self showAlert:@"Alert" message:@"Please select a type of meat"];
+        [self scrollToPage:[headerArray indexOfObject:@"Meat"]];
+        return FALSE;
+    }
+    else if ([[orderDictionary objectForKey:@"Bread"] isEqual: [NSNull null]]) {
+        [self showAlert:@"Alert" message:@"Please select a type of bread"];
+        [self scrollToPage:[headerArray indexOfObject:@"Bread"]];
+        return FALSE;
+    }
+    else {
+        return TRUE;
+    }
+}
+
+- (void)showAlert:(NSString *)title message:(NSString *)messageString
+{
+    // Show an alert on the screen
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 @end
