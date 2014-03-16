@@ -146,7 +146,7 @@
     self.pageIndicator.currentPage -=1;
 }
 
-- (void)scrollToPage:(int)pageNumber
+- (void)scrollToPage:(NSInteger)pageNumber
 {
     // Scroll to the page number
     [self.scrollView scrollRectToVisible:CGRectMake(pageNumber*self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:YES];
@@ -204,7 +204,39 @@
         [orderDictionary setObject:[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] forKey:[headerArray objectAtIndex:tableView.tag]];
         [self scrollToNextPage];
     }
+    // If selecting from toppings page, extra code is required to handle selecting and deselecting
     else {
+        // If the user selects none, deselect the other cells
+        // Else, deselect none
+        if ([[toppingsArray objectAtIndex:[indexPath row]] isEqual:@"None"])
+        {
+            // Cycle through all other cells
+            for (NSUInteger i = 0; i < [indexPath row]; i++)
+            {
+                // Deselect all other cells
+                [tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES];
+                
+                // Remove all other items from the toppings array
+                [selectedToppings removeObject:[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:i]];
+
+                // Re-add the updated array to the dictionary
+                [orderDictionary setObject:selectedToppings forKey:[headerArray objectAtIndex:tableView.tag]];
+            }
+        }
+        // The user did not select none
+        else {
+            // If toppings array contains none, remove it
+            if ([selectedToppings containsObject:@"None"])
+            {
+                [selectedToppings removeObject:@"None"];
+                
+                // Re-add the updated array to the dictionary
+                [orderDictionary setObject:selectedToppings forKey:[headerArray objectAtIndex:tableView.tag]];
+            }
+
+            // Deselect all other cells
+            [tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[toppingsArray indexOfObject:@"None"] inSection:0] animated:YES];
+        }
         // Add the toppings to an array and add it to the order dictionary
         [selectedToppings addObject:[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]]];
         [orderDictionary setObject:selectedToppings forKey:[headerArray objectAtIndex:tableView.tag]];
@@ -239,7 +271,6 @@
     // If the user is on the last page and selected all required items
     if (self.pageIndicator.currentPage == 5 && [self checkForCompleteOrder]) {
         [self showAlert:@"Order" message:[JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]];
-        NSLog(@"%@", [JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]);
     }
     else {
         // Scroll to the previous page and then set the right button label
