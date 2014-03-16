@@ -30,27 +30,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSString *jsonString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"custommenu" ofType:@"json"]
-                                                     encoding:NSUTF8StringEncoding
-                                                        error:nil];
-    NSDictionary *menuDictionary = [JSONConverter convertJSONToNSDictionary:jsonString];
-    
-    // Hard-coded menu data
-    headerArray = [[NSArray alloc] initWithObjects:@"Meat", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
-    meatArray = [menuDictionary objectForKey:@"Meat"];
-    breadArray = [menuDictionary objectForKey:@"Bread"];
-    cheeseArray = [menuDictionary objectForKey:@"Cheese"];
-    toppingsArray = [menuDictionary objectForKey:@"Toppings"];
-    sauceArray = [menuDictionary objectForKey:@"Sauce"];
-    friesArray = [menuDictionary objectForKey:@"Fries"];
-    menuDataArray = [[NSArray alloc] initWithObjects:meatArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
-    selectedToppings = [[NSMutableArray alloc] init];
-    
     // Set the properties of the page indicator
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
 
+    [self initializeMenuArrays];
     [self initializeOrderDictionary];
     [self createPagingScrollView];
 }
@@ -292,6 +277,25 @@
 }
 
 #pragma mark - Miscellaneous
+
+- (void)initializeMenuArrays
+{
+    NSString *jsonString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"custommenu" ofType:@"json"]
+                                                     encoding:NSUTF8StringEncoding
+                                                        error:nil];
+    NSDictionary *menuDictionary = [JSONConverter convertJSONToNSDictionary:jsonString];
+    
+    // Menu data arrays
+    headerArray = [[NSArray alloc] initWithObjects:@"Meat", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
+    meatArray = [menuDictionary objectForKey:@"Meat"];
+    breadArray = [menuDictionary objectForKey:@"Bread"];
+    cheeseArray = [menuDictionary objectForKey:@"Cheese"];
+    toppingsArray = [menuDictionary objectForKey:@"Toppings"];
+    sauceArray = [menuDictionary objectForKey:@"Sauce"];
+    friesArray = [menuDictionary objectForKey:@"Fries"];
+    menuDataArray = [[NSArray alloc] initWithObjects:meatArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
+    selectedToppings = [[NSMutableArray alloc] init];
+}
 
 - (void)initializeOrderDictionary
 {
