@@ -30,14 +30,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self initializeMenuArrays];
+    [self initializeOrderDictionary];
+    [self createPagingScrollView];
+    
     // Set the properties of the page indicator
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
-
-    [self initializeMenuArrays];
-    [self initializeOrderDictionary];
-    [self createPagingScrollView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,17 +50,27 @@
 
 - (void)createPagingScrollView
 {
+    //Creates a new frame that will contain the table
+    CGRect frame;
+    
+    // Sets the size of each page to be the size of the scroll view
+    frame.size.width = self.scrollView.frame.size.width;
+    
+    // if 3.5 inch screen size
+    if (self.view.frame.size.height == 480) {
+        frame.size.height = self.scrollView.frame.size.height;
+    }
+    else {
+        // Get the size of the screen and subtract 195 - the height of all other elements
+        // on the screen
+        frame.size.height = self.view.frame.size.height-195;
+    }
+    
     // Creates a table page for each menu category
     for (int i = 0; i < [headerArray count]; i++)
     {
-        //Creates a new frame that will contain the table
-        CGRect frame;
-        
         // Sets the origin location of each page by multiplying the width by the number of frames
         frame.origin.x = self.scrollView.frame.size.width * i;
-        
-        // Sets the size of each page to be the size of the scroll view
-        frame.size = self.scrollView.frame.size;
         
         // Creates a new tableView and sets the delegate and data souce to self
         UITableView *tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
