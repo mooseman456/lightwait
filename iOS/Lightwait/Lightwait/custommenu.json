@@ -3,7 +3,8 @@
         "Hamburger",
         "Double Hamburger",
         "Chicken",
-        "Turkey"
+        "Turkey",
+        "Black Bean"
     ],
     "Sauce": [
         "Chipotle",
@@ -24,6 +25,7 @@
         "Jalapenos",
         "Lettuce",
         "Onions",
+        "Pico de Gallo",
         "None"
     ],
     "Cheese": [

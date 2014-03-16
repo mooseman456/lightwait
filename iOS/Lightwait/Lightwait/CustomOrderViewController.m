@@ -266,6 +266,9 @@
     // If the user is on the last page and selected all required items
     if (self.pageIndicator.currentPage == 5 && [self checkForCompleteOrder]) {
         [self showAlert:@"Order" message:[JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]];
+        
+        // Save the order - ADD FUNCTIONALITY TO INPUT NAME
+        [OrderSaver saveOrder:@"Saved Order" order:orderDictionary];
     }
     else {
         // Scroll to the previous page and then set the right button label

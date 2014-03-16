@@ -27,7 +27,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    savedOrdersArray = [[NSArray alloc] initWithObjects:@"Hot and Spicy", @"Island", @"Favorite", nil];
+
+    savedOrdersArray = [OrderSaver getOrderNames];
+    
+    [self checkForEmptyArray];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,7 +76,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSMutableDictionary *retrievedOrder = [[NSMutableDictionary alloc] initWithDictionary:[OrderSaver loadOrder:[savedOrdersArray objectAtIndex:[indexPath row]]]];
+    NSString *jsonString = [JSONConverter convertNSMutableDictionaryToJSON:retrievedOrder];
     
+    [self showAlert:@"Order" message:jsonString];
+}
+
+- (void)checkForEmptyArray
+{
+    // If the array returned is empty, alert the user
+    if ([savedOrdersArray count] == 0) {
+        [self showAlert:@"Alert" message:@"You have not saved any orders yet"];
+    }
+}
+
+- (void)showAlert:(NSString *)title message:(NSString *)messageString
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 @end
