@@ -265,10 +265,7 @@
 {
     // If the user is on the last page and selected all required items
     if (self.pageIndicator.currentPage == 5 && [self checkForCompleteOrder]) {
-        [self showAlert:@"Order" message:[JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]];
-        
-        // Save the order - ADD FUNCTIONALITY TO INPUT NAME
-        [OrderSaver saveOrder:@"Saved Order" order:orderDictionary];
+        [self askUserToSaveOrder];
     }
     else {
         // Scroll to the previous page and then set the right button label
@@ -276,6 +273,28 @@
         [self updateRightButton];
     }
 }
+
+- (void)askUserToSaveOrder
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save This Order"
+                                                    message:@"Would you like to save this order?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"No thanks"
+                                          otherButtonTitles:@"Save", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // If the user clicked save
+    if (buttonIndex == 1) {
+        NSString *orderName = [alertView textFieldAtIndex:0].text;
+        [OrderSaver saveOrder:orderName order:orderDictionary];
+    }
+}
+
+
 
 - (void)updateRightButton
 {

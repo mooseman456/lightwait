@@ -79,7 +79,8 @@
     NSMutableDictionary *retrievedOrder = [[NSMutableDictionary alloc] initWithDictionary:[OrderSaver loadOrder:[savedOrdersArray objectAtIndex:[indexPath row]]]];
     NSString *jsonString = [JSONConverter convertNSMutableDictionaryToJSON:retrievedOrder];
     
-    [self showAlert:@"Order" message:jsonString];
+    //[self showAlert:@"Order" message:jsonString];
+    [self showAlert:@"Order" message:@"Successful Order"];
 }
 
 - (void)checkForEmptyArray
