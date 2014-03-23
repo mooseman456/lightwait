@@ -274,28 +274,6 @@
     }
 }
 
-- (void)askUserToSaveOrder
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save This Order"
-                                                    message:@"Would you like to save this order?"
-                                                   delegate:self
-                                          cancelButtonTitle:@"No thanks"
-                                          otherButtonTitles:@"Save", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    // If the user clicked save
-    if (buttonIndex == 1) {
-        NSString *orderName = [alertView textFieldAtIndex:0].text;
-        [OrderSaver saveOrder:orderName order:orderDictionary];
-    }
-}
-
-
-
 - (void)updateRightButton
 {
     // Check to see if the user is on the last page - TRUE when selecting fries
@@ -363,6 +341,29 @@
     }
     else {
         return TRUE;
+    }
+}
+
+#pragma mark - Alerts
+
+- (void)askUserToSaveOrder
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save This Order"
+                                                    message:@"Would you like to save this order?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"No thanks"
+                                          otherButtonTitles:@"Save", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // If the user clicked save
+    if (buttonIndex == 1) {
+        NSString *orderName = [alertView textFieldAtIndex:0].text;
+        [OrderSaver saveOrder:orderName order:orderDictionary];
+        [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly."];
     }
 }
 
