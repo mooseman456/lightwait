@@ -20,6 +20,7 @@ body {
 	width:100%;
 	background-color: rgba(250,105,0,0.4);
 	display:block;
+	min-height: 2em
 }
 
 .header span {

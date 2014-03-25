@@ -7,7 +7,7 @@ $(document).ready(function(){
 
    //Set current and total page number
    //This should happen every time the page is change or 
-   //TODO
+   //TODO: that
 
    //Previous page arrow
    $('div.navigation img[alt~="Previous"]').click(function() {
