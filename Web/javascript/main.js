@@ -10,33 +10,40 @@ $(document).ready(function(){
    //TODO
 
    //Previous page arrow
-   //TODO
    $('div.navigation img[alt~="Previous"]').click(function() {
       console.log("You clicked the previous arrow");
+      //TODO:
+      //Nothing if you are on the first page
+      //Display the previous ten order queue items in the window
    });
    
    //Next page arrow
-   //TODO
    $('div.navigation img[alt~="Next"]').click(function() {
       console.log("You clicked the next arrow");
+      //TODO:
+      //Nothing if on the last page
+      //Display the next ten order queue items in the window
    });
 
    //Recall button
-   //TODO
    $("#recall").click(function() {
       console.log("You clicked the recall button")
+      //TODO: Bring up the most recently bumped order
+      //i.e. Retrieve from the database, the order most recently bumped
    });
 
    //Bump button
-   //TODO
    $('section.order button').click(function(event) {
       console.log("You clicked a bump button");
+      //TODO
+      //Visually remove that order from the queue
+      //Add the order to the bumped database (or whatever that is)
    });
 
    //Change availability
-   //TODO
    $('a[href~="#"]').click(function(e) {
       e.preventDefault();
       console.log("You changed the availability of your mother");
+      //TODO: Go to the change availability page
    });
 });
