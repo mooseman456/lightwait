@@ -10,7 +10,7 @@
 		<form id="loginForm" method="POST">
 			<input class="textForm" type="text" name="username" placeholder="Username" required><br/>
 			<input class="textForm" type="text" name="password" placeholder="Password" requried><br/>
-			<input class="textForm" type="submit" value="Log In">
+			<input class="formSubmit" type="submit" value="Log In">
 		</form>	
 	</div>
 </body>
