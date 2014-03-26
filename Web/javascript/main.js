@@ -1,5 +1,4 @@
 $(document).ready(function(){
-   console.log("HELLO");
 
    //Populate order information from JSON
    //This displays ten orders from the order queue in the chef queue window
@@ -11,7 +10,6 @@ $(document).ready(function(){
 
    //Previous page arrow
    $('div.navigation img[alt~="Previous"]').click(function() {
-      console.log("You clicked the previous arrow");
       if (currentPage > 0)
          currentPage--;
       changePage();
@@ -19,7 +17,6 @@ $(document).ready(function(){
    
    //Next page arrow
    $('div.navigation img[alt~="Next"]').click(function() {
-      console.log("You clicked the next arrow");
       console.log(Math.floor(numOrders/10));
       if(currentPage < maxPage) {
          currentPage++;
@@ -62,7 +59,6 @@ $(document).ready(function(){
          orderHTML = [];
          var doc=client.responseText;  //store text in doc
          sampleOrder=JSON.parse(doc);
-         console.log(sampleOrder);
          
          for(var i=0; i<sampleOrder.length; i++){
             switch(sampleOrder[i].Base){
@@ -94,7 +90,6 @@ $(document).ready(function(){
             numOrders++;
             
          }
-         console.log("turkey="+turkeyNum+", Hamburger="+beefNum);
 
          maxPage = Math.floor(numOrders/10);
          changePage();
