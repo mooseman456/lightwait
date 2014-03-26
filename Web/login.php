@@ -1,6 +1,6 @@
 <?php
-	$pageTitle = "Home";
-	include('include/header.php');
+	$pageTitle = "Login";
+	include 'include/header.php';
 ?>
 </head>
 
@@ -13,6 +13,5 @@
 			<input class="formSubmit" type="submit" value="Log In">
 		</form>	
 	</div>
-	<a href="queue.php">Screw that, I'll hack in!</a>
 </body>
 </html>
