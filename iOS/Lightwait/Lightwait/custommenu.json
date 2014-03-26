@@ -1,5 +1,5 @@
 {
-    "Meat": [
+    "Base": [
         "Hamburger",
         "Double Hamburger",
         "Chicken",
@@ -24,6 +24,7 @@
         "Bacon",
         "Jalapenos",
         "Lettuce",
+        "Tomatoes",
         "Onions",
         "Pico de Gallo",
         "None"
@@ -31,6 +32,7 @@
     "Cheese": [
         "Cheddar",
         "Pepperjack",
+        "Swiss",
         "None"
     ]
 }

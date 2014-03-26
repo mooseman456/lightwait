@@ -13,7 +13,7 @@
 @interface CustomOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 {
     NSArray *headerArray;
-    NSArray *meatArray;
+    NSArray *baseArray;
     NSArray *breadArray;
     NSArray *cheeseArray;
     NSArray *toppingsArray;

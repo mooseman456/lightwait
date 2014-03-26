@@ -296,14 +296,14 @@
     NSDictionary *menuDictionary = [JSONConverter convertJSONToNSDictionary:jsonString];
     
     // Menu data arrays
-    headerArray = [[NSArray alloc] initWithObjects:@"Meat", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
-    meatArray = [menuDictionary objectForKey:@"Meat"];
+    headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
+    baseArray = [menuDictionary objectForKey:@"Base"];
     breadArray = [menuDictionary objectForKey:@"Bread"];
     cheeseArray = [menuDictionary objectForKey:@"Cheese"];
     toppingsArray = [menuDictionary objectForKey:@"Toppings"];
     sauceArray = [menuDictionary objectForKey:@"Sauce"];
     friesArray = [menuDictionary objectForKey:@"Fries"];
-    menuDataArray = [[NSArray alloc] initWithObjects:meatArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
+    menuDataArray = [[NSArray alloc] initWithObjects:baseArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
     selectedToppings = [[NSMutableArray alloc] init];
 }
 
@@ -314,9 +314,9 @@
     
     // Set values that can be none to none so that the user does not have to
     // should they not want a particular item
-    // Set meat and bread to null so that they can later be checked if they
+    // Set base and bread to null so that they can later be checked if they
     // were selected or not
-    [orderDictionary setObject:[NSNull null] forKey:@"Meat"];
+    [orderDictionary setObject:[NSNull null] forKey:@"Base"];
     [orderDictionary setObject:[NSNull null] forKey:@"Bread"];
     [orderDictionary setObject:@"None" forKey:@"Cheese"];
     [orderDictionary setObject:@"None" forKey:@"Toppings"];
@@ -326,12 +326,12 @@
 
 - (BOOL)checkForCompleteOrder
 {
-    // Check if either meat or bread are null
+    // Check if either base or bread are null
     // If either are true, alert the user and then scroll to that page
     // Otherwise, the order is complete
-    if ([[orderDictionary objectForKey:@"Meat"] isEqual: [NSNull null]]) {
-        [self showAlert:@"Alert" message:@"Please select a type of meat"];
-        [self scrollToPage:[headerArray indexOfObject:@"Meat"]];
+    if ([[orderDictionary objectForKey:@"Base"] isEqual: [NSNull null]]) {
+        [self showAlert:@"Alert" message:@"Please select a base"];
+        [self scrollToPage:[headerArray indexOfObject:@"Base"]];
         return FALSE;
     }
     else if ([[orderDictionary objectForKey:@"Bread"] isEqual: [NSNull null]]) {
@@ -364,6 +364,7 @@
         NSString *orderName = [alertView textFieldAtIndex:0].text;
         [OrderSaver saveOrder:orderName order:orderDictionary];
         [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly."];
+        NSLog(@"%@", [JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]);
     }
 }
 

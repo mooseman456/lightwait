@@ -1,0 +1,267 @@
+[
+    {
+        "Sauce": "Chipotle",
+        "Fries": "Fries",
+        "Base": "Hamburger",
+        "Bread": "White",
+        "Toppings": [
+            "Jalapenos",
+            "Bacon"
+        ],
+        "Cheese": "Cheddar"
+    },
+    {
+        "Sauce": "Bistro",
+        "Fries": "No Fries",
+        "Base": "Double Hamburger",
+        "Bread": "Wheat",
+        "Toppings": [
+            "Lettuce",
+            "Tomatoes"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "None",
+        "Fries": "No Fries",
+        "Base": "Chicken",
+        "Bread": "Texas Toast",
+        "Toppings": [
+            "Onions",
+            "Pico de Gallo",
+            "Bacon"
+        ],
+        "Cheese": "Swiss"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "Fries",
+        "Base": "Turkey",
+        "Bread": "White",
+        "Toppings": [
+            "Pico de Gallo",
+            "Onions",
+            "Tomatoes",
+            "Lettuce",
+            "Jalapenos",
+            "Bacon"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "No Fries",
+        "Base": "Black Bean",
+        "Bread": "White",
+        "Toppings": [
+            "Bacon",
+            "Jalapenos",
+            "Lettuce"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "None",
+        "Fries": "Fries",
+        "Base": "Turkey",
+        "Bread": "Wheat",
+        "Toppings": [
+            "Bacon",
+            "Lettuce",
+            "Pico de Gallo"
+        ],
+        "Cheese": "Cheddar"
+    },
+    {
+        "Sauce": "Bistro",
+        "Fries": "Fries",
+        "Base": "Double Hamburger",
+        "Bread": "Wheat",
+        "Toppings": [
+            "None"
+        ],
+        "Cheese": "None"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "Fries",
+        "Base": "Double Hamburger",
+        "Bread": "White",
+        "Toppings": [
+            "Tomatoes",
+            "Lettuce",
+            "Bacon"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "Bistro",
+        "Fries": "No Fries",
+        "Base": "Double Hamburger",
+        "Bread": "White",
+        "Toppings": [
+            "Bacon",
+            "Lettuce"
+        ],
+        "Cheese": "Swiss"
+    },
+    {
+        "Sauce": "Bistro",
+        "Fries": "Fries",
+        "Base": "Black Bean",
+        "Bread": "Texas Toast",
+        "Toppings": [
+            "Lettuce"
+        ],
+        "Cheese": "Cheddar"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "No Fries",
+        "Base": "Turkey",
+        "Bread": "Wheat",
+        "Toppings": [
+            "Jalapenos",
+            "Pico de Gallo",
+            "Lettuce"
+        ],
+        "Cheese": "None"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "No Fries",
+        "Base": "Hamburger",
+        "Bread": "Texas Toast",
+        "Toppings": [
+            "Pico de Gallo",
+            "Tomatoes"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "No Fries",
+        "Base": "Hamburger",
+        "Bread": "Texas Toast",
+        "Toppings": [
+            "Lettuce",
+            "Jalapenos",
+            "Bacon"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "No Fries",
+        "Base": "Turkey",
+        "Bread": "White",
+        "Toppings": [
+            "Tomatoes",
+            "Lettuce",
+            "Jalapenos"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "No Fries",
+        "Base": "Turkey",
+        "Bread": "White",
+        "Toppings": [
+            "Tomatoes",
+            "Jalapenos",
+            "Bacon"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "Fries",
+        "Base": "Chicken",
+        "Bread": "White",
+        "Toppings": [
+            "Bacon",
+            "Tomatoes"
+        ],
+        "Cheese": "Swiss"
+    },
+    {
+        "Sauce": "Bistro",
+        "Fries": "No Fries",
+        "Base": "Hamburger",
+        "Bread": "Texas Toast",
+        "Toppings": [
+            "Lettuce",
+            "Bacon"
+        ],
+        "Cheese": "Cheddar"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "Fries",
+        "Base": "Hamburger",
+        "Bread": "White",
+        "Toppings": [
+            "Lettuce",
+            "Bacon"
+        ],
+        "Cheese": "Cheddar"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "No Fries",
+        "Base": "Chicken",
+        "Bread": "White",
+        "Toppings": [
+            "Bacon",
+            "Jalapenos",
+            "Tomatoes"
+        ],
+        "Cheese": "Cheddar"
+    },
+    {
+        "Sauce": "Bistro",
+        "Fries": "Fries",
+        "Base": "Chicken",
+        "Bread": "White",
+        "Toppings": [
+            "Tomatoes",
+            "Jalapenos",
+            "Pico de Gallo"
+        ],
+        "Cheese": "Pepperjack"
+    },
+    {
+        "Sauce": "Bistro",
+        "Fries": "Fries",
+        "Base": "Hamburger",
+        "Bread": "Texas Toast",
+        "Toppings": [
+            "Lettuce",
+            "Bacon"
+        ],
+        "Cheese": "Cheddar"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "No Fries",
+        "Base": "Double Hamburger",
+        "Bread": "White",
+        "Toppings": [
+            "Bacon",
+            "Tomatoes"
+        ],
+        "Cheese": "Swiss"
+    },
+    {
+        "Sauce": "Chipotle",
+        "Fries": "Fries",
+        "Base": "Black Bean",
+        "Bread": "White",
+        "Toppings": [
+            "Bacon",
+            "Lettuce"
+        ],
+        "Cheese": "Pepperjack"
+    }
+]
