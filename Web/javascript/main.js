@@ -102,9 +102,20 @@ $(document).ready(function(){
             
          }
          console.log("turkey="+turkeyNum+", Hamburger="+beefNum);
+
          maxPage = Math.floor(numOrders/10);
          changePage();
+         
+         for (var i=0; i<10; i++){
+            $('div section:nth-child('+i+') ul').append(orderHTML[i]);
+         }
+         $("#hNum").html(beefNum);     
+         $("#dhNum").html(doubleBeefNum);
+         $("#cNum").html(chickNum);
+         $("#tNum").html(turkeyNum);
+         $("#bNum").html(beanNum);
       }
+
 
    };
 
@@ -120,3 +131,4 @@ $(document).ready(function(){
    }   
 
 });
+

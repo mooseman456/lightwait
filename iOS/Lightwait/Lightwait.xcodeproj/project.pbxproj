@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B0988DF18E29A9100B48354 /* SavedOrdersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B0988DE18E29A9100B48354 /* SavedOrdersManager.m */; };
 		7B3170F318D3B0B200080C78 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B3170F218D3B0B200080C78 /* Foundation.framework */; };
 		7B3170F518D3B0B200080C78 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B3170F418D3B0B200080C78 /* CoreGraphics.framework */; };
 		7B3170F718D3B0B200080C78 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B3170F618D3B0B200080C78 /* UIKit.framework */; };
@@ -27,7 +28,6 @@
 		7B31713118D3B16200080C78 /* GrabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31713018D3B16200080C78 /* GrabViewController.m */; };
 		7B31713318D3B1D600080C78 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B31713218D3B1D600080C78 /* logo.png */; };
 		7B31713918D4D7EE00080C78 /* custommenu.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B31713818D4D7EE00080C78 /* custommenu.json */; };
-		7B63D00918D56F0300F3FAE0 /* OrderSaver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D00818D56F0300F3FAE0 /* OrderSaver.m */; };
 		7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD58A4B18E2779600983618 /* JSONConverter.m */; };
 		7BD58A4F18E277A900983618 /* REST_API.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD58A4E18E277A900983618 /* REST_API.m */; };
 /* End PBXBuildFile section */
@@ -43,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7B0988DD18E29A9100B48354 /* SavedOrdersManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedOrdersManager.h; sourceTree = "<group>"; };
+		7B0988DE18E29A9100B48354 /* SavedOrdersManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedOrdersManager.m; sourceTree = "<group>"; };
 		7B3170EF18D3B0B200080C78 /* Lightwait.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lightwait.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B3170F218D3B0B200080C78 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7B3170F418D3B0B200080C78 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -71,8 +73,6 @@
 		7B31713018D3B16200080C78 /* GrabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrabViewController.m; sourceTree = "<group>"; };
 		7B31713218D3B1D600080C78 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		7B31713818D4D7EE00080C78 /* custommenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = custommenu.json; sourceTree = "<group>"; };
-		7B63D00718D56F0300F3FAE0 /* OrderSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderSaver.h; sourceTree = "<group>"; };
-		7B63D00818D56F0300F3FAE0 /* OrderSaver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderSaver.m; sourceTree = "<group>"; };
 		7BD58A4A18E2779600983618 /* JSONConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONConverter.h; sourceTree = "<group>"; };
 		7BD58A4B18E2779600983618 /* JSONConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONConverter.m; sourceTree = "<group>"; };
 		7BD58A4D18E277A900983618 /* REST_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REST_API.h; sourceTree = "<group>"; };
@@ -154,8 +154,8 @@
 				7B3170F918D3B0B200080C78 /* Supporting Files */,
 				7BD58A4D18E277A900983618 /* REST_API.h */,
 				7BD58A4E18E277A900983618 /* REST_API.m */,
-				7B63D00718D56F0300F3FAE0 /* OrderSaver.h */,
-				7B63D00818D56F0300F3FAE0 /* OrderSaver.m */,
+				7B0988DD18E29A9100B48354 /* SavedOrdersManager.h */,
+				7B0988DE18E29A9100B48354 /* SavedOrdersManager.m */,
 				7BD58A4A18E2779600983618 /* JSONConverter.h */,
 				7BD58A4B18E2779600983618 /* JSONConverter.m */,
 				7B31713818D4D7EE00080C78 /* custommenu.json */,
@@ -291,13 +291,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B0988DF18E29A9100B48354 /* SavedOrdersManager.m in Sources */,
 				7B31712E18D3B15100080C78 /* SavedOrdersViewController.m in Sources */,
 				7B31712B18D3B14200080C78 /* CustomOrderViewController.m in Sources */,
 				7BD58A4F18E277A900983618 /* REST_API.m in Sources */,
 				7B31713118D3B16200080C78 /* GrabViewController.m in Sources */,
 				7B31710918D3B0B200080C78 /* ViewController.m in Sources */,
 				7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */,
-				7B63D00918D56F0300F3FAE0 /* OrderSaver.m in Sources */,
 				7B31710318D3B0B200080C78 /* AppDelegate.m in Sources */,
 				7B3170FF18D3B0B200080C78 /* main.m in Sources */,
 			);

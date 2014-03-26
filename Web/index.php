@@ -14,6 +14,7 @@
 			<input class="formSubmit" type="submit" value="Log In">
 		</form>	
 	</div>
-	<a href="queue.php">Screw that, I'll hack in!</a>
+	<a href="queue.php">Chef</a>
+	<a href="order.php">Order</a>
 </body>
 </html>
