@@ -39,4 +39,74 @@ $(document).ready(function(){
       //Visually remove that order from the queue
       //Add the order to the bumped database (or whatever that is)
    });
+<<<<<<< HEAD
 });
+=======
+
+
+   var client = new XMLHttpRequest();     
+   client.open('GET', '../Resources/SampleOrderData.json', true);
+   client.send();
+   var sampleOrder;
+   var orderHTML = new Array();
+   var chickNum=0;
+   var beefNum=0;
+   var beanNum=0;
+   var doubleBeefNum=0;
+   var turkeyNum=0;
+   var numOrders=0;
+   //waits for the names.csv to be successfully sent before running code
+   client.onreadystatechange = function() {     
+      if(client.readyState===4 && client.status===200){
+         var doc=client.responseText;  //store text in doc
+         sampleOrder=JSON.parse(doc);
+         console.log(sampleOrder);
+         
+         for(var i=0; i<sampleOrder.length; i++){
+            switch(sampleOrder[i].Base){
+               case "Chicken":
+               chickNum++;
+               break;
+               case "Hamburger":
+               beefNum++;
+               break;
+               case "Double Hamburger":
+               doubleBeefNum++;
+               break;
+               case "Turkey":
+               turkeyNum++;
+               break;
+               case "Black Bean":
+               beanNum++;
+               break;
+            }
+            orderHTML.push("");
+            $.each(sampleOrder[i], function(key, val){
+               if($.isArray(val)){
+                  for(var j=0; j<val.length; j++)
+                     orderHTML[numOrders] += "<li>" + val[j] + "</li>";
+               }
+               else
+                  orderHTML[numOrders] += "<li>" + val + "</li>";
+            })
+            numOrders++;
+            
+         }
+         console.log("turkey="+turkeyNum+", Hamburger="+beefNum);
+         for (var i=0; i<10; i++){
+            $('div section:nth-child('+i+') ul').append(orderHTML[i]);
+         }
+         $("#hNum").html(beefNum);     
+         $("#dhNum").html(doubleBeefNum);
+         $("#cNum").html(chickNum);
+         $("#tNum").html(turkeyNum);
+         $("#bNum").html(beanNum);
+      }
+
+
+   };
+   
+
+});
+
+>>>>>>> 6aea8371f6c6230abb1f0282a016afabe7f3d488

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
+#import "REST_API.h"
+
 @interface ViewController : UIViewController <CLLocationManagerDelegate>
 {
     bool isOnCampus;
