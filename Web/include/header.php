@@ -6,10 +6,30 @@
    //require_once 'login.php'
    //$db = new mysqli($db_hostname, $db_username, $db_password, $db_database);
    //if ($db->connect > 0) {
-   //		die('Unable to connect to database [' . $db->connect_error . ']');
+   //    die('Unable to connect to database [' . $db->connect_error . ']');
    //}
 
    $app = new \Slim\Slim();
+
+   $app->get('/wines', 'getWines');
+   $app->run();
+
+
+function getWines() {
+   echo "Hello";
+
+}
+
+function getConnection() {
+   $dbhost="localhost";
+   $dbuser="root";
+   $dbpass="root";
+   $dbname="Macs";
+   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);  
+   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+   return $dbh;
+}
+
 
    /*$app->get('/Orders', function() use ($db, $app) {
    		$query = "SELECT Users.fName, Users.lName, Orders.timePlaced, Orders.OrderID, Breads.name, Bases.name, Cheeses.name, Orders.hasFries 
@@ -20,7 +40,7 @@
    		$orders = mysqli_fetch_object($result);
    		echo json_encode($orders);
    });
-   $app->run();*/
+$app->run();*/
 ?>
 
 <!Doctype html>
