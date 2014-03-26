@@ -129,6 +129,5 @@ $(document).ready(function(){
       }
       $('#page_number').html((currentPage+1) + "/" + (maxPage+1));
    }   
-
 });
 
