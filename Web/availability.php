@@ -1,6 +1,6 @@
 <?php
-	pageTitle = "availability";
-	include 'include/header.php'
+	$pageTitle = "availability";
+	include 'include/header.php';
 ?>
 </head>
 <body>
