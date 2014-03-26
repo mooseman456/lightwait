@@ -39,11 +39,4 @@ $(document).ready(function(){
       //Visually remove that order from the queue
       //Add the order to the bumped database (or whatever that is)
    });
-
-   //Change availability
-   $('a[href~="#"]').click(function(e) {
-      e.preventDefault();
-      console.log("You changed the availability of your mother");
-      //TODO: Go to the change availability page
-   });
 });

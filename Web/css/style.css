@@ -39,6 +39,18 @@ body {
 	font-size: 1.6em;
 }
 
+/***********************/
+/*   Navbar - Header   */
+/***********************/
+nav ol {
+	float:left;
+}
+
+nav li {
+	float:left;
+	list-style:none;
+}
+
 
 /******************/
 /*   Order Pane   */
