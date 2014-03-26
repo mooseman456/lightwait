@@ -1,6 +1,12 @@
 <?php
+<<<<<<< HEAD
 	$pageTitle = "Login";
 	include 'include/header.php';
+=======
+	$pageTitle = "Home";
+
+	include('include/header.php');
+>>>>>>> bc1a919a1184f12b690a9ad202f4f4054023fcd6
 ?>
 </head>
 
