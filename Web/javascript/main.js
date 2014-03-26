@@ -74,6 +74,11 @@ client.onreadystatechange = function() {
             break;
          }
       }
+      $("#hNum").html(beefNum);     
+      $("#dhNum").html(doubleBeefNum);
+      $("#cNum").html(chickNum);
+      $("#tNum").html(turkeyNum);
+      $("#bNum").html(beanNum);
       console.log("turkey="+turkeyNum+", Hamburger="+beefNum);
    }
 };
