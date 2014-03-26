@@ -1,6 +1,13 @@
 $(document).ready(function(){
    console.log("HELLO");
 
+   $.getJSON("../Resources/SampleOrderData.json", function(data) {
+      var items = [];
+      $.each(data, function(key, val) {
+         console.log(data[key]["Sauce"]);
+
+      })
+   });
    //Populate order information from JSON
    //This displays ten orders from the order queue in the chef queue window
    //TODO: 1st step, static (update when you refresh the pagae)
@@ -38,12 +45,5 @@ $(document).ready(function(){
       //TODO
       //Visually remove that order from the queue
       //Add the order to the bumped database (or whatever that is)
-   });
-
-   //Change availability
-   $('a[href~="#"]').click(function(e) {
-      e.preventDefault();
-      console.log("You changed the availability of your mother");
-      //TODO: Go to the change availability page
    });
 });
