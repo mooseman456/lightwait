@@ -12,6 +12,9 @@ $(document).ready(function(){
    //Previous page arrow
    $('div.navigation img[alt~="Previous"]').click(function() {
       console.log("You clicked the previous arrow");
+      if (currentPage > 0)
+         currentPage--;
+      changePage();
       //TODO:
       //Nothing if you are on the first page
       //Display the previous ten order queue items in the window
@@ -20,6 +23,12 @@ $(document).ready(function(){
    //Next page arrow
    $('div.navigation img[alt~="Next"]').click(function() {
       console.log("You clicked the next arrow");
+      console.log(Math.floor(numOrders/10));
+      if(currentPage < maxPage) {
+         currentPage++;
+      }
+
+      changePage();
       //TODO:
       //Nothing if on the last page
       //Display the next ten order queue items in the window
@@ -39,25 +48,25 @@ $(document).ready(function(){
       //Visually remove that order from the queue
       //Add the order to the bumped database (or whatever that is)
    });
-<<<<<<< HEAD
-});
-=======
 
 
    var client = new XMLHttpRequest();     
    client.open('GET', '../Resources/SampleOrderData.json', true);
    client.send();
    var sampleOrder;
-   var orderHTML = new Array();
+   var orderHTML;
    var chickNum=0;
    var beefNum=0;
    var beanNum=0;
    var doubleBeefNum=0;
    var turkeyNum=0;
    var numOrders=0;
+   var currentPage=0;
+   var maxPage=0;
    //waits for the names.csv to be successfully sent before running code
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
+         orderHTML = [];
          var doc=client.responseText;  //store text in doc
          sampleOrder=JSON.parse(doc);
          console.log(sampleOrder);
@@ -93,9 +102,10 @@ $(document).ready(function(){
             
          }
          console.log("turkey="+turkeyNum+", Hamburger="+beefNum);
-         for (var i=0; i<10; i++){
-            $('div section:nth-child('+i+') ul').append(orderHTML[i]);
-         }
+
+         maxPage = Math.floor(numOrders/10);
+         changePage();
+         
          $("#hNum").html(beefNum);     
          $("#dhNum").html(doubleBeefNum);
          $("#cNum").html(chickNum);
@@ -105,8 +115,16 @@ $(document).ready(function(){
 
 
    };
-   
 
+   function changePage() {
+      for (var i=0; i<10; i++){
+         if (currentPage*10+i < numOrders)
+            $('div section:nth-child('+i+') ul').html(orderHTML[currentPage*10+i]);
+         else
+            $('div section:nth-child('+i+') ul').html("");
+
+      }
+      $('#page_number').html((currentPage+1) + "/" + (maxPage+1));
+   }   
 });
 
->>>>>>> 6aea8371f6c6230abb1f0282a016afabe7f3d488
