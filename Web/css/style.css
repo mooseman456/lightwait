@@ -19,7 +19,6 @@ body {
 .header {
 	height:10%;
 	width:100%;
-	background-color: rgba(250,105,0,0.4);
 	display:block;
 	min-height: 2em
 }
@@ -42,13 +41,44 @@ body {
 /***********************/
 /*   Navbar - Header   */
 /***********************/
-nav ol {
+nav {
+	background-color:#2491FF;
+	height:4em;
+	box-shadow: 0 0 10px #888;
+	border-bottom: 2px solid #248DFF
+}
+
+nav h1 {
+	margin:0;
+	font-size:2em;
+	margin: 0.5em 0.6em;
 	float:left;
+	color:rgba(255,255,255,0.9);
+}
+
+nav ul {
+	clear:none;
+	list-style:none;
+	float:right;
+	margin:0;
 }
 
 nav li {
-	float:left;
-	list-style:none;
+	float:right;
+	height:3em;
+	margin-right:1em;
+	margin-top:1.6em;
+}
+
+nav a {
+	font-size:1.4em;
+	padding:12px;
+	text-decoration:none;
+	color:rgba(60,60,60,0.95);
+}
+
+nav a:hover {
+	color:rgba(70,70,70,0.7);
 }
 
 
@@ -78,7 +108,7 @@ nav li {
 	margin:0;
 }
 
-ul {
+.order ul {
 	margin: 0.5em 0 0 0 ;
 	list-style: none;
 	padding-left:0;
@@ -127,6 +157,4 @@ ul {
 	width: 80%;
 	margin: 0 10%;
 }
-
-
 

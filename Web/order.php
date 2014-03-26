@@ -1,19 +1,17 @@
 <?php
-	$pageTitle="Order";
-	include('inlude/header.php');
+	$pageTitle = "Order";
+	include('include/header.php');
 ?>
 </head>
 
 <body>
-	<header>
-		<h1>lightwait!</h1>
-		<nav>
-			<ul>
-				<li><a href="index.php">logout</a></li>
-				<li><a href="#">account</a></li>
-			</ul>
-		</nav>
-	</header>
+	<nav>
+		<h1>lightwait</h1>
+		<ul>
+			<li><a href="index.php">logout</a></li>
+			<li><a href="#">account</a></li>
+		</ul>
+	</nav>
 </body>
 
 </html
