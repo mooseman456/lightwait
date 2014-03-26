@@ -106,9 +106,6 @@ $(document).ready(function(){
          maxPage = Math.floor(numOrders/10);
          changePage();
          
-         for (var i=0; i<10; i++){
-            $('div section:nth-child('+i+') ul').append(orderHTML[i]);
-         }
          $("#hNum").html(beefNum);     
          $("#dhNum").html(doubleBeefNum);
          $("#cNum").html(chickNum);
