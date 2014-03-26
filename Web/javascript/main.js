@@ -39,9 +39,6 @@ $(document).ready(function(){
       //Visually remove that order from the queue
       //Add the order to the bumped database (or whatever that is)
    });
-<<<<<<< HEAD
-});
-=======
 
 
    var client = new XMLHttpRequest();     
@@ -109,4 +106,3 @@ $(document).ready(function(){
 
 });
 
->>>>>>> 6aea8371f6c6230abb1f0282a016afabe7f3d488
