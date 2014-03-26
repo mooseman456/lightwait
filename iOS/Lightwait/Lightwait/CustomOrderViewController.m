@@ -333,12 +333,12 @@
     // If either are true, alert the user and then scroll to that page
     // Otherwise, the order is complete
     if ([[orderDictionary objectForKey:@"Base"] isEqual: [NSNull null]]) {
-        [self showAlert:@"Alert" message:@"Please select a base"];
+        [self showAlert:@"Alert" message:@"Please select a base" tagNumber:0];
         [self scrollToPage:[headerArray indexOfObject:@"Base"]];
         return FALSE;
     }
     else if ([[orderDictionary objectForKey:@"Bread"] isEqual: [NSNull null]]) {
-        [self showAlert:@"Alert" message:@"Please select a type of bread"];
+        [self showAlert:@"Alert" message:@"Please select a type of bread" tagNumber:0];
         [self scrollToPage:[headerArray indexOfObject:@"Bread"]];
         return FALSE;
     }
@@ -357,23 +357,36 @@
                                           cancelButtonTitle:@"No thanks"
                                           otherButtonTitles:@"Save", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 1;
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // If the user clicked save
-    if (buttonIndex == 1) {
-        NSString *orderName = [alertView textFieldAtIndex:0].text;
-        [OrderSaver saveOrder:orderName order:orderDictionary];
-        [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly."];
+    switch (alertView.tag) {
+        // askUserToSaveOrder alert
+        case 1:
+            // If the user clicked save
+            if (buttonIndex == 1) {
+                NSString *orderName = [alertView textFieldAtIndex:0].text;
+                [OrderSaver saveOrder:orderName order:orderDictionary];
+            }
+               [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
+            break;
+        case 2:
+            // Successful order alert, send the user back to the home page
+            [self.navigationController popToRootViewControllerAnimated:TRUE];
+            break;
+        default:
+            break;
     }
 }
 
-- (void)showAlert:(NSString *)title message:(NSString *)messageString
+- (void)showAlert:(NSString *)title message:(NSString *)messageString tagNumber:(int)tag
 {
     // Show an alert on the screen
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+    alertView.tag = tag;
     [alertView show];
 }
 
