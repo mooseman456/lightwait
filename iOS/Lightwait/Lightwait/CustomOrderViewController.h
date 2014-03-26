@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JSONConverter.h"
 #import "OrderSaver.h"
+#import "REST_API.h"
 
 @interface CustomOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 {

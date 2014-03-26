@@ -26,9 +26,10 @@
 		7B31712E18D3B15100080C78 /* SavedOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31712D18D3B15100080C78 /* SavedOrdersViewController.m */; };
 		7B31713118D3B16200080C78 /* GrabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31713018D3B16200080C78 /* GrabViewController.m */; };
 		7B31713318D3B1D600080C78 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B31713218D3B1D600080C78 /* logo.png */; };
-		7B31713618D4C9DB00080C78 /* JSONConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31713518D4C9DB00080C78 /* JSONConverter.m */; };
 		7B31713918D4D7EE00080C78 /* custommenu.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B31713818D4D7EE00080C78 /* custommenu.json */; };
 		7B63D00918D56F0300F3FAE0 /* OrderSaver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D00818D56F0300F3FAE0 /* OrderSaver.m */; };
+		7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD58A4B18E2779600983618 /* JSONConverter.m */; };
+		7BD58A4F18E277A900983618 /* REST_API.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD58A4E18E277A900983618 /* REST_API.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,11 +70,13 @@
 		7B31712F18D3B16200080C78 /* GrabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrabViewController.h; sourceTree = "<group>"; };
 		7B31713018D3B16200080C78 /* GrabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrabViewController.m; sourceTree = "<group>"; };
 		7B31713218D3B1D600080C78 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		7B31713418D4C9DB00080C78 /* JSONConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONConverter.h; sourceTree = "<group>"; };
-		7B31713518D4C9DB00080C78 /* JSONConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONConverter.m; sourceTree = "<group>"; };
 		7B31713818D4D7EE00080C78 /* custommenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = custommenu.json; sourceTree = "<group>"; };
 		7B63D00718D56F0300F3FAE0 /* OrderSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderSaver.h; sourceTree = "<group>"; };
 		7B63D00818D56F0300F3FAE0 /* OrderSaver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderSaver.m; sourceTree = "<group>"; };
+		7BD58A4A18E2779600983618 /* JSONConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONConverter.h; sourceTree = "<group>"; };
+		7BD58A4B18E2779600983618 /* JSONConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONConverter.m; sourceTree = "<group>"; };
+		7BD58A4D18E277A900983618 /* REST_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REST_API.h; sourceTree = "<group>"; };
+		7BD58A4E18E277A900983618 /* REST_API.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REST_API.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,10 +152,12 @@
 				7B31713218D3B1D600080C78 /* logo.png */,
 				7B31710A18D3B0B200080C78 /* Images.xcassets */,
 				7B3170F918D3B0B200080C78 /* Supporting Files */,
-				7B31713418D4C9DB00080C78 /* JSONConverter.h */,
-				7B31713518D4C9DB00080C78 /* JSONConverter.m */,
+				7BD58A4D18E277A900983618 /* REST_API.h */,
+				7BD58A4E18E277A900983618 /* REST_API.m */,
 				7B63D00718D56F0300F3FAE0 /* OrderSaver.h */,
 				7B63D00818D56F0300F3FAE0 /* OrderSaver.m */,
+				7BD58A4A18E2779600983618 /* JSONConverter.h */,
+				7BD58A4B18E2779600983618 /* JSONConverter.m */,
 				7B31713818D4D7EE00080C78 /* custommenu.json */,
 			);
 			path = Lightwait;
@@ -288,12 +293,13 @@
 			files = (
 				7B31712E18D3B15100080C78 /* SavedOrdersViewController.m in Sources */,
 				7B31712B18D3B14200080C78 /* CustomOrderViewController.m in Sources */,
+				7BD58A4F18E277A900983618 /* REST_API.m in Sources */,
 				7B31713118D3B16200080C78 /* GrabViewController.m in Sources */,
 				7B31710918D3B0B200080C78 /* ViewController.m in Sources */,
+				7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */,
 				7B63D00918D56F0300F3FAE0 /* OrderSaver.m in Sources */,
 				7B31710318D3B0B200080C78 /* AppDelegate.m in Sources */,
 				7B3170FF18D3B0B200080C78 /* main.m in Sources */,
-				7B31713618D4C9DB00080C78 /* JSONConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

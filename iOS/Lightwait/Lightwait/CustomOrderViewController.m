@@ -38,6 +38,9 @@
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
+    
+    NSDictionary *test = [REST_API getPath:@"http://localhost:8888/apitest/test.json"];
+    NSLog(@"%@", test);
 }
 
 - (void)didReceiveMemoryWarning
@@ -293,7 +296,11 @@
     NSString *jsonString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"custommenu" ofType:@"json"]
                                                      encoding:NSUTF8StringEncoding
                                                         error:nil];
-    NSDictionary *menuDictionary = [JSONConverter convertJSONToNSDictionary:jsonString];
+    NSDictionary *menuDictionary = [REST_API getPath:@"http://localhost:8888/apitest/test.json"];
+    NSDictionary *testDictionary = [JSONConverter convertJSONToNSDictionary:jsonString];
+    
+    NSLog(@"%@", testDictionary);
+    NSLog(@"%@", menuDictionary);
     
     // Menu data arrays
     headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
@@ -364,7 +371,6 @@
         NSString *orderName = [alertView textFieldAtIndex:0].text;
         [OrderSaver saveOrder:orderName order:orderDictionary];
         [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly."];
-        NSLog(@"%@", [JSONConverter convertNSMutableDictionaryToJSON:orderDictionary]);
     }
 }
 

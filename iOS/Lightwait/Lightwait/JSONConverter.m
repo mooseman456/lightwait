@@ -29,6 +29,25 @@
     }
 }
 
++ (NSDictionary*)convertNSDataToNSDictionary:(NSData *)data
+{
+    // Initialize an error
+    NSError *error;
+    
+    // Convert the data to a dictionary
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        
+    // If a string, return it - else return an error
+    if (dictionary) {
+        return dictionary;
+    }
+    else {
+        NSString *errorString = [@"JSON error: " stringByAppendingString:[error localizedDescription]];
+        NSLog(@"%@", errorString);
+        return nil;
+    }
+}
+
 + (NSDictionary*)convertJSONToNSDictionary:(NSString *)jsonString
 {
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
