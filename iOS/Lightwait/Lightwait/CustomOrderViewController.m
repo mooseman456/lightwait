@@ -38,9 +38,6 @@
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
-    
-    NSDictionary *test = [REST_API getPath:@"http://localhost:8888/apitest/test.json"];
-    NSLog(@"%@", test);
 }
 
 - (void)didReceiveMemoryWarning
@@ -293,14 +290,12 @@
 
 - (void)initializeMenuArrays
 {
-    NSString *jsonString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"custommenu" ofType:@"json"]
-                                                     encoding:NSUTF8StringEncoding
-                                                        error:nil];
-    NSDictionary *menuDictionary = [REST_API getPath:@"http://localhost:8888/apitest/test.json"];
-    NSDictionary *testDictionary = [JSONConverter convertJSONToNSDictionary:jsonString];
+#warning Change this link for release
+    NSDictionary *menuDictionary = [REST_API getPath:@"http://localhost:8888/lightwait/Web/resources/menu.json"];
     
-    NSLog(@"%@", testDictionary);
-    NSLog(@"%@", menuDictionary);
+    if (!menuDictionary) {
+        NSLog(@"Failed to retreive menu");
+    }
     
     // Menu data arrays
     headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
