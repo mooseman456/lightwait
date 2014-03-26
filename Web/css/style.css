@@ -1,0 +1,120 @@
+/***************/
+/*   General   */
+/***************/
+html {
+	height:100%;
+}
+
+body {
+	height:100%;
+	width:100%;
+	margin:0;
+	font-size:16px;
+	font-family:'Ubuntu',Arial;
+}
+
+/**************/
+/*   Header   */
+/**************/
+.header {
+	height:10%;
+	width:100%;
+	background-color: rgba(250,105,0,0.4);
+	display:block;
+	min-height: 2em
+}
+
+.header span {
+	padding-left: 1em;
+}
+
+.header a {
+	float: right;
+	padding-right:1em;
+	height: 100%;
+	/* margin-top: 1em; */
+}
+
+.header span {
+	font-size: 1.6em;
+}
+
+
+/******************/
+/*   Order Pane   */
+/******************/
+.window {
+	width:80%;
+	height:90%;
+}
+
+.order {
+	width:23%;
+	height:50%;
+	background-color: rgba(167,219,216,0.8);
+	padding: 0 1%;
+	min-width: 180px;
+	min-height: 260px;
+	float:left;
+}
+
+.order:nth-child(even) {
+	background-color: rgba(167,219,216,0.6);
+}
+
+.order h1 {
+	margin:0;
+}
+
+ul {
+	margin: 0.5em 0 0 0 ;
+	list-style: none;
+	padding-left:0;
+}
+
+
+/***************/
+/*   Sidebar   */
+/***************/
+.sidebar {
+	width:20%;
+	height:90%;
+	background-color: green;
+	position:absolute;
+	top:10%;
+	right:0;
+	min-width:200px;
+	min-height:520px;
+}
+
+.sidebar img {
+	height: 3.5em;
+	width:auto;
+	float: left;
+}
+
+.sidebar img:hover {
+	opacity: .6;
+}
+
+#page_number {
+	font-size: 3em;
+}
+
+.navigation div {
+	float: left;
+}
+
+.navigation {
+	position: absolute;
+	bottom:0;
+	margin: 0 auto;
+}
+
+.sidebar button {
+	width: 80%;
+	margin: 0 10%;
+}
+
+
+
