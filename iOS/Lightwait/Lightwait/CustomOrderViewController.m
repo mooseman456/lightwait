@@ -293,20 +293,21 @@
 #warning Change this link for release
     NSDictionary *menuDictionary = [REST_API getPath:@"http://localhost:8888/lightwait/Web/resources/menu.json"];
     
-    if (!menuDictionary) {
-        NSLog(@"Failed to retreive menu");
+    if (menuDictionary) {
+        // Menu data arrays
+        headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
+        baseArray = [menuDictionary objectForKey:@"Base"];
+        breadArray = [menuDictionary objectForKey:@"Bread"];
+        cheeseArray = [menuDictionary objectForKey:@"Cheese"];
+        toppingsArray = [menuDictionary objectForKey:@"Toppings"];
+        sauceArray = [menuDictionary objectForKey:@"Sauce"];
+        friesArray = [menuDictionary objectForKey:@"Fries"];
+        menuDataArray = [[NSArray alloc] initWithObjects:baseArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
+        selectedToppings = [[NSMutableArray alloc] init];
     }
-    
-    // Menu data arrays
-    headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
-    baseArray = [menuDictionary objectForKey:@"Base"];
-    breadArray = [menuDictionary objectForKey:@"Bread"];
-    cheeseArray = [menuDictionary objectForKey:@"Cheese"];
-    toppingsArray = [menuDictionary objectForKey:@"Toppings"];
-    sauceArray = [menuDictionary objectForKey:@"Sauce"];
-    friesArray = [menuDictionary objectForKey:@"Fries"];
-    menuDataArray = [[NSArray alloc] initWithObjects:baseArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
-    selectedToppings = [[NSMutableArray alloc] init];
+    else {
+        return;
+    }
 }
 
 - (void)initializeOrderDictionary

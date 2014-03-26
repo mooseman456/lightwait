@@ -25,7 +25,7 @@
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
 
     if ([urlResponse statusCode] >= 200 && [urlResponse statusCode] < 300) {
-        //Convert data to JSON string
+        // Convert data to JSON string
         return [JSONConverter convertNSDataToNSDictionary:responseData];
     }
     else {
@@ -41,7 +41,7 @@
 
 @implementation REST_API
 
-+ (NSString*)getPath:(NSString*)resource
++ (NSDictionary*)getPath:(NSString*)resource
 {
     // Create the link that will be used for the request
     NSURL *nsurl = [NSURL URLWithString:[[NSString stringWithFormat:@"%@", resource] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -54,6 +54,32 @@
     
     // Return the results of the request
     return [self sendRequest:request];
+}
+
++ (bool)testConnection:(NSString*)resource
+{
+    // Create the link that will be used for the request
+    NSURL *nsurl = [NSURL URLWithString:[[NSString stringWithFormat:@"%@", resource] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    // Create the request
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nsurl];
+    
+    // Set the request type to GET
+    [request setHTTPMethod:@"GET"];
+    
+    NSHTTPURLResponse* urlResponse = nil;
+    NSError *error = [[NSError alloc] init];
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+    
+    if ([urlResponse statusCode] >= 200 && [urlResponse statusCode] < 300) {
+        return true;
+    }
+    else {
+        // Error in request - return nil and log the error
+        NSLog(@"Response Code: %ld", (long)[urlResponse statusCode]);
+        NSLog(@"%@", [error localizedDescription]);
+        return  false;
+    }
 }
 
 @end
