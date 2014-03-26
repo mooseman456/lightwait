@@ -47,3 +47,40 @@ $(document).ready(function(){
       //Add the order to the bumped database (or whatever that is)
    });
 });
+
+var client = new XMLHttpRequest();     
+client.open('GET', '../Resources/SampleOrderData.json', true);
+client.send();
+//waits for the names.csv to be successfully sent before running code
+client.onreadystatechange = function() {     
+   if(client.readyState===4 && client.status===200){
+      var doc=client.responseText;  //store text in doc
+      var sampleOrder=JSON.parse(doc);
+      console.log(sampleOrder);
+      var chickNum=0;
+      var beefNum=0;
+      var beanNum=0;
+      var doubleBeefNum=0;
+      var turkeyNum=0;
+      for(var i=0; i<sampleOrder.length; i++){
+         switch(sampleOrder[i].Base){
+            case "Chicken":
+            chickNum++;
+            break;
+            case "Hamburger":
+            beefNum++;
+            break;
+            case "Double Hamburger":
+            doubleBeefNum++;
+            break;
+            case "Turkey":
+            turkeyNum++;
+            break;
+            case "Black Bean":
+            beanNum++;
+            break;
+         }
+      }
+      console.log("turkey="+turkeyNum+", Hamburger="+beefNum);
+   }
+};
