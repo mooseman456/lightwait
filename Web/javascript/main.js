@@ -15,9 +15,6 @@ $(document).ready(function(){
       if (currentPage > 0)
          currentPage--;
       changePage();
-      //TODO:
-      //Nothing if you are on the first page
-      //Display the previous ten order queue items in the window
    });
    
    //Next page arrow
@@ -27,11 +24,7 @@ $(document).ready(function(){
       if(currentPage < maxPage) {
          currentPage++;
       }
-
       changePage();
-      //TODO:
-      //Nothing if on the last page
-      //Display the next ten order queue items in the window
    });
 
    //Recall button
@@ -106,6 +99,9 @@ $(document).ready(function(){
          maxPage = Math.floor(numOrders/10);
          changePage();
          
+         // TODO:
+         // Be able to dynamically create and keep track of base items
+         // Right now they are hardcoded (i.e. chickNum, beefNum etc.)
          $("#hNum").html(beefNum);     
          $("#dhNum").html(doubleBeefNum);
          $("#cNum").html(chickNum);
