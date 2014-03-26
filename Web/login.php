@@ -1,8 +1,9 @@
 <?php
-	$pageTitle = "availability";
+	$pageTitle = "Login";
 	include 'include/header.php';
 ?>
 </head>
+
 <body>
 	<div class="login">
 		<h1>Log In</h1>

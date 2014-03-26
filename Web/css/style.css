@@ -116,5 +116,20 @@ ul {
 	margin: 0 10%;
 }
 
+/***************/
+/*    LogIn    */
+/***************/
 
+.login{
+	background-color: rgba(250,105,0,0.4);
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width:20%;
+	text-align: center;
+}
+
+.textForm{
+	margin-bottom: 10px;
+}
 
