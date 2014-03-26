@@ -28,7 +28,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 
-    savedOrdersArray = [OrderSaver getOrderNames];
+    savedOrdersArray = [SavedOrdersManager getOrderNames];
     
     [self checkForEmptyArray];
 }
@@ -76,10 +76,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableDictionary *retrievedOrder = [[NSMutableDictionary alloc] initWithDictionary:[OrderSaver loadOrder:[savedOrdersArray objectAtIndex:[indexPath row]]]];
+    NSMutableDictionary *retrievedOrder = [[NSMutableDictionary alloc] initWithDictionary:[SavedOrdersManager loadOrder:[savedOrdersArray objectAtIndex:[indexPath row]]]];
     NSString *jsonString = [JSONConverter convertNSMutableDictionaryToJSON:retrievedOrder];
     
-    //[self showAlert:@"Order" message:jsonString];
     [self showAlert:@"Order" message:@"Successful Order"];
 }
 

@@ -347,6 +347,17 @@
     }
 }
 
+- (BOOL)checkOrderName:(NSString*)nameString
+{
+    // If the name already exists, return false
+    if (![SavedOrdersManager checkIfNameExists:nameString] && ![nameString isEqual:[NSNull null]]) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 #pragma mark - Alerts
 
 - (void)askUserToSaveOrder
@@ -369,14 +380,31 @@
             // If the user clicked save
             if (buttonIndex == 1) {
                 NSString *orderName = [alertView textFieldAtIndex:0].text;
-                [OrderSaver saveOrder:orderName order:orderDictionary];
+                NSLog(@"%@", orderName);
+                // Check to see if the order name is valid
+                if ([self checkOrderName:orderName]) {
+                    // Save the order and alert the user
+                    [SavedOrdersManager saveOrder:orderName order:orderDictionary];
+                    [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
+                }
+                else {
+                    // Alert the user that the given name was invalid and then re-prompt
+                    [self showAlert:@"Invalid Name" message:@"Please enter a new name." tagNumber:3];
+                }
             }
-               [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
+            else {
+                // Successful order, alert the user
+                [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
+            }
             break;
+        // Successful order table
         case 2:
             // Successful order alert, send the user back to the home page
             [self.navigationController popToRootViewControllerAnimated:TRUE];
             break;
+        // Invalid name table
+        case 3:
+            [self askUserToSaveOrder];
         default:
             break;
     }

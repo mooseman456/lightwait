@@ -1,14 +1,14 @@
 //
-//  OrderSaver.m
+//  SavedOrdersManager.m
 //  Lightwait
 //
-//  Created by Patrick Leopard II on 3/16/14.
+//  Created by Patrick Leopard II on 3/26/14.
 //  Copyright (c) 2014 Patrick Leopard II. All rights reserved.
 //
 
-#import "OrderSaver.h"
+#import "SavedOrdersManager.h"
 
-@implementation OrderSaver
+@implementation SavedOrdersManager
 
 + (void)saveOrder:(NSString *)nameString order:(NSMutableDictionary *)dictionary
 {
@@ -55,10 +55,10 @@
     
     // String that will hold the file name for the saved order
     NSString *dictionaryFileString = [nameString stringByAppendingString:@".txt"];
-
+    
     // Get path to documents directory
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-
+    
     // Path to load dictionary
     NSString *dictPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:dictionaryFileString];
     
@@ -94,6 +94,19 @@
     }
     
     return orderNames;
+}
+
++ (BOOL)checkIfNameExists:(NSString *)nameString
+{
+    // Retrieve all the file names
+    NSArray *nameArray = [self getOrderNames];
+    
+    // Check to see if the array contains that name
+    // Returns true if the name has already been saved
+    if ([nameArray containsObject:nameString])
+        return true;
+    else
+        return false;
 }
 
 @end
