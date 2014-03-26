@@ -1,15 +1,7 @@
 <?php
-	$pageTitle = "Queue";
+	$navElements=array("logout"=>"index.php","avilability"=>"availability.php");
 	include 'include/header.php';
 ?>
-</head>
-
-<body>
-	<div class="header">
-		<span>lightwait</span>
-		<a href="availability.php">Change Availablity</a>
-		<a href="index.php">Home</a>
-	</div>
 	
 	<div class="window">
 		<section class="order">

@@ -1,11 +1,9 @@
 <?php
 	$pageTitle = "Home";
+	$navElements = array(	"chef"=>"queue.php",
+							"order"=>"order.php");
 	include('include/header.php');
 ?>
-   </head>
-
-
-<body>
 	<div class="login">
 		<h1>Log In</h1>
 		<form id="loginForm" method="POST">
@@ -14,7 +12,5 @@
 			<input class="formSubmit" type="submit" value="Log In">
 		</form>	
 	</div>
-	<a href="queue.php">Chef</a>
-	<a href="order.php">Order</a>
 </body>
 </html>

@@ -13,3 +13,15 @@
 
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="javascript/main.js"></script>
+</head>
+
+<body>
+	<nav>
+		<h1>lightwait</h1>
+		<ul>
+			<?php
+				foreach($navElements as $key => $value) {
+					echo '<li><a href='.$value.'>'.$key.'</a></li>';
+			} ?>
+		</ul>
+	</nav>
