@@ -119,7 +119,6 @@ $(document).ready(function(){
 
    };
 
-<<<<<<< HEAD
    function changePage() {
       for (var i=0; i<10; i++){
          if (currentPage*10+i < numOrders)
@@ -130,7 +129,5 @@ $(document).ready(function(){
       }
       $('#page_number').html((currentPage+1) + "/" + (maxPage+1));
    }   
-=======
->>>>>>> 2990776a542c8d43fca10330d849764339e3c3cb
 });
 
