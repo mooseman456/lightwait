@@ -1,4 +1,7 @@
-<?php include 'include/header.php' ?>
+<?php
+	pageTitle = "availability";
+	include 'include/header.php'
+?>
 </head>
 <body>
 	<h1>This is where you would change availability!</h1>

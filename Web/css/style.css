@@ -9,7 +9,8 @@ body {
 	height:100%;
 	width:100%;
 	margin:0;
-	font-size: 16px;
+	font-size:16px;
+	font-family:'Ubuntu',Arial;
 }
 
 /**************/
@@ -93,7 +94,7 @@ ul {
 }
 
 .sidebar img:hover {
-	opacity: .7;
+	opacity: .6;
 }
 
 #page_number {

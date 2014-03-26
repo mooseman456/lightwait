@@ -1,4 +1,7 @@
-<?php include 'include/header.php' ?>
+<?php
+	$pageTitle = "Home";
+	include('include/header.php');
+?>
 </head>
 
 <body>

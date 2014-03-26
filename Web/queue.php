@@ -1,4 +1,7 @@
-<?php include 'include/header.php' ?>
+<?php
+	$pageTitle = "Queue";
+	include 'include/header.php';
+?>
 </head>
 
 <body>
@@ -12,7 +15,7 @@
 		<section class="order">
 			<h1>Order</h1>
 			<span>Matt</span>
-			<span>2:00pm</span>
+			<span>2:00</span>
 			<ul>
 				<li>Burger</li>
 				<li>Wheat</li>
@@ -30,7 +33,7 @@
 		<section class="order">
 			<h1>Order</h1>
 			<span>Matt</span>
-			<span>2:00pm</span>
+			<span>2:00</span>
 			<ul>
 				<li>Burger</li>
 				<li>Wheat</li>
@@ -48,7 +51,7 @@
 		<section class="order">
 			<h1>Order</h1>
 			<span>Matt</span>
-			<span>2:00pm</span>
+			<span>2:00</span>
 			<ul>
 				<li>Burger</li>
 				<li>Wheat</li>
@@ -66,7 +69,7 @@
 		<section class="order">
 			<h1>Order</h1>
 			<span>Matt</span>
-			<span>2:00pm</span>
+			<span>2:00</span>
 			<ul>
 				<li>Burger</li>
 				<li>Wheat</li>
@@ -84,7 +87,7 @@
 		<section class="order">
 			<h1>Order</h1>
 			<span>Matt</span>
-			<span>2:00pm</span>
+			<span>2:00</span>
 			<ul>
 				<li>Burger</li>
 				<li>Wheat</li>
@@ -102,7 +105,7 @@
 		<section class="order">
 			<h1>Order</h1>
 			<span>Matt</span>
-			<span>2:00pm</span>
+			<span>2:00</span>
 			<ul>
 				<li>Burger</li>
 				<li>Wheat</li>
@@ -120,7 +123,7 @@
 		<section class="order">
 			<h1>Order</h1>
 			<span>Matt</span>
-			<span>2:00pm</span>
+			<span>2:00</span>
 			<ul>
 				<li>Burger</li>
 				<li>Wheat</li>
@@ -138,7 +141,7 @@
 		<section class="order">
 			<h1>Order</h1>
 			<span>Matt</span>
-			<span>2:00pm</span>
+			<span>2:00</span>
 			<ul>
 				<li>Burger</li>
 				<li>Wheat</li>
