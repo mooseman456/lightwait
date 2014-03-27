@@ -23,6 +23,7 @@ nav {
 	border-bottom: 2px solid #248DFF;
 	z-index:2;
 	position:static;
+	box-sizing:border-box;
 }
 
 nav h1 {
@@ -62,7 +63,7 @@ nav a:hover {
 /******************/
 .window {
 	width:80%;
-	height:92%;
+	height:100%;
 	z-index:1;
 }
 
@@ -94,10 +95,10 @@ nav a:hover {
 /***************/
 .sidebar {
 	width:20%;
-	height:90%;
+	height:100%;
 	background-color: green;
 	position:absolute;
-	top:10%;
+	top:4em;
 	right:0;
 	min-width:200px;
 	min-height:520px;
@@ -161,6 +162,12 @@ div.order-page {
 }
 
 .order-page h1 {
+	text-align: center;
+}
+
+.order-wrapper p {
+	display:block;
+	margin-bottom:0;
 	text-align: center;
 }
 

@@ -4,11 +4,12 @@
 	include('include/header.php');
 ?>
 	<div class="order-wrapper">
+		<p>Add items to your order by clicking on them in the menu</p>
 		<div class="order-page">
-			<h1>Order</h1>
+			<h1>order</h1>
 		</div>
 		<div class="order-page">
-			<h1>Menu</h1>
+			<h1>menu</h1>
 		</div>
 	</div>
 </body>

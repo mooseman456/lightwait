@@ -44,7 +44,7 @@ $(document).ready(function(){
 
    //Bump button
    $('section.order button').click(function(event) {
-      console.log("This one " + event.target.parentNode);
+      console.log("Bump");
       $(event.target.parentNode).remove();
       //TODO
 
