@@ -1,5 +1,5 @@
 <?php
-	$navElements=array("logout"=>"index.php","availability"=>"availability.php");
+	$navElements=array("availability"=>"availability.php","account"=>"#","logout"=>"index.php");
 	$pageTitle = "Queue";
 	include 'include/header.php';
 ?>
