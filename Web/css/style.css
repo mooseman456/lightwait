@@ -13,34 +13,9 @@ body {
 	font-family:'Ubuntu',Arial;
 }
 
-/**************/
-/*   Header   */
-/**************/
-.header {
-	height:10%;
-	width:100%;
-	display:block;
-	min-height: 2em
-}
-
-.header span {
-	padding-left: 1em;
-}
-
-.header a {
-	float: right;
-	padding-right:1em;
-	height: 100%;
-	/* margin-top: 1em; */
-}
-
-.header span {
-	font-size: 1.6em;
-}
-
-/***********************/
-/*   Navbar - Header   */
-/***********************/
+/*********************/
+/*   Navbar/Header   */
+/*********************/
 nav {
 	background-color:#2491FF;
 	height:4em;
@@ -87,12 +62,15 @@ nav a:hover {
 /******************/
 .window {
 	width:80%;
+	height:92%;
 	z-index:1;
 }
 
-.order {
-	width:22%;
-	padding:1em 1%;
+.queue {
+	box-sizing:border-box;
+	width:25%;
+	height:50%;
+	padding:0.6em 1%;
 	min-width: 180px;
 	min-height: 300px;
 	float:left;
@@ -100,15 +78,11 @@ nav a:hover {
 	border-right: 1px solid rgba(0,0,0,0.15);
 }
 
-.order:nth-child(odd) {
-	
-}
-
-.order h1 {
+.queue h1 {
 	margin:0;
 }
 
-.order ul {
+.queue ul {
 	margin: 0.5em 0 0 0 ;
 	list-style: none;
 	padding-left:0;
@@ -173,4 +147,24 @@ nav a:hover {
 
 .textForm{
 	margin-bottom: 10px;
+}
+
+/*************/
+/*   Order   */
+/*************/
+div.order-page {
+	border: 2px solid rgba(0,0,0,0.15);
+	float:left;
+	width:40%;
+	margin:2em 5%;
+	box-sizing:border-box;
+}
+
+.order-page h1 {
+	text-align: center;
+}
+
+div.order-wrapper {
+	width:80%;
+	margin:0 10%;
 }
