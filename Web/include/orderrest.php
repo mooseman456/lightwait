@@ -52,18 +52,20 @@ function addOrder() {
 	error_log('addOrder\n', 3, '/var/tmp/php.log');
 	$request = Slim::getInstance()->request();
 	$order = json_decode($request->getBody());
-	$sql = "INSERT INTO Orders (OrderID, UserID, BreadID, BaseID, CheeseID, hasFries, timePlaced, isActive) 
-				VALUES (:OrderID, :UserID, :BreadID, :BaseID, :CheeseID, :hasFries, timePlaced, isActive)";
+	$sql = "INSERT INTO Orders (OrderID, UserID, hasFries, timePlaced, isActive, BreadID, BaseID, CheeseID)
+				VALUES (:OrderID, :UserID, :hasFries, :timePlaced, :isActive, (SELECT BreadID FROM Breads WHERE name = :breadname), (SELECT BaseID FROM Bases WHERE name = :basename), 
+				(SELECT CheeseID FROM Cheeses WHERE name = :cheesename))";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);  
 		$stmt->bindParam("OrderID", $order->OrderID);
 		$stmt->bindParam("UserID", $order->UserID);
-		$stmt->bindParam("BreadID", $order->BreadID);
-		$stmt->bindParam("BaseID", $order->BaseID);
-		$stmt->bindParam("CheeseID", $order->CheeseID);
 		$stmt->bindParam("hasFries", $order->hasFries);
+		$stmt->bindParam("timePlaced", $order->timePlaced)
 		$stmt->bindParam("isActive", $order->isActive);
+		$stmt->bindParam("breadname", $order->Bread);
+		$stmt->bindParam("basename", $order->Base);
+		$stmt->bindParam("cheesename", $order->Cheese);
 		$stmt->execute();
 		$order->id = $db->lastInsertId();
 		$db = null;
