@@ -74,12 +74,29 @@ CREATE TABLE Orders (
 ) Engine=InnoDB;
 
 # INSERT some ingredients and Users
-
 INSERT INTO Breads VALUES (1, "White", 1);
 INSERT INTO Breads VALUES (2, "Wheat", 1);
 INSERT INTO Breads VALUES (3, "Texas Toast", 1);
 
-INSERT INTO Bases VALUES (1, "Beef Burger", 1);
-INSERT INTO Bases VALUES (2, "Black Bean Burger", 1);
-INSERT INTO Bases VALUES (3, "Turkey", 1);
-INSERT INTO Bases VALUES (4, "Double Beef Burger", 1);
+INSERT INTO Bases VALUES (1, "Hamburger", 1);
+INSERT INTO Bases VALUES (2, "Turkey", 1);
+INSERT INTO Bases VALUES (3, "Chicken", 1);
+INSERT INTO Bases VALUES (4, "Veggie", 1);
+INSERT INTO Bases VALUES (5, "Black Bean", 1);
+INSERT INTO Bases VALUES (6, "Double Beef Burger", 1);
+
+INSERT INTO Cheeses VALUES (1, "American", 1);
+INSERT INTO Cheeses VALUES (2, "Pepper Jack", 1);
+INSERT INTO Cheeses VALUES (3, "Swiss", 1);
+
+INSERT INTO Toppings VALUES (1, "Lettuce", 1);
+INSERT INTO Toppings VALUES (2, "Jalapeno", 1);
+INSERT INTO Toppings VALUES (3, "Tomato", 1);
+INSERT INTO Toppings VALUES (4, "Bacon", 1);
+INSERT INTO Toppings VALUES (5, "Pico de Gallo", 1);
+INSERT INTO Toppings VALUES (6, "Pineapple", 1);
+INSERT INTO Toppings VALUES (7, "Pickle", 1);
+INSERT INTO Toppings VALUES (8, "Onion", 1);
+INSERT INTO Toppings VALUES (9, "Avocado Mayo", 1);
+INSERT INTO Toppings VALUES (10, "Bistro Sauce", 1);
+INSERT INTO Toppings VALUES (11, "Chipotle Ranch", 1);
