@@ -35,5 +35,7 @@
       </form>
    </div>
 
+<button id="apiTestButton">Test API</button>
+
 </body>
 </html>
