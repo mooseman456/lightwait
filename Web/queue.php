@@ -1,11 +1,11 @@
 <?php
-	$navElements=array("logout"=>"index.php","availability"=>"availability.php");
+	$navElements=array("availability"=>"availability.php","account"=>"#","logout"=>"index.php");
 	$pageTitle = "Queue";
 	include 'include/header.php';
 ?>
 	
 	<div class="window">
-		<section class="order">
+		<section class="queue">
 			<h1>Order</h1>
 			<span>Matt</span>
 			<span>2:00</span>
@@ -23,7 +23,7 @@
 			<button>Bump</button>
 		</section>
 
-		<section class="order">
+		<section class="queue">
 			<h1>Order</h1>
 			<span>Matt</span>
 			<span>2:00</span>
@@ -41,7 +41,7 @@
 			<button>Bump</button>
 		</section>
 		
-		<section class="order">
+		<section class="queue">
 			<h1>Order</h1>
 			<span>Matt</span>
 			<span>2:00</span>
@@ -59,7 +59,7 @@
 			<button>Bump</button>
 		</section>
 
-		<section class="order">
+		<section class="queue">
 			<h1>Order</h1>
 			<span>Matt</span>
 			<span>2:00</span>
@@ -77,7 +77,7 @@
 			<button>Bump</button>
 		</section>
 
-		<section class="order">
+		<section class="queue">
 			<h1>Order</h1>
 			<span>Matt</span>
 			<span>2:00</span>
@@ -95,7 +95,7 @@
 			<button>Bump</button>
 		</section>
 
-		<section class="order">
+		<section class="queue">
 			<h1>Order</h1>
 			<span>Matt</span>
 			<span>2:00</span>
@@ -113,7 +113,7 @@
 			<button>Bump</button>
 		</section>
 
-		<section class="order">
+		<section class="queue">
 			<h1>Order</h1>
 			<span>Matt</span>
 			<span>2:00</span>
@@ -131,7 +131,7 @@
 			<button>Bump</button>
 		</section>
 
-		<section class="order">
+		<section class="queue">
 			<h1>Order</h1>
 			<span>Matt</span>
 			<span>2:00</span>

@@ -13,61 +13,37 @@ body {
 	font-family:'Ubuntu',Arial;
 }
 
-/**************/
-/*   Header   */
-/**************/
-.header {
-	height:10%;
-	width:100%;
-	display:block;
-	min-height: 2em
-}
-
-.header span {
-	padding-left: 1em;
-}
-
-.header a {
-	float: right;
-	padding-right:1em;
-	height: 100%;
-	/* margin-top: 1em; */
-}
-
-.header span {
-	font-size: 1.6em;
-}
-
-/***********************/
-/*   Navbar - Header   */
-/***********************/
+/*********************/
+/*   Navbar/Header   */
+/*********************/
 nav {
 	background-color:#2491FF;
 	height:4em;
 	box-shadow: 0 0 10px #888;
-	border-bottom: 2px solid #248DFF
+	border-bottom: 2px solid #248DFF;
+	z-index:2;
+	position:static;
+	box-sizing:border-box;
 }
 
 nav h1 {
-	margin:0;
-	font-size:2em;
-	margin: 0.5em 0.6em;
 	float:left;
-	color:rgba(255,255,255,0.9);
+	font-size:2em;
+	margin:.5em auto auto 0.6em;
+	color:rgba(255,255,255,0.95);
 }
 
 nav ul {
-	clear:none;
 	list-style:none;
-	float:right;
 	margin:0;
+	float:right;
+	clear:none;
 }
 
 nav li {
-	float:right;
-	height:3em;
-	margin-right:1em;
-	margin-top:1.6em;
+	float:left;
+	margin:1.6em 1em auto auto;
+	margin-bottom: 0;
 }
 
 nav a {
@@ -87,28 +63,27 @@ nav a:hover {
 /******************/
 .window {
 	width:80%;
-	height:90%;
+	height:100%;
+	z-index:1;
 }
 
-.order {
-	width:23%;
+.queue {
+	box-sizing:border-box;
+	width:25%;
 	height:50%;
-	background-color: rgba(167,219,216,0.8);
-	padding: 0 1%;
+	padding:0.6em 1%;
 	min-width: 180px;
-	min-height: 260px;
+	min-height: 300px;
 	float:left;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+	border-right: 1px solid rgba(0,0,0,0.15);
 }
 
-.order:nth-child(even) {
-	background-color: rgba(167,219,216,0.6);
-}
-
-.order h1 {
+.queue h1 {
 	margin:0;
 }
 
-.order ul {
+.queue ul {
 	margin: 0.5em 0 0 0 ;
 	list-style: none;
 	padding-left:0;
@@ -120,10 +95,10 @@ nav a:hover {
 /***************/
 .sidebar {
 	width:20%;
-	height:90%;
+	height:100%;
 	background-color: green;
 	position:absolute;
-	top:10%;
+	top:4em;
 	right:0;
 	min-width:200px;
 	min-height:520px;
@@ -173,4 +148,30 @@ nav a:hover {
 
 .textForm{
 	margin-bottom: 10px;
+}
+
+/*************/
+/*   Order   */
+/*************/
+div.order-page {
+	border: 2px solid rgba(0,0,0,0.15);
+	float:left;
+	width:40%;
+	margin:2em 5%;
+	box-sizing:border-box;
+}
+
+.order-page h1 {
+	text-align: center;
+}
+
+.order-wrapper p {
+	display:block;
+	margin-bottom:0;
+	text-align: center;
+}
+
+div.order-wrapper {
+	width:80%;
+	margin:0 10%;
 }

@@ -24,6 +24,17 @@ $(document).ready(function(){
       changePage();
    });
 
+   function changePage() {
+      for (var i=0; i<10; i++){
+         if (currentPage*10+i < numOrders)
+            $('div section:nth-child('+i+') ul').html(orderHTML[currentPage*10+i]);
+         else
+            $('div section:nth-child('+i+') ul').html("");
+
+      }
+      $('#page_number').html((currentPage+1) + "/" + (maxPage+1));
+   }
+
    //Recall button
    $("#recall").click(function() {
       console.log("You clicked the recall button")
@@ -33,9 +44,11 @@ $(document).ready(function(){
 
    //Bump button
    $('section.order button').click(function(event) {
-      console.log("You clicked a bump button");
+      console.log("Bump");
+      $(event.target.parentNode).remove();
       //TODO
-      //Visually remove that order from the queue
+
+      //Order fill
       //Add the order to the bumped database (or whatever that is)
    });
 
@@ -105,17 +118,6 @@ $(document).ready(function(){
       }
 
 
-   };
-
-   function changePage() {
-      for (var i=0; i<10; i++){
-         if (currentPage*10+i < numOrders)
-            $('div section:nth-child('+i+') ul').html(orderHTML[currentPage*10+i]);
-         else
-            $('div section:nth-child('+i+') ul').html("");
-
-      }
-      $('#page_number').html((currentPage+1) + "/" + (maxPage+1));
-   }   
+   };   
 });
 
