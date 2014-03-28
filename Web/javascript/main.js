@@ -118,6 +118,23 @@ $(document).ready(function(){
       }
 
 
-   };   
-});
+   };
 
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/orders";
+
+   function getAllOrders() {
+      $.ajax({
+         type: 'GET',
+         url: rootURL,
+         dataType: "json", // data type of response
+         success: function(data){      
+            console.log(data);
+         }
+      });
+}
+
+   $( "#apiTestButton" ).click(function() {
+      getAllOrders();
+   });
+
+});

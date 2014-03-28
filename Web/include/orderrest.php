@@ -37,12 +37,12 @@ function getOrder($OrderID) {
 				INNER JOIN OrderToppings ON Orders.OrderID = OrderToppings.OrderID WHERE Orders.OrderID = :OrderID AND Orders.isActive = true";
 	try {
 		$db = getConnection();
-		$stmt = $db->prepare($sql);  
+		$stmt = $db->prepare($sql);
 		$stmt->bindParam("OrderID", $OrderID);
 		$stmt->execute();
-		$order = $stmt->fetchObject();  
+		$order = $stmt->fetchObject();
 		$db = null;
-		echo json_encode($order); 
+		echo json_encode($order);
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
@@ -52,13 +52,13 @@ function addOrder() {
 	error_log('addOrder\n', 3, '/var/tmp/php.log');
 	$request = Slim::getInstance()->request();
 	$order = json_decode($request->getBody());
-	$sql = "INSERT INTO Orders (OrderID, UserID, hasFries, timePlaced, isActive, BreadID, BaseID, CheeseID)
-				VALUES (:OrderID, :UserID, :hasFries, :timePlaced, :isActive, (SELECT BreadID FROM Breads WHERE name = :breadname), (SELECT BaseID FROM Bases WHERE name = :basename), 
+	$sql = "INSERT INTO Orders (UserID, hasFries, timePlaced, isActive, BreadID, BaseID, CheeseID)
+				VALUES (:UserID, :hasFries, :timePlaced, :isActive, (SELECT BreadID FROM Breads WHERE name = :breadname), (SELECT BaseID FROM Bases WHERE name = :basename), 
 				(SELECT CheeseID FROM Cheeses WHERE name = :cheesename))";
+	$tsql = "INSERT INTO OrderToppings (OrderID, ToppingID) VALUES(:toppingname)";
 	try {
 		$db = getConnection();
-		$stmt = $db->prepare($sql);  
-		$stmt->bindParam("OrderID", $order->OrderID);
+		$stmt = $db->prepare($sql);
 		$stmt->bindParam("UserID", $order->UserID);
 		$stmt->bindParam("hasFries", $order->hasFries);
 		$stmt->bindParam("timePlaced", $order->timePlaced)
@@ -66,8 +66,15 @@ function addOrder() {
 		$stmt->bindParam("breadname", $order->Bread);
 		$stmt->bindParam("basename", $order->Base);
 		$stmt->bindParam("cheesename", $order->Cheese);
+		$stmt->bindParam("toppings", $order->Toppings);
 		$stmt->execute();
-		$order->id = $db->lastInsertId();
+		foreach(:toppings as $topping)
+		{
+			$stmt = $db->prepare($tsql);
+			$stmt->bindParam("toppingname", $topping); //PDO::PARAM_STR
+			$stmt->execute();
+		}
+		//$order->id = $db->lastInsertId();
 		$db = null;
 		echo json_encode($order); 
 	} catch(PDOException $e) {

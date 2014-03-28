@@ -1,0 +1,11 @@
+{	"Base":[
+		{"Beef": true},
+		{"Chicken": true},
+		{"BlackBean": false}
+	],
+	"Sauce":[
+		{"Chipotle": true},
+		{"Fire": false},
+		{"MincedThings": true}
+	]
+}
