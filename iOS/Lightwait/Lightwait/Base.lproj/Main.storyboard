@@ -59,7 +59,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="lightwait" id="Krj-Jm-5dM"/>
                     <connections>
-                        <segue destination="7lg-Ef-jQT" kind="push" identifier="customOrderSegue" id="QgN-hd-dtE"/>
+                        <segue destination="7lg-Ef-jQT" kind="push" identifier="customOrderSegue" id="oQS-C6-Oln"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

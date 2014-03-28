@@ -1,9 +1,10 @@
 <?php
-	$pageTitle = "Home";
-	$navElements = array(	"chef"=>"queue.php",
-							"order"=>"order.php");
-	include('include/header.php');
+	$pageTitle = "Login";
+	include 'include/header.php';
 ?>
+</head>
+
+<body>
 	<div class="login">
 		<h1>Log In</h1>
 		<form id="loginForm" method="POST">

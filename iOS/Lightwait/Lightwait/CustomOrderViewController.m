@@ -290,21 +290,24 @@
 
 - (void)initializeMenuArrays
 {
-    NSString *jsonString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"custommenu" ofType:@"json"]
-                                                     encoding:NSUTF8StringEncoding
-                                                        error:nil];
-    NSDictionary *menuDictionary = [JSONConverter convertJSONToNSDictionary:jsonString];
+#warning Change this link for release
+    NSDictionary *menuDictionary = [REST_API getPath:@"http://localhost:8888/lightwait/Web/resources/menu.json"];
     
-    // Menu data arrays
-    headerArray = [[NSArray alloc] initWithObjects:@"Meat", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
-    meatArray = [menuDictionary objectForKey:@"Meat"];
-    breadArray = [menuDictionary objectForKey:@"Bread"];
-    cheeseArray = [menuDictionary objectForKey:@"Cheese"];
-    toppingsArray = [menuDictionary objectForKey:@"Toppings"];
-    sauceArray = [menuDictionary objectForKey:@"Sauce"];
-    friesArray = [menuDictionary objectForKey:@"Fries"];
-    menuDataArray = [[NSArray alloc] initWithObjects:meatArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
-    selectedToppings = [[NSMutableArray alloc] init];
+    if (menuDictionary) {
+        // Menu data arrays
+        headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
+        baseArray = [menuDictionary objectForKey:@"Base"];
+        breadArray = [menuDictionary objectForKey:@"Bread"];
+        cheeseArray = [menuDictionary objectForKey:@"Cheese"];
+        toppingsArray = [menuDictionary objectForKey:@"Toppings"];
+        sauceArray = [menuDictionary objectForKey:@"Sauce"];
+        friesArray = [menuDictionary objectForKey:@"Fries"];
+        menuDataArray = [[NSArray alloc] initWithObjects:baseArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
+        selectedToppings = [[NSMutableArray alloc] init];
+    }
+    else {
+        return;
+    }
 }
 
 - (void)initializeOrderDictionary
@@ -314,9 +317,9 @@
     
     // Set values that can be none to none so that the user does not have to
     // should they not want a particular item
-    // Set meat and bread to null so that they can later be checked if they
+    // Set base and bread to null so that they can later be checked if they
     // were selected or not
-    [orderDictionary setObject:[NSNull null] forKey:@"Meat"];
+    [orderDictionary setObject:[NSNull null] forKey:@"Base"];
     [orderDictionary setObject:[NSNull null] forKey:@"Bread"];
     [orderDictionary setObject:@"None" forKey:@"Cheese"];
     [orderDictionary setObject:@"None" forKey:@"Toppings"];
@@ -326,21 +329,33 @@
 
 - (BOOL)checkForCompleteOrder
 {
-    // Check if either meat or bread are null
+    // Check if either base or bread are null
     // If either are true, alert the user and then scroll to that page
     // Otherwise, the order is complete
-    if ([[orderDictionary objectForKey:@"Meat"] isEqual: [NSNull null]]) {
-        [self showAlert:@"Alert" message:@"Please select a type of meat"];
-        [self scrollToPage:[headerArray indexOfObject:@"Meat"]];
+    if ([[orderDictionary objectForKey:@"Base"] isEqual: [NSNull null]]) {
+        [self showAlert:@"Alert" message:@"Please select a base" tagNumber:0];
+        [self scrollToPage:[headerArray indexOfObject:@"Base"]];
         return FALSE;
     }
     else if ([[orderDictionary objectForKey:@"Bread"] isEqual: [NSNull null]]) {
-        [self showAlert:@"Alert" message:@"Please select a type of bread"];
+        [self showAlert:@"Alert" message:@"Please select a type of bread" tagNumber:0];
         [self scrollToPage:[headerArray indexOfObject:@"Bread"]];
         return FALSE;
     }
     else {
         return TRUE;
+    }
+}
+
+- (BOOL)checkOrderName:(NSString*)nameString
+{
+    NSLog(@"%@", nameString);
+    // If the name already exists, return false
+    if (![nameString isEqual:@""] && ![SavedOrdersManager checkIfNameExists:nameString]) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
@@ -354,23 +369,54 @@
                                           cancelButtonTitle:@"No thanks"
                                           otherButtonTitles:@"Save", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 1;
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // If the user clicked save
-    if (buttonIndex == 1) {
-        NSString *orderName = [alertView textFieldAtIndex:0].text;
-        [OrderSaver saveOrder:orderName order:orderDictionary];
-        [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly."];
+    switch (alertView.tag) {
+        // askUserToSaveOrder alert
+        case 1:
+            // If the user clicked save
+            if (buttonIndex == 1) {
+                NSString *orderName = @"";
+                orderName = [alertView textFieldAtIndex:0].text;
+                // Check to see if the order name is valid
+                NSLog(@"%@", orderName);
+                if ([self checkOrderName:orderName]) {
+                    // Save the order and alert the user
+                    [SavedOrdersManager saveOrder:orderName order:orderDictionary];
+                    [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
+                }
+                else {
+                    // Alert the user that the given name was invalid and then re-prompt
+                    [self showAlert:@"Invalid Name" message:@"Please enter a new name." tagNumber:3];
+                }
+            }
+            else {
+                // Successful order, alert the user
+                [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
+            }
+            break;
+        // Successful order table
+        case 2:
+            // Successful order alert, send the user back to the home page
+            [self.navigationController popToRootViewControllerAnimated:TRUE];
+            break;
+        // Invalid name table
+        case 3:
+            [self askUserToSaveOrder];
+        default:
+            break;
     }
 }
 
-- (void)showAlert:(NSString *)title message:(NSString *)messageString
+- (void)showAlert:(NSString *)title message:(NSString *)messageString tagNumber:(int)tag
 {
     // Show an alert on the screen
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+    alertView.tag = tag;
     [alertView show];
 }
 

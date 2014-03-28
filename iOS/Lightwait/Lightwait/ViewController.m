@@ -95,13 +95,32 @@ CLLocationManager *_locationManager;
         isOnCampus = FALSE;
 }
 */
+
+- (bool)testMenuConnection
+{
+    // Attempt to connect to the website
+    bool isConnected = [REST_API testConnection:@"http://localhost:8888/lightwait/"];
+    if (isConnected)
+        return true;
+    else
+        return false;
+}
+
+// Location testing is commented out for testing
 - (IBAction)pushCustomOrder:(id)sender
 {
-    //[self initializeLocationManager];
-    if (isOnCampus == TRUE)
-        [self performSegueWithIdentifier:@"customOrderSegue" sender:self];
-    else
-        [self showAlert:@"Alert" message:@"You must be on campus to order from Mac's Place"];
+    // First check to see if the menu can be loaded, then check if the user is on campus
+    if ([self testMenuConnection]) {
+        //if (isOnCampus == true) {
+            [self performSegueWithIdentifier:@"customOrderSegue" sender:self];
+        //}
+        //else {
+        //    [self showAlert:@"Alert" message:@"You must be on campus to order from Mac's Place"];
+        //}
+    }
+    else {
+        [self showAlert:@"Connection Failure" message:@"Failed to load the menu"];
+    }
 }
 
 - (void)showAlert:(NSString *)title message:(NSString *)messageString

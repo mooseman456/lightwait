@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JSONConverter.h"
-#import "OrderSaver.h"
+#import "SavedOrdersManager.h"
 
 @interface SavedOrdersViewController : UIViewController
 {
