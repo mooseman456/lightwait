@@ -349,7 +349,6 @@
 
 - (BOOL)checkOrderName:(NSString*)nameString
 {
-    NSLog(@"%@", nameString);
     // If the name already exists, return false
     if (![nameString isEqual:@""] && ![SavedOrdersManager checkIfNameExists:nameString]) {
         return true;
@@ -383,7 +382,6 @@
                 NSString *orderName = @"";
                 orderName = [alertView textFieldAtIndex:0].text;
                 // Check to see if the order name is valid
-                NSLog(@"%@", orderName);
                 if ([self checkOrderName:orderName]) {
                     // Save the order and alert the user
                     [SavedOrdersManager saveOrder:orderName order:orderDictionary];
