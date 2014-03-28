@@ -1,6 +1,6 @@
 <?php
 	$pageTitle = "Order";
-	$navElements=array("account"=>"#",logout=>"index.php");
+	$navElements=array("account"=>"account.php","logout"=>"index.php");
 	include('include/header.php');
 ?>
 	<div class="order-wrapper">
