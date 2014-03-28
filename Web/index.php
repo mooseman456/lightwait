@@ -12,5 +12,6 @@
 			<input class="formSubmit" type="submit" value="Log In">
 		</form>	
 	</div>
+	<button id="apiTestButton">Test API</button>
 </body>
 </html>
