@@ -43,11 +43,11 @@ $(document).ready(function(){
    });
 
    //Bump button
-   $('section.order button').click(function(event) {
+   $('section.queue button').click(function(event) {
       console.log("Bump");
       $(event.target.parentNode).remove();
-      //TODO
 
+      //TODO
       //Order fill
       //Add the order to the bumped database (or whatever that is)
    });
