@@ -44,7 +44,6 @@ function getMenuData() {
       /* store first result set */
       $mysqli->next_result();
       if ($result = $mysqli->store_result()) {
-        $totalJSON;
         while ($row = $result->fetch_row()) {
           $json = json_encode($row[0]);
           printf("%s\n", $json);
@@ -60,10 +59,6 @@ function getMenuData() {
 
   // Close mysqli connection
   $mysqli->close();
-}
-
-function jsonConcatenation($json) {
-  $totalJSON .= (string)$json;
 }
 
 function getConnection() {
