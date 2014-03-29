@@ -11,7 +11,7 @@ $(document).ready(function(){
    client.open('GET', '../Resources/SampleOrderData.json', true);
    client.send();
    var orders;
-   var orderHTML =   [];
+   //var orderHTML = [];
    var numOrders=0;
    var currentPage=0;
    var maxPage=0;
@@ -27,7 +27,7 @@ $(document).ready(function(){
 
          //Update order window
          //THIS IS INSIDE THE .ready()!!
-         updateOrderWindow();
+         updateCurrentWindow();
       }
    };
    
@@ -41,32 +41,23 @@ $(document).ready(function(){
    $('div.navigation img[alt~="Previous"]').click(function() {
       if (currentPage > 0)
          currentPage--;
-      changePage();
+      console.log("page: "+currentPage);
+      $('#page_number').html((currentPage+1) + "/" + (Math.floor(orders.length/8+1)));
+      updateCurrentWindow();
    });
    
    //Next page arrow
    $('div.navigation img[alt~="Next"]').click(function() {
-      console.log(Math.floor(numOrders/10));
-      if(currentPage < maxPage) {
+      if(currentPage < Math.floor(orders.length)/8-1) {
          currentPage++;
       }
-      changePage();
+      $('#page_number').html((currentPage+1) + "/" + (Math.floor(orders.length/8+1)));
+      updateCurrentWindow();
    });
-
-   function changePage() {
-      for (var i=0; i<10; i++){
-         if (currentPage*10+i < numOrders)
-            $('div section:nth-child('+i+') ul').html(orderHTML[currentPage*10+i]);
-         else
-            $('div section:nth-child('+i+') ul').html("");
-
-      }
-      $('#page_number').html((currentPage+1) + "/" + (maxPage+1));
-   }
 
    //Recall button
    $("#recall").click(function() {
-      console.log("You clicked the recall button")
+      console.log("You clicked the recall button");
       //TODO: Bring up the most recently bumped order
       //i.e. Retrieve from the database, the order most recently bumped
    });
@@ -74,15 +65,15 @@ $(document).ready(function(){
    //Bump button
    $('section.queue button').click(function(event) {
       console.log("Bump");
-
       $(event.target.parentNode).remove();
-
       //TODO
       //Order fill
       //Add the order to the bumped database (or whatever that is)
    });
 
-   ////***availability.php Section***////
+   /*******************/
+   /*   Avilability   */
+   /*******************/
    var vClient = new XMLHttpRequest();     
    vClient.open('GET', '../Resources/sampleAvail.json', true);
    vClient.send();
@@ -92,10 +83,42 @@ $(document).ready(function(){
       }
    }
 
+   /***********************/
+   /*  Helper Funcitons   */
+   /***********************/
+   
+
+   //UpdateCurrentWindow
+   function updateCurrentWindow() {
+      //TODO: Go through orders and add to the html
+      $('div.window').empty();
+      for(var i=currentPage*8; i<currentPage*8+8; i++) {
+         pushOrderToWindow(i);
+      }
+   }
+
+   function pushOrderToWindow(index) {
+      //TODO: add the order object to the end of the window
+      var orderElement = $('<section class="queue"><h1>Order</h1><ul></ul></section>');
+      $('div.window').append(orderElement);
+      $.each(orders[index], function(key,val) {
+         if ($.isArray(val)) {
+            val.forEach( function(item) {
+               $(orderElement.children('ul')).append('<li>'+item+'</li>');
+            });
+         } else {
+            $(orderElement.children('ul')).append('<li>'+val+'</li>');
+         }
+      });
+   }
+
+
+
    // UPDATE ORDER WINDOW
    // Takes an array of JSON orders
    // Populates the order window with individual orders
    // Returns nothing
+   /*
    function updateOrderWindow() {
       orderHTML = [];
       for(var i=0; i<orders.length; i++){
@@ -115,6 +138,18 @@ $(document).ready(function(){
       maxPage = Math.floor(numOrders/10);
       changePage();
    }
+   */
+
+   //Change Page
+   function changePage() {
+      for (var i=0; i<10; i++){
+         if (currentPage*10+i < numOrders)
+            $('div section:nth-child('+i+') ul').html(orderHTML[currentPage*10+i]);
+         else
+            $('div section:nth-child('+i+') ul').html("");
+      }
+      $('#page_number').html((currentPage+1) + "/" + (maxPage+1));
+   }
 });
 
 // UPDATE SIDEBAR
@@ -124,7 +159,7 @@ $(document).ready(function(){
 function updateSidebar(orders) {
    var baseTypeCount = [];
    for(var i=0; i < orders.length; i++) {
-      //If the base is not in baseTypeCount, add the ket to baseTypeCount
+      //If the base is not in baseTypeCount, add the key to baseTypeCount
       if( baseTypeCount[orders[i].Base] ){
          baseTypeCount[orders[i].Base] += 1;
       //Else, incrment that element
