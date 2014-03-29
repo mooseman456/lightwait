@@ -32,25 +32,6 @@ $(document).ready(function(){
 
 
    };
-
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
-
-   function getAllOrders() {
-      $.ajax({
-         type: 'GET',
-         url: rootURL,
-         dataType: "json", // data type of response
-         success: function(data){      
-            console.log(data);
-         }
-      });
-   }
-
-   $( "#apiTestButton" ).click(function() {
-      getAllOrders();
-   });
-
-
    
    /***********************/
    /*   Event Listeners   */
@@ -246,8 +227,6 @@ function loadAvailChat(vClient){
          }
       }
    }
-   
-}
 
   
    var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
@@ -304,6 +283,9 @@ function loadAvailChat(vClient){
          });
    }
 
-   $( "#apiTestButton" ).click(function() {
-      console.log(formToJSON);
-   });
+   $('#apiTestButton').click(function() {
+      console.log("clicked");
+      //console.log(formToJSON);
+   });   
+}
+
