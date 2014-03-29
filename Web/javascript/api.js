@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-
    var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
 
    function getAllOrders() {
@@ -15,7 +14,6 @@ $(document).ready(function(){
    }
 
    function postOrder(json) {
-      console.log(json);
       $.ajax({
          type: 'POST',
          contentType: 'application/json',
@@ -24,8 +22,6 @@ $(document).ready(function(){
          data: json,
          success: function(data, textStatus, jqXHR){
             console.log("Order uploaded");
-            $('#btnDelete').show();
-            $('#wineId').val(data.id);
          },
          error: function(jqXHR, textStatus, errorThrown){
             console.log("Order upload failed");
