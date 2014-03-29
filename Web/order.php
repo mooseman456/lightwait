@@ -5,12 +5,19 @@
 ?>
 	<div class="order-wrapper">
 		<p>Add items to your order by clicking on them in the menu</p>
-		<div class="order-page">
-			<h1>order</h1>
+		<div id="menuWrapper" class="order-page">
+			<form id="menuForm" method="POST">
+				<!-- <ul id="basesMenu">
+					<li>
+						<input type="radio" name="baseType" id=jsonName value=jsonName>
+						<label for=jsonName>jsonName</label>
+					</li>
+
+				</ul>
+				<ul id="toppingsMenu"> -->
+			</form>
 		</div>
-		<div class="order-page">
-			<h1>menu</h1>
-		</div>
+		
 	</div>
 </body>
 
