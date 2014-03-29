@@ -161,11 +161,10 @@ function loadAvailChat(vClient){
          }
       }
    }
-
   
    var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 
-   function getMenuDat() {
+   function getMenuData() {
       $.ajax({
          type: 'GET',
          url: rootURL,
@@ -185,7 +184,7 @@ function loadAvailChat(vClient){
       });
    }
 
-   getMenuDat();
+   getMenuData();
    
    function postOrder() {
       console.log('addWine');
