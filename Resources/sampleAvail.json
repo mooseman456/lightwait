@@ -1,11 +1,23 @@
-{	"Base":[
-		{"Beef": true},
-		{"Chicken": true},
-		{"BlackBean": false}
+[	
+	[
+		"Base",
+		{	"name": "beef",
+			"available": false
+
+		},
+		{	"name": "chicken",
+			"available": true
+		},
+		{	"name": "BlackBean",
+			"available": true
+		}
 	],
-	"Sauce":[
-		{"Chipotle": true},
-		{"Fire": false},
-		{"MincedThings": true}
+	[   "Sauce",
+		{	"name": "Chipotle",
+			"available": false},
+		{	"name": "Fire",
+			"available": true},
+		{	"name": "MincedThings",
+			"available": false}
 	]
-}
+]

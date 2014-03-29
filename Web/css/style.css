@@ -175,3 +175,10 @@ div.order-wrapper {
 	width:80%;
 	margin:0 10%;
 }
+
+.mainForm div{
+	display:block;
+	float:left;
+	background-color: rgba(250,105,0,0.4);
+	margin-left: 3px;
+}

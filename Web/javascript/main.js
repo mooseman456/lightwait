@@ -131,10 +131,46 @@ $(document).ready(function(){
             console.log(data);
          }
       });
-}
+   }
 
    $( "#apiTestButton" ).click(function() {
       getAllOrders();
    });
 
+   ////***availability.php Section***////
+   var vClient = new XMLHttpRequest();     
+   vClient.open('GET', '../Resources/sampleAvail.json', true);
+   vClient.send();
+   vClient.onreadystatechange = function() {     
+      if(vClient.readyState===4 && vClient.status===200){
+         loadAvailChat(vClient);
+      }
+   }
 });
+
+//loads in the availability json into html and checks available items
+function loadAvailChat(vClient){
+   availTest=JSON.parse(vClient.responseText);
+   console.log(availTest);
+
+   for(var k=0; k<availTest.length; k++){
+      var category=availTest[k][0];
+      $(".mainForm").append("<div class=\"avail\"></div>");
+      var z=k+1;
+      var currentItem=".mainForm div:nth-child("+z+")";
+
+      $(currentItem).append("<h2>"+category+"</h2>");
+      for(var j=1; j<availTest[k].length; j++){
+         var allPurpose=availTest[k][j].name;
+         $(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
+         $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"></br>");
+
+         if(availTest[k][j].available){
+            var z2=j*3;
+            var evil="body > div > form > div:nth-child("+z+") > input:nth-child("+z2+")";
+            $(evil).prop("checked", true);
+         }
+      }
+   }
+   
+}
