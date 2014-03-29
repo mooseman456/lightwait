@@ -45,12 +45,11 @@ function getMenuData() {
     $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings");
 
     while ($mysqli->more_results()) {
-      /* store first result set */
+      // Store first result set
       $mysqli->next_result();
       if ($result = $mysqli->store_result()) {
         while ($row = $result->fetch_row()) {
-          $json = json_encode($row[0]);
-          array_push($menuData, $json);
+          array_push($menuData, $row[0]);
         }
         $result->free();
       }
