@@ -15,10 +15,10 @@ $app->delete('/Orders/:OrderID', 'deleteOrder');	//deletes an order based on the
 $app->run();
 
 function getOrders() {
-	$sql = "SELECT Users.fName, Users.lName, Orders.timePlaced, Orders.OrderID, Breads.name, Bases.name, Cheeses.name, Toppings.name,
-				(SELECT name FROM Toppings), (SELECT hasFries FROM Orders WHERE hasFries = true) FROM Orders INNER JOIN Users ON Orders.UserID = Users.UserID 
-				INNER JOIN Breads ON Orders.BreadID = Breads.BreadID INNER JOIN Bases ON Orders.BaseID = Bases.BaseID INNER JOIN Cheeses ON Orders.CheeseID = Cheeses.CheeseID 
-				INNER JOIN OrderToppings ON Orders.OrderID = OrderToppings.OrderID WHERE Orders.isActive = true ORDER BY Orders.OrderID";
+	$sql = "SELECT Users.fName, Users.lName, Orders.timePlaced, Orders.order_id, Breads.name, Bases.name, Cheeses.name,
+				(SELECT name FROM Toppings), (SELECT hasFries FROM Orders WHERE hasFries = true) FROM Orders INNER JOIN Users ON Orders.user_id = Users.user_id 
+				INNER JOIN Breads ON Orders.bread_id = Breads.bread_id INNER JOIN Bases ON Orders.base_id = Bases.base_id INNER JOIN Cheeses ON Orders.cheese_id = Cheeses.cheese_id 
+				INNER JOIN OrderToppings ON Orders.order_id = OrderToppings.order_id WHERE Orders.isActive = true ORDER BY Orders.order_id";
 	try {
 		$db = getConnection();
 		$stmt = $db->query($sql);  
@@ -52,14 +52,14 @@ function addOrder() {
 	error_log('addOrder\n', 3, '/var/tmp/php.log');
 	$request = Slim::getInstance()->request();
 	$order = json_decode($request->getBody());
-	$sql = "INSERT INTO Orders (UserID, hasFries, timePlaced, isActive, BreadID, BaseID, CheeseID)
-				VALUES (:UserID, :hasFries, :timePlaced, :isActive, (SELECT BreadID FROM Breads WHERE name = :breadname), (SELECT BaseID FROM Bases WHERE name = :basename), 
-				(SELECT CheeseID FROM Cheeses WHERE name = :cheesename))";
-	$tsql = "INSERT INTO OrderToppings (OrderID, ToppingID) VALUES(:toppingname)";
+	$sql = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
+				VALUES (:user_id, :hasFries, :timePlaced, :isActive, (SELECT bread_id FROM Breads WHERE name = :breadname), (SELECT base_id FROM Bases WHERE name = :basename), 
+				(SELECT cheese_id FROM Cheeses WHERE name = :cheesename))";
+	$tsql = "INSERT INTO OrderToppings (order_id, topping_id) VALUES(:toppingname)";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("UserID", $order->UserID);
+		$stmt->bindParam("user_id", $order->UserID);
 		$stmt->bindParam("hasFries", $order->hasFries);
 		$stmt->bindParam("timePlaced", $order->timePlaced)
 		$stmt->bindParam("isActive", $order->isActive);
