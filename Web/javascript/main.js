@@ -8,6 +8,53 @@ $(document).ready(function(){
    //This should happen every time the page is change or 
    //TODO: that
 
+   var client = new XMLHttpRequest();     
+   client.open('GET', '../Resources/SampleOrderData.json', true);
+   client.send();
+   var orders;
+   var orderHTML =   [];
+   var numOrders=0;
+   var currentPage=0;
+   var maxPage=0;
+   //waits for the names.csv to be successfully sent before running code
+   client.onreadystatechange = function() {     
+      if(client.readyState===4 && client.status===200){
+         var doc=client.responseText;  //store text in doc
+         console.log(client.responseText);
+         orders=JSON.parse(doc);
+         
+         //Set the base count values in the side bar
+         updateSidebar(orders);
+
+         //Update order window
+         updateOrderWindow();
+      }
+
+
+   };
+
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
+
+   function getAllOrders() {
+      $.ajax({
+         type: 'GET',
+         url: rootURL,
+         dataType: "json", // data type of response
+         success: function(data){      
+            console.log(data);
+         }
+      });
+   }
+
+   $( "#apiTestButton" ).click(function() {
+      getAllOrders();
+   });
+
+
+   
+   /***********************/
+   /*   Event Listeners   */
+   /***********************/
    //Previous page arrow
    $('div.navigation img[alt~="Previous"]').click(function() {
       if (currentPage > 0)
@@ -54,71 +101,6 @@ $(document).ready(function(){
    });
 
 
-   var client = new XMLHttpRequest();     
-   client.open('GET', '../Resources/SampleOrderData.json', true);
-   client.send();
-   var orders;
-   var orderHTML;
-   var baseTypeCount = []; //Holds the information for quantity quick look in the side bar
-   var numOrders=0;
-   var currentPage=0;
-   var maxPage=0;
-   //waits for the names.csv to be successfully sent before running code
-   client.onreadystatechange = function() {     
-      if(client.readyState===4 && client.status===200){
-         orderHTML = [];
-         var doc=client.responseText;  //store text in doc
-         console.log(client.responseText);
-         orders=JSON.parse(doc);
-         
-         //Qunatity Sidebar stuff
-         baseTypeCount = updateSidebar(orders);
-         for(var i=0; i<orders.length; i++){
-            orderHTML.push("");
-            $.each(orders[i], function(key, val){
-               if($.isArray(val)){
-                  for(var j=0; j<val.length; j++)
-                     orderHTML[numOrders] += "<li>" + val[j] + "</li>";
-               }
-               else
-                  orderHTML[numOrders] += "<li>" + val + "</li>";
-            })
-            numOrders++;
-            
-         }
-
-         maxPage = Math.floor(numOrders/10);
-         changePage();
-         
-         // TODO:
-         // Be able to dynamically create and keep track of base items
-         // Right now they are hardcoded (i.e. chickNum, beefNum etc.)
-         $("#hNum").html(beefNum);     
-         $("#dhNum").html(doubleBeefNum);
-         $("#cNum").html(chickNum);
-         $("#tNum").html(turkeyNum);
-         $("#bNum").html(beanNum);
-      }
-
-
-   };
-
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
-
-   function getAllOrders() {
-      $.ajax({
-         type: 'GET',
-         url: rootURL,
-         dataType: "json", // data type of response
-         success: function(data){      
-            console.log(data);
-         }
-      });
-   }
-
-   $( "#apiTestButton" ).click(function() {
-      getAllOrders();
-   });
 
    ////***availability.php Section***////
    var vClient = new XMLHttpRequest();     
@@ -129,8 +111,36 @@ $(document).ready(function(){
          loadAvailChat(vClient);
       }
    }
+
+   // UPDATE ORDER WINDOW
+   // Takes an array of JSON orders
+   // Populates the order window with individual orders
+   // Returns nothing
+   function updateOrderWindow() {
+      orderHTML = [];
+      for(var i=0; i<orders.length; i++){
+         orderHTML.push("");
+         $.each(orders[i], function(key, val){
+            if($.isArray(val)){
+               for(var j=0; j<val.length; j++)
+                  orderHTML[numOrders] += "<li>" + val[j] + "</li>";
+            }
+            else
+               orderHTML[numOrders] += "<li>" + val + "</li>";
+         })
+         numOrders++;
+         
+      }
+
+      maxPage = Math.floor(numOrders/10);
+      changePage();
+   }
 });
 
+// UPDATE SIDEBAR
+// Takes an array of JSON orders
+// Sets the number of bases in the side panel
+// Returns nothing
 function updateSidebar(orders) {
    var baseTypeCount = [];
    for(var i=0; i < orders.length; i++) {
@@ -142,9 +152,10 @@ function updateSidebar(orders) {
          baseTypeCount[orders[i].Base] = 1;
       }
    }
-
-   return baseTypeCount;
+   // TODO:
+   // Add the info in baseTypeCount to the html
 }
+
 
 //loads in the availability json into html and checks available items
 function loadAvailChat(vClient){
