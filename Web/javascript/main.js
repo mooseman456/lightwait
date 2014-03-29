@@ -273,9 +273,7 @@ function loadAvailChat(vClient){
    }
 
    getMenuDat();
-   $( "#apiTestButton" ).click(function() {
-      getMenuDat();
-   });
+   
    function postOrder() {
       console.log('addWine');
       $.ajax({
@@ -294,16 +292,3 @@ function loadAvailChat(vClient){
          }
       });
    }
-
-   function formToJSON() {
-      return JSON.stringify({
-         "Base": "Hamburger", 
-         "Bread": "White", 
-         "Cheese": "Cheddar",
-         "Toppings": "Lettuce"
-         });
-   }
-
-   $( "#apiTestButton" ).click(function() {
-      console.log(formToJSON);
-   });
