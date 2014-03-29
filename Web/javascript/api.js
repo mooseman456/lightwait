@@ -1,47 +1,49 @@
 $(document).ready(function(){
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
+
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/order";
 
    function getAllOrders() {
       $.ajax({
          type: 'GET',
          url: rootURL,
          dataType: "json", // data type of response
-         success: function(data){      
+         success: function(data){   
             console.log(data);
          }
       });
    }
 
-   function postOrder() {
-      console.log('addWine');
+   function postOrder(json) {
       $.ajax({
          type: 'POST',
          contentType: 'application/json',
          url: rootURL,
          dataType: "json",
-         data: formToJSON(),
+         data: json,
          success: function(data, textStatus, jqXHR){
-            alert('Wine created successfully');
-            $('#btnDelete').show();
-            $('#wineId').val(data.id);
+            console.log("Order uploaded");
          },
          error: function(jqXHR, textStatus, errorThrown){
-            alert('addWine error: ' + textStatus);
+            console.log("Order upload failed");
+            console.log(jqXHR, textStatus, errorThrown);
          }
       });
    }
 
    function formToJSON() {
       return JSON.stringify({
-         "Base": "Hamburger", 
-         "Bread": "White", 
-         "Cheese": "Cheddar",
-         "Toppings": "Lettuce"
+         "user_id" : "1",
+         "hasFries" : "1",
+         "timePlaced" : "2014-03-029 12:04:01",
+         "isActive" : "1",
+         "base": "Hamburger", 
+         "bread": "White", 
+         "cheese": "Cheddar"
          });
    }
 
    $('#apiTestButton').click(function() {
-      console.log("clicked");
-      //console.log(formToJSON);
+      var json = formToJSON();
+      postOrder(json);
    });   
-}
+});

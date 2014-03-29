@@ -49,7 +49,6 @@ $(document).ready(function(){
    //Next page arrow
    $('div.navigation img[alt~="Next"]').click(function() {
       if(currentPage < Math.floor(orders.length)/8-1) {
-         currentPage++;
       }
       $('#page_number').html((currentPage+1) + "/" + (Math.floor(orders.length/8+1)));
       updateCurrentWindow();
@@ -138,6 +137,7 @@ $(document).ready(function(){
       maxPage = Math.floor(numOrders/10);
       changePage();
    }
+<<<<<<< HEAD
    */
 
    //Change Page
@@ -166,78 +166,82 @@ function updateSidebar(orders) {
       } else {
          baseTypeCount[orders[i].Base] = 1;
       }
+      // TODO:
+      // Add the info in baseTypeCount to the html
    }
-   // TODO:
-   // Add the info in baseTypeCount to the html
-}
 
 
-//loads in the availability json into html and checks available items
-function loadAvailChat(vClient){
-   availTest=JSON.parse(vClient.responseText);
-   //console.log(availTest);
+   //loads in the availability json into html and checks available items
+   function loadAvailChat(vClient){
+      availTest=JSON.parse(vClient.responseText);
+      //console.log(availTest);
 
-   for(var k=0; k<availTest.length; k++){
-      var category=availTest[k][0];
-      $(".mainForm").append("<div class=\"avail\"></div>");
-      var z=k+1;
-      var currentItem=".mainForm div:nth-child("+z+")";
+      for(var k=0; k<availTest.length; k++){
+         var category=availTest[k][0];
+         $(".mainForm").append("<div class=\"avail\"></div>");
+         var z=k+1;
+         var currentItem=".mainForm div:nth-child("+z+")";
 
-      $(currentItem).append("<h2>"+category+"</h2>");
-      for(var j=1; j<availTest[k].length; j++){
-         var allPurpose=availTest[k][j].name;
-         $(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
-         $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"></br>");
+         $(currentItem).append("<h2>"+category+"</h2>");
+         for(var j=1; j<availTest[k].length; j++){
+            var allPurpose=availTest[k][j].name;
+            $(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
+            $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"></br>");
 
-         if(availTest[k][j].available){
-            var z2=j*3;
-            var evil="body > div > form > div:nth-child("+z+") > input:nth-child("+z2+")";
-            $(evil).prop("checked", true);
+            if(availTest[k][j].available){
+               var z2=j*3;
+               var evil="body > div > form > div:nth-child("+z+") > input:nth-child("+z2+")";
+               $(evil).prop("checked", true);
+            }
+         }
+      }
+      //console.log(returnItem("Chipotle", availTest)); //testing
+   }
+
+   function returnItem(ingredient, jsonObject){
+      for(var i=0; i<jsonObject.length; i++){
+         for(var k=1; k<jsonObject[i].length; k++){
+            if(jsonObject[i][k].name===ingredient){
+               return [i,k];
+            }
          }
       }
    }
 
-  
-   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 
-   function getMenuDat() {
+  
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
+
+   function getMenuData() {
       $.ajax({
          type: 'GET',
          url: rootURL,
          dataType: "json", // data type of response
          success: function(data){  
-            //console.log("Chicken!");
             $('#menuForm').append("<ul id=\"basesMenu\">");  
             for (var i=0; i<data['Bases'].length; i++){
                $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\"> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
             }
             $('#menuForm').append("</ul><ul id=\"breadsMenu\">");
             for (var i=0; i<data['Breads'].length; i++){
-               $('#menuForm').append("<li> <input type=\"radio\" name=\"breadsType\" id=\"" + data['Breads'][i] + "\" value=\"" + data['Breads'][i] + "\"> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i] + "\" value=\"" + data['Breads'][i] + "\"> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul><ul id=\"cheeseMenu\">");
+            for (var i=0; i<data['Cheeses'].length; i++){
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i] + "\" value=\"" + data['Cheeses'][i] + "\"> <label for=\"" + data['Cheeses'][i] + "\">" + data['Cheeses'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul><ul id=\"toppingsMenu\">");
+            for (var i=0; i<data['Toppings'].length; i++){
+               $('#menuForm').append("<li> <input type=\"checkbox\" name=\"toppingType\" id=\"" + data['Toppings'][i] + "\" value=\"" + data['Toppings'][i] + "\"> <label for=\"" + data['Toppings'][i] + "\">" + data['Toppings'][i] + "</label></li>");
             }
             $('#menuForm').append("</ul>");
+
          }
       });
    }
 
-   getMenuDat();
-   
-   function postOrder() {
-      console.log('addWine');
-      $.ajax({
-         type: 'POST',
-         contentType: 'application/json',
-         url: rootURL,
-         dataType: "json",
-         data: formToJSON(),
-         success: function(data, textStatus, jqXHR){
-            alert('Wine created successfully');
-            $('#btnDelete').show();
-            $('#wineId').val(data.id);
-         },
-         error: function(jqXHR, textStatus, errorThrown){
-            alert('addWine error: ' + textStatus);
-         }
-      });
-   }
-}
+   getMenuData();
+
+
+
+});
