@@ -276,7 +276,6 @@ function loadAvailChat(vClient){
    $( "#apiTestButton" ).click(function() {
       getMenuDat();
    });
-
    function postOrder() {
       console.log('addWine');
       $.ajax({
