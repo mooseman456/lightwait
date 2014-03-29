@@ -46,7 +46,7 @@ $(document).ready(function(){
    
    //Next page arrow
    $('div.navigation img[alt~="Next"]').click(function() {
-      console.log(Math.floor(numOrders/10));
+      //console.log(Math.floor(numOrders/10));
       if(currentPage < maxPage) {
          currentPage++;
       }
@@ -179,6 +179,7 @@ $(document).ready(function(){
          }
 
       });
+
    }
 
    function returnItem(ingredient, jsonObject){
@@ -193,7 +194,7 @@ $(document).ready(function(){
 
 
   
-   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
 
    function getMenuData() {
       $.ajax({
@@ -201,7 +202,6 @@ $(document).ready(function(){
          url: rootURL,
          dataType: "json", // data type of response
          success: function(data){  
-            //console.log("Chicken!");
             $('#menuForm').append("<ul id=\"basesMenu\">");  
             for (var i=0; i<data['Bases'].length; i++){
                $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\"> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
@@ -225,23 +225,7 @@ $(document).ready(function(){
    }
 
    getMenuData();
-   
-   function postOrder() {
-      console.log('addWine');
-      $.ajax({
-         type: 'POST',
-         contentType: 'application/json',
-         url: rootURL,
-         dataType: "json",
-         data: formToJSON(),
-         success: function(data, textStatus, jqXHR){
-            alert('Wine created successfully');
-            $('#btnDelete').show();
-            $('#wineId').val(data.id);
-         },
-         error: function(jqXHR, textStatus, errorThrown){
-            alert('addWine error: ' + textStatus);
-         }
-      });
-   }
+
+
+
 });
