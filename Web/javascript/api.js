@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-   var rootURL = "http://localhost/lightwait/Web/api/index.php/order";
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/order";
 
    function getAllOrders() {
       $.ajax({
@@ -44,6 +44,7 @@ $(document).ready(function(){
 
    $('#apiTestButton').click(function() {
       var json = formToJSON();
+      console.log(json);
       postOrder(json);
    });   
 });
