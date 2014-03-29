@@ -49,80 +49,77 @@ function getOrder($OrderID) {
 }
 
 function addOrder() {
-	error_log('addOrder\n', 3, '/var/tmp/php.log');
 	$request = Slim::getInstance()->request();
 	$order = json_decode($request->getBody());
-	$sql = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
+	
+	$query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
 				VALUES (:user_id, :hasFries, :timePlaced, :isActive, (SELECT bread_id FROM Breads WHERE name = :breadname), (SELECT base_id FROM Bases WHERE name = :basename), 
 				(SELECT cheese_id FROM Cheeses WHERE name = :cheesename))";
-	$tsql = "INSERT INTO OrderToppings (order_id, topping_id) VALUES(:toppingname)";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("user_id", $order->UserID);
-		$stmt->bindParam("hasFries", $order->hasFries);
-		$stmt->bindParam("timePlaced", $order->timePlaced)
-		$stmt->bindParam("isActive", $order->isActive);
-		$stmt->bindParam("breadname", $order->Bread);
-		$stmt->bindParam("basename", $order->Base);
-		$stmt->bindParam("cheesename", $order->Cheese);
-		$stmt->bindParam("toppings", $order->Toppings);
+
+	$db = getConnection();
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam("user_id", $order->UserID);
+	$stmt->bindParam("hasFries", $order->hasFries);
+	$stmt->bindParam("timePlaced", $order->timePlaced)
+	$stmt->bindParam("isActive", $order->isActive);
+	$stmt->bindParam("breadname", $order->Bread);
+	$stmt->bindParam("basename", $order->Base);
+	$stmt->bindParam("cheesename", $order->Cheese);
+	$stmt->bindParam("toppings", $order->Toppings);
+	$stmt->execute();
+	foreach(:toppings as $topping)
+	{
+		$stmt = $db->prepare($tsql);
+		$stmt->bindParam("toppingname", $topping); //PDO::PARAM_STR
 		$stmt->execute();
-		foreach(:toppings as $topping)
-		{
-			$stmt = $db->prepare($tsql);
-			$stmt->bindParam("toppingname", $topping); //PDO::PARAM_STR
-			$stmt->execute();
-		}
-		//$order->id = $db->lastInsertId();
-		$db = null;
-		echo json_encode($order); 
-	} catch(PDOException $e) {
-		error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
+	//$order->id = $db->lastInsertId();
+	$db = null;
+	echo json_encode($order);
 }
 
 function updateOrder($OrderID) {
-	$request = Slim::getInstance()->request();
-	$body = $request->getBody();
-	$order = json_decode($body);
-	$sql = "UPDATE Orders SET timeFinished=:timeFinished, isActive=:isActive WHERE OrderID=:OrderID";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("timeFinished", $order->timeFinished)
-		$stmt->bindParam("isActive", $order->isActive);
-		$stmt->bindParam("OrderID", $OrderID);
-		$stmt->execute();
-		$db = null;
-		echo json_encode($order); 
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
+	// $request = Slim::getInstance()->request();
+	// $body = $request->getBody();
+	// $order = json_decode($body);
+	// $sql = "UPDATE Orders SET timeFinished=:timeFinished, isActive=:isActive WHERE OrderID=:OrderID";
+	// try {
+	// 	$db = getConnection();
+	// 	$stmt = $db->prepare($sql);
+	// 	$stmt->bindParam("timeFinished", $order->timeFinished)
+	// 	$stmt->bindParam("isActive", $order->isActive);
+	// 	$stmt->bindParam("OrderID", $OrderID);
+	// 	$stmt->execute();
+	// 	$db = null;
+	// 	echo json_encode($order); 
+	// } catch(PDOException $e) {
+	// 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	// }
 }
 
 function deleteOrder($OrderID) {
-	$sql = "DELETE FROM Orders WHERE OrderID=:OrderID";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);  
-		$stmt->bindParam("OrderID", $OrderID);
-		$stmt->execute();
-		$db = null;
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
+	// $sql = "DELETE FROM Orders WHERE OrderID=:OrderID";
+	// try {
+	// 	$db = getConnection();
+	// 	$stmt = $db->prepare($sql);  
+	// 	$stmt->bindParam("OrderID", $OrderID);
+	// 	$stmt->execute();
+	// 	$db = null;
+	// } catch(PDOException $e) {
+	// 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	// }
 }
 
 function getConnection() {
 	$dbhost="127.0.0.1";
 	$dbuser="root";
-	$dbpass="";
-	$dbname="cellar";	//database name will need to be changed
-	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	return $dbh;
+	$dbpass="root";
+	$dbname="lightwait";	//database name will need to be changed
+	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+	if($db->connect_errno > 0){
+		die('Unable to connect to database [' . $db->connect_error . ']');
+	}
+	return $db;
 }
 
 ?>

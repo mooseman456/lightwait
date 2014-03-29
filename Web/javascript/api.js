@@ -1,13 +1,13 @@
 $(document).ready(function(){
 
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/order";
+   var rootURL = "http://localhost/lightwait/Web/api/index.php/order";
 
    function getAllOrders() {
       $.ajax({
          type: 'GET',
          url: rootURL,
          dataType: "json", // data type of response
-         success: function(data){      
+         success: function(data){   
             console.log(data);
          }
       });
