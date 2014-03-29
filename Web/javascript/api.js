@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+
    var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
 
    function getAllOrders() {
@@ -12,21 +14,21 @@ $(document).ready(function(){
       });
    }
 
-   function postOrder() {
-      console.log('addWine');
+   function postOrder(json) {
+      console.log(json);
       $.ajax({
          type: 'POST',
          contentType: 'application/json',
          url: rootURL,
          dataType: "json",
-         data: formToJSON(),
+         data: json,
          success: function(data, textStatus, jqXHR){
-            alert('Wine created successfully');
+            console.log("Order uploaded");
             $('#btnDelete').show();
             $('#wineId').val(data.id);
          },
          error: function(jqXHR, textStatus, errorThrown){
-            alert('addWine error: ' + textStatus);
+            console.log("Order upload failed");
          }
       });
    }
@@ -41,7 +43,7 @@ $(document).ready(function(){
    }
 
    $('#apiTestButton').click(function() {
-      console.log("clicked");
-      //console.log(formToJSON);
+      var json = formToJSON();
+      postOrder(json);
    });   
-}
+});
