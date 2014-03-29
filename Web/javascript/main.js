@@ -1,13 +1,12 @@
 $(document).ready(function(){
 
+
+   /*********************/
+   /*   Populate HTML   */
+   /*********************/
    //Populate order information from JSON
    //This displays ten orders from the order queue in the chef queue window
    //TODO: 1st step, static (update when you refresh the pagae)
-
-   //Set current and total page number
-   //This should happen every time the page is change or 
-   //TODO: that
-
    var client = new XMLHttpRequest();     
    client.open('GET', '../Resources/SampleOrderData.json', true);
    client.send();
@@ -55,6 +54,9 @@ $(document).ready(function(){
    /***********************/
    /*   Event Listeners   */
    /***********************/
+   //Set current and total page number
+   //This should happen every time the page is change or 
+   //TODO: that ^
    //Previous page arrow
    $('div.navigation img[alt~="Previous"]').click(function() {
       if (currentPage > 0)
