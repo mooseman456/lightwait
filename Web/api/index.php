@@ -25,16 +25,19 @@ function getOrders() {
 }
 
 function addOrder() {
-  $db = getConnection();
-  $request = Slim::getInstance()->request();
-  $order = json_decode($request->getBody());
-  
-  $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
-        VALUES ('".$order['user_id']."', '". $order['hasFries'] ."', '". $order['timePlaced'] ."', '1', (SELECT bread_id FROM Breads WHERE name = ".$order['bread'] ."), (SELECT base_id FROM Bases WHERE name = ".$order['base'] ."), 
-        (SELECT cheese_id FROM Cheeses WHERE name = ".$order['cheese']."))";
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $order = json_decode($request);
+  //$query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
+    //  VALUES ('".$order['user_id']."', '". $order['hasFries'] ."', '". $order['timePlaced'] ."', '1', (SELECT bread_id FROM Breads WHERE name = ".$order['bread'] ."), (SELECT base_id FROM Bases WHERE name = ".$order['base'] ."), 
+     //  (SELECT cheese_id FROM Cheeses WHERE name = ".$order['cheese']."))";
 
-  echo json_encode($order);
+  $query = "INSERT INTO Bases (name) VALUES ('Test')";
 
+  $mysqli->query($query);
+
+  echo $request;
 }
 
 function getMenuData() {

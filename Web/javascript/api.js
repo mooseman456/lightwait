@@ -44,7 +44,6 @@ $(document).ready(function(){
 
    $('#apiTestButton').click(function() {
       var json = formToJSON();
-      console.log(json);
       postOrder(json);
    });   
 });
