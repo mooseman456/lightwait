@@ -7,6 +7,7 @@ $app = new \Slim\Slim();
 
 $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
+$app->post('order', 'addOrder');
 
 $app->run();
 
