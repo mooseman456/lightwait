@@ -1,5 +1,4 @@
 <?php
-logConsole("Slimming");
 
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
@@ -25,18 +24,18 @@ function getOrders() {
 	}
 }
 
-// function addOrder() {
-//   // $db = getConnection();
-//   // $request = Slim::getInstance()->request();
-//   // $order = json_decode($request->getBody());
-
-//   //logConsole("Request: ", "hello");
+function addOrder() {
+  $db = getConnection();
+  $request = Slim::getInstance()->request();
+  $order = json_decode($request->getBody());
   
-//   // $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
-//   //       VALUES (:user_id, :hasFries, :timePlaced, :isActive, (SELECT bread_id FROM Breads WHERE name = :breadname), (SELECT base_id FROM Bases WHERE name = :basename), 
-//   //       (SELECT cheese_id FROM Cheeses WHERE name = :cheesename))";
+  $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
+        VALUES ('".$order['user_id']."', '". $order['hasFries'] ."', '". $order['timePlaced'] ."', '1', (SELECT bread_id FROM Breads WHERE name = ".$order['bread'] ."), (SELECT base_id FROM Bases WHERE name = ".$order['base'] ."), 
+        (SELECT cheese_id FROM Cheeses WHERE name = ".$order['cheese']."))";
 
-// }
+  echo json_encode($order);
+
+}
 
 function getMenuData() {
 
@@ -94,48 +93,5 @@ function getConnection() {
   }
   return $db;
 }
-
-function logConsole($name, $data = NULL, $jsEval = FALSE)
-     {
-          if (! $name) return false;
- 
-          $isevaled = false;
-          $type = ($data || gettype($data)) ? 'Type: ' . gettype($data) : '';
- 
-          if ($jsEval && (is_array($data) || is_object($data)))
-          {
-               $data = 'eval(' . preg_replace('#[\s\r\n\t\0\x0B]+#', '', json_encode($data)) . ')';
-               $isevaled = true;
-          }
-          else
-          {
-               $data = json_encode($data);
-          }
- 
-          # sanitalize
-          $data = $data ? $data : '';
-          $search_array = array("#'#", '#""#', "#''#", "#\n#", "#\r\n#");
-          $replace_array = array('"', '', '', '\\n', '\\n');
-          $data = preg_replace($search_array,  $replace_array, $data);
-          $data = ltrim(rtrim($data, '"'), '"');
-          $data = $isevaled ? $data : ($data[0] === "'") ? $data : "'" . $data . "'";
- 
-$js = <<<JSCODE
-\n<script>
-     // fallback - to deal with IE (or browsers that don't have console)
-     if (! window.console) console = {};
-     console.log = console.log || function(name, data){};
-     // end of fallback
- 
-     console.log('$name');
-     console.log('------------------------------------------');
-     console.log('$type');
-     console.log($data);
-     console.log('\\n');
-</script>
-JSCODE;
- 
-          echo $js;
-     } # end logConsole
 
 ?>
