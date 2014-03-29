@@ -161,6 +161,17 @@ function loadAvailChat(vClient){
          }
       }
    }
+   console.log(returnItem("Chipotle", availTest)); //testing
+
+}
+
+function returnItem(ingredient, jsonObject){
+   for(var i=0; i<jsonObject.length; i++){
+      for(var k=1; k<jsonObject[i].length; k++){
+         if(jsonObject[i][k].name===ingredient){
+            return [i,k];
+         }
+      }
 
   
    var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";

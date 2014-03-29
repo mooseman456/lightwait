@@ -7,7 +7,7 @@ $app = new \Slim\Slim();
 
 $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
-$app->post('order', 'addOrder');
+$app->post('/order', 'addOrder');
 
 $app->run();
 
@@ -25,34 +25,16 @@ function getOrders() {
 }
 
 function addOrder() {
-  $db = getConnection();
-  $request = Slim::getInstance()->request();
-  $order = json_decode($request->getBody());
-  
-  $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
-        VALUES (:user_id, :hasFries, :timePlaced, :isActive, (SELECT bread_id FROM Breads WHERE name = :breadname), (SELECT base_id FROM Bases WHERE name = :basename), 
-        (SELECT cheese_id FROM Cheeses WHERE name = :cheesename))";
+  // $db = getConnection();
+  // $request = Slim::getInstance()->request();
+  // $order = json_decode($request->getBody());
 
-  $db = getConnection();
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam("user_id", $order->UserID);
-  $stmt->bindParam("hasFries", $order->hasFries);
-  $stmt->bindParam("timePlaced", $order->timePlaced)
-  $stmt->bindParam("isActive", $order->isActive);
-  $stmt->bindParam("breadname", $order->Bread);
-  $stmt->bindParam("basename", $order->Base);
-  $stmt->bindParam("cheesename", $order->Cheese);
-  $stmt->bindParam("toppings", $order->Toppings);
-  $stmt->execute();
-  foreach(:toppings as $topping)
-  {
-    $stmt = $db->prepare($tsql);
-    $stmt->bindParam("toppingname", $topping); //PDO::PARAM_STR
-    $stmt->execute();
-  }
-  //$order->id = $db->lastInsertId();
-  $db = null;
-  echo json_encode($order);
+  //logConsole("Request: ", "hello");
+  
+  // $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
+  //       VALUES (:user_id, :hasFries, :timePlaced, :isActive, (SELECT bread_id FROM Breads WHERE name = :breadname), (SELECT base_id FROM Bases WHERE name = :basename), 
+  //       (SELECT cheese_id FROM Cheeses WHERE name = :cheesename))";
+
 }
 
 function getMenuData() {
@@ -111,5 +93,48 @@ function getConnection() {
   }
   return $db;
 }
+
+function logConsole($name, $data = NULL, $jsEval = FALSE)
+     {
+          if (! $name) return false;
+ 
+          $isevaled = false;
+          $type = ($data || gettype($data)) ? 'Type: ' . gettype($data) : '';
+ 
+          if ($jsEval && (is_array($data) || is_object($data)))
+          {
+               $data = 'eval(' . preg_replace('#[\s\r\n\t\0\x0B]+#', '', json_encode($data)) . ')';
+               $isevaled = true;
+          }
+          else
+          {
+               $data = json_encode($data);
+          }
+ 
+          # sanitalize
+          $data = $data ? $data : '';
+          $search_array = array("#'#", '#""#', "#''#", "#\n#", "#\r\n#");
+          $replace_array = array('"', '', '', '\\n', '\\n');
+          $data = preg_replace($search_array,  $replace_array, $data);
+          $data = ltrim(rtrim($data, '"'), '"');
+          $data = $isevaled ? $data : ($data[0] === "'") ? $data : "'" . $data . "'";
+ 
+$js = <<<JSCODE
+\n<script>
+     // fallback - to deal with IE (or browsers that don't have console)
+     if (! window.console) console = {};
+     console.log = console.log || function(name, data){};
+     // end of fallback
+ 
+     console.log('$name');
+     console.log('------------------------------------------');
+     console.log('$type');
+     console.log($data);
+     console.log('\\n');
+</script>
+JSCODE;
+ 
+          echo $js;
+     } # end logConsole
 
 ?>
