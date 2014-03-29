@@ -1,10 +1,6 @@
 $(document).ready(function(){
 
-<<<<<<< HEAD
-   var rootURL = "http://localhost/DBGUI_lightwait/Web/api/index.php/order";
-=======
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/order";
->>>>>>> 9cc72ad3d6182eb77c56fdf33edcfc549e25b1ce
+   var rootURL = "http://localhost/lightwait/Web/api/index.php/order";
 
    function getAllOrders() {
       $.ajax({
