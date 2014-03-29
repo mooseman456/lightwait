@@ -174,7 +174,7 @@ function returnItem(ingredient, jsonObject){
       }
 
   
-   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
 
    function getMenuData() {
       $.ajax({
