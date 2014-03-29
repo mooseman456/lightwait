@@ -22,9 +22,11 @@ $(document).ready(function(){
          orders=JSON.parse(doc);
          
          //Set the base count values in the side bar
+         //THIS IS OUTSIDE THE .ready()!!
          updateSidebar(orders);
 
          //Update order window
+         //THIS IS INSIDE THE .ready()!!
          updateOrderWindow();
       }
    };
