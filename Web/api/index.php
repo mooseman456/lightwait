@@ -40,22 +40,24 @@ function getMenuData() {
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
+    // Array that will hold all menu data
+    $menuData = array();
+    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings");
+
     while ($mysqli->more_results()) {
       /* store first result set */
       $mysqli->next_result();
       if ($result = $mysqli->store_result()) {
         while ($row = $result->fetch_row()) {
           $json = json_encode($row[0]);
-          printf("%s\n", $json);
+          array_push($menuData, $json);
         }
         $result->free();
       }
-      /* print divider */
-      if ($mysqli->more_results()) {
-        printf("-----------------\n");
-      }
     }
   }
+  $encoded = json_encode($menuData);
+  printf($encoded);
 
   // Close mysqli connection
   $mysqli->close();
