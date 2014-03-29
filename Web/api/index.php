@@ -40,8 +40,7 @@ function getMenuData() {
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
-    // Array that will hold all menu data
-    
+    // Arrays that will hold all menu data
     $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings");
     $baseArray = array();
     $breadArray = array();
@@ -49,7 +48,6 @@ function getMenuData() {
     $toppingArray = array();
     $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray);
     $menuIndex = -1;
-
 
     while ($mysqli->more_results()) {
       // Store first result set
