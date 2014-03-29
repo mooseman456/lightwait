@@ -114,67 +114,70 @@ $(document).ready(function(){
 
       maxPage = Math.floor(numOrders/10);
       changePage();
-      }
-   });
-
-// UPDATE SIDEBAR
-// Takes an array of JSON orders
-// Sets the number of bases in the side panel
-// Returns nothing
-function updateSidebar(orders) {
-   var baseTypeCount = [];
-   for(var i=0; i < orders.length; i++) {
-      //If the base is not in baseTypeCount, add the ket to baseTypeCount
-      if( baseTypeCount[orders[i].Base] ){
-         baseTypeCount[orders[i].Base] += 1;
-      //Else, incrment that element
-      } else {
-         baseTypeCount[orders[i].Base] = 1;
-      }
    }
-   // TODO:
-   // Add the info in baseTypeCount to the html
-}
 
 
-//loads in the availability json into html and checks available items
-function loadAvailChat(vClient){
-   availTest=JSON.parse(vClient.responseText);
-   //console.log(availTest);
 
-   for(var k=0; k<availTest.length; k++){
-      var category=availTest[k][0];
-      $(".mainForm").append("<div class=\"avail\"></div>");
-      var z=k+1;
-      var currentItem=".mainForm div:nth-child("+z+")";
+   // UPDATE SIDEBAR
+   // Takes an array of JSON orders
+   // Sets the number of bases in the side panel
+   // Returns nothing
+   function updateSidebar(orders) {
+      var baseTypeCount = [];
+      for(var i=0; i < orders.length; i++) {
+         //If the base is not in baseTypeCount, add the ket to baseTypeCount
+         if( baseTypeCount[orders[i].Base] ){
+            baseTypeCount[orders[i].Base] += 1;
+         //Else, incrment that element
+         } else {
+            baseTypeCount[orders[i].Base] = 1;
+         }
+      }
+      // TODO:
+      // Add the info in baseTypeCount to the html
+   }
 
-      $(currentItem).append("<h2>"+category+"</h2>");
-      for(var j=1; j<availTest[k].length; j++){
-         var allPurpose=availTest[k][j].name;
-         $(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
-         $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"></br>");
 
-         if(availTest[k][j].available){
-            var z2=j*3;
-            var evil="body > div > form > div:nth-child("+z+") > input:nth-child("+z2+")";
-            $(evil).prop("checked", true);
+   //loads in the availability json into html and checks available items
+   function loadAvailChat(vClient){
+      availTest=JSON.parse(vClient.responseText);
+      //console.log(availTest);
+
+      for(var k=0; k<availTest.length; k++){
+         var category=availTest[k][0];
+         $(".mainForm").append("<div class=\"avail\"></div>");
+         var z=k+1;
+         var currentItem=".mainForm div:nth-child("+z+")";
+
+         $(currentItem).append("<h2>"+category+"</h2>");
+         for(var j=1; j<availTest[k].length; j++){
+            var allPurpose=availTest[k][j].name;
+            $(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
+            $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"></br>");
+
+            if(availTest[k][j].available){
+               var z2=j*3;
+               var evil="body > div > form > div:nth-child("+z+") > input:nth-child("+z2+")";
+               $(evil).prop("checked", true);
+            }
+         }
+      }
+      console.log(returnItem("Chipotle", availTest)); //testing
+   }
+
+   function returnItem(ingredient, jsonObject){
+      for(var i=0; i<jsonObject.length; i++){
+         for(var k=1; k<jsonObject[i].length; k++){
+            if(jsonObject[i][k].name===ingredient){
+               return [i,k];
+            }
          }
       }
    }
-   console.log(returnItem("Chipotle", availTest)); //testing
 
-}
-
-function returnItem(ingredient, jsonObject){
-   for(var i=0; i<jsonObject.length; i++){
-      for(var k=1; k<jsonObject[i].length; k++){
-         if(jsonObject[i][k].name===ingredient){
-            return [i,k];
-         }
-      }
 
   
-   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
 
    function getMenuData() {
       $.ajax({
@@ -225,4 +228,4 @@ function returnItem(ingredient, jsonObject){
          }
       });
    }
-}
+});

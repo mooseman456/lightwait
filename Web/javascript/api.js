@@ -1,6 +1,10 @@
 $(document).ready(function(){
 
+<<<<<<< HEAD
    var rootURL = "http://localhost/DBGUI_lightwait/Web/api/index.php/order";
+=======
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/order";
+>>>>>>> 9cc72ad3d6182eb77c56fdf33edcfc549e25b1ce
 
    function getAllOrders() {
       $.ajax({
@@ -25,6 +29,7 @@ $(document).ready(function(){
          },
          error: function(jqXHR, textStatus, errorThrown){
             console.log("Order upload failed");
+            console.log(jqXHR, textStatus, errorThrown);
          }
       });
    }
