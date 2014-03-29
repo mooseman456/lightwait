@@ -43,11 +43,11 @@ $(document).ready(function(){
    });
 
    //Bump button
-   $('section.order button').click(function(event) {
+   $('section.queue button').click(function(event) {
       console.log("Bump");
       $(event.target.parentNode).remove();
-      //TODO
 
+      //TODO
       //Order fill
       //Add the order to the bumped database (or whatever that is)
    });
@@ -120,7 +120,7 @@ $(document).ready(function(){
 
    };
 
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/orders";
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
 
    function getAllOrders() {
       $.ajax({

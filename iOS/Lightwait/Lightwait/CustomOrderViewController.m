@@ -38,6 +38,10 @@
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
+    
+    NSDictionary *testDictionary = [REST_API getPath:@"http://localhost:8888/lightwait/Web/api/index.php/menu"];
+    NSArray *testArray = [testDictionary valueForKey:@"base"];
+    NSLog(@"%@", testArray);
 }
 
 - (void)didReceiveMemoryWarning
