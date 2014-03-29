@@ -38,10 +38,6 @@
     self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
-    
-    NSDictionary *testDictionary = [REST_API getPath:@"http://localhost:8888/lightwait/Web/api/index.php/menu"];
-    NSArray *testArray = [testDictionary valueForKey:@"base"];
-    NSLog(@"%@", testArray);
 }
 
 - (void)didReceiveMemoryWarning
@@ -268,7 +264,7 @@
 - (IBAction)pushRightButton:(id)sender
 {
     // If the user is on the last page and selected all required items
-    if (self.pageIndicator.currentPage == 5 && [self checkForCompleteOrder]) {
+    if (self.pageIndicator.currentPage == 4 && [self checkForCompleteOrder]) {
         [self askUserToSaveOrder];
     }
     else {
@@ -282,7 +278,7 @@
 {
     // Check to see if the user is on the last page - TRUE when selecting fries
     // Update the next button to equal done if true or next if false
-    if (self.pageIndicator.currentPage == 5) {
+    if (self.pageIndicator.currentPage == 4) {
         self.rightButton.title = @"Done";
     }
     else {
@@ -295,18 +291,17 @@
 - (void)initializeMenuArrays
 {
 #warning Change this link for release
-    NSDictionary *menuDictionary = [REST_API getPath:@"http://localhost:8888/lightwait/Web/resources/menu.json"];
+    NSDictionary *menuDictionary = [REST_API getPath:@"http://localhost:8888/lightwait/Web/api/index.php/menu"];
     
     if (menuDictionary) {
         // Menu data arrays
-        headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Sauce", @"Fries", nil];
-        baseArray = [menuDictionary objectForKey:@"Base"];
-        breadArray = [menuDictionary objectForKey:@"Bread"];
-        cheeseArray = [menuDictionary objectForKey:@"Cheese"];
+        headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Fries", nil];
+        baseArray = [menuDictionary objectForKey:@"Bases"];
+        breadArray = [menuDictionary objectForKey:@"Breads"];
+        cheeseArray = [menuDictionary objectForKey:@"Cheeses"];
         toppingsArray = [menuDictionary objectForKey:@"Toppings"];
-        sauceArray = [menuDictionary objectForKey:@"Sauce"];
-        friesArray = [menuDictionary objectForKey:@"Fries"];
-        menuDataArray = [[NSArray alloc] initWithObjects:baseArray, breadArray, cheeseArray, toppingsArray, sauceArray, friesArray, nil];
+        friesArray = [[NSArray alloc] initWithObjects:@"Fries", @"No Fries", nil];
+        menuDataArray = [[NSArray alloc] initWithObjects:baseArray, breadArray, cheeseArray, toppingsArray, friesArray, nil];
         selectedToppings = [[NSMutableArray alloc] init];
     }
     else {
@@ -317,7 +312,7 @@
 - (void)initializeOrderDictionary
 {
     // Initialize order dictionary
-    orderDictionary = [[NSMutableDictionary alloc] init];
+    orderDictionary = [[NSMutableDictionary alloc] initWithDictionary:[REST_API getPath:@"http://localhost:8888/lightwait/Web/api/index.php/menu"]];
     
     // Set values that can be none to none so that the user does not have to
     // should they not want a particular item
@@ -327,7 +322,6 @@
     [orderDictionary setObject:[NSNull null] forKey:@"Bread"];
     [orderDictionary setObject:@"None" forKey:@"Cheese"];
     [orderDictionary setObject:@"None" forKey:@"Toppings"];
-    [orderDictionary setObject:@"None" forKey:@"Sauce"];
     [orderDictionary setObject:@"No Fries" forKey:@"Fries"];
 }
 

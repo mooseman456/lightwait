@@ -1,13 +1,42 @@
 $(document).ready(function(){
 
+
+   /*********************/
+   /*   Populate HTML   */
+   /*********************/
    //Populate order information from JSON
    //This displays ten orders from the order queue in the chef queue window
    //TODO: 1st step, static (update when you refresh the pagae)
+   var client = new XMLHttpRequest();     
+   client.open('GET', '../Resources/SampleOrderData.json', true);
+   client.send();
+   var orders;
+   var orderHTML =   [];
+   var numOrders=0;
+   var currentPage=0;
+   var maxPage=0;
+   //waits for the names.csv to be successfully sent before running code
+   client.onreadystatechange = function() {     
+      if(client.readyState===4 && client.status===200){
+         var doc=client.responseText;  //store text in doc
+         orders=JSON.parse(doc);
+         
+         //Set the base count values in the side bar
+         //THIS IS OUTSIDE THE .ready()!!
+         updateSidebar(orders);
 
+         //Update order window
+         //THIS IS INSIDE THE .ready()!!
+         updateOrderWindow();
+      }
+   };
+   
+   /***********************/
+   /*   Event Listeners   */
+   /***********************/
    //Set current and total page number
    //This should happen every time the page is change or 
-   //TODO: that
-
+   //TODO: that ^
    //Previous page arrow
    $('div.navigation img[alt~="Previous"]').click(function() {
       if (currentPage > 0)
@@ -45,96 +74,12 @@ $(document).ready(function(){
    //Bump button
    $('section.queue button').click(function(event) {
       console.log("Bump");
+
       $(event.target.parentNode).remove();
 
       //TODO
       //Order fill
       //Add the order to the bumped database (or whatever that is)
-   });
-
-
-   var client = new XMLHttpRequest();     
-   client.open('GET', '../Resources/SampleOrderData.json', true);
-   client.send();
-   var sampleOrder;
-   var orderHTML;
-   var chickNum=0;
-   var beefNum=0;
-   var beanNum=0;
-   var doubleBeefNum=0;
-   var turkeyNum=0;
-   var numOrders=0;
-   var currentPage=0;
-   var maxPage=0;
-   //waits for the names.csv to be successfully sent before running code
-   client.onreadystatechange = function() {     
-      if(client.readyState===4 && client.status===200){
-         orderHTML = [];
-         var doc=client.responseText;  //store text in doc
-         sampleOrder=JSON.parse(doc);
-         
-         for(var i=0; i<sampleOrder.length; i++){
-            switch(sampleOrder[i].Base){
-               case "Chicken":
-               chickNum++;
-               break;
-               case "Hamburger":
-               beefNum++;
-               break;
-               case "Double Hamburger":
-               doubleBeefNum++;
-               break;
-               case "Turkey":
-               turkeyNum++;
-               break;
-               case "Black Bean":
-               beanNum++;
-               break;
-            }
-            orderHTML.push("");
-            $.each(sampleOrder[i], function(key, val){
-               if($.isArray(val)){
-                  for(var j=0; j<val.length; j++)
-                     orderHTML[numOrders] += "<li>" + val[j] + "</li>";
-               }
-               else
-                  orderHTML[numOrders] += "<li>" + val + "</li>";
-            })
-            numOrders++;
-            
-         }
-
-         maxPage = Math.floor(numOrders/10);
-         changePage();
-         
-         // TODO:
-         // Be able to dynamically create and keep track of base items
-         // Right now they are hardcoded (i.e. chickNum, beefNum etc.)
-         $("#hNum").html(beefNum);     
-         $("#dhNum").html(doubleBeefNum);
-         $("#cNum").html(chickNum);
-         $("#tNum").html(turkeyNum);
-         $("#bNum").html(beanNum);
-      }
-
-
-   };
-
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
-
-   function getAllOrders() {
-      $.ajax({
-         type: 'GET',
-         url: rootURL,
-         dataType: "json", // data type of response
-         success: function(data){      
-            console.log(data);
-         }
-      });
-   }
-
-   $( "#apiTestButton" ).click(function() {
-      getAllOrders();
    });
 
    ////***availability.php Section***////
@@ -146,12 +91,56 @@ $(document).ready(function(){
          loadAvailChat(vClient);
       }
    }
+
+   // UPDATE ORDER WINDOW
+   // Takes an array of JSON orders
+   // Populates the order window with individual orders
+   // Returns nothing
+   function updateOrderWindow() {
+      orderHTML = [];
+      for(var i=0; i<orders.length; i++){
+         orderHTML.push("");
+         $.each(orders[i], function(key, val){
+            if($.isArray(val)){
+               for(var j=0; j<val.length; j++)
+                  orderHTML[numOrders] += "<li>" + val[j] + "</li>";
+            }
+            else
+               orderHTML[numOrders] += "<li>" + val + "</li>";
+         })
+         numOrders++;
+         
+      }
+
+      maxPage = Math.floor(numOrders/10);
+      changePage();
+   }
 });
+
+// UPDATE SIDEBAR
+// Takes an array of JSON orders
+// Sets the number of bases in the side panel
+// Returns nothing
+function updateSidebar(orders) {
+   var baseTypeCount = [];
+   for(var i=0; i < orders.length; i++) {
+      //If the base is not in baseTypeCount, add the ket to baseTypeCount
+      if( baseTypeCount[orders[i].Base] ){
+         baseTypeCount[orders[i].Base] += 1;
+      //Else, incrment that element
+      } else {
+         baseTypeCount[orders[i].Base] = 1;
+      }
+   }
+   // TODO:
+   // Add the info in baseTypeCount to the html
+}
+
 
 //loads in the availability json into html and checks available items
 function loadAvailChat(vClient){
    availTest=JSON.parse(vClient.responseText);
-   console.log(availTest);
+   //console.log(availTest);
 
    for(var k=0; k<availTest.length; k++){
       var category=availTest[k][0];
@@ -183,5 +172,48 @@ function returnItem(ingredient, jsonObject){
             return [i,k];
          }
       }
+
+  
+   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
+
+   function getMenuDat() {
+      $.ajax({
+         type: 'GET',
+         url: rootURL,
+         dataType: "json", // data type of response
+         success: function(data){  
+            //console.log("Chicken!");
+            $('#menuForm').append("<ul id=\"basesMenu\">");  
+            for (var i=0; i<data['Bases'].length; i++){
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\"> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul><ul id=\"breadsMenu\">");
+            for (var i=0; i<data['Breads'].length; i++){
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"breadsType\" id=\"" + data['Breads'][i] + "\" value=\"" + data['Breads'][i] + "\"> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul>");
+         }
+      });
+   }
+
+   getMenuDat();
+   
+   function postOrder() {
+      console.log('addWine');
+      $.ajax({
+         type: 'POST',
+         contentType: 'application/json',
+         url: rootURL,
+         dataType: "json",
+         data: formToJSON(),
+         success: function(data, textStatus, jqXHR){
+            alert('Wine created successfully');
+            $('#btnDelete').show();
+            $('#wineId').val(data.id);
+         },
+         error: function(jqXHR, textStatus, errorThrown){
+            alert('addWine error: ' + textStatus);
+         }
+      });
    }
 }

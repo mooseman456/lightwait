@@ -8,6 +8,7 @@
 
    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
    <script src="javascript/main.js"></script>
+   <script src="javascript/api.js"></script>
 </head>
 
 <body>
