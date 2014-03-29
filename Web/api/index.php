@@ -1,4 +1,5 @@
 <?php
+logConsole("Slimming");
 
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
@@ -23,20 +24,20 @@ function getOrders() {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 }
-
+/*
 function addOrder() {
-  // $db = getConnection();
-  // $request = Slim::getInstance()->request();
+  $db = getConnection();
+  $request = Slim::getInstance()->request();
   // $order = json_decode($request->getBody());
+  $wine = json_decode($request->getBody());
 
-  //logConsole("Request: ", "hello");
-  
+  echo json_encode($wine); 
   // $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
   //       VALUES (:user_id, :hasFries, :timePlaced, :isActive, (SELECT bread_id FROM Breads WHERE name = :breadname), (SELECT base_id FROM Bases WHERE name = :basename), 
   //       (SELECT cheese_id FROM Cheeses WHERE name = :cheesename))";
 
 }
-
+*/
 function getMenuData() {
 
   $mysqli = getConnection();
