@@ -176,7 +176,7 @@ function returnItem(ingredient, jsonObject){
   
    var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 
-   function getMenuDat() {
+   function getMenuData() {
       $.ajax({
          type: 'GET',
          url: rootURL,
@@ -196,7 +196,7 @@ function returnItem(ingredient, jsonObject){
       });
    }
 
-   getMenuDat();
+   getMenuData();
    
    function postOrder() {
       console.log('addWine');
