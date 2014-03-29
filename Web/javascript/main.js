@@ -117,6 +117,7 @@ $(document).ready(function(){
    }
 
 
+
    // UPDATE SIDEBAR
    // Takes an array of JSON orders
    // Sets the number of bases in the side panel
@@ -176,7 +177,7 @@ $(document).ready(function(){
 
 
   
-   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
+   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
 
    function getMenuData() {
       $.ajax({
@@ -184,16 +185,25 @@ $(document).ready(function(){
          url: rootURL,
          dataType: "json", // data type of response
          success: function(data){  
-            //console.log("Chicken!");
+            console.log("Chicken!");
             $('#menuForm').append("<ul id=\"basesMenu\">");  
             for (var i=0; i<data['Bases'].length; i++){
                $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\"> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
             }
             $('#menuForm').append("</ul><ul id=\"breadsMenu\">");
             for (var i=0; i<data['Breads'].length; i++){
-               $('#menuForm').append("<li> <input type=\"radio\" name=\"breadsType\" id=\"" + data['Breads'][i] + "\" value=\"" + data['Breads'][i] + "\"> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i] + "\" value=\"" + data['Breads'][i] + "\"> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul><ul id=\"cheeseMenu\">");
+            for (var i=0; i<data['Cheeses'].length; i++){
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i] + "\" value=\"" + data['Cheeses'][i] + "\"> <label for=\"" + data['Cheeses'][i] + "\">" + data['Cheeses'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul><ul id=\"toppingsMenu\">");
+            for (var i=0; i<data['Toppings'].length; i++){
+               $('#menuForm').append("<li> <input type=\"checkbox\" name=\"toppingType\" id=\"" + data['Toppings'][i] + "\" value=\"" + data['Toppings'][i] + "\"> <label for=\"" + data['Toppings'][i] + "\">" + data['Toppings'][i] + "</label></li>");
             }
             $('#menuForm').append("</ul>");
+
          }
       });
    }
