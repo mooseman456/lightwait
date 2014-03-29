@@ -33,8 +33,6 @@
     wrapsArray = [[NSArray alloc] initWithObjects:@"Barbecue Chicken", @"Buffalo Chicken", @"Turkey Wrap", nil];
     sidesArray = [[NSArray alloc] initWithObjects:@"Blueberry Yogurt", @"Strawberry Yogurt", @"Fruit Cup", @"Chips", nil];
     dessertsArray = [[NSArray alloc] initWithObjects:@"Carnival Cookies", @"Brownies", nil];
-    
-    _menuTable.allowsSelection=NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,7 +129,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self showAlert:@"Item Information" message:@"Here is some information about the item tapped."];
+}
+
+- (void)showAlert:(NSString *)title message:(NSString *)messageString
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 @end
