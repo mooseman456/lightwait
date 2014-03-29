@@ -8,7 +8,5 @@
 
 		</form>
 	</div>
-	<a href="index.php">Home</a>
-	<a href="queue.php">Back</a>
 </body>
 </html>
