@@ -120,21 +120,30 @@ $(document).ready(function(){
 
    };
 
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
+   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 
-   function getAllOrders() {
+   function getMenuDat() {
       $.ajax({
          type: 'GET',
          url: rootURL,
          dataType: "json", // data type of response
-         success: function(data){      
-            console.log(data);
+         success: function(data){  
+            //console.log("Chicken!");
+            $('#menuForm').append("<ul id=\"basesMenu\">");  
+            for (var i=0; i<data['Bases'].length; i++){
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\"> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul><ul id=\"breadsMenu\">");
+            for (var i=0; i<data['Breads'].length; i++){
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"breadsType\" id=\"" + data['Bread'][i] + "\" value=\"" + data['Breads'][i] + "\"> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul>");
          }
       });
    }
-
+   getMenuDat();
    $( "#apiTestButton" ).click(function() {
-      getAllOrders();
+      getMenuDat();
    });
 
    ////***availability.php Section***////
@@ -174,3 +183,5 @@ function loadAvailChat(vClient){
    }
    
 }
+
+
