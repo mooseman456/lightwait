@@ -270,3 +270,4 @@ function loadAvailChat(vClient){
          }
       });
    }
+}
