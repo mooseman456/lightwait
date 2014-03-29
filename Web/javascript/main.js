@@ -1,13 +1,12 @@
 $(document).ready(function(){
 
+
+   /*********************/
+   /*   Populate HTML   */
+   /*********************/
    //Populate order information from JSON
    //This displays ten orders from the order queue in the chef queue window
    //TODO: 1st step, static (update when you refresh the pagae)
-
-   //Set current and total page number
-   //This should happen every time the page is change or 
-   //TODO: that
-
    var client = new XMLHttpRequest();     
    client.open('GET', '../Resources/SampleOrderData.json', true);
    client.send();
@@ -20,7 +19,6 @@ $(document).ready(function(){
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
          var doc=client.responseText;  //store text in doc
-         console.log(client.responseText);
          orders=JSON.parse(doc);
          
          //Set the base count values in the side bar
@@ -29,32 +27,14 @@ $(document).ready(function(){
          //Update order window
          updateOrderWindow();
       }
-
-
    };
-
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
-
-   function getAllOrders() {
-      $.ajax({
-         type: 'GET',
-         url: rootURL,
-         dataType: "json", // data type of response
-         success: function(data){      
-            console.log(data);
-         }
-      });
-   }
-
-   $( "#apiTestButton" ).click(function() {
-      getAllOrders();
-   });
-
-
    
    /***********************/
    /*   Event Listeners   */
    /***********************/
+   //Set current and total page number
+   //This should happen every time the page is change or 
+   //TODO: that ^
    //Previous page arrow
    $('div.navigation img[alt~="Previous"]').click(function() {
       if (currentPage > 0)
@@ -246,8 +226,6 @@ function loadAvailChat(vClient){
          }
       }
    }
-   
-}
 
   
    var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
