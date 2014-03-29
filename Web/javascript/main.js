@@ -172,9 +172,11 @@ function returnItem(ingredient, jsonObject){
             return [i,k];
          }
       }
+   }
+}
 
   
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
+   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 
    function getMenuData() {
       $.ajax({
@@ -182,7 +184,7 @@ function returnItem(ingredient, jsonObject){
          url: rootURL,
          dataType: "json", // data type of response
          success: function(data){  
-            console.log("Chicken!");
+            //console.log("Chicken!");
             $('#menuForm').append("<ul id=\"basesMenu\">");  
             for (var i=0; i<data['Bases'].length; i++){
                $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\"> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
@@ -225,4 +227,3 @@ function returnItem(ingredient, jsonObject){
          }
       });
    }
-}
