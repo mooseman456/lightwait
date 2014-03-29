@@ -45,6 +45,7 @@ $(document).ready(function(){
    //Bump button
    $('section.queue button').click(function(event) {
       console.log("Bump");
+
       $(event.target.parentNode).remove();
 
       //TODO
@@ -56,13 +57,9 @@ $(document).ready(function(){
    var client = new XMLHttpRequest();     
    client.open('GET', '../Resources/SampleOrderData.json', true);
    client.send();
-   var sampleOrder;
+   var orders;
    var orderHTML;
-   var chickNum=0;
-   var beefNum=0;
-   var beanNum=0;
-   var doubleBeefNum=0;
-   var turkeyNum=0;
+   var baseTypeCount = []; //Holds the information for quantity quick look in the side bar
    var numOrders=0;
    var currentPage=0;
    var maxPage=0;
@@ -71,28 +68,14 @@ $(document).ready(function(){
       if(client.readyState===4 && client.status===200){
          orderHTML = [];
          var doc=client.responseText;  //store text in doc
-         sampleOrder=JSON.parse(doc);
+         console.log(client.responseText);
+         orders=JSON.parse(doc);
          
-         for(var i=0; i<sampleOrder.length; i++){
-            switch(sampleOrder[i].Base){
-               case "Chicken":
-               chickNum++;
-               break;
-               case "Hamburger":
-               beefNum++;
-               break;
-               case "Double Hamburger":
-               doubleBeefNum++;
-               break;
-               case "Turkey":
-               turkeyNum++;
-               break;
-               case "Black Bean":
-               beanNum++;
-               break;
-            }
+         //Qunatity Sidebar stuff
+         baseTypeCount = updateSidebar(orders);
+         for(var i=0; i<orders.length; i++){
             orderHTML.push("");
-            $.each(sampleOrder[i], function(key, val){
+            $.each(orders[i], function(key, val){
                if($.isArray(val)){
                   for(var j=0; j<val.length; j++)
                      orderHTML[numOrders] += "<li>" + val[j] + "</li>";
@@ -148,10 +131,25 @@ $(document).ready(function(){
    }
 });
 
+function updateSidebar(orders) {
+   var baseTypeCount = [];
+   for(var i=0; i < orders.length; i++) {
+      //If the base is not in baseTypeCount, add the ket to baseTypeCount
+      if( baseTypeCount[orders[i].Base] ){
+         baseTypeCount[orders[i].Base] += 1;
+      //Else, incrment that element
+      } else {
+         baseTypeCount[orders[i].Base] = 1;
+      }
+   }
+
+   return baseTypeCount;
+}
+
 //loads in the availability json into html and checks available items
 function loadAvailChat(vClient){
    availTest=JSON.parse(vClient.responseText);
-   console.log(availTest);
+   //console.log(availTest);
 
    for(var k=0; k<availTest.length; k++){
       var category=availTest[k][0];

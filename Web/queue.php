@@ -10,15 +10,7 @@
 			<span>Matt</span>
 			<span>2:00</span>
 			<ul>
-				<!--<li>Burger</li>
-				<li>Wheat</li>
-				<li>Swiss</li>
-				<li>Lettuce</li>
-				<li>Tomato</li>
-				<li>Pickle</li>
-				<li>Onion</li>
-				<li>BBQ Sauce</li>
-				<li>Fries</li> -->
+				
 			</ul>
 			<button>Bump</button>
 		</section>
@@ -28,15 +20,7 @@
 			<span>Matt</span>
 			<span>2:00</span>
 			<ul>
-				<!--<li>Burger</li>
-				<li>Wheat</li>
-				<li>Swiss</li>
-				<li>Lettuce</li>
-				<li>Tomato</li>
-				<li>Pickle</li>
-				<li>Onion</li>
-				<li>BBQ Sauce</li>
-				<li>Fries</li> -->
+				
 			</ul>
 			<button>Bump</button>
 		</section>
@@ -46,15 +30,7 @@
 			<span>Matt</span>
 			<span>2:00</span>
 			<ul>
-				<!-- <li>Burger</li>
-				<li>Wheat</li>
-				<li>Swiss</li>
-				<li>Lettuce</li>
-				<li>Tomato</li>
-				<li>Pickle</li>
-				<li>Onion</li>
-				<li>BBQ Sauce</li>
-				<li>Fries</li> -->			
+							
 			</ul>
 			<button>Bump</button>
 		</section>
@@ -64,15 +40,7 @@
 			<span>Matt</span>
 			<span>2:00</span>
 			<ul>
-				<!-- <li>Burger</li>
-				<li>Wheat</li>
-				<li>Swiss</li>
-				<li>Lettuce</li>
-				<li>Tomato</li>
-				<li>Pickle</li>
-				<li>Onion</li>
-				<li>BBQ Sauce</li>
-				<li>Fries</li> -->
+				
 			</ul>
 			<button>Bump</button>
 		</section>
@@ -82,15 +50,7 @@
 			<span>Matt</span>
 			<span>2:00</span>
 			<ul>
-				<!-- <li>Burger</li>
-				<li>Wheat</li>
-				<li>Swiss</li>
-				<li>Lettuce</li>
-				<li>Tomato</li>
-				<li>Pickle</li>
-				<li>Onion</li>
-				<li>BBQ Sauce</li>
-				<li>Fries</li> -->
+				
 			</ul>
 			<button>Bump</button>
 		</section>
@@ -100,15 +60,7 @@
 			<span>Matt</span>
 			<span>2:00</span>
 			<ul>
-				<!-- <li>Burger</li>
-				<li>Wheat</li>
-				<li>Swiss</li>
-				<li>Lettuce</li>
-				<li>Tomato</li>
-				<li>Pickle</li>
-				<li>Onion</li>
-				<li>BBQ Sauce</li>
-				<li>Fries</li> -->
+				
 			</ul>
 			<button>Bump</button>
 		</section>
@@ -118,15 +70,7 @@
 			<span>Matt</span>
 			<span>2:00</span>
 			<ul>
-				<!-- <li>Burger</li>
-				<li>Wheat</li>
-				<li>Swiss</li>
-				<li>Lettuce</li>
-				<li>Tomato</li>
-				<li>Pickle</li>
-				<li>Onion</li>
-				<li>BBQ Sauce</li>
-				<li>Fries</li> -->
+				
 			</ul>
 			<button>Bump</button>
 		</section>
@@ -136,15 +80,7 @@
 			<span>Matt</span>
 			<span>2:00</span>
 			<ul>
-				<!-- <li>Burger</li>
-				<li>Wheat</li>
-				<li>Swiss</li>
-				<li>Lettuce</li>
-				<li>Tomato</li>
-				<li>Pickle</li>
-				<li>Onion</li>
-				<li>BBQ Sauce</li>
-				<li>Fries</li> -->
+				
 			</ul>
 			<button>Bump</button>
 		</section>
