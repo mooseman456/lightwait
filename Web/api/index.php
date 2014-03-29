@@ -23,9 +23,40 @@ function getOrders() {
 	}
 }
 
+function addOrder() {
+  $db = getConnection();
+  $request = Slim::getInstance()->request();
+  $order = json_decode($request->getBody());
+  
+  $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
+        VALUES (:user_id, :hasFries, :timePlaced, :isActive, (SELECT bread_id FROM Breads WHERE name = :breadname), (SELECT base_id FROM Bases WHERE name = :basename), 
+        (SELECT cheese_id FROM Cheeses WHERE name = :cheesename))";
+
+  $db = getConnection();
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam("user_id", $order->UserID);
+  $stmt->bindParam("hasFries", $order->hasFries);
+  $stmt->bindParam("timePlaced", $order->timePlaced)
+  $stmt->bindParam("isActive", $order->isActive);
+  $stmt->bindParam("breadname", $order->Bread);
+  $stmt->bindParam("basename", $order->Base);
+  $stmt->bindParam("cheesename", $order->Cheese);
+  $stmt->bindParam("toppings", $order->Toppings);
+  $stmt->execute();
+  foreach(:toppings as $topping)
+  {
+    $stmt = $db->prepare($tsql);
+    $stmt->bindParam("toppingname", $topping); //PDO::PARAM_STR
+    $stmt->execute();
+  }
+  //$order->id = $db->lastInsertId();
+  $db = null;
+  echo json_encode($order);
+}
+
 function getMenuData() {
 
-  $mysqli = new mysqli("localhost", "root", "root", "lightwait");
+  $mysqli = getConnection();
 
   // Check mysqli connection
   if (mysqli_connect_errno()) {
@@ -75,9 +106,11 @@ function getConnection() {
 	$dbuser="root";
 	$dbpass="root";
 	$dbname="lightwait";
-	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	return $dbh;
+	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+  if($db->connect_errno > 0){
+    die('Unable to connect to database [' . $db->connect_error . ']');
+  }
+  return $db;
 }
 
 ?>
