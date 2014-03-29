@@ -18,7 +18,6 @@
     NSArray *breadArray;
     NSArray *cheeseArray;
     NSArray *toppingsArray;
-    NSArray *sauceArray;
     NSArray *friesArray;
     NSArray *menuDataArray;
     NSMutableArray *selectedToppings;
