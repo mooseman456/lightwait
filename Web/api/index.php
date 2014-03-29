@@ -25,7 +25,7 @@ function getOrders() {
 
 function getMenuData() {
 
-  $mysqli = new mysqli("localhost", "root", "root", "lightwait");
+  $mysqli = new mysqli("localhost", "joe", "root", "lightwait");
 
   // Check mysqli connection
   if (mysqli_connect_errno()) {

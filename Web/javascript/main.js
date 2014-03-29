@@ -28,25 +28,6 @@ $(document).ready(function(){
          updateOrderWindow();
       }
    };
-
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
-
-   function getAllOrders() {
-      $.ajax({
-         type: 'GET',
-         url: rootURL,
-         dataType: "json", // data type of response
-         success: function(data){      
-            console.log(data);
-         }
-      });
-   }
-
-   $( "#apiTestButton" ).click(function() {
-      getAllOrders();
-   });
-
-
    
    /***********************/
    /*   Event Listeners   */
@@ -99,6 +80,73 @@ $(document).ready(function(){
       //Add the order to the bumped database (or whatever that is)
    });
 
+
+   var client = new XMLHttpRequest();     
+   client.open('GET', '../Resources/SampleOrderData.json', true);
+   client.send();
+   var sampleOrder;
+   var orderHTML;
+   var chickNum=0;
+   var beefNum=0;
+   var beanNum=0;
+   var doubleBeefNum=0;
+   var turkeyNum=0;
+   var numOrders=0;
+   var currentPage=0;
+   var maxPage=0;
+   //waits for the names.csv to be successfully sent before running code
+   client.onreadystatechange = function() {     
+      if(client.readyState===4 && client.status===200){
+         orderHTML = [];
+         var doc=client.responseText;  //store text in doc
+         sampleOrder=JSON.parse(doc);
+         
+         for(var i=0; i<sampleOrder.length; i++){
+            switch(sampleOrder[i].Base){
+               case "Chicken":
+               chickNum++;
+               break;
+               case "Hamburger":
+               beefNum++;
+               break;
+               case "Double Hamburger":
+               doubleBeefNum++;
+               break;
+               case "Turkey":
+               turkeyNum++;
+               break;
+               case "Black Bean":
+               beanNum++;
+               break;
+            }
+            orderHTML.push("");
+            $.each(sampleOrder[i], function(key, val){
+               if($.isArray(val)){
+                  for(var j=0; j<val.length; j++)
+                     orderHTML[numOrders] += "<li>" + val[j] + "</li>";
+               }
+               else
+                  orderHTML[numOrders] += "<li>" + val + "</li>";
+            })
+            numOrders++;
+            
+         }
+
+         maxPage = Math.floor(numOrders/10);
+         changePage();
+         
+         // TODO:
+         // Be able to dynamically create and keep track of base items
+         // Right now they are hardcoded (i.e. chickNum, beefNum etc.)
+         $("#hNum").html(beefNum);     
+         $("#dhNum").html(doubleBeefNum);
+         $("#cNum").html(chickNum);
+         $("#tNum").html(turkeyNum);
+         $("#bNum").html(beanNum);
+      }
+
+
+   };
    ////***availability.php Section***////
    var vClient = new XMLHttpRequest();     
    vClient.open('GET', '../Resources/sampleAvail.json', true);
@@ -178,22 +226,34 @@ function loadAvailChat(vClient){
          }
       }
    }
-   
-}
 
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
+  
+   var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 
-   function getAllOrders() {
+   function getMenuDat() {
       $.ajax({
          type: 'GET',
          url: rootURL,
          dataType: "json", // data type of response
-         success: function(data){      
-            console.log(data);
+         success: function(data){  
+            //console.log("Chicken!");
+            $('#menuForm').append("<ul id=\"basesMenu\">");  
+            for (var i=0; i<data['Bases'].length; i++){
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\"> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul><ul id=\"breadsMenu\">");
+            for (var i=0; i<data['Breads'].length; i++){
+               $('#menuForm').append("<li> <input type=\"radio\" name=\"breadsType\" id=\"" + data['Breads'][i] + "\" value=\"" + data['Breads'][i] + "\"> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
+            }
+            $('#menuForm').append("</ul>");
          }
       });
    }
 
+   getMenuDat();
+   $( "#apiTestButton" ).click(function() {
+      getMenuDat();
+   });
    function postOrder() {
       console.log('addWine');
       $.ajax({
@@ -222,6 +282,9 @@ function loadAvailChat(vClient){
          });
    }
 
-   $( "#apiTestButton" ).click(function() {
-      console.log(formToJSON);
-   });
+   $('#apiTestButton').click(function() {
+      console.log("clicked");
+      //console.log(formToJSON);
+   });   
+}
+
