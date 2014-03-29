@@ -174,10 +174,7 @@ $(document).ready(function(){
          }
       }
    }
-<<<<<<< HEAD
-=======
 
->>>>>>> 22fe41de460e37505cdfff80584c6dab7d3ddcdc
 
   
    var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
@@ -230,9 +227,4 @@ $(document).ready(function(){
             alert('addWine error: ' + textStatus);
          }
       });
-<<<<<<< HEAD
    }
-=======
-   }
-});
->>>>>>> 22fe41de460e37505cdfff80584c6dab7d3ddcdc
