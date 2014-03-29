@@ -19,7 +19,6 @@ $(document).ready(function(){
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
          var doc=client.responseText;  //store text in doc
-         console.log(client.responseText);
          orders=JSON.parse(doc);
          
          //Set the base count values in the side bar
@@ -28,8 +27,6 @@ $(document).ready(function(){
          //Update order window
          updateOrderWindow();
       }
-
-
    };
 
    var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
