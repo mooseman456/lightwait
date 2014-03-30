@@ -22,6 +22,7 @@ $(document).ready(function(){
          data: json,
          success: function(data, textStatus, jqXHR){
             console.log("Order uploaded");
+            console.log(data, textStatus, jqXHR);
          },
          error: function(jqXHR, textStatus, errorThrown){
             console.log("Order upload failed");
@@ -32,7 +33,7 @@ $(document).ready(function(){
 
    function formToJSON() {
       return JSON.stringify({
-         "user_id" : "1",
+         "user_id" : "25",
          "hasFries" : "1",
          "timePlaced" : "2014-03-029 12:04:01",
          "isActive" : "1",
@@ -44,7 +45,6 @@ $(document).ready(function(){
 
    $('#apiTestButton').click(function() {
       var json = formToJSON();
-      console.log(json);
       postOrder(json);
    });   
 });
