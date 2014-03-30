@@ -8,6 +8,7 @@ $app = new \Slim\Slim();
 $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
 $app->post('/order', 'addOrder');
+$app->post('/webOrder', 'webOrder');
 
 $app->run();
 
@@ -24,20 +25,43 @@ function getOrders() {
 	}
 }
 
+function webOrder() {
+  $mysqli = getConnection();
+  date_default_timezone_set('America/Chicago');
+  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
+            VALUES (25, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
+            (SELECT fry_id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+  //echo $query;
+  $mysqli->query($query);
+
+  echo "<h2>Thank you for your order!</h2>";
+  echo "<h3>It has been received and is underway!</h3>";
+  echo "<a href=http://localhost/lightwait/Web/index.php>Return home</a>";
+}
+
 function addOrder() {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
-  $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id) 
+  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
             VALUES (".$order['user_id'].", ". $order['hasFries'] .", \"". $order['timePlaced'] ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
-            (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"))";
+            (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
+            (SELECT fry_id FROM Fries WHERE name = \"".$order['fries']."\"))";
 
   $mysqli->query($query);
 
+  $orderID = $mysqli->insert_id;
 
-  $return = json_encode($query);
-  echo $return;
+  foreach($order['toppings'] as $key=>$val) {
+    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('$orderID', (SELECT topping_id FROM Toppings WHERE name='".$order['toppings'][$key]."'))";
+    $mysqli->query($query);
+
+    $return = json_encode($query);
+    echo $return;
+  }
+
 }
 
 function getMenuData() {
@@ -53,17 +77,19 @@ function getMenuData() {
   $query  = "SELECT name FROM Bases WHERE available = 1;";
   $query .= "SELECT name FROM Breads WHERE available = 1;";
   $query .= "SELECT name FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name FROM Toppings WHERE available = 1";
+  $query .= "SELECT name FROM Toppings WHERE available = 1;";
+  $query .= "SELECT name FROM Fries WHERE available = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
     // Arrays that will hold all menu data
-    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings");
+    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
     $baseArray = array();
     $breadArray = array();
     $cheeseArray = array();
     $toppingArray = array();
-    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray);
+    $friesArray = array();
+    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
     $menuIndex = -1;
 
     while ($mysqli->more_results()) {
@@ -87,7 +113,7 @@ function getMenuData() {
 
 function getConnection() {
 	$dbhost="localhost";
-	$dbuser="root";
+	$dbuser="joe";
 	$dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);

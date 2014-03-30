@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/order";
+   var rootURL = "http://localhost/lightwait/Web/api/index.php/order";
 
    function getAllOrders() {
       $.ajax({
@@ -32,16 +32,16 @@ $(document).ready(function(){
    }
 
    function formToJSON() {
-      return JSON.stringify(
-      {
-       "bread" : "White",
-       "base" : "Hamburger",
-       "cheese" : "American",
-       "topping" : "Lettuce",
-       "timePlaced" : "2014-03-30 16:54:10",
-       "user_id" : "1",
-       "hasFries" : "1"
-    });
+      return JSON.stringify({
+         "user_id" : "25",
+         "timePlaced" : "2014-03-029 12:04:01",
+         "isActive" : "1",
+         "base": "Hamburger", 
+         "bread": "White", 
+         "cheese": "Cheddar",
+         "toppings": [ "Pineapple", "Jalapeno", "Lettuce", "Chipotle Ranch" ],
+         "fries": "Regular"
+         });
    }
 
    $('#apiTestButton').click(function() {
