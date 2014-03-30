@@ -13,6 +13,9 @@ $(document).ready(function(){
    // client.open('GET', '../Resources/SampleOrderData.json', true);
    // client.send();
    var orders;
+   var numOrders=0;
+   var currentPage=1;
+   var maxPage=1;
    getActiveOrders();
    function getActiveOrders() {
       $.ajax({
@@ -20,8 +23,8 @@ $(document).ready(function(){
          url: "http://localhost/lightwait/Web/api/index.php/activeorders",
          dataType: "json", // data type of response
          success: function(data){  
-            console.log(data);
             orders = data;
+            console.log(data);
             //Set the base count values in the side bar
             //THIS IS OUTSIDE THE .ready()!!
             updateSidebar(orders);
@@ -36,10 +39,6 @@ $(document).ready(function(){
          }
       });
    }
-   getActiveOrders();
-   var numOrders=0;
-   var currentPage=1;
-   var maxPage=1;
    //waits for the names.csv to be successfully sent before running code
    /*
    client.onreadystatechange = function() {     
@@ -119,18 +118,21 @@ $(document).ready(function(){
    function updateCurrentWindow() {
       $('div.window').empty();
       updatePagenumbers();
-      for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length-1; i++) {
+      for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length; i++) {
          pushOrderToWindow(i);
       }
    }
 
    // Push order to window
    function pushOrderToWindow(index) {
-      var orderElement = $('<section class="queue" id="order'+index+'"><h1>Order #'+index+'</h1><ul></ul></section>');
+      var orderId = orders[index].order_id;
+      var timeStamp = orders[index].timePlaced;
+      var orderElement = $('<section class="queue" id="order'+orderId+'"><h1>Order #'+orderId+'</h1><ul></ul></section>');
       $('div.window').append(orderElement);
       $.each(orders[index], function(key,val) {
          if ($.isArray(val)) {
             val.forEach( function(item) {
+   
                $(orderElement.children('ul')).append('<li>'+item+'</li>');
             });
          } else {
