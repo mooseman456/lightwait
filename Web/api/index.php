@@ -9,6 +9,7 @@ $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
+$app->get('/activeorders', 'getActiveOrders');
 
 $app->run();
 
@@ -108,9 +109,35 @@ function getMenuData() {
   $mysqli->close();
 }
 
+function getActiveOrders() {
+  $mysqli = getConnection();
+
+  // Check mysqli connection
+  if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+  }
+
+  $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as breadName, Bases.name as baseName, Cheeses.name as cheeseName, Fries.name as fryType, Orders.timePlaced 
+            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.bread_id JOIN Bases 
+            ON Orders.base_id=Bases.base_id JOIN Cheeses ON Orders.cheese_id=Cheeses.cheese_id JOIN Fries ON Fries.fry_id=Orders.fry_id 
+            WHERE Orders.isActive='1'";
+
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+  
+  while ($row = $result->fetch_assoc()) {
+           $array[] = $row;
+  }
+
+  $encoded = json_encode($array);
+  printf($encoded);
+
+  $mysqli->close();
+}
+
 function getConnection() {
 	$dbhost="localhost";
-	$dbuser="joe";
+	$dbuser="root";
 	$dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
