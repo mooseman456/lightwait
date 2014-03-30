@@ -121,7 +121,7 @@ function getActiveOrders() {
     exit();
   }
 
-  $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as breadName, Bases.name as baseName, Cheeses.name as cheeseName, Fries.name as fryType, Orders.timePlaced 
+  $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
             FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.bread_id JOIN Bases 
             ON Orders.base_id=Bases.base_id JOIN Cheeses ON Orders.cheese_id=Cheeses.cheese_id JOIN Fries ON Fries.fry_id=Orders.fry_id 
             WHERE Orders.isActive='1'";
