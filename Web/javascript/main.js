@@ -11,7 +11,8 @@ $(document).ready(function(){
    client.send();
    var orders;
    var numOrders=0;
-   var currentPage=0;
+   var currentPage=1;
+   var maxPage=1;
    //waits for the names.csv to be successfully sent before running code
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
@@ -42,19 +43,20 @@ $(document).ready(function(){
       //TODO: that ^
       //Previous page arrow
       $('div.navigation img[alt~="Previous"]').click(function() {
-         if (currentPage > 0)
+         if (currentPage > 1) {
             currentPage--;
-         updatePagenumbers();
-         updateCurrentWindow();
+            //updatePagenumbers();
+            updateCurrentWindow();
+         }
       });
       
       //Next page arrow
       $('div.navigation img[alt~="Next"]').click(function() {
-         if(currentPage < Math.floor(orders.length)/8-1) {
+         if(currentPage < maxPage) {
             currentPage++;
+            //updatePagenumbers();
+            updateCurrentWindow();
          }
-         updatePagenumbers();
-         updateCurrentWindow();
       });
 
       //Recall button
@@ -63,31 +65,20 @@ $(document).ready(function(){
          //TODO: Bring up the most recently bumped order
          //i.e. Retrieve from the database, the order most recently bumped
       });
-
-      //Bump button
-      /*
-      $('.bump').click(function(event) {
-         console.log("Bump");
-         event.target.parentNode.remove();
-         var index = event.target.parentNode.id.match(/order(\d)/)[1];
-         orders.slice(index,index+1);
-         pushOrderToWindow(9);
-         //TODO
-         //Order fill
-         //Add the order to the bumped database (or whatever that is)
-      });
-      */
    }
 
    /*******************/
    /*   Avilability   */
    /*******************/
-   var vClient = new XMLHttpRequest();     
-   vClient.open('GET', '../Resources/sampleAvail.json', true);
-   vClient.send();
-   vClient.onreadystatechange = function() {     
-      if(vClient.readyState===4 && vClient.status===200){
-         loadAvailChart(vClient);
+   //Change this to support Ajax instead!!!!
+   if(document.getElementsByClassName("mainForm").length>0){ 
+      var vClient = new XMLHttpRequest();     
+      vClient.open('GET', '../Resources/sampleAvail.json', true);
+      vClient.send();
+      vClient.onreadystatechange = function() {     
+         if(vClient.readyState===4 && vClient.status===200){
+            loadAvailChart(vClient);
+         }
       }
    }
 
@@ -98,7 +89,8 @@ $(document).ready(function(){
    // Update current window
    function updateCurrentWindow() {
       $('div.window').empty();
-      for(var i=currentPage*8; i<currentPage*8+8; i++) {
+      updatePagenumbers();
+      for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length-1; i++) {
          pushOrderToWindow(i);
       }
    }
@@ -121,7 +113,6 @@ $(document).ready(function(){
       orderElement.children('button').click(function(event) {
          orderElement.remove();
          var index = event.target.parentNode.id.match(/order(\d)/)[1];
-         console.log("index: "+index);
          orders.splice(index,1);
          //TODO: send this information to the database
          updatePagenumbers();
@@ -131,7 +122,11 @@ $(document).ready(function(){
 
    // UPDATE PAGENUMBERS
    function updatePagenumbers() {
-      $('#page_number').html((currentPage+1) + "/" + Math.floor(orders.length/8+1));
+      maxPage = Math.ceil((orders.length-1)/8);
+      if (maxPage < currentPage) {
+         currentPage = maxPage;
+      }
+      $('#page_number').html((currentPage) + "/" + maxPage);
    }
 });
 
@@ -149,17 +144,15 @@ function updateSidebar(orders) {
       } else {
          baseTypeCount[orders[i].Base] = 1;
       }
-      // TODO:
-      // Add the info in baseTypeCount to the html
    }
-   console.log("sidebar info");
    for(var key in baseTypeCount) {
       var value = baseTypeCount[key];
       $("#quantityList").append("<span>"+key+"="+value+"</span><br/>");
    }
 }
 
-//Load Availability C
+//Load Availability 
+
 //loads in the availability json into html and checks available items
 function loadAvailChart(vClient){
    availTest=JSON.parse(vClient.responseText);
