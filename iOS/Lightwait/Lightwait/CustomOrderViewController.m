@@ -286,6 +286,68 @@
     }
 }
 
+#pragma mark - Alerts
+
+- (void)askUserToSaveOrder
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save This Order"
+                                                    message:@"Would you like to save this order?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"No thanks"
+                                          otherButtonTitles:@"Save", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 1;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (alertView.tag) {
+            // askUserToSaveOrder alert
+        case 1:
+            // If the user clicked save
+            if (buttonIndex == 1) {
+                NSString *orderName = @"";
+                orderName = [alertView textFieldAtIndex:0].text;
+                // Check to see if the order name is valid
+                if ([self checkOrderName:orderName]) {
+                    // Save the order and alert the user
+                    [SavedOrdersManager saveOrder:orderName order:orderDictionary];
+                    [OrderManager uploadOrder:orderDictionary];
+                    [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
+                }
+                else {
+                    // Alert the user that the given name was invalid and then re-prompt
+                    [self showAlert:@"Invalid Name" message:@"Please enter a new name." tagNumber:3];
+                }
+            }
+            else {
+                // Successful order, alert the user
+                [OrderManager uploadOrder:orderDictionary];
+                [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
+            }
+            break;
+            // Successful order table
+        case 2:
+            // Successful order alert, send the user back to the home page
+            [self.navigationController popToRootViewControllerAnimated:TRUE];
+            break;
+            // Invalid name table
+        case 3:
+            [self askUserToSaveOrder];
+        default:
+            break;
+    }
+}
+
+- (void)showAlert:(NSString *)title message:(NSString *)messageString tagNumber:(int)tag
+{
+    // Show an alert on the screen
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+    alertView.tag = tag;
+    [alertView show];
+}
+
 #pragma mark - Miscellaneous
 
 - (void)initializeMenuArrays
@@ -353,91 +415,6 @@
     else {
         return false;
     }
-}
-
-#pragma mark - Alerts
-
-- (void)askUserToSaveOrder
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save This Order"
-                                                    message:@"Would you like to save this order?"
-                                                   delegate:self
-                                          cancelButtonTitle:@"No thanks"
-                                          otherButtonTitles:@"Save", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    alert.tag = 1;
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (alertView.tag) {
-        // askUserToSaveOrder alert
-        case 1:
-            // If the user clicked save
-            if (buttonIndex == 1) {
-                NSString *orderName = @"";
-                orderName = [alertView textFieldAtIndex:0].text;
-                // Check to see if the order name is valid
-                if ([self checkOrderName:orderName]) {
-                    // Save the order and alert the user
-                    [SavedOrdersManager saveOrder:orderName order:orderDictionary];
-
-                    [DataManager uploadOrder:[self orderBuilder]];
-                    [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
-                }
-                else {
-                    // Alert the user that the given name was invalid and then re-prompt
-                    [self showAlert:@"Invalid Name" message:@"Please enter a new name." tagNumber:3];
-                }
-            }
-            else {
-                // Successful order, alert the user
-                [DataManager uploadOrder:[self orderBuilder]];
-                [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
-            }
-            break;
-        // Successful order table
-        case 2:
-            // Successful order alert, send the user back to the home page
-            [self.navigationController popToRootViewControllerAnimated:TRUE];
-            break;
-        // Invalid name table
-        case 3:
-            [self askUserToSaveOrder];
-        default:
-            break;
-    }
-}
-
-- (void)showAlert:(NSString *)title message:(NSString *)messageString tagNumber:(int)tag
-{
-    // Show an alert on the screen
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
-    alertView.tag = tag;
-    [alertView show];
-}
-
-- (NSString *)orderBuilder
-{
-    NSDate *currentTime = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    NSString *currentTimeString = [dateFormat stringFromDate:currentTime];
-    
-#warning This is a temporary solution
-    
-    uploadDictionary = [[NSMutableDictionary alloc] init];
-    
-    [uploadDictionary setObject:currentTimeString forKey:@"timePlaced"];
-    [uploadDictionary setObject:@"1" forKey:@"user_id"];
-    [uploadDictionary setObject:[orderDictionary objectForKey:@"Base"] forKey:@"base"];
-    [uploadDictionary setObject:[orderDictionary objectForKey:@"Bread"] forKey:@"bread"];
-    [uploadDictionary setObject:[orderDictionary objectForKey:@"Cheese"] forKey:@"cheese"];
-    [uploadDictionary setObject:[orderDictionary objectForKey:@"Toppings"] forKey:@"toppings"];
-    [uploadDictionary setObject:[orderDictionary objectForKey:@"Fries"] forKey:@"fries"];
-    
-    return [JSONConverter convertNSMutableDictionaryToJSON:uploadDictionary];
 }
 
 @end
