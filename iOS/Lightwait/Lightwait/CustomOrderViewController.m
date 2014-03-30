@@ -437,7 +437,6 @@
     [uploadDictionary setObject:[orderDictionary objectForKey:@"Toppings"] forKey:@"toppings"];
     [uploadDictionary setObject:[orderDictionary objectForKey:@"Fries"] forKey:@"fries"];
     
-    NSLog(@"%@", [JSONConverter convertNSMutableDictionaryToJSON:uploadDictionary]);
     return [JSONConverter convertNSMutableDictionaryToJSON:uploadDictionary];
 }
 

@@ -17,7 +17,6 @@
 
 + (NSString *)uploadOrder:(NSString*)data
 {
-    NSLog(@"%@", data);
     return [REST_API postPath:[kRootURL stringByAppendingString:kOrder] data:data];
 }
 
