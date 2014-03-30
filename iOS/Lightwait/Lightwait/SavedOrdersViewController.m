@@ -77,8 +77,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableDictionary *retrievedOrder = [[NSMutableDictionary alloc] initWithDictionary:[SavedOrdersManager loadOrder:[savedOrdersArray objectAtIndex:[indexPath row]]]];
-    NSString *jsonString = [JSONConverter convertNSMutableDictionaryToJSON:retrievedOrder];
-    
+
     [self showAlert:@"Order" message:@"Successful Order"];
 }
 

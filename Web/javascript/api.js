@@ -32,15 +32,16 @@ $(document).ready(function(){
    }
 
    function formToJSON() {
-      return JSON.stringify({
-         "user_id" : "1",
-         "hasFries" : "1",
-         "timePlaced" : "2014-03-029 12:04:01",
-         "isActive" : "1",
-         "base": "Hamburger", 
-         "bread": "White", 
-         "cheese": "Cheddar"
-         });
+      return JSON.stringify(
+      {
+       "bread" : "White",
+       "base" : "Hamburger",
+       "cheese" : "American",
+       "topping" : "Lettuce",
+       "timePlaced" : "2014-03-30 16:54:10",
+       "user_id" : "1",
+       "hasFries" : "1"
+    });
    }
 
    $('#apiTestButton').click(function() {

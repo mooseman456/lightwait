@@ -12,9 +12,7 @@
 @interface REST_API : NSObject
 
 + (NSDictionary*)getPath:(NSString*)resource;
-+ (NSDictionary*)postPath:(NSString*)resource;
-+ (NSDictionary*)putPath:(NSString*)resource;
-+ (NSDictionary*)deletePath:(NSString*)resource;
++ (NSString *)postPath:(NSString*)resource data:(NSString*)dataString;
 + (bool)testConnection:(NSString*)resource;
 
 @end
