@@ -34,13 +34,13 @@ $(document).ready(function(){
    function formToJSON() {
       return JSON.stringify({
          "user_id" : "25",
-         "hasFries" : "1",
          "timePlaced" : "2014-03-029 12:04:01",
          "isActive" : "1",
          "base": "Hamburger", 
          "bread": "White", 
          "cheese": "Cheddar",
-         "toppings": [ "Pineapple", "Jalapeno", "Lettuce", "Chipotle Ranch" ]
+         "toppings": [ "Pineapple", "Jalapeno", "Lettuce", "Chipotle Ranch" ],
+         "fries": "Regular"
          });
    }
 

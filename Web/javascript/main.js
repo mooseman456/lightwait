@@ -11,7 +11,8 @@ $(document).ready(function(){
    client.send();
    var orders;
    var numOrders=0;
-   var currentPage=0;
+   var currentPage=1;
+   var maxPage=1;
    //waits for the names.csv to be successfully sent before running code
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
@@ -42,19 +43,20 @@ $(document).ready(function(){
       //TODO: that ^
       //Previous page arrow
       $('div.navigation img[alt~="Previous"]').click(function() {
-         if (currentPage > 0)
+         if (currentPage > 1) {
             currentPage--;
-         updatePagenumbers();
-         updateCurrentWindow();
+            //updatePagenumbers();
+            updateCurrentWindow();
+         }
       });
       
       //Next page arrow
       $('div.navigation img[alt~="Next"]').click(function() {
-         if(currentPage < Math.floor(orders.length)/8-1) {
+         if(currentPage < maxPage) {
             currentPage++;
+            //updatePagenumbers();
+            updateCurrentWindow();
          }
-         updatePagenumbers();
-         updateCurrentWindow();
       });
 
       //Recall button
@@ -63,31 +65,20 @@ $(document).ready(function(){
          //TODO: Bring up the most recently bumped order
          //i.e. Retrieve from the database, the order most recently bumped
       });
-
-      //Bump button
-      /*
-      $('.bump').click(function(event) {
-         console.log("Bump");
-         event.target.parentNode.remove();
-         var index = event.target.parentNode.id.match(/order(\d)/)[1];
-         orders.slice(index,index+1);
-         pushOrderToWindow(9);
-         //TODO
-         //Order fill
-         //Add the order to the bumped database (or whatever that is)
-      });
-      */
    }
 
    /*******************/
    /*   Avilability   */
    /*******************/
-   var vClient = new XMLHttpRequest();     
-   vClient.open('GET', '../Resources/sampleAvail.json', true);
-   vClient.send();
-   vClient.onreadystatechange = function() {     
-      if(vClient.readyState===4 && vClient.status===200){
-         loadAvailChart(vClient);
+   //Change this to support Ajax instead!!!!
+   if(document.getElementsByClassName("mainForm").length>0){ 
+      var vClient = new XMLHttpRequest();     
+      vClient.open('GET', '../Resources/sampleAvail.json', true);
+      vClient.send();
+      vClient.onreadystatechange = function() {     
+         if(vClient.readyState===4 && vClient.status===200){
+            loadAvailChart(vClient);
+         }
       }
    }
 
@@ -98,7 +89,8 @@ $(document).ready(function(){
    // Update current window
    function updateCurrentWindow() {
       $('div.window').empty();
-      for(var i=currentPage*8; i<currentPage*8+8; i++) {
+      updatePagenumbers();
+      for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length-1; i++) {
          pushOrderToWindow(i);
       }
    }
@@ -121,7 +113,6 @@ $(document).ready(function(){
       orderElement.children('button').click(function(event) {
          orderElement.remove();
          var index = event.target.parentNode.id.match(/order(\d)/)[1];
-         console.log("index: "+index);
          orders.splice(index,1);
          //TODO: send this information to the database
          updatePagenumbers();
@@ -131,7 +122,11 @@ $(document).ready(function(){
 
    // UPDATE PAGENUMBERS
    function updatePagenumbers() {
-      $('#page_number').html((currentPage+1) + "/" + Math.floor(orders.length/8+1));
+      maxPage = Math.ceil((orders.length-1)/8);
+      if (maxPage < currentPage) {
+         currentPage = maxPage;
+      }
+      $('#page_number').html((currentPage) + "/" + maxPage);
    }
 });
 
@@ -149,17 +144,15 @@ function updateSidebar(orders) {
       } else {
          baseTypeCount[orders[i].Base] = 1;
       }
-      // TODO:
-      // Add the info in baseTypeCount to the html
    }
-   console.log("sidebar info");
    for(var key in baseTypeCount) {
       var value = baseTypeCount[key];
       $("#quantityList").append("<span>"+key+"="+value+"</span><br/>");
    }
 }
 
-//Load Availability C
+//Load Availability 
+
 //loads in the availability json into html and checks available items
 function loadAvailChart(vClient){
    availTest=JSON.parse(vClient.responseText);
@@ -182,40 +175,21 @@ function loadAvailChart(vClient){
          }
       }
    }
-
-
-
-   $(".mainForm").append("<input class=\"submitAvail\" type=\"submit\" value=\"Update Availability\">");
-   $(".mainForm input[type=\"submit\"]").click(function(event){
-      event.preventDefault();
+   //updates availability json when you navaigate from page.
+   $(window).on("beforeunload", function() {
       for(var g=0;g<availTest.length; g++){
          for(var h=1; h<availTest[g].length; h++){
             var inputPos="body > div > form > div:nth-child("+(g+1)+") > input:nth-child("+(h*3)+")";
             console.log(availTest[g][h].name+",--- "+availTest[g][h].available+", ---"+$(inputPos).is(":checked"));
-            //console.log($(inputPos));
             if(availTest[g][h].available!==$(inputPos).is(":checked")){
                availTest[g][h].available=!availTest[g][h].available;
                console.log(availTest[g][h].available);
-
             }
-
          }
       }
-
+      //Send the json back to the server here!!!
    });
 }
-
-function returnItem(ingredient, jsonObject){
-   for(var i=0; i<jsonObject.length; i++){
-      for(var k=1; k<jsonObject[i].length; k++){
-         if(jsonObject[i][k].name===ingredient){
-            return [i,k];
-         }
-      }
-   }
-}
-
-
   
 var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 getMenuData();
@@ -240,6 +214,10 @@ function getMenuData() {
          $('#menuForm').append("</ul><ul id=\"toppingsMenu\">");
          for (var i=0; i<data['Toppings'].length; i++){
             $('#menuForm').append("<li> <input type=\"checkbox\" name=\"toppingType\" id=\"" + data['Toppings'][i] + "\" value=\"" + data['Toppings'][i] + "\"> <label for=\"" + data['Toppings'][i] + "\">" + data['Toppings'][i] + "</label></li>");
+         }
+         $('#menuForm').append("</ul><ul id=\"fryMenu\">");
+         for (var i=0; i<data['Fries'].length; i++){
+            $('#menuForm').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i] + "\" value=\"" + data['Fries'][i] + "\"> <label for=\"" + data['Fries'][i] + "\">" + data['Fries'][i] + "</label></li>");
          }
          $('#menuForm').append("</ul><input type=\"submit\" value=\"Submit Order\">");
 
