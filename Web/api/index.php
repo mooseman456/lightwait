@@ -65,17 +65,19 @@ function getMenuData() {
   $query  = "SELECT name FROM Bases WHERE available = 1;";
   $query .= "SELECT name FROM Breads WHERE available = 1;";
   $query .= "SELECT name FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name FROM Toppings WHERE available = 1";
+  $query .= "SELECT name FROM Toppings WHERE available = 1;";
+  $query .= "SELECT name FROM Fries WHERE available = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
     // Arrays that will hold all menu data
-    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings");
+    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
     $baseArray = array();
     $breadArray = array();
     $cheeseArray = array();
     $toppingArray = array();
-    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray);
+    $friesArray = array();
+    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
     $menuIndex = -1;
 
     while ($mysqli->more_results()) {
