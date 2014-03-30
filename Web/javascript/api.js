@@ -2,17 +2,6 @@ $(document).ready(function(){
 
    var rootURL = "http://localhost/lightwait/Web/api/index.php";
 
-   function getActiveOrders() {
-      $.ajax({
-         type: 'GET',
-         url: rootURL + "/activeorders",
-         dataType: "json", // data type of response
-         success: function(data){   
-            console.log(data);
-         }
-      });
-   }
-
    function postOrder(json) {
       $.ajax({
          type: 'POST',

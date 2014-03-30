@@ -6,14 +6,42 @@ $(document).ready(function(){
    //Populate order information from JSON
    //This displays ten orders from the order queue in the chef queue window
    //TODO: 1st step, static (update when you refresh the pagae)
-   var client = new XMLHttpRequest();     
-   client.open('GET', '../Resources/SampleOrderData.json', true);
-   client.send();
+      
+
+
+   // var client = new XMLHttpRequest();     
+   // client.open('GET', '../Resources/SampleOrderData.json', true);
+   // client.send();
    var orders;
+   getActiveOrders();
+   function getActiveOrders() {
+      $.ajax({
+         type: 'GET',
+         url: "http://localhost/lightwait/Web/api/index.php/activeorders",
+         dataType: "json", // data type of response
+         success: function(data){  
+            console.log(data);
+            orders = data;
+            //Set the base count values in the side bar
+            //THIS IS OUTSIDE THE .ready()!!
+            updateSidebar(orders);
+
+            //Update order window
+            //THIS IS INSIDE THE .ready()!!
+            updateCurrentWindow();
+
+            //Set the click listeners
+            //THIS IS INSIDE THE .ready()!!
+            setClickListeners();
+         }
+      });
+   }
+   getActiveOrders();
    var numOrders=0;
    var currentPage=1;
    var maxPage=1;
    //waits for the names.csv to be successfully sent before running code
+   /*
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
          var doc=client.responseText;  //store text in doc
@@ -33,6 +61,7 @@ $(document).ready(function(){
          setClickListeners();
       }
    };
+   */
    
    /***********************/
    /*   Event Listeners   */
@@ -192,6 +221,10 @@ function loadAvailChart(vClient){
       //Send the json back to the server here!!!
    });
 }
+
+/************/
+/*   REST   */
+/************/
   
 var rootURL = "http://localhost/lightwait/Web/api/index.php";
 getMenuData();
@@ -226,7 +259,6 @@ function getMenuData() {
       }
 
    });
-
 }
 $('#menuForm').submit(function(e){
    e.preventDefault();
@@ -240,5 +272,5 @@ $('#menuForm').submit(function(e){
       "bread": "White", 
       "cheese": "Cheddar"
    });
-})
+});
 
