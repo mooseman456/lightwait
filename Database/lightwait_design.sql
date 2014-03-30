@@ -61,7 +61,7 @@ CREATE TABLE Orders (
 	user_id INT(30) NOT NULL,
 	bread_id INT(30) NOT NULL,
 	base_id INT(30) NOT NULL,
-	cheese_id INT(30) DEFAULT 0,
+	cheese_id INT(30) DEFAULT 5,
 	hasFries BOOLEAN DEFAULT 0,
 	timePlaced TIMESTAMP NOT NULL DEFAULT 0,
 	timeFinished TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
