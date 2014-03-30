@@ -182,40 +182,21 @@ function loadAvailChart(vClient){
          }
       }
    }
-
-
-
-   $(".mainForm").append("<input class=\"submitAvail\" type=\"submit\" value=\"Update Availability\">");
-   $(".mainForm input[type=\"submit\"]").click(function(event){
-      event.preventDefault();
+   //updates availability json when you navaigate from page.
+   $(window).on("beforeunload", function() {
       for(var g=0;g<availTest.length; g++){
          for(var h=1; h<availTest[g].length; h++){
             var inputPos="body > div > form > div:nth-child("+(g+1)+") > input:nth-child("+(h*3)+")";
             console.log(availTest[g][h].name+",--- "+availTest[g][h].available+", ---"+$(inputPos).is(":checked"));
-            //console.log($(inputPos));
             if(availTest[g][h].available!==$(inputPos).is(":checked")){
                availTest[g][h].available=!availTest[g][h].available;
                console.log(availTest[g][h].available);
-
             }
-
          }
       }
-
+      //Send the json back to the server here!!!
    });
 }
-
-function returnItem(ingredient, jsonObject){
-   for(var i=0; i<jsonObject.length; i++){
-      for(var k=1; k<jsonObject[i].length; k++){
-         if(jsonObject[i][k].name===ingredient){
-            return [i,k];
-         }
-      }
-   }
-}
-
-
   
 var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 getMenuData();
