@@ -122,9 +122,19 @@ INSERT INTO `Toppings` (`topping_id`, `name`, `available`) VALUES
 (10, 'Bistro Sauce', 1),
 (11, 'Chipotle Ranch', 1);
 
-INSERT INTO `Users` (`user_id`, `fName`, `lName`, `email`, `password`, `phoneNumber`) VALUES
-(25, 'John', 'Pinkerton', 'jpink@poop.com', 'ding', '8795468253'),
-(86, 'Jimmy', 'Devlin', 'jdevlin@ding.com', 'poop', '8796531523'),
-(789, 'Ryan', 'Sligh', 'rsligh@sneaky.com', 'burgler', '2564532156'),
-(835, 'Patrick', 'Leopard', 'pleopard@spots.com', 'grrr', '8256431589'),
-(976, 'Joe', 'TheSaint', 'jsaint@holy.com', 'angel', '3958203958');
+INSERT INTO `Users` (`fName`, `lName`, `email`, `password`, `phoneNumber`) VALUES
+('John', 'Pinkerton', 'jpink@poop.com', 'ding', '8795468253'),
+('Jimmy', 'Devlin', 'jdevlin@ding.com', 'poop', '8796531523'),
+('Ryan', 'Sligh', 'rsligh@sneaky.com', 'burgler', '2564532156'),
+('Patrick', 'Leopard', 'pleopard@spots.com', 'grrr', '8256431589'),
+('Joe', 'TheSaint', 'jsaint@holy.com', 'angel', '3958203958');
+
+INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced) 
+				VALUES	(1, 1, 1, 1, 1, '2014-03-30 12:04:03'),
+						(2, 1, 2, 2, 2, '2014-03-30 12:04:04'),
+						(3, 2, 3, 3, 2, '2014-03-30 12:04:05'),
+						(4, 3, 4, 4, 2, '2014-03-30 12:04:06'),
+						(5, 3, 7, 4, 3, '2014-03-30 12:04:07');
+
+
+
