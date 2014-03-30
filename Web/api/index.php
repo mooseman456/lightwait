@@ -47,7 +47,7 @@ function addOrder() {
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$order['user_id'].", ". $order['hasFries'] .", \"". $order['timePlaced'] ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
+            VALUES (".$order['user_id'].", \"". $order['timePlaced'] ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
             (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
             (SELECT fry_id FROM Fries WHERE name = \"".$order['fries']."\"))";
 
