@@ -87,7 +87,7 @@ $(document).ready(function(){
    vClient.send();
    vClient.onreadystatechange = function() {     
       if(vClient.readyState===4 && vClient.status===200){
-         loadAvailChat(vClient);
+         loadAvailChart(vClient);
       }
    }
 
@@ -152,15 +152,20 @@ function updateSidebar(orders) {
       // TODO:
       // Add the info in baseTypeCount to the html
    }
+   console.log("sidebar info");
+   for(var key in baseTypeCount) {
+      var value = baseTypeCount[key];
+      $("#quantityList").append("<span>"+key+"="+value+"</span><br/>");
+   }
 }
 
-
+//Load Availability C
 //loads in the availability json into html and checks available items
-function loadAvailChat(vClient){
+function loadAvailChart(vClient){
    availTest=JSON.parse(vClient.responseText);
    //console.log(availTest);
 
-   for(var k=0; k<availTest.length; k++){
+   for(var k=0; k<availTest.length; k++){    //does some cool stuff
       var category=availTest[k][0];
       $(".mainForm").append("<div class=\"avail\"></div>");
       var currentItem=".mainForm div:nth-child("+(k+1)+")";

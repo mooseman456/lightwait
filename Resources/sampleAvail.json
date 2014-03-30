@@ -10,6 +10,12 @@
 		},
 		{	"name": "BlackBean",
 			"available": true
+		},
+		{	"name": "ChickenStrips",
+			"available": true
+		},
+		{	"name": "Turkey",
+			"available": true
 		}
 	],
 	[   "Sauce",
@@ -19,5 +25,36 @@
 			"available": true},
 		{	"name": "MincedOnions",
 			"available": false}
+	],
+	[	"Bread",
+		{	"name": "White",
+			"available": true},
+		{	"name": "Wheat",
+			"available": true},
+		{	"name": "TexasToast",
+			"available": false}
+	],
+	[	"Cheese",
+		{	"name": "American",
+			"available": false},
+		{	"name": "PepperJack",
+			"available": true},
+		{	"name": "Swiss",
+			"available": true}
+	],
+	[	"Veggie",
+		{	"name": "Lettuce",
+			"available": true},
+		{	"name": "Tomato",
+			"available": true},
+		{	"name": "Jalapeno",
+			"available": false},
+		{	"name": "Bacon",
+			"available": true},
+		{	"name": "Pickle",
+			"available": false},
+		{	"name": "Onion",
+			"available": false}
 	]
+
 ]
