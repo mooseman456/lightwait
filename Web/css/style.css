@@ -138,17 +138,57 @@ nav a:hover {
 	margin: 0 10%;
 }
 
-/***************/
-/*    LogIn    */
-/***************/
+/*******************/
+/*    LogIn Page   */
+/*******************/
 
-.login{
-	background-color: rgba(250,105,0,0.4);
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width:20%;
+/*TODO: delete this*/
+#apiTestButton {
+	display:none;
+}
+
+.content {
+	display: block:;
+	width:50%;
+	min-height: wrap;
+	margin: 0 auto;
+	height: 90%;
+	border-right: 1px solid rgba(0,0,0,0.15);
+	border-left: 1px solid rgba(0,0,0,0.15);
+}
+
+.content > div {
+	border-bottom: 1px solid rgba(0,0,0,0.15);;
+}
+
+.content >div:last-child {
+	border-bottom: none;
+}
+.accountForm {
+	display:block;
 	text-align: center;
+	padding:1em;
+	width:100;
+}
+
+.accountForm ul {
+	list-style: none;
+}
+
+.accountForm li {
+	float: left;
+}
+
+.accountForm input[type="submit"] {
+	clear:left;
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.login h1 {
+	margin:0.4em;
+	padding:0;
 }
 
 .textForm{
