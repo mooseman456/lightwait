@@ -39,7 +39,8 @@ $(document).ready(function(){
          "isActive" : "1",
          "base": "Hamburger", 
          "bread": "White", 
-         "cheese": "Cheddar"
+         "cheese": "Cheddar",
+         "toppings": [ "Pineapple", "Jalapeno", "Lettuce", "Chipotle Ranch" ]
          });
    }
 

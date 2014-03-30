@@ -47,9 +47,16 @@ function addOrder() {
   
   $mysqli->query($query);
 
+  $orderID = $mysqli->insert_id;
 
-  $return = json_encode($query);
-  echo $return;
+  foreach($order['toppings'] as $key=>$val) {
+    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('$orderID', (SELECT topping_id FROM Toppings WHERE name='".$order['toppings'][$key]."'))";
+    $mysqli->query($query);
+
+    $return = json_encode($query);
+    echo $return;
+  }
+
 }
 
 function getMenuData() {
