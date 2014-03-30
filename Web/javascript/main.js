@@ -241,6 +241,10 @@ function getMenuData() {
          for (var i=0; i<data['Toppings'].length; i++){
             $('#menuForm').append("<li> <input type=\"checkbox\" name=\"toppingType\" id=\"" + data['Toppings'][i] + "\" value=\"" + data['Toppings'][i] + "\"> <label for=\"" + data['Toppings'][i] + "\">" + data['Toppings'][i] + "</label></li>");
          }
+         $('#menuForm').append("</ul><ul id=\"fryMenu\">");
+         for (var i=0; i<data['Fries'].length; i++){
+            $('#menuForm').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i] + "\" value=\"" + data['Fries'][i] + "\"> <label for=\"" + data['Fries'][i] + "\">" + data['Fries'][i] + "</label></li>");
+         }
          $('#menuForm').append("</ul><input type=\"submit\" value=\"Submit Order\">");
 
       }
