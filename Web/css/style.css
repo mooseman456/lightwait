@@ -182,3 +182,6 @@ div.order-wrapper {
 	background-color: rgba(250,105,0,0.4);
 	margin-left: 3px;
 }
+.mainForm input[type="submit"]{
+	clear: left;
+}

@@ -179,8 +179,7 @@ function updateSidebar(orders) {
       for(var k=0; k<availTest.length; k++){
          var category=availTest[k][0];
          $(".mainForm").append("<div class=\"avail\"></div>");
-         var z=k+1;
-         var currentItem=".mainForm div:nth-child("+z+")";
+         var currentItem=".mainForm div:nth-child("+(k+1)+")";
 
          $(currentItem).append("<h2>"+category+"</h2>");
          for(var j=1; j<availTest[k].length; j++){
@@ -189,13 +188,31 @@ function updateSidebar(orders) {
             $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"></br>");
 
             if(availTest[k][j].available){
-               var z2=j*3;
-               var evil="body > div > form > div:nth-child("+z+") > input:nth-child("+z2+")";
+               var evil="body > div > form > div:nth-child("+(k+1)+") > input:nth-child("+(j*3)+")";
                $(evil).prop("checked", true);
             }
          }
       }
-      //console.log(returnItem("Chipotle", availTest)); //testing
+
+      $(".mainForm").append("<input class=\"submitAvail\" type=\"submit\" value=\"Update Availability\">");
+      $(".mainForm input[type=\"submit\"]").click(function(event){
+         event.preventDefault();
+         for(var g=0;g<availTest.length; g++){
+            for(var h=1; h<availTest[g].length; h++){
+               var inputPos="body > div > form > div:nth-child("+(g+1)+") > input:nth-child("+(h*3)+")";
+               console.log(availTest[g][h].name+",--- "+availTest[g][h].available+", ---"+$(inputPos).is(":checked"));
+               //console.log($(inputPos));
+               if(availTest[g][h].available!==$(inputPos).is(":checked")){
+                  availTest[g][h].available=!availTest[g][h].available;
+                  console.log(availTest[g][h].available);
+
+               }
+
+            }
+         }
+
+      });
+
    }
 
    function returnItem(ingredient, jsonObject){
