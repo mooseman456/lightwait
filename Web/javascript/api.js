@@ -2,17 +2,6 @@ $(document).ready(function(){
 
    var rootURL = "http://localhost/lightwait/Web/api/index.php";
 
-   function getActiveOrders() {
-      $.ajax({
-         type: 'GET',
-         url: rootURL + "/activeorders",
-         dataType: "json", // data type of response
-         success: function(data){   
-            console.log(data);
-         }
-      });
-   }
-
    function postOrder(json) {
       $.ajax({
          type: 'POST',
@@ -33,15 +22,18 @@ $(document).ready(function(){
 
    function formToJSON() {
       return JSON.stringify({
-         "user_id" : "25",
-         "timePlaced" : "2014-03-029 12:04:01",
-         "isActive" : "1",
-         "base": "Hamburger", 
-         "bread": "White", 
-         "cheese": "Cheddar",
-         "toppings": [ "Pineapple", "Jalapeno", "Lettuce", "Chipotle Ranch" ],
-         "fries": "Regular"
-         });
+       "bread" : "White",
+       "toppings" : [
+                      "Lettuce",
+                      "Bacon",
+                      "Jalapeno"
+                      ],
+       "base" : "Turkey",
+       "cheese" : "American",
+       "fries" : "Regular",
+       "timePlaced" : "2014-03-30 17:37:25",
+       "user_id" : "1"
+    });
    }
 
    $('#apiTestButton').click(function() {

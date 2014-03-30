@@ -78,13 +78,10 @@
         tableView.dataSource = self;
         tableView.tag=i;
         
-#warning Multiple selection disabled for testing
-        /*
         // If the table is the toppings table, allow multiple selections
         if (i == [headerArray indexOfObject:@"Toppings"]) {
             tableView.allowsMultipleSelection=TRUE;
         }
-         */
         
         // Sets the view of each page and background color
         [self.scrollView addSubview:tableView];
@@ -302,7 +299,7 @@
         breadArray = [menuDictionary objectForKey:@"Breads"];
         cheeseArray = [menuDictionary objectForKey:@"Cheeses"];
         toppingsArray = [menuDictionary objectForKey:@"Toppings"];
-        friesArray = [[NSArray alloc] initWithObjects:@"1", @"0", nil];
+        friesArray = [menuDictionary objectForKey:@"Fries"];
         menuDataArray = [[NSArray alloc] initWithObjects:baseArray, breadArray, cheeseArray, toppingsArray, friesArray, nil];
         selectedToppings = [[NSMutableArray alloc] init];
     }
@@ -438,8 +435,9 @@
     [uploadDictionary setObject:[orderDictionary objectForKey:@"Bread"] forKey:@"bread"];
     [uploadDictionary setObject:[orderDictionary objectForKey:@"Cheese"] forKey:@"cheese"];
     [uploadDictionary setObject:[orderDictionary objectForKey:@"Toppings"] forKey:@"toppings"];
-    [uploadDictionary setObject:[orderDictionary objectForKey:@"Fries"] forKey:@"hasFries"];
+    [uploadDictionary setObject:[orderDictionary objectForKey:@"Fries"] forKey:@"fries"];
     
+    NSLog(@"%@", [JSONConverter convertNSMutableDictionaryToJSON:uploadDictionary]);
     return [JSONConverter convertNSMutableDictionaryToJSON:uploadDictionary];
 }
 
