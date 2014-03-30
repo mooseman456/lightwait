@@ -82,12 +82,15 @@ $(document).ready(function(){
    /*******************/
    /*   Avilability   */
    /*******************/
-   var vClient = new XMLHttpRequest();     
-   vClient.open('GET', '../Resources/sampleAvail.json', true);
-   vClient.send();
-   vClient.onreadystatechange = function() {     
-      if(vClient.readyState===4 && vClient.status===200){
-         loadAvailChart(vClient);
+   //Change this to support Ajax instead!!!!
+   if(document.getElementsByClassName("mainForm").length>0){ 
+      var vClient = new XMLHttpRequest();     
+      vClient.open('GET', '../Resources/sampleAvail.json', true);
+      vClient.send();
+      vClient.onreadystatechange = function() {     
+         if(vClient.readyState===4 && vClient.status===200){
+            loadAvailChart(vClient);
+         }
       }
    }
 
@@ -159,7 +162,8 @@ function updateSidebar(orders) {
    }
 }
 
-//Load Availability C
+//Load Availability 
+
 //loads in the availability json into html and checks available items
 function loadAvailChart(vClient){
    availTest=JSON.parse(vClient.responseText);
