@@ -11,7 +11,7 @@
 // Hidden methods interface
 @interface REST_API (hidden)
 
-+ (NSString*)sendRequest:(NSMutableURLRequest*)request;
++ (NSDictionary*)sendRequest:(NSMutableURLRequest*)request;
 
 @end
 
@@ -38,7 +38,7 @@
 
 @end
 
-
+// Public implementation
 @implementation REST_API
 
 + (NSDictionary*)getPath:(NSString*)resource
@@ -51,6 +51,30 @@
     
     // Set the request type to GET
     [request setHTTPMethod:@"GET"];
+    
+    // Return the results of the request
+    return [self sendRequest:request];
+}
+
++ (NSDictionary *)postPath:(NSString*)resource data:(NSString*)dataString
+{
+    // Create the link that will be used for the request
+    NSURL *nsurl = [NSURL URLWithString:[[NSString stringWithFormat:@"%@", resource] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    // Create the request
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nsurl];
+    
+    // Set the request type to POST
+    [request setHTTPMethod:@"POST"];
+    
+    // Convert the information to post to NSData
+    NSData *postData = [dataString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+    
+    // Set the values to the HTTP body
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
     
     // Return the results of the request
     return [self sendRequest:request];
