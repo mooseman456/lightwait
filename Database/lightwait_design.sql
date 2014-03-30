@@ -98,13 +98,13 @@ INSERT INTO `Bases` (`base_id`, `name`, `available`) VALUES
 (9, 'Double Meat', 1);
 
 INSERT INTO `Cheeses` (`cheese_id`, `name`, `available`) VALUES
-(1, 'No Cheese', 1)
+(1, 'No Cheese', 1),
 (2, 'American', 1),
 (3, 'Pepper Jack', 1),
 (4, 'Swiss', 1),
 (5, 'Extra Cheese', 1);
 
-INSERT INTO 'Fries' ('fry_id', 'name', 'available') VALUES
+INSERT INTO `Fries` (`fry_id`, `name`, `available`) VALUES
 (1, 'No Fries', 1),
 (2, 'Regular', 1),
 (3, 'Sweet Potato', 1);
