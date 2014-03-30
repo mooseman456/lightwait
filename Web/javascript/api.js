@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
-   var rootURL = "http://localhost/lightwait/Web/api/index.php/order";
+   var rootURL = "http://localhost/lightwait/Web/api/index.php";
 
-   function getAllOrders() {
+   function getActiveOrders() {
       $.ajax({
          type: 'GET',
-         url: rootURL,
+         url: rootURL + "/activeorders",
          dataType: "json", // data type of response
          success: function(data){   
             console.log(data);
@@ -17,7 +17,7 @@ $(document).ready(function(){
       $.ajax({
          type: 'POST',
          contentType: 'application/json',
-         url: rootURL,
+         url: rootURL + "/order",
          dataType: "json",
          data: json,
          success: function(data, textStatus, jqXHR){
@@ -39,6 +39,7 @@ $(document).ready(function(){
          "base": "Hamburger", 
          "bread": "White", 
          "cheese": "Cheddar",
+         "toppings": [ "Pineapple", "Jalapeno", "Lettuce", "Chipotle Ranch" ],
          "fries": "Regular"
          });
    }

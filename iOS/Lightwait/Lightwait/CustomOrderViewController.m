@@ -78,10 +78,13 @@
         tableView.dataSource = self;
         tableView.tag=i;
         
+#warning Multiple selection disabled for testing
+        /*
         // If the table is the toppings table, allow multiple selections
         if (i == [headerArray indexOfObject:@"Toppings"]) {
             tableView.allowsMultipleSelection=TRUE;
         }
+         */
         
         // Sets the view of each page and background color
         [self.scrollView addSubview:tableView];
@@ -290,8 +293,7 @@
 
 - (void)initializeMenuArrays
 {
-#warning Change this link for release
-    NSDictionary *menuDictionary = [REST_API getPath:@"http://localhost:8888/lightwait/Web/api/index.php/menu"];
+    NSDictionary *menuDictionary = [DataManager getMenu];
     
     if (menuDictionary) {
         // Menu data arrays
@@ -300,7 +302,7 @@
         breadArray = [menuDictionary objectForKey:@"Breads"];
         cheeseArray = [menuDictionary objectForKey:@"Cheeses"];
         toppingsArray = [menuDictionary objectForKey:@"Toppings"];
-        friesArray = [[NSArray alloc] initWithObjects:@"Fries", @"No Fries", nil];
+        friesArray = [[NSArray alloc] initWithObjects:@"1", @"0", nil];
         menuDataArray = [[NSArray alloc] initWithObjects:baseArray, breadArray, cheeseArray, toppingsArray, friesArray, nil];
         selectedToppings = [[NSMutableArray alloc] init];
     }
@@ -312,7 +314,7 @@
 - (void)initializeOrderDictionary
 {
     // Initialize order dictionary
-    orderDictionary = [[NSMutableDictionary alloc] initWithDictionary:[REST_API getPath:@"http://localhost:8888/lightwait/Web/api/index.php/menu"]];
+    orderDictionary = [[NSMutableDictionary alloc] init];
     
     // Set values that can be none to none so that the user does not have to
     // should they not want a particular item
@@ -383,6 +385,8 @@
                 if ([self checkOrderName:orderName]) {
                     // Save the order and alert the user
                     [SavedOrdersManager saveOrder:orderName order:orderDictionary];
+
+                    [DataManager uploadOrder:[self orderBuilder]];
                     [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
                 }
                 else {
@@ -392,6 +396,7 @@
             }
             else {
                 // Successful order, alert the user
+                [DataManager uploadOrder:[self orderBuilder]];
                 [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly." tagNumber:2];
             }
             break;
@@ -414,6 +419,28 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
     alertView.tag = tag;
     [alertView show];
+}
+
+- (NSString *)orderBuilder
+{
+    NSDate *currentTime = [NSDate date];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    NSString *currentTimeString = [dateFormat stringFromDate:currentTime];
+    
+#warning This is a temporary solution
+    
+    uploadDictionary = [[NSMutableDictionary alloc] init];
+    
+    [uploadDictionary setObject:currentTimeString forKey:@"timePlaced"];
+    [uploadDictionary setObject:@"1" forKey:@"user_id"];
+    [uploadDictionary setObject:[orderDictionary objectForKey:@"Base"] forKey:@"base"];
+    [uploadDictionary setObject:[orderDictionary objectForKey:@"Bread"] forKey:@"bread"];
+    [uploadDictionary setObject:[orderDictionary objectForKey:@"Cheese"] forKey:@"cheese"];
+    [uploadDictionary setObject:[orderDictionary objectForKey:@"Toppings"] forKey:@"toppings"];
+    [uploadDictionary setObject:[orderDictionary objectForKey:@"Fries"] forKey:@"hasFries"];
+    
+    return [JSONConverter convertNSMutableDictionaryToJSON:uploadDictionary];
 }
 
 @end

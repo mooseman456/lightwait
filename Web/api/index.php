@@ -8,6 +8,8 @@ $app = new \Slim\Slim();
 $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
 $app->post('/order', 'addOrder');
+$app->post('/webOrder', 'webOrder');
+$app->get('/activeorders', 'getActiveOrders');
 
 $app->run();
 
@@ -24,6 +26,21 @@ function getOrders() {
 	}
 }
 
+function webOrder() {
+  $mysqli = getConnection();
+  date_default_timezone_set('America/Chicago');
+  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
+            VALUES (25, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
+            (SELECT fry_id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+  //echo $query;
+  $mysqli->query($query);
+
+  echo "<h2>Thank you for your order!</h2>";
+  echo "<h3>It has been received and is underway!</h3>";
+  echo "<a href=http://localhost/lightwait/Web/index.php>Return home</a>";
+}
+
 function addOrder() {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
@@ -36,9 +53,16 @@ function addOrder() {
 
   $mysqli->query($query);
 
+  $orderID = $mysqli->insert_id;
 
-  $return = json_encode($query);
-  echo $return;
+  foreach($order['toppings'] as $key=>$val) {
+    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('$orderID', (SELECT topping_id FROM Toppings WHERE name='".$order['toppings'][$key]."'))";
+    $mysqli->query($query);
+
+    $return = json_encode($query);
+    echo $return;
+  }
+
 }
 
 function getMenuData() {
@@ -88,10 +112,36 @@ function getMenuData() {
   $mysqli->close();
 }
 
+function getActiveOrders() {
+  $mysqli = getConnection();
+
+  // Check mysqli connection
+  if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+  }
+
+  $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as breadName, Bases.name as baseName, Cheeses.name as cheeseName, Fries.name as fryType, Orders.timePlaced 
+            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.bread_id JOIN Bases 
+            ON Orders.base_id=Bases.base_id JOIN Cheeses ON Orders.cheese_id=Cheeses.cheese_id JOIN Fries ON Fries.fry_id=Orders.fry_id 
+            WHERE Orders.isActive='1'";
+
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+  
+  while ($row = $result->fetch_assoc()) {
+           $array[] = $row;
+  }
+
+  $encoded = json_encode($array);
+  printf($encoded);
+
+  $mysqli->close();
+}
+
 function getConnection() {
 	$dbhost="localhost";
 	$dbuser="root";
-	$dbpass="arthas77";
+	$dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
   if($db->connect_errno > 0){

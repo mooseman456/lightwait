@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JSONConverter.h"
 #import "SavedOrdersManager.h"
-#import "REST_API.h"
+//#import "REST_API.h"
+#import "DataManager.h"
 
 @interface CustomOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 {
@@ -22,6 +23,7 @@
     NSArray *menuDataArray;
     NSMutableArray *selectedToppings;
     NSMutableDictionary *orderDictionary;
+    NSMutableDictionary *uploadDictionary;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
