@@ -1,5 +1,4 @@
 # Create the lighwait database
-
 DROP DATABASE IF EXISTS lightwait;
 
 CREATE DATABASE lightwait;
@@ -20,6 +19,13 @@ CREATE TABLE Employees (
 	fName VARCHAR(255),
 	lName VARCHAR(255),
 	Primary Key (emp_id)
+) ENGINE=InnoDB;
+
+CREATE TABLE Fries (
+	fry_id INT(30) NOT NULL,
+	name VARCHAR(30),
+	available BOOLEAN DEFAULT 1,
+	Primary Key(fry_id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Breads (
@@ -61,8 +67,8 @@ CREATE TABLE Orders (
 	user_id INT(30) NOT NULL,
 	bread_id INT(30) NOT NULL,
 	base_id INT(30) NOT NULL,
-	cheese_id INT(30) DEFAULT 5,
-	hasFries BOOLEAN DEFAULT 0,
+	cheese_id INT(30) DEFAULT 0,
+	fry_id INT(30) DEFAULT 0,
 	timePlaced TIMESTAMP NOT NULL DEFAULT 0,
 	timeFinished TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	isActive BOOLEAN DEFAULT 1,
@@ -70,7 +76,8 @@ CREATE TABLE Orders (
 	Foreign Key (user_id) REFERENCES Users(user_id),
 	Foreign Key (bread_id) REFERENCES Breads(bread_id),
 	Foreign Key (base_id) REFERENCES Bases(base_id),
-	Foreign Key (cheese_id) REFERENCES Cheeses(cheese_id)
+	Foreign Key (cheese_id) REFERENCES Cheeses(cheese_id),
+	Foreign Key (fry_id) REFERENCES Fries(fry_id)
 ) Engine=InnoDB;
 
 # INSERT some ingredients and Users
@@ -91,11 +98,16 @@ INSERT INTO `Bases` (`base_id`, `name`, `available`) VALUES
 (9, 'Double Meat', 1);
 
 INSERT INTO `Cheeses` (`cheese_id`, `name`, `available`) VALUES
-(1, 'American', 1),
-(2, 'Pepper Jack', 1),
-(3, 'Swiss', 1),
-(4, 'Extra Cheese', 1),
-(5, 'No Cheese', 1);
+(1, 'No Cheese', 1)
+(2, 'American', 1),
+(3, 'Pepper Jack', 1),
+(4, 'Swiss', 1),
+(5, 'Extra Cheese', 1);
+
+INSERT INTO 'Fries' ('fry_id', 'name', 'available') VALUES
+(1, 'No Fries', 1),
+(2, 'Regular', 1),
+(3, 'Sweet Potato', 1);
 
 INSERT INTO `Toppings` (`topping_id`, `name`, `available`) VALUES
 (1, 'Lettuce', 1),
