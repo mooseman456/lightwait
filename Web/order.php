@@ -6,7 +6,7 @@
 	<div class="order-wrapper">
 		<p>Add items to your order by clicking on them in the menu</p>
 		<div id="menuWrapper" class="order-page">
-			<form id="menuForm" method="POST">
+			<form id="menuForm" method="POST" action="completeOrder.php">
 				<!-- <ul id="basesMenu">
 					<li>
 						<input type="radio" name="baseType" id=jsonName value=jsonName>

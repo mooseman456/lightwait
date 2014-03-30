@@ -17,7 +17,7 @@ $(document).ready(function(){
       if(client.readyState===4 && client.status===200){
          var doc=client.responseText;  //store text in doc
          orders=JSON.parse(doc);
-         console.log(client.responseText);
+         //console.log(client.responseText);
          
          //Set the base count values in the side bar
          //THIS IS OUTSIDE THE .ready()!!
@@ -217,8 +217,8 @@ function returnItem(ingredient, jsonObject){
 
 
   
-var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/menu";
-
+var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
+getMenuData();
 function getMenuData() {
    $.ajax({
       type: 'GET',
@@ -241,8 +241,24 @@ function getMenuData() {
          for (var i=0; i<data['Toppings'].length; i++){
             $('#menuForm').append("<li> <input type=\"checkbox\" name=\"toppingType\" id=\"" + data['Toppings'][i] + "\" value=\"" + data['Toppings'][i] + "\"> <label for=\"" + data['Toppings'][i] + "\">" + data['Toppings'][i] + "</label></li>");
          }
-         $('#menuForm').append("</ul>");
+         $('#menuForm').append("</ul><input type=\"submit\" value=\"Submit Order\">");
 
       }
+
    });
+
 }
+$('#menuForm').submit(function(e){
+   e.preventDefault();
+   
+   JSON.stringify({
+      "user_id" : "1",
+      "hasFries" : "1",
+      "timePlaced" : "2014-03-029 12:04:01",
+      "isActive" : "1",
+      "base": "Hamburger", 
+      "bread": "White", 
+      "cheese": "Cheddar"
+   });
+})
+
