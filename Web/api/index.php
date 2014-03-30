@@ -30,10 +30,10 @@ function addOrder() {
   $request = $app->request()->getBody();
   $order = json_decode($request);
   //$query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id)
-    //  VALUES ('".$order['user_id']."', '". $order['hasFries'] ."', '". $order['timePlaced'] ."', '1', (SELECT bread_id FROM Breads WHERE name = ".$order['bread'] ."), (SELECT base_id FROM Bases WHERE name = ".$order['base'] ."), 
-     //  (SELECT cheese_id FROM Cheeses WHERE name = ".$order['cheese']."))";
+  //    VALUES ('".$order->{'user_id'}."', '". $order->{'hasFries'} ."', '". $order->{'timePlaced'} ."', '1', (SELECT bread_id FROM Breads WHERE name = ".$order->{'bread'} ."), (SELECT base_id FROM Bases WHERE name = ".$order->{'base'} ."), 
+  //   (SELECT cheese_id FROM Cheeses WHERE name = ".$order->{'cheese'}."))";
 
-  $query = "INSERT INTO Bases (name) VALUES ('Test')";
+  //$query = "INSERT INTO Bases (name) VALUES ('Test')";
 
   $mysqli->query($query);
 
@@ -50,10 +50,10 @@ function getMenuData() {
     exit();
   }
 
-  $query  = "SELECT name FROM Bases;";
-  $query .= "SELECT name FROM Breads;";
-  $query .= "SELECT name FROM Cheeses;";
-  $query .= "SELECT name FROM Toppings";
+  $query  = "SELECT name FROM Bases WHERE available = 1;";
+  $query .= "SELECT name FROM Breads WHERE available = 1;";
+  $query .= "SELECT name FROM Cheeses WHERE available = 1;";
+  $query .= "SELECT name FROM Toppings WHERE available = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
