@@ -104,6 +104,11 @@ nav a:hover {
 	min-height:520px;
 }
 
+.sidebar #quantityList{
+	margin-left: 5%;
+	font-size: 20px;
+}
+
 .sidebar img {
 	height: 3.5em;
 	width:auto;
@@ -179,9 +184,18 @@ div.order-wrapper {
 .mainForm div{
 	display:block;
 	float:left;
+	width: 10%;
+	height:200px;
 	background-color: rgba(250,105,0,0.4);
 	margin-left: 3px;
 }
-.mainForm input[type="submit"]{
-	clear: left;
+.mainForm input[type="checkbox"]{
+	float:right;
+}
+.mainForm label{
+	font-size: 16px;
+}
+
+.avail h2{
+	text-align: center;
 }
