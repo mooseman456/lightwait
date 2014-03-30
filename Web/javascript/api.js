@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php/order";
+   var rootURL = "http://localhost/lightwait/Web/api/index.php/order";
 
    function getAllOrders() {
       $.ajax({
@@ -33,7 +33,7 @@ $(document).ready(function(){
 
    function formToJSON() {
       return JSON.stringify({
-         "user_id" : "1",
+         "user_id" : "25",
          "hasFries" : "1",
          "timePlaced" : "2014-03-029 12:04:01",
          "isActive" : "1",

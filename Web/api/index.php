@@ -99,8 +99,8 @@ function getMenuData() {
 
 function getConnection() {
 	$dbhost="localhost";
-	$dbuser= "joe";
-	$dbpass="root";
+	$dbuser="root";
+  $dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
   if($db->connect_errno > 0){
