@@ -116,7 +116,9 @@ $(document).ready(function(){
          orders.splice(index,1);
          //TODO: send this information to the database
          updatePagenumbers();
+         updateSidebar();
          updateCurrentWindow();
+
       });
    }
 
