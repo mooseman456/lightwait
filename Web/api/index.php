@@ -8,6 +8,7 @@ $app = new \Slim\Slim();
 $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
 $app->post('/order', 'addOrder');
+$app->post('/webOrder', 'webOrder');
 
 $app->run();
 
@@ -24,6 +25,17 @@ function getOrders() {
 	}
 }
 
+function webOrder() {
+  $mysqli = getConnection();
+  date_default_timezone_set('America/Chicago');
+  $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id) 
+            VALUES (25, true, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"))";
+  echo $query;
+  $mysqli->query($query);
+
+}
+
 function addOrder() {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
@@ -32,7 +44,7 @@ function addOrder() {
   $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id) 
             VALUES (".$order['user_id'].", ". $order['hasFries'] .", \"". $order['timePlaced'] ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
             (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"))";
-
+  
   $mysqli->query($query);
 
 
@@ -87,7 +99,7 @@ function getMenuData() {
 
 function getConnection() {
 	$dbhost="localhost";
-	$dbuser="root";
+	$dbuser= "joe";
 	$dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
