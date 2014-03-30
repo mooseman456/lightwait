@@ -191,12 +191,12 @@ function loadAvailChart(vClient){
    });
 }
   
-var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
+var rootURL = "http://localhost/lightwait/Web/api/index.php";
 getMenuData();
 function getMenuData() {
    $.ajax({
       type: 'GET',
-      url: rootURL,
+      url: rootURL + "/menu",
       dataType: "json", // data type of response
       success: function(data){  
          $('#menuForm').append("<ul id=\"basesMenu\">");  
