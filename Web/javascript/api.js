@@ -22,6 +22,7 @@ $(document).ready(function(){
          data: json,
          success: function(data, textStatus, jqXHR){
             console.log("Order uploaded");
+            console.log(data, textStatus, jqXHR);
          },
          error: function(jqXHR, textStatus, errorThrown){
             console.log("Order upload failed");
