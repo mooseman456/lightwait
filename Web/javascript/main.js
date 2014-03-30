@@ -6,12 +6,32 @@ $(document).ready(function(){
    //Populate order information from JSON
    //This displays ten orders from the order queue in the chef queue window
    //TODO: 1st step, static (update when you refresh the pagae)
-   var client = new XMLHttpRequest();     
-   client.open('GET', '../Resources/SampleOrderData.json', true);
-   client.send();
    var orders;
-   var numOrders=0;
-   var currentPage=0;
+   var currentPage=1;
+   var maxPage=1;
+   getActiveOrders();
+   function getActiveOrders() {
+      $.ajax({
+         type: 'GET',
+         url: "http://localhost/lightwait/Web/api/index.php/activeorders",
+         dataType: "json", // data type of response
+         success: function(data){  
+            orders = data;
+            console.log(data);
+            //Set the base count values in the side bar
+            //THIS IS OUTSIDE THE .ready()!!
+            updateSidebar(orders);
+
+            //Update order window
+            //THIS IS INSIDE THE .ready()!!
+            updateCurrentWindow();
+
+            //Set the click listeners
+            //THIS IS INSIDE THE .ready()!!
+            setClickListeners();
+         }
+      });
+   }
    //waits for the names.csv to be successfully sent before running code
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
@@ -98,18 +118,22 @@ $(document).ready(function(){
    // Update current window
    function updateCurrentWindow() {
       $('div.window').empty();
-      for(var i=currentPage*8; i<currentPage*8+8; i++) {
+      updatePagenumbers();
+      for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length; i++) {
          pushOrderToWindow(i);
       }
    }
 
    // Push order to window
    function pushOrderToWindow(index) {
-      var orderElement = $('<section class="queue" id="order'+index+'"><h1>Order #'+index+'</h1><ul></ul></section>');
+      var orderId = orders[index].order_id;
+      var timeStamp = orders[index].timePlaced;
+      var orderElement = $('<section class="queue" id="order'+orderId+'"><h1>Order #'+orderId+'</h1><ul></ul></section>');
       $('div.window').append(orderElement);
       $.each(orders[index], function(key,val) {
          if ($.isArray(val)) {
             val.forEach( function(item) {
+   
                $(orderElement.children('ul')).append('<li>'+item+'</li>');
             });
          } else {
@@ -222,20 +246,25 @@ function getMenuData() {
       success: function(data){  
          $('#menuForm').append("<ul id=\"basesMenu\">");  
          for (var i=0; i<data['Bases'].length; i++){
-            $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\"> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
+            $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\" required> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");
          }
          $('#menuForm').append("</ul><ul id=\"breadsMenu\">");
          for (var i=0; i<data['Breads'].length; i++){
-            $('#menuForm').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i] + "\" value=\"" + data['Breads'][i] + "\"> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
+            $('#menuForm').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i] + "\" value=\"" + data['Breads'][i] + "\" required> <label for=\"" + data['Breads'][i] + "\">" + data['Breads'][i] + "</label></li>");
          }
          $('#menuForm').append("</ul><ul id=\"cheeseMenu\">");
          for (var i=0; i<data['Cheeses'].length; i++){
-            $('#menuForm').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i] + "\" value=\"" + data['Cheeses'][i] + "\"> <label for=\"" + data['Cheeses'][i] + "\">" + data['Cheeses'][i] + "</label></li>");
+            $('#menuForm').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i] + "\" value=\"" + data['Cheeses'][i] + "\" required> <label for=\"" + data['Cheeses'][i] + "\">" + data['Cheeses'][i] + "</label></li>");
          }
          $('#menuForm').append("</ul><ul id=\"toppingsMenu\">");
          for (var i=0; i<data['Toppings'].length; i++){
             $('#menuForm').append("<li> <input type=\"checkbox\" name=\"toppingType\" id=\"" + data['Toppings'][i] + "\" value=\"" + data['Toppings'][i] + "\"> <label for=\"" + data['Toppings'][i] + "\">" + data['Toppings'][i] + "</label></li>");
          }
+         $('#menuForm').append("</ul><ul id=\"fryMenu\">");
+         for (var i=0; i<data['Fries'].length; i++){
+            $('#menuForm').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i] + "\" value=\"" + data['Fries'][i] + "\" required> <label for=\"" + data['Fries'][i] + "\">" + data['Fries'][i] + "</label></li>");
+         }
+
          $('#menuForm').append("</ul><input type=\"submit\" value=\"Submit Order\">");
 
       }
@@ -243,17 +272,3 @@ function getMenuData() {
    });
 
 }
-$('#menuForm').submit(function(e){
-   e.preventDefault();
-   
-   JSON.stringify({
-      "user_id" : "1",
-      "timePlaced" : "2014-03-029 12:04:01",
-      "isActive" : "1",
-      "base": "Hamburger", 
-      "bread": "White", 
-      "cheese": "Cheddar",
-      "fries": "Regular"
-   });
-})
-
