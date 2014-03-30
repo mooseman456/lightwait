@@ -74,29 +74,45 @@ CREATE TABLE Orders (
 ) Engine=InnoDB;
 
 # INSERT some ingredients and Users
-INSERT INTO Breads VALUES (1, "White", 1);
-INSERT INTO Breads VALUES (2, "Wheat", 1);
-INSERT INTO Breads VALUES (3, "Texas Toast", 1);
+INSERT INTO `Breads` (`bread_id`, `name`, `available`) VALUES
+(1, 'White', 1),
+(2, 'Wheat', 1),
+(3, 'Texas Toast', 1);
 
-INSERT INTO Bases VALUES (1, "Hamburger", 1);
-INSERT INTO Bases VALUES (2, "Turkey", 1);
-INSERT INTO Bases VALUES (3, "Chicken", 1);
-INSERT INTO Bases VALUES (4, "Veggie", 1);
-INSERT INTO Bases VALUES (5, "Black Bean", 1);
-INSERT INTO Bases VALUES (6, "Double Beef Burger", 1);
+INSERT INTO `Bases` (`base_id`, `name`, `available`) VALUES
+(1, 'Chicken Strips', 1),
+(2, 'Grilled Cheese', 1),
+(3, 'Hamburger', 1),
+(4, 'Turkey', 1),
+(5, 'Chicken', 1),
+(6, 'Veggie', 1),
+(7, 'Black Bean', 1),
+(8, 'Chicken For Salad', 1),
+(9, 'Double Meat', 1);
 
-INSERT INTO Cheeses VALUES (1, "American", 1);
-INSERT INTO Cheeses VALUES (2, "Pepper Jack", 1);
-INSERT INTO Cheeses VALUES (3, "Swiss", 1);
+INSERT INTO `Cheeses` (`cheese_id`, `name`, `available`) VALUES
+(1, 'American', 1),
+(2, 'Pepper Jack', 1),
+(3, 'Swiss', 1),
+(4, 'Extra Cheese', 1),
+(5, 'No Cheese', 1);
 
-INSERT INTO Toppings VALUES (1, "Lettuce", 1);
-INSERT INTO Toppings VALUES (2, "Jalapeno", 1);
-INSERT INTO Toppings VALUES (3, "Tomato", 1);
-INSERT INTO Toppings VALUES (4, "Bacon", 1);
-INSERT INTO Toppings VALUES (5, "Pico de Gallo", 1);
-INSERT INTO Toppings VALUES (6, "Pineapple", 1);
-INSERT INTO Toppings VALUES (7, "Pickle", 1);
-INSERT INTO Toppings VALUES (8, "Onion", 1);
-INSERT INTO Toppings VALUES (9, "Avocado Mayo", 1);
-INSERT INTO Toppings VALUES (10, "Bistro Sauce", 1);
-INSERT INTO Toppings VALUES (11, "Chipotle Ranch", 1);
+INSERT INTO `Toppings` (`topping_id`, `name`, `available`) VALUES
+(1, 'Lettuce', 1),
+(2, 'Jalapeno', 1),
+(3, 'Tomato', 1),
+(4, 'Bacon', 1),
+(5, 'Pico de Gallo', 1),
+(6, 'Pineapple', 1),
+(7, 'Pickle', 1),
+(8, 'Onion', 1),
+(9, 'Avocado Mayo', 1),
+(10, 'Bistro Sauce', 1),
+(11, 'Chipotle Ranch', 1);
+
+INSERT INTO `Users` (`user_id`, `fName`, `lName`, `email`, `password`, `phoneNumber`) VALUES
+(25, 'John', 'Pinkerton', 'jpink@poop.com', 'ding', '8795468253'),
+(86, 'Jimmy', 'Devlin', 'jdevlin@ding.com', 'poop', '8796531523'),
+(789, 'Ryan', 'Sligh', 'rsligh@sneaky.com', 'burgler', '2564532156'),
+(835, 'Patrick', 'Leopard', 'pleopard@spots.com', 'grrr', '8256431589'),
+(976, 'Joe', 'TheSaint', 'jsaint@holy.com', 'angel', '3958203958');
