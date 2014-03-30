@@ -29,9 +29,10 @@ function addOrder() {
   $app = \Slim\Slim::getInstance();
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
-  $query = "INSERT INTO Orders (user_id, hasFries, timePlaced, isActive, bread_id, base_id, cheese_id) 
+  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
             VALUES (".$order['user_id'].", ". $order['hasFries'] .", \"". $order['timePlaced'] ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
-            (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"))";
+            (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
+            (SELECT fry_id FROM Fries WHERE name = \"".$order['fries']."\"))";
 
   $mysqli->query($query);
 
@@ -53,17 +54,19 @@ function getMenuData() {
   $query  = "SELECT name FROM Bases WHERE available = 1;";
   $query .= "SELECT name FROM Breads WHERE available = 1;";
   $query .= "SELECT name FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name FROM Toppings WHERE available = 1";
+  $query .= "SELECT name FROM Toppings WHERE available = 1;";
+  $query .= "SELECT name FROM Fries WHERE available = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
     // Arrays that will hold all menu data
-    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings");
+    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
     $baseArray = array();
     $breadArray = array();
     $cheeseArray = array();
     $toppingArray = array();
-    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray);
+    $friesArray = array();
+    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
     $menuIndex = -1;
 
     while ($mysqli->more_results()) {

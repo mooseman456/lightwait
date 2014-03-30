@@ -70,12 +70,15 @@ $(document).ready(function(){
    /*******************/
    /*   Avilability   */
    /*******************/
-   var vClient = new XMLHttpRequest();     
-   vClient.open('GET', '../Resources/sampleAvail.json', true);
-   vClient.send();
-   vClient.onreadystatechange = function() {     
-      if(vClient.readyState===4 && vClient.status===200){
-         loadAvailChart(vClient);
+   //Change this to support Ajax instead!!!!
+   if(document.getElementsByClassName("mainForm").length>0){ 
+      var vClient = new XMLHttpRequest();     
+      vClient.open('GET', '../Resources/sampleAvail.json', true);
+      vClient.send();
+      vClient.onreadystatechange = function() {     
+         if(vClient.readyState===4 && vClient.status===200){
+            loadAvailChart(vClient);
+         }
       }
    }
 
@@ -148,7 +151,8 @@ function updateSidebar(orders) {
    }
 }
 
-//Load Availability C
+//Load Availability 
+
 //loads in the availability json into html and checks available items
 function loadAvailChart(vClient){
    availTest=JSON.parse(vClient.responseText);
@@ -171,40 +175,21 @@ function loadAvailChart(vClient){
          }
       }
    }
-
-
-
-   $(".mainForm").append("<input class=\"submitAvail\" type=\"submit\" value=\"Update Availability\">");
-   $(".mainForm input[type=\"submit\"]").click(function(event){
-      event.preventDefault();
+   //updates availability json when you navaigate from page.
+   $(window).on("beforeunload", function() {
       for(var g=0;g<availTest.length; g++){
          for(var h=1; h<availTest[g].length; h++){
             var inputPos="body > div > form > div:nth-child("+(g+1)+") > input:nth-child("+(h*3)+")";
             console.log(availTest[g][h].name+",--- "+availTest[g][h].available+", ---"+$(inputPos).is(":checked"));
-            //console.log($(inputPos));
             if(availTest[g][h].available!==$(inputPos).is(":checked")){
                availTest[g][h].available=!availTest[g][h].available;
                console.log(availTest[g][h].available);
-
             }
-
          }
       }
-
+      //Send the json back to the server here!!!
    });
 }
-
-function returnItem(ingredient, jsonObject){
-   for(var i=0; i<jsonObject.length; i++){
-      for(var k=1; k<jsonObject[i].length; k++){
-         if(jsonObject[i][k].name===ingredient){
-            return [i,k];
-         }
-      }
-   }
-}
-
-
   
 var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
 getMenuData();
@@ -229,6 +214,10 @@ function getMenuData() {
          $('#menuForm').append("</ul><ul id=\"toppingsMenu\">");
          for (var i=0; i<data['Toppings'].length; i++){
             $('#menuForm').append("<li> <input type=\"checkbox\" name=\"toppingType\" id=\"" + data['Toppings'][i] + "\" value=\"" + data['Toppings'][i] + "\"> <label for=\"" + data['Toppings'][i] + "\">" + data['Toppings'][i] + "</label></li>");
+         }
+         $('#menuForm').append("</ul><ul id=\"fryMenu\">");
+         for (var i=0; i<data['Fries'].length; i++){
+            $('#menuForm').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i] + "\" value=\"" + data['Fries'][i] + "\"> <label for=\"" + data['Fries'][i] + "\">" + data['Fries'][i] + "</label></li>");
          }
          $('#menuForm').append("</ul><input type=\"submit\" value=\"Submit Order\">");
 
