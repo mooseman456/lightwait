@@ -24,6 +24,7 @@ function getOrders() {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 }
+
 function webOrder() {
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
@@ -31,11 +32,13 @@ function webOrder() {
             VALUES (25, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
             (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
             (SELECT fry_id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
-  echo $query;
+  //echo $query;
   $mysqli->query($query);
-}
- 
 
+  echo "<h2>Thank you for your order!</h2>";
+  echo "<h3>It has been received and is underway!</h3>";
+  echo "<a href=http://localhost/lightwait/Web/index.php>Return home</a>";
+}
 
 function addOrder() {
   $mysqli = getConnection();
