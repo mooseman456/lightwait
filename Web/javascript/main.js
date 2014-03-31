@@ -41,7 +41,7 @@ $(document).ready(function(){
       $("#recall").click(function() {
          console.log("You clicked the recall button");
          recallOrder();
-         //getActiveOrders();
+         getActiveOrders();
          //updateCurrentWindow();
       });
    }
@@ -148,6 +148,7 @@ $(document).ready(function(){
       $.ajax({
          type: 'PUT',
          url: rootURL + "/recall",
+         async: false,
          success: function(data, textStatus, jqXHR){
             console.log("Order recalled");
             console.log(data, textStatus, jqXHR);
