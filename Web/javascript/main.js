@@ -10,26 +10,6 @@ $(document).ready(function(){
    var currentPage=1;
    var maxPage=1;
    getActiveOrders();
-   //waits for the names.csv to be successfully sent before running code
-   client.onreadystatechange = function() {     
-      if(client.readyState===4 && client.status===200){
-         var doc=client.responseText;  //store text in doc
-         orders=JSON.parse(doc);
-         //console.log(client.responseText);
-         
-         //Set the base count values in the side bar
-         //THIS IS OUTSIDE THE .ready()!!
-         updateSidebar(orders);
-
-         //Update order window
-         //THIS IS INSIDE THE .ready()!!
-         updateCurrentWindow();
-
-         //Set the click listeners
-         //THIS IS INSIDE THE .ready()!!
-         setClickListeners();
-      }
-   };
    
    /***********************/
    /*   Event Listeners   */
