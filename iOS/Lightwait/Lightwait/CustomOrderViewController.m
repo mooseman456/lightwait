@@ -332,7 +332,7 @@
             // Successful order alert, send the user back to the home page
             [self.navigationController popToRootViewControllerAnimated:TRUE];
             break;
-            // Invalid name table
+            // Invalid name alert
         case 3:
             [self askUserToSaveOrder];
         default:

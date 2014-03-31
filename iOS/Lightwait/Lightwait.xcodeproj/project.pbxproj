@@ -146,26 +146,9 @@
 				7B31710118D3B0B200080C78 /* AppDelegate.h */,
 				7B31710218D3B0B200080C78 /* AppDelegate.m */,
 				7B31710418D3B0B200080C78 /* Main.storyboard */,
-				7B31710718D3B0B200080C78 /* ViewController.h */,
-				7B31710818D3B0B200080C78 /* ViewController.m */,
-				7B31712918D3B14200080C78 /* CustomOrderViewController.h */,
-				7B31712A18D3B14200080C78 /* CustomOrderViewController.m */,
-				7B31712F18D3B16200080C78 /* GrabViewController.h */,
-				7B31713018D3B16200080C78 /* GrabViewController.m */,
-				7B31712C18D3B15100080C78 /* SavedOrdersViewController.h */,
-				7B31712D18D3B15100080C78 /* SavedOrdersViewController.m */,
-				7B31713218D3B1D600080C78 /* logo.png */,
-				7BD69E2518E8AF84004E6AA4 /* Strings.h */,
-				7B0988DD18E29A9100B48354 /* SavedOrdersManager.h */,
-				7B0988DE18E29A9100B48354 /* SavedOrdersManager.m */,
-				7BE8FC0718E8DFAD003F2916 /* OrderManager.h */,
-				7BE8FC0818E8DFAD003F2916 /* OrderManager.m */,
-				7BD69E2618E8B02B004E6AA4 /* DataManager.h */,
-				7BD69E2718E8B02B004E6AA4 /* DataManager.m */,
-				7BD58A4D18E277A900983618 /* REST_API.h */,
-				7BD58A4E18E277A900983618 /* REST_API.m */,
-				7BD58A4A18E2779600983618 /* JSONConverter.h */,
-				7BD58A4B18E2779600983618 /* JSONConverter.m */,
+				7BE8FC0B18E8E984003F2916 /* Views */,
+				7BE8FC0C18E8E9B3003F2916 /* Managers */,
+				7BE8FC0A18E8E927003F2916 /* Database */,
 				7B31710A18D3B0B200080C78 /* Images.xcassets */,
 				7B3170F918D3B0B200080C78 /* Supporting Files */,
 			);
@@ -175,6 +158,7 @@
 		7B3170F918D3B0B200080C78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7B31713218D3B1D600080C78 /* logo.png */,
 				7B3170FA18D3B0B200080C78 /* Lightwait-Info.plist */,
 				7B3170FB18D3B0B200080C78 /* InfoPlist.strings */,
 				7B3170FE18D3B0B200080C78 /* main.m */,
@@ -199,6 +183,46 @@
 				7B31711A18D3B0B200080C78 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7BE8FC0A18E8E927003F2916 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				7BD69E2518E8AF84004E6AA4 /* Strings.h */,
+				7BD69E2618E8B02B004E6AA4 /* DataManager.h */,
+				7BD69E2718E8B02B004E6AA4 /* DataManager.m */,
+				7BD58A4D18E277A900983618 /* REST_API.h */,
+				7BD58A4E18E277A900983618 /* REST_API.m */,
+			);
+			name = Database;
+			sourceTree = "<group>";
+		};
+		7BE8FC0B18E8E984003F2916 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7B31710718D3B0B200080C78 /* ViewController.h */,
+				7B31710818D3B0B200080C78 /* ViewController.m */,
+				7B31712918D3B14200080C78 /* CustomOrderViewController.h */,
+				7B31712A18D3B14200080C78 /* CustomOrderViewController.m */,
+				7B31712F18D3B16200080C78 /* GrabViewController.h */,
+				7B31713018D3B16200080C78 /* GrabViewController.m */,
+				7B31712C18D3B15100080C78 /* SavedOrdersViewController.h */,
+				7B31712D18D3B15100080C78 /* SavedOrdersViewController.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		7BE8FC0C18E8E9B3003F2916 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7BD58A4A18E2779600983618 /* JSONConverter.h */,
+				7BD58A4B18E2779600983618 /* JSONConverter.m */,
+				7BE8FC0718E8DFAD003F2916 /* OrderManager.h */,
+				7BE8FC0818E8DFAD003F2916 /* OrderManager.m */,
+				7B0988DD18E29A9100B48354 /* SavedOrdersManager.h */,
+				7B0988DE18E29A9100B48354 /* SavedOrdersManager.m */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
