@@ -155,7 +155,7 @@ $(document).ready(function(){
 
    // UPDATE PAGENUMBERS
    function updatePagenumbers() {
-      $('#page_number').html((currentPage+1) + "/" + Math.floor(orders.length/8+1));
+      $('#page_number').html((currentPage) + "/" + Math.floor(orders.length/8+1));
    }
 });
 
