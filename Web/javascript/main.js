@@ -90,14 +90,33 @@ $(document).ready(function(){
       orderElement.append('<button class="bump">Bump</button>');
 
       orderElement.children('button').click(function(event) {
+         console.log("bumped");
          orderElement.remove();
          orders.splice(index,1);
-         console.log("id: "+orderId);
          updateOrder(orderId);
          updatePagenumbers();
          updateSidebar();
          updateCurrentWindow();
       });
+   }
+
+   // UPDATE SIDEBAR
+   // Takes an array of JSON orders
+   // Sets the number of bases in the side panel
+   // Returns nothing
+   function updateSidebar() {
+      var baseTypeCount = [];
+      for(var i=0; i < orders.length; i++) {
+         //If the base is not in baseTypeCount, add the key to baseTypeCount
+         if( baseTypeCount[orders[i].Base] ){
+            baseTypeCount[orders[i].Base] += 1;
+         //Else, incrment that element
+         } else {
+            baseTypeCount[orders[i].Base] = 1;
+         }
+         // TODO:
+         // Add the info in baseTypeCount to the html
+      }
    }
 
    /****************/
@@ -127,7 +146,7 @@ $(document).ready(function(){
    function recallOrder() {
       $.ajax({
          type: 'PUT',
-         url: rootURL + "/poop",
+         url: rootURL + "/recall",
          success: function(data, textStatus, jqXHR){
             console.log("Order recalled");
             console.log(data, textStatus, jqXHR);
@@ -154,7 +173,7 @@ $(document).ready(function(){
             console.log(data);
             //Set the base count values in the side bar
             //THIS IS OUTSIDE THE .ready()!!
-            updateSidebar(orders);
+            updateSidebar();
 
             //Update order window
             //THIS IS INSIDE THE .ready()!!
@@ -167,25 +186,6 @@ $(document).ready(function(){
       });
    }
 });
-
-// UPDATE SIDEBAR
-// Takes an array of JSON orders
-// Sets the number of bases in the side panel
-// Returns nothing
-function updateSidebar(orders) {
-   var baseTypeCount = [];
-   for(var i=0; i < orders.length; i++) {
-      //If the base is not in baseTypeCount, add the key to baseTypeCount
-      if( baseTypeCount[orders[i].Base] ){
-         baseTypeCount[orders[i].Base] += 1;
-      //Else, incrment that element
-      } else {
-         baseTypeCount[orders[i].Base] = 1;
-      }
-      // TODO:
-      // Add the info in baseTypeCount to the html
-   }
-}
 
 
 //loads in the availability json into html and checks available items
