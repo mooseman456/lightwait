@@ -78,6 +78,7 @@ function updateOrder($id) {
 
   $mysqli->close();
 
+  echo json_encode($query); 
 }
 
 function recallOrder() {
@@ -89,6 +90,7 @@ function recallOrder() {
 
   $mysqli->close();
 
+  echo json_encode($query); 
 }
 
 function getMenuData() {
