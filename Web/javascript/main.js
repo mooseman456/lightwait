@@ -38,28 +38,17 @@ $(document).ready(function(){
       //Recall button
       $("#recall").click(function() {
          console.log("You clicked the recall button");
+         recallOrder();
+         //getActiveOrders();
+         //updateCurrentWindow();
          //TODO: Bring up the most recently bumped order
          //i.e. Retrieve from the database, the order most recently bumped
       });
-
-      //Bump button
-      /*
-      $('.bump').click(function(event) {
-         console.log("Bump");
-         event.target.parentNode.remove();
-         var index = event.target.parentNode.id.match(/order(\d)/)[1];
-         orders.slice(index,index+1);
-         pushOrderToWindow(9);
-         //TODO
-         //Order fill
-         //Add the order to the bumped database (or whatever that is)
-      });
-      */
    }
 
-   /*******************/
-   /*   Avilability   */
-   /*******************/
+   /********************/
+   /*   Availability   */
+   /********************/
    var vClient = new XMLHttpRequest();     
    vClient.open('GET', '../Resources/sampleAvail.json', true);
    vClient.send();
@@ -103,6 +92,7 @@ $(document).ready(function(){
       orderElement.children('button').click(function(event) {
          orderElement.remove();
          orders.splice(index,1);
+         console.log("id: "+orderId);
          updateOrder(orderId);
          updatePagenumbers();
          updateSidebar();
@@ -110,7 +100,10 @@ $(document).ready(function(){
       });
    }
 
-   //DATABASE: UPDATE ORDER
+   /****************/
+   /*   Database   */
+   /****************/
+   //Update Order
    function updateOrder(id) {
       console.log(id);
       $.ajax({
@@ -130,7 +123,25 @@ $(document).ready(function(){
       });
    }
 
-   // UPDATE PAGENUMBERS
+   //Recall Order
+   function recallOrder() {
+      $.ajax({
+         type: 'PUT',
+         contentType: 'application/json',
+         url: rootURL + "/recall",
+         dataType: "text",
+         success: function(data, textStatus, jqXHR){
+            console.log("Order recalled");
+            console.log(data, textStatus, jqXHR);
+         },
+         error: function(jqXHR, textStatus, errorThrown){
+            console.log("Order recall failed");
+            console.log(jqXHR, textStatus, errorThrown);
+         }
+      });
+   }
+
+   //UPDATE PAGENUMBERS
    function updatePagenumbers() {
       $('#page_number').html((currentPage) + "/" + Math.floor(orders.length/8+1));
    }

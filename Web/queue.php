@@ -1,5 +1,5 @@
 <?php
-	$navElements=array("availability"=>"availability.php","account"=>"#","logout"=>"index.php");
+	$navElements=array("account"=>"#","logout"=>"index.php");
 	$pageTitle = "Queue";
 	include 'include/header.php';
 ?>
@@ -7,7 +7,6 @@
 	<div class="window"></div>
 
 	<div class="sidebar">
-		<h1>Sidebar</h1>
 		<div id="quantityList">
 
 		</div>
