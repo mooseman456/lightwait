@@ -76,7 +76,6 @@ nav a:hover {
 	min-height: 300px;
 	float:left;
 	border-bottom: 1px solid rgba(0,0,0,0.15);
-	border-right: 1px solid rgba(0,0,0,0.15);
 }
 
 .queue h1 {
@@ -227,8 +226,9 @@ div.order-wrapper {
 	float:left;
 	width: 10%;
 	height:200px;
-	background-color: rgba(250,105,0,0.4);
-	margin-left: 3px;
+	border-right: 1px solid rgba(0,0,0,0.15);
+
+	padding: 10px;
 }
 .mainForm input[type="checkbox"]{
 	float:right;
