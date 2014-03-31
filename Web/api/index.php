@@ -90,7 +90,7 @@ function recallOrder() {
 
   $result = $mysqli->query($query);
   $arr = $result->fetch_assoc();
-  $max = $arr['max']
+  $max = $arr['max'];
 
   $query = "UPDATE Orders SET isActive=1 WHERE timeFinished='".$max."'";
 
