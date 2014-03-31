@@ -40,7 +40,7 @@ function webOrder() {
 
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
-  echo "<a href=http://localhost/lightwait/Web/index.php>Return home</a>";
+  echo "<a href=http://54.186.252.120.com/Web/api/index.php>Return home</a>";
 }
 
 function addOrder() {
