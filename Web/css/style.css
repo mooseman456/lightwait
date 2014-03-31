@@ -159,7 +159,7 @@ nav a:hover {
 }
 
 .content > div {
-	border-bottom: 1px solid rgba(0,0,0,0.15);;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
 }
 
 .content >div:last-child {

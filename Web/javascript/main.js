@@ -125,9 +125,10 @@ $(document).ready(function(){
 
    //Recall Order
    function recallOrder() {
+      console.log("RECALL");
       $.ajax({
          type: 'PUT',
-         url: rootURL + "/poop",
+         url: rootURL + "/recall",
          success: function(data, textStatus, jqXHR){
             console.log("Order recalled");
             console.log(data, textStatus, jqXHR);
@@ -147,7 +148,7 @@ $(document).ready(function(){
    function getActiveOrders() {
       $.ajax({
          type: 'GET',
-         url: "http://localhost/lightwait/Web/api/index.php/activeorders",
+         url: rootURL + "/activeorders",
          dataType: "json", // data type of response
          success: function(data){  
             orders = data;
