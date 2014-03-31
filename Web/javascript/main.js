@@ -32,6 +32,8 @@ $(document).ready(function(){
          }
       });
    }
+   console.log("UNDO COMMENTS");
+   /*
    //waits for the names.csv to be successfully sent before running code
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
@@ -52,6 +54,7 @@ $(document).ready(function(){
          setClickListeners();
       }
    };
+   */
    
    /***********************/
    /*   Event Listeners   */

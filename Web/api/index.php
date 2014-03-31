@@ -10,6 +10,7 @@ $app->get('/menu', 'getMenuData');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->get('/activeorders', 'getActiveOrders');
+$app->put('/:id', 'updateOrder');
 
 $app->run();
 
@@ -62,6 +63,19 @@ function addOrder() {
     $return = json_encode($query);
     echo $return;
   }
+
+  $mysqli->close();
+
+}
+
+function updateOrder($id) {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+
+  $query = "UPDATE Orders SET isActive=0 WHERE order_id=$id";
+  $mysqli->query($query);
+
+  $mysqli->close();
 
 }
 
@@ -129,6 +143,10 @@ function getActiveOrders() {
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
   
   while ($row = $result->fetch_assoc()) {
+           // $row['ingredients'][] = $row['bread_name'];
+           // $row['ingredients'][] = $row['base_name'];
+           // $row['ingredients'][] = $row['cheese_name'];
+           // $row['ingredients'][] = $row['fry_type'];
            $array[] = $row;
   }
 
