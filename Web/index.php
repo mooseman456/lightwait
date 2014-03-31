@@ -1,6 +1,6 @@
 <?php
 	$pageTitle = "Home";
-	$navElements = array(	"chef"=>"queue.php",
+	$navElements = array(	"queue"=>"queue.php",
 							"order"=>"order.php");
 	include('include/header.php');
 ?>

@@ -10,28 +10,6 @@ $(document).ready(function(){
    var currentPage=1;
    var maxPage=1;
    getActiveOrders();
-   function getActiveOrders() {
-      $.ajax({
-         type: 'GET',
-         url: "http://localhost/lightwait/Web/api/index.php/activeorders",
-         dataType: "json", // data type of response
-         success: function(data){  
-            orders = data;
-            console.log(data);
-            //Set the base count values in the side bar
-            //THIS IS OUTSIDE THE .ready()!!
-            updateSidebar(orders);
-
-            //Update order window
-            //THIS IS INSIDE THE .ready()!!
-            updateCurrentWindow();
-
-            //Set the click listeners
-            //THIS IS INSIDE THE .ready()!!
-            setClickListeners();
-         }
-      });
-   }
    //waits for the names.csv to be successfully sent before running code
    client.onreadystatechange = function() {     
       if(client.readyState===4 && client.status===200){
@@ -144,18 +122,60 @@ $(document).ready(function(){
 
       orderElement.children('button').click(function(event) {
          orderElement.remove();
-         var index = event.target.parentNode.id.match(/order(\d)/)[1];
-         console.log("index: "+index);
          orders.splice(index,1);
-         
+         updateOrder(orderId);
          updatePagenumbers();
+         updateSidebar();
          updateCurrentWindow();
+      });
+   }
+
+   //DATABASE: UPDATE ORDER
+   function updateOrder(id) {
+      console.log(id);
+      $.ajax({
+         type: 'PUT',
+         contentType: 'application/json',
+         url: rootURL + "/" + id,
+         dataType: "text",
+         data: id,
+         success: function(data, textStatus, jqXHR){
+            console.log("Order uploaded");
+            console.log(data, textStatus, jqXHR);
+         },
+         error: function(jqXHR, textStatus, errorThrown){
+            console.log("Order upload failed");
+            console.log(jqXHR, textStatus, errorThrown);
+         }
       });
    }
 
    // UPDATE PAGENUMBERS
    function updatePagenumbers() {
       $('#page_number').html((currentPage) + "/" + Math.floor(orders.length/8+1));
+   }
+
+   function getActiveOrders() {
+      $.ajax({
+         type: 'GET',
+         url: "http://localhost/lightwait/Web/api/index.php/activeorders",
+         dataType: "json", // data type of response
+         success: function(data){  
+            orders = data;
+            console.log(data);
+            //Set the base count values in the side bar
+            //THIS IS OUTSIDE THE .ready()!!
+            updateSidebar(orders);
+
+            //Update order window
+            //THIS IS INSIDE THE .ready()!!
+            updateCurrentWindow();
+
+            //Set the click listeners
+            //THIS IS INSIDE THE .ready()!!
+            setClickListeners();
+         }
+      });
    }
 });
 
@@ -236,12 +256,12 @@ function returnItem(ingredient, jsonObject){
 
 
   
-var rootURL = "http://localhost/lightwait/Web/api/index.php/menu";
+var rootURL = "http://localhost/lightwait/Web/api/index.php";
 getMenuData();
 function getMenuData() {
    $.ajax({
       type: 'GET',
-      url: rootURL,
+      url: rootURL+"/menu",
       dataType: "json", // data type of response
       success: function(data){  
          $('#menuForm').append("<ul id=\"basesMenu\">");  
