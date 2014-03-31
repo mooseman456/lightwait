@@ -27,10 +27,10 @@
 		7B31712E18D3B15100080C78 /* SavedOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31712D18D3B15100080C78 /* SavedOrdersViewController.m */; };
 		7B31713118D3B16200080C78 /* GrabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31713018D3B16200080C78 /* GrabViewController.m */; };
 		7B31713318D3B1D600080C78 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B31713218D3B1D600080C78 /* logo.png */; };
-		7B31713918D4D7EE00080C78 /* custommenu.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B31713818D4D7EE00080C78 /* custommenu.json */; };
 		7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD58A4B18E2779600983618 /* JSONConverter.m */; };
 		7BD58A4F18E277A900983618 /* REST_API.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD58A4E18E277A900983618 /* REST_API.m */; };
 		7BD69E2818E8B02B004E6AA4 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD69E2718E8B02B004E6AA4 /* DataManager.m */; };
+		7BE8FC0918E8DFAD003F2916 /* OrderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE8FC0818E8DFAD003F2916 /* OrderManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +73,6 @@
 		7B31712F18D3B16200080C78 /* GrabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrabViewController.h; sourceTree = "<group>"; };
 		7B31713018D3B16200080C78 /* GrabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrabViewController.m; sourceTree = "<group>"; };
 		7B31713218D3B1D600080C78 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		7B31713818D4D7EE00080C78 /* custommenu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = custommenu.json; sourceTree = "<group>"; };
 		7BD58A4A18E2779600983618 /* JSONConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONConverter.h; sourceTree = "<group>"; };
 		7BD58A4B18E2779600983618 /* JSONConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONConverter.m; sourceTree = "<group>"; };
 		7BD58A4D18E277A900983618 /* REST_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REST_API.h; sourceTree = "<group>"; };
@@ -81,6 +80,8 @@
 		7BD69E2518E8AF84004E6AA4 /* Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Strings.h; sourceTree = "<group>"; };
 		7BD69E2618E8B02B004E6AA4 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		7BD69E2718E8B02B004E6AA4 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		7BE8FC0718E8DFAD003F2916 /* OrderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderManager.h; sourceTree = "<group>"; };
+		7BE8FC0818E8DFAD003F2916 /* OrderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,27 +146,11 @@
 				7B31710118D3B0B200080C78 /* AppDelegate.h */,
 				7B31710218D3B0B200080C78 /* AppDelegate.m */,
 				7B31710418D3B0B200080C78 /* Main.storyboard */,
-				7B31710718D3B0B200080C78 /* ViewController.h */,
-				7B31710818D3B0B200080C78 /* ViewController.m */,
-				7B31712918D3B14200080C78 /* CustomOrderViewController.h */,
-				7B31712A18D3B14200080C78 /* CustomOrderViewController.m */,
-				7B31712F18D3B16200080C78 /* GrabViewController.h */,
-				7B31713018D3B16200080C78 /* GrabViewController.m */,
-				7B31712C18D3B15100080C78 /* SavedOrdersViewController.h */,
-				7B31712D18D3B15100080C78 /* SavedOrdersViewController.m */,
-				7B31713218D3B1D600080C78 /* logo.png */,
+				7BE8FC0B18E8E984003F2916 /* Views */,
+				7BE8FC0C18E8E9B3003F2916 /* Managers */,
+				7BE8FC0A18E8E927003F2916 /* Database */,
 				7B31710A18D3B0B200080C78 /* Images.xcassets */,
 				7B3170F918D3B0B200080C78 /* Supporting Files */,
-				7BD69E2518E8AF84004E6AA4 /* Strings.h */,
-				7BD69E2618E8B02B004E6AA4 /* DataManager.h */,
-				7BD69E2718E8B02B004E6AA4 /* DataManager.m */,
-				7BD58A4D18E277A900983618 /* REST_API.h */,
-				7BD58A4E18E277A900983618 /* REST_API.m */,
-				7B0988DD18E29A9100B48354 /* SavedOrdersManager.h */,
-				7B0988DE18E29A9100B48354 /* SavedOrdersManager.m */,
-				7BD58A4A18E2779600983618 /* JSONConverter.h */,
-				7BD58A4B18E2779600983618 /* JSONConverter.m */,
-				7B31713818D4D7EE00080C78 /* custommenu.json */,
 			);
 			path = Lightwait;
 			sourceTree = "<group>";
@@ -173,6 +158,7 @@
 		7B3170F918D3B0B200080C78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7B31713218D3B1D600080C78 /* logo.png */,
 				7B3170FA18D3B0B200080C78 /* Lightwait-Info.plist */,
 				7B3170FB18D3B0B200080C78 /* InfoPlist.strings */,
 				7B3170FE18D3B0B200080C78 /* main.m */,
@@ -197,6 +183,46 @@
 				7B31711A18D3B0B200080C78 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7BE8FC0A18E8E927003F2916 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				7BD69E2518E8AF84004E6AA4 /* Strings.h */,
+				7BD69E2618E8B02B004E6AA4 /* DataManager.h */,
+				7BD69E2718E8B02B004E6AA4 /* DataManager.m */,
+				7BD58A4D18E277A900983618 /* REST_API.h */,
+				7BD58A4E18E277A900983618 /* REST_API.m */,
+			);
+			name = Database;
+			sourceTree = "<group>";
+		};
+		7BE8FC0B18E8E984003F2916 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7B31710718D3B0B200080C78 /* ViewController.h */,
+				7B31710818D3B0B200080C78 /* ViewController.m */,
+				7B31712918D3B14200080C78 /* CustomOrderViewController.h */,
+				7B31712A18D3B14200080C78 /* CustomOrderViewController.m */,
+				7B31712F18D3B16200080C78 /* GrabViewController.h */,
+				7B31713018D3B16200080C78 /* GrabViewController.m */,
+				7B31712C18D3B15100080C78 /* SavedOrdersViewController.h */,
+				7B31712D18D3B15100080C78 /* SavedOrdersViewController.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		7BE8FC0C18E8E9B3003F2916 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7BD58A4A18E2779600983618 /* JSONConverter.h */,
+				7BD58A4B18E2779600983618 /* JSONConverter.m */,
+				7BE8FC0718E8DFAD003F2916 /* OrderManager.h */,
+				7BE8FC0818E8DFAD003F2916 /* OrderManager.m */,
+				7B0988DD18E29A9100B48354 /* SavedOrdersManager.h */,
+				7B0988DE18E29A9100B48354 /* SavedOrdersManager.m */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,7 +305,6 @@
 				7B31710B18D3B0B200080C78 /* Images.xcassets in Resources */,
 				7B3170FD18D3B0B200080C78 /* InfoPlist.strings in Resources */,
 				7B31710618D3B0B200080C78 /* Main.storyboard in Resources */,
-				7B31713918D4D7EE00080C78 /* custommenu.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +331,7 @@
 				7B31710918D3B0B200080C78 /* ViewController.m in Sources */,
 				7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */,
 				7B31710318D3B0B200080C78 /* AppDelegate.m in Sources */,
+				7BE8FC0918E8DFAD003F2916 /* OrderManager.m in Sources */,
 				7BD69E2818E8B02B004E6AA4 /* DataManager.m in Sources */,
 				7B3170FF18D3B0B200080C78 /* main.m in Sources */,
 			);

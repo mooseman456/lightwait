@@ -87,27 +87,23 @@ INSERT INTO `Breads` (`bread_id`, `name`, `available`) VALUES
 (3, 'Texas Toast', 1);
 
 INSERT INTO `Bases` (`base_id`, `name`, `available`) VALUES
-(1, 'Chicken Strips', 1),
-(2, 'Grilled Cheese', 1),
-(3, 'Hamburger', 1),
-(4, 'Turkey', 1),
-(5, 'Chicken', 1),
-(6, 'Veggie', 1),
-(7, 'Black Bean', 1),
-(8, 'Chicken For Salad', 1),
-(9, 'Double Meat', 1);
+(1, 'Grilled Cheese', 1),
+(2, 'Hamburger', 1),
+(3, 'Turkey', 1),
+(4, 'Chicken', 1),
+(5, 'Veggie', 1),
+(6, 'Black Bean', 1);
 
 INSERT INTO `Cheeses` (`cheese_id`, `name`, `available`) VALUES
-(1, 'No Cheese', 1),
-(2, 'American', 1),
-(3, 'Pepper Jack', 1),
-(4, 'Swiss', 1),
-(5, 'Extra Cheese', 1);
+(1, 'American', 1),
+(2, 'Pepper Jack', 1),
+(3, 'Swiss', 1),
+(4, 'No Cheese', 1);
 
 INSERT INTO `Fries` (`fry_id`, `name`, `available`) VALUES
-(1, 'No Fries', 1),
-(2, 'Regular', 1),
-(3, 'Sweet Potato', 1);
+(1, 'Regular', 1),
+(2, 'Sweet Potato', 1),
+(3, 'No Fries', 1);
 
 INSERT INTO `Toppings` (`topping_id`, `name`, `available`) VALUES
 (1, 'Lettuce', 1),
@@ -132,9 +128,9 @@ INSERT INTO `Users` (`fName`, `lName`, `email`, `password`, `phoneNumber`) VALUE
 INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced) 
 				VALUES	(1, 1, 1, 1, 1, '2014-03-30 12:04:03'),
 						(2, 1, 2, 2, 2, '2014-03-30 12:04:04'),
-						(3, 2, 3, 3, 2, '2014-03-30 12:04:05'),
-						(4, 3, 4, 4, 2, '2014-03-30 12:04:06'),
-						(5, 3, 7, 4, 3, '2014-03-30 12:04:07');
+						(3, 2, 3, 2, 2, '2014-03-30 12:04:05'),
+						(4, 3, 4, 3, 2, '2014-03-30 12:04:06'),
+						(5, 3, 4, 2, 3, '2014-03-30 12:04:07');
 
 
 

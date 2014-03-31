@@ -76,9 +76,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableDictionary *retrievedOrder = [[NSMutableDictionary alloc] initWithDictionary:[SavedOrdersManager loadOrder:[savedOrdersArray objectAtIndex:[indexPath row]]]];
+    [OrderManager uploadOrder:[[NSMutableDictionary alloc] initWithDictionary:[SavedOrdersManager loadOrder:[savedOrdersArray objectAtIndex:[indexPath row]]]]];
 
-    [self showAlert:@"Order" message:@"Successful Order"];
+    [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly."];
 }
 
 - (void)checkForEmptyArray

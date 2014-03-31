@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-   var rootURL = "http://localhost:8888/lightwait/Web/api/index.php";
+   var rootURL = "http://localhost/lightwait/Web/api/index.php";
 
    function postOrder(json) {
       $.ajax({
@@ -20,6 +20,26 @@ $(document).ready(function(){
       });
    }
 
+   function updateOrder(id) {
+      console.log(id);
+      $.ajax({
+         type: 'PUT',
+         contentType: 'application/json',
+         url: rootURL + "/" + id,
+         dataType: "text",
+         data: id,
+         success: function(data, textStatus, jqXHR){
+            console.log("Order uploaded");
+            console.log(data, textStatus, jqXHR);
+         },
+         error: function(jqXHR, textStatus, errorThrown){
+            console.log("Order upload failed");
+            console.log(jqXHR, textStatus, errorThrown);
+         }
+      });
+   }
+
+
    function formToJSON() {
       return JSON.stringify({
        "bread" : "White",
@@ -37,7 +57,7 @@ $(document).ready(function(){
    }
 
    $('#apiTestButton').click(function() {
-      var json = formToJSON();
-      postOrder(json);
+      //var json = formToJSON();
+      updateOrder(1);
    });   
 });

@@ -147,7 +147,7 @@ $(document).ready(function(){
          var index = event.target.parentNode.id.match(/order(\d)/)[1];
          console.log("index: "+index);
          orders.splice(index,1);
-         //TODO: send this information to the database
+         
          updatePagenumbers();
          updateCurrentWindow();
       });
