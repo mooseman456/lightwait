@@ -1,4 +1,4 @@
-var rootURL = "http://lightwait.alecsiems.com/lightwait/Web/api/index.php";
+var rootURL = "http://lightwait.alecsiems.com/Web/api/index.php";
 
 $(document).ready(function(){
 
