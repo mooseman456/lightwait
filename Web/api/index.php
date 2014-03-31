@@ -11,6 +11,7 @@ $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->get('/activeorders', 'getActiveOrders');
 $app->put('/:id', 'updateOrder');
+$app->put('/recall', 'recallOrder');
 
 $app->run();
 
@@ -77,6 +78,19 @@ function updateOrder($id) {
 
   $mysqli->close();
 
+  echo json_encode($query); 
+}
+
+function recallOrder() {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+
+  $query = "UPDATE Orders SET isActive=1 WHERE isActive=0 AND timeFinished=(SELECT MAX(timeFinished))";
+  $mysqli->query($query);
+
+  $mysqli->close();
+
+  echo json_encode($query); 
 }
 
 function getMenuData() {
