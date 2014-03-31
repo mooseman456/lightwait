@@ -1,3 +1,5 @@
+var rootURL = "http://localhost/lightwait/Web/api/index.php";
+
 $(document).ready(function(){
 
    /*********************/
@@ -41,8 +43,6 @@ $(document).ready(function(){
          recallOrder();
          //getActiveOrders();
          //updateCurrentWindow();
-         //TODO: Bring up the most recently bumped order
-         //i.e. Retrieve from the database, the order most recently bumped
       });
    }
 
@@ -127,9 +127,7 @@ $(document).ready(function(){
    function recallOrder() {
       $.ajax({
          type: 'PUT',
-         contentType: 'application/json',
-         url: rootURL + "/recall",
-         dataType: "text",
+         url: rootURL + "/poop",
          success: function(data, textStatus, jqXHR){
             console.log("Order recalled");
             console.log(data, textStatus, jqXHR);
@@ -245,9 +243,6 @@ function returnItem(ingredient, jsonObject){
    }
 }
 
-
-  
-var rootURL = "http://localhost/lightwait/Web/api/index.php";
 getMenuData();
 function getMenuData() {
    $.ajax({
