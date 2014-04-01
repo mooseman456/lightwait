@@ -99,7 +99,7 @@ CLLocationManager *_locationManager;
 - (bool)testMenuConnection
 {
     // Attempt to connect to the website
-    bool isConnected = [REST_API testConnection:@"http://localhost:8888/lightwait/"];
+    bool isConnected = [REST_API testConnection:@"http://lightwait.alecsiems.com"];
     if (isConnected)
         return true;
     else

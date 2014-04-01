@@ -353,7 +353,7 @@
 - (void)initializeMenuArrays
 {
     NSDictionary *menuDictionary = [DataManager getMenu];
-    
+    NSLog(@"%@", menuDictionary);
     if (menuDictionary) {
         // Menu data arrays
         headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Fries", nil];
