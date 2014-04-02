@@ -1,4 +1,5 @@
-var rootURL = "http://lightwait.alecsiems.com/Web/api/index.php";
+//var rootURL = "http://lightwait.alecsiems.com/Web/api/index.php";
+var rootURL = "api/index.php";
 
 $(document).ready(function(){
 
@@ -172,8 +173,9 @@ $(document).ready(function(){
          type: 'GET',
          url: rootURL + "/activeorders",
          dataType: "json", // data type of response
-         success: function(data){  
+         success: function(data){ 
             orders = data;
+            console.log(orders); //DEBUG
             console.log(data);
             //Set the base count values in the side bar
             //THIS IS OUTSIDE THE .ready()!!

@@ -1,6 +1,6 @@
 <?php
    $pageTitle="Account";
-   $navElements = Array("What should go here?" => "#");
+   $navElements = Array("home"=>"index.php","queue" => "queue.php");
    include('include/header.php');
 ?>
    <h2>SSID:</h2>
