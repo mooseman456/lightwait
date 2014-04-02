@@ -69,8 +69,12 @@ $(document).ready(function(){
    function updateCurrentWindow() {
       $('div.window').empty();
       updatePagenumbers();
-      for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length; i++) {
-         pushOrderToWindow(i);
+      if (orders.length==0) {
+         $('div.window').append('<h1>No pending orders</h1>');
+      } else {
+         for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length; i++) {
+            pushOrderToWindow(i);
+         }
       }
    }
 
