@@ -15,6 +15,7 @@
     NSArray *wrapsArray;
     NSArray *sidesArray;
     NSArray *dessertsArray;
+    NSArray *menuArray;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *menuTable;

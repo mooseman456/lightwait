@@ -33,6 +33,7 @@
     wrapsArray = [[NSArray alloc] initWithObjects:@"Barbecue Chicken", @"Buffalo Chicken", @"Turkey Wrap", nil];
     sidesArray = [[NSArray alloc] initWithObjects:@"Blueberry Yogurt", @"Strawberry Yogurt", @"Fruit Cup", @"Chips", nil];
     dessertsArray = [[NSArray alloc] initWithObjects:@"Carnival Cookies", @"Brownies", nil];
+    menuArray = [[NSArray alloc] initWithObjects:pizzaArray, wrapsArray, sidesArray, dessertsArray, nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,7 +131,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self showAlert:@"Item Information" message:@"Here is some information about the item tapped."];
+    NSString *selectionString = [[menuArray objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+    [self showAlert:selectionString message:[@"Here is some information about " stringByAppendingString:[selectionString lowercaseString]]];
 }
 
 - (void)showAlert:(NSString *)title message:(NSString *)messageString
