@@ -23,7 +23,7 @@ $(document).ready(function(){
       //TODO: that ^
       //Previous page arrow
       $('div.navigation img[alt~="Previous"]').click(function() {
-         if (currentPage > 0)
+         if (currentPage > 1)
             currentPage--;
          updatePagenumbers();
          updateCurrentWindow();
@@ -31,7 +31,7 @@ $(document).ready(function(){
       
       //Next page arrow
       $('div.navigation img[alt~="Next"]').click(function() {
-         if(currentPage < Math.floor(orders.length)/8-1) {
+         if(currentPage < Math.ceil(orders.length)/8) {
             currentPage++;
          }
          updatePagenumbers();
@@ -169,7 +169,7 @@ $(document).ready(function(){
 
    //UPDATE PAGENUMBERS
    function updatePagenumbers() {
-      $('#page_number').html((currentPage) + "/" + Math.floor(orders.length/8+1));
+      $('#page_number').html((currentPage) + "/" + Math.ceil(orders.length/8));
    }
 
    function getActiveOrders() {
