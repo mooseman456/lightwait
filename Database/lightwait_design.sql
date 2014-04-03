@@ -80,6 +80,19 @@ CREATE TABLE Orders (
 	Foreign Key (fry_id) REFERENCES Fries(fry_id)
 ) Engine=InnoDB;
 
+# Procedures
+DELIMITER $$
+
+CREATE PROCEDURE recallOrder()
+BEGIN
+
+UPDATE Orders SET isActive = 1 
+WHERE timeFinished = (SELECT timeFinished FROM (SELECT timeFinished FROM Orders WHERE isActive=0 ORDER BY timeFinished DESC LIMIT 1) AS TimeFinished);
+
+END $$
+
+DELIMITER ;
+
 # INSERT some ingredients and Users
 INSERT INTO `Breads` (`bread_id`, `name`, `available`) VALUES
 (1, 'White', 1),

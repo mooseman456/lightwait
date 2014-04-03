@@ -85,14 +85,7 @@ function recallOrder() {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
 
-
-  $query = "SELECT MAX(timeFinished) as max FROM Orders WHERE isActive = 0";
-
-  $result = $mysqli->query($query);
-  $arr = $result->fetch_assoc();
-  $max = $arr['max'];
-
-  $query = "UPDATE Orders SET isActive=1 WHERE timeFinished='".$max."'";
+  $query = "CALL recallOrder";
 
   $mysqli->query($query);
 
