@@ -1,4 +1,5 @@
-var rootURL = "http://localhost/lightwait/Web/api/index.php";
+//var rootURL = "http://lightwait.alecsiems.com/Web/api/index.php";
+var rootURL = "api/index.php";
 
 $(document).ready(function(){
 
@@ -22,7 +23,7 @@ $(document).ready(function(){
       //TODO: that ^
       //Previous page arrow
       $('div.navigation img[alt~="Previous"]').click(function() {
-         if (currentPage > 0)
+         if (currentPage > 1)
             currentPage--;
          updatePagenumbers();
          updateCurrentWindow();
@@ -30,7 +31,7 @@ $(document).ready(function(){
       
       //Next page arrow
       $('div.navigation img[alt~="Next"]').click(function() {
-         if(currentPage < Math.floor(orders.length)/8-1) {
+         if(currentPage < Math.ceil(orders.length)/8) {
             currentPage++;
          }
          updatePagenumbers();
@@ -68,8 +69,12 @@ $(document).ready(function(){
    function updateCurrentWindow() {
       $('div.window').empty();
       updatePagenumbers();
-      for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length; i++) {
-         pushOrderToWindow(i);
+      if (orders.length==0) {
+         $('div.window').append('<h1>No pending orders</h1>');
+      } else {
+         for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length; i++) {
+            pushOrderToWindow(i);
+         }
       }
    }
 
@@ -164,7 +169,7 @@ $(document).ready(function(){
 
    //UPDATE PAGENUMBERS
    function updatePagenumbers() {
-      $('#page_number').html((currentPage) + "/" + Math.floor(orders.length/8+1));
+      $('#page_number').html((currentPage) + "/" + Math.ceil(orders.length/8));
    }
 
    function getActiveOrders() {
@@ -172,8 +177,9 @@ $(document).ready(function(){
          type: 'GET',
          url: rootURL + "/activeorders",
          dataType: "json", // data type of response
-         success: function(data){  
+         success: function(data){ 
             orders = data;
+            console.log(orders); //DEBUG
             console.log(data);
             //Set the base count values in the side bar
             //THIS IS OUTSIDE THE .ready()!!
