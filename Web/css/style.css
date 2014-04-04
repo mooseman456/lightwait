@@ -58,13 +58,18 @@ nav a:hover {
 }
 
 
-/******************/
-/*   Order Pane   */
-/******************/
+/********************/
+/*   Queue Window   */
+/********************/
 .window {
 	width:80%;
 	height:100%;
 	z-index:1;
+}
+
+.window > h1 {
+	color: #AAA;
+	text-align: center;
 }
 
 .queue {

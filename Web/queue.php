@@ -1,6 +1,7 @@
 <?php
 	$navElements=array("account"=>"account.php","logout"=>"index.php");
 	$pageTitle = "Queue";
+	$javascript='javascript/queue.js';
 	include 'include/header.php';
 ?>
 	

@@ -1,10 +1,7 @@
-
 <!--
 	This page holds the account information form
 	to be used in the login as well as the account page
 -->
-
-
 
 <form id="createAccountForm" method="POST">
 	<input class="textForm" type="email" name="username" placeholder="Email" required></br>
