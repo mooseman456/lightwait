@@ -15,6 +15,7 @@
    	</div>
       <div class="accountForm">
          <h1>Create an Account</h1>
+
          <form id="createAccountForm" method="POST">
             <input class="textForm" type="email" name="username" placeholder="Email" required></br>
             <input class="textForm" type="password" name="password" placeholder="Password" required></br>
