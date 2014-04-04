@@ -10,7 +10,7 @@ $app->get('/menu', 'getMenuData');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->get('/activeorders', 'getActiveOrders');
-$app->put('/recall', 'recallOrder');
+$app->get('/recall', 'recallOrder');
 $app->put('/:id', 'updateOrder');
 
 $app->run();

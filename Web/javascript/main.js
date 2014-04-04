@@ -13,39 +13,36 @@ $(document).ready(function(){
    var currentPage=1;
    var maxPage=1;
    getActiveOrders();
-   
    /***********************/
    /*   Event Listeners   */
    /***********************/
-   function setClickListeners() {
-      //Set current and total page number
-      //This should happen every time the page is change or 
-      //TODO: that ^
-      //Previous page arrow
-      $('div.navigation img[alt~="Previous"]').click(function() {
-         if (currentPage > 1)
-            currentPage--;
-         updatePagenumbers();
-         updateCurrentWindow();
-      });
-      
-      //Next page arrow
-      $('div.navigation img[alt~="Next"]').click(function() {
-         if(currentPage < Math.ceil(orders.length)/8) {
-            currentPage++;
-         }
-         updatePagenumbers();
-         updateCurrentWindow();
-      });
+   //Set current and total page number
+   //This should happen every time the page is change or 
+   //TODO: that ^
+   //Previous page arrow
+   $('div.navigation img[alt~="Previous"]').click(function() {
+      if (currentPage > 1)
+         currentPage--;
+      updatePagenumbers();
+      updateCurrentWindow();
+   });
+   
+   //Next page arrow
+   $('div.navigation img[alt~="Next"]').click(function() {
+      if(currentPage < Math.ceil(orders.length)/8) {
+         currentPage++;
+      }
+      updatePagenumbers();
+      updateCurrentWindow();
+   });
 
-      //Recall button
-      $("#recall").click(function() {
-         console.log("You clicked the recall button");
-         recallOrder();
-         getActiveOrders();
-         //updateCurrentWindow();
-      });
-   }
+   //Recall button
+   $("#recall").click(function() {
+      console.log("You clicked the recall button");
+      recallOrder();
+      getActiveOrders();
+      //updateCurrentWindow();
+   });
 
    /********************/
    /*   Availability   */
@@ -153,7 +150,7 @@ $(document).ready(function(){
    function recallOrder() {
       console.log("RECALL");
       $.ajax({
-         type: 'PUT',
+         type: 'GET',
          url: rootURL + "/recall",
          async: false,
          success: function(data, textStatus, jqXHR){
@@ -188,10 +185,6 @@ $(document).ready(function(){
             //Update order window
             //THIS IS INSIDE THE .ready()!!
             updateCurrentWindow();
-
-            //Set the click listeners
-            //THIS IS INSIDE THE .ready()!!
-            setClickListeners();
          }
       });
    }
