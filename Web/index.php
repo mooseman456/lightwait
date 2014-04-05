@@ -17,7 +17,7 @@
       <div class="accountForm">
          <h1>Create an Account</h1>
          <form id="createAccountForm" method="POST" action="#">
-            <input class="textForm" type="email" name="username" placeholder="Email" required>
+            <input class="textForm" type="email" name="email" placeholder="Email" required>
             <input class="textForm" type="password" name="password" placeholder="Password" required>
             <input type="text" name="fName" placeholder="First Name" required>
             <input type="text" name="lName" placeholder="Last Name" required>

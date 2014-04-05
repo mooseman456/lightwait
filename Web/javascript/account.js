@@ -6,20 +6,23 @@ const rootURL = "api/index.php"
 
 $(document).ready(function() {
 
+  //createAccount('Alec', 'Siems', 'asiems@smu.edu', 'l', '1234567890');
+
   $('#loginForm input[type="submit"]').click(function(e) {
     e.preventDefault();
-    var email = $('#loginForm input[name="email"]').value;
-    var password = $('#loginForm input[name="password"]').value;
+    var email = $('#loginForm input[name="email"]').val();
+    var password = $('#loginForm input[name="password"]').val();
     logIn(email, password);
   });
 
   $('#createAccountForm input[type="submit"]').click(function(e) {
     e.preventDefault();
-    var fName = $('#createAccountForm input[name="fName"]').value;
-    var lName = $('#createAccountForm input[name="lName"]').value;
-    var email = $('#createAccountForm input[name="email"]').value;
-    var password = $('#createAccountForm input[name="password"]').value;
-    var phone = $('#createAccountForm input[name="phone"]').value;
+    var fName = $('#createAccountForm input[name="fName"]').val();
+    var lName = $('#createAccountForm input[name="lName"]').val();
+    var email = $('#createAccountForm input[name="email"]').val();
+    var password = $('#createAccountForm input[name="password"]').val();
+    var phone = $('#createAccountForm input[name="phone"]').val();
+    console.log(fName+" "+lName+" "+email+" "+password+" "+phone);
     createAccount(fName, lName, email, password, phone);
   });
 });
