@@ -7,13 +7,14 @@ $app = new \Slim\Slim();
 
 $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
-$app->post('/order', 'addOrder');
-$app->post('/webOrder', 'webOrder');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/recall', 'recallOrder');
+$app->get('/account/:email/:password', 'logIn');
+$app->post('/order', 'addOrder');
+$app->post('/webOrder', 'webOrder');
+$app->post('/account/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:id', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
-$app->post('/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 
 $app->run();
 
@@ -190,11 +191,33 @@ function createAccount($fName, $lName, $email, $password, $phoneNumber) {
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ($fName, $lName, $email, $password, $phoneNumber)";
+  $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ('$fName', '$lName', '$email', '$password', '$phoneNumber')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
 
   $mysqli->close();
+
+  echo json_encode("Success");
+}
+
+function logIn($email, $password) {
+  $mysqli = getConnection();
+
+  $email = $mysqli->escape_string($email);
+  $password = $mysqli->escape_string($password);
+
+  $password = hash("sha512", $password);
+
+  $query = "SELECT user_id FROM Users WHERE email='$email' AND password='$password'";
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+
+  $row = $result->fetch_assoc();
+
+  if ($row['user_id']) {
+    echo json_encode("Success");
+  } else {
+    echo json_encode("Failed");
+  }
 }
 
 

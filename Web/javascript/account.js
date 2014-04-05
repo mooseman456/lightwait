@@ -5,17 +5,35 @@
 const rootURL = "api/index.php"
 
 $(document).ready(function() {
-  createAccount('Alec', 'Siems', 'asiems@smu.edu', 'faggot123', '1234567890');
+  logIn('asiems@smu.edu', 'testpassword123');
 });
 
 function createAccount(fName, lName, email, password, phoneNumber) {
   $.ajax({
-     type: 'PUT',
-     url: rootURL + '/' + fName + '/' + lName + '/' + email + '/' + password + '/' + phoneNumber,
+     type: 'POST',
+     url: rootURL + '/' + 'account' + '/' + fName + '/' + lName + '/' + email + '/' + password + '/' + phoneNumber,
      dataType: "json", // data type of response
-     success: function(data, textStatus, jqXHR){
-        console.log("Order recalled");
-        console.log(data, textStatus, jqXHR);
+     success: function(){
+        console.log("Account created");
+     },
+     error: function(jqXHR, textStatus, errorThrown){
+        console.log("Account creation failed");
+        console.log(jqXHR, textStatus, errorThrown);
+     }
+  });
+}
+
+function logIn(email, password) {
+  $.ajax({
+     type: 'GET',
+     url: rootURL + '/' + 'account' + '/' + email + '/' + password,
+     dataType: "json", // data type of response
+     success: function(data){
+        console.log(data);
+     },
+     error: function(jqXHR, textStatus, errorThrown){
+        console.log("Account creation failed");
+        console.log(jqXHR, textStatus, errorThrown);
      }
   });
 }
