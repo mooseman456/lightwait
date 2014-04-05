@@ -208,13 +208,14 @@ function logIn($email, $password) {
 
   $password = hash("sha512", $password);
 
-  $query = "SELECT user_id FROM Users WHERE email='$email' AND password='$password'";
+  $query = "SELECT user_id, fName FROM Users WHERE email='$email' AND password='$password'";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
   $row = $result->fetch_assoc();
 
   if ($row['user_id']) {
-    echo json_encode("Success");
+    $fName = $row['fName'];
+    echo json_encode("$fName");
   } else {
     echo json_encode("Failed");
   }
@@ -224,7 +225,7 @@ function logIn($email, $password) {
 function getConnection() {
 	$dbhost="localhost";
 	$dbuser="root";
-	$dbpass="arthas77";
+	$dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
   if($db->connect_errno > 0){
