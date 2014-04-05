@@ -215,9 +215,11 @@ function logIn($email, $password) {
 
   if ($row['user_id']) {
     $fName = $row['fName'];
-    echo json_encode($fName);
+    $arr = array($fName);
+    echo json_encode($arr);
   } else {
-    echo json_encode("Failed");
+    $arr = array("Failed");
+    echo json_encode($arr);
   }
 }
 
