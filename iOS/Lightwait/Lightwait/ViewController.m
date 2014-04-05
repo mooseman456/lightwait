@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "DataManager.h"
 
 @interface ViewController ()
 
@@ -23,7 +22,6 @@
     // Defaults to yes - FOR TESTING PURPOSES ONLY
     isOnCampus = YES;
     //[self initializeLocationManager];
-    [DataManager logIn:@"" password:@""];
 }
 
 - (void)didReceiveMemoryWarning
