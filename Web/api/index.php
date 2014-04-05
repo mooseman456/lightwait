@@ -226,7 +226,7 @@ function logIn($email, $password) {
 
 function getConnection() {
 	$dbhost="localhost";
-	$dbuser="joe";
+	$dbuser="root";
 	$dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
