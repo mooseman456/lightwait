@@ -15,11 +15,11 @@ $(document).ready(function() {
 
   $('#createAccountForm input[type="submit"]').click(function(e) {
     e.preventDefault();
-    var fName = $('#createAccountForm input[name="fName"]');
-    var lName = $('#createAccountForm input[name="lName"]');
-    var email = $('#createAccountForm input[name="email"]');
-    var password = $('#createAccountForm input[name="password"]');
-    var phone = $('#createAccountForm input[name="phone"]');
+    var fName = $('#createAccountForm input[name="fName"]').value;
+    var lName = $('#createAccountForm input[name="lName"]').value;
+    var email = $('#createAccountForm input[name="email"]').value;
+    var password = $('#createAccountForm input[name="password"]').value;
+    var phone = $('#createAccountForm input[name="phone"]').value;
     createAccount(fName, lName, email, password, phone);
   });
 });
