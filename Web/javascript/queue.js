@@ -97,17 +97,22 @@ function pushOrderToWindow(index) {
 // Sets the number of bases in the side panel
 // Returns nothing
 function updateSidebar() {
+  $("#quantityList").empty();
   var baseTypeCount = [];
   for(var i=0; i < orders.length; i++) {
      //If the base is not in baseTypeCount, add the key to baseTypeCount
-     if( baseTypeCount[orders[i].Base] ){
-        baseTypeCount[orders[i].Base] += 1;
+     if( baseTypeCount[orders[i].base_name] ){
+        baseTypeCount[orders[i].base_name] += 1;
      //Else, incrment that element
      } else {
-        baseTypeCount[orders[i].Base] = 1;
+        baseTypeCount[orders[i].base_name] = 1;
      }
-     // TODO:
-     // Add the info in baseTypeCount to the html
+    //add base Type Count to sidebar
+  }
+  for(var key in baseTypeCount) {
+    console.log(baseTypeCount);
+    var value = baseTypeCount[key];
+    $("#quantityList").append("<span>"+key+"="+value+"</span><br/>");
   }
 }
 
