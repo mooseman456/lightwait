@@ -13,6 +13,7 @@ $app->get('/activeorders', 'getActiveOrders');
 $app->get('/recall', 'recallOrder');
 $app->put('/:id', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
+$app->post('/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 
 $app->run();
 
@@ -187,6 +188,10 @@ function getActiveOrders() {
   printf($encoded);
 
   $mysqli->close();
+}
+
+function createAccount($fName, $lName, $email, $password, $phoneNumber) {
+// INSERT CODE HERE
 }
 
 
