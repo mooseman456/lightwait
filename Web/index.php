@@ -16,7 +16,7 @@
    	</div>
       <div class="accountForm">
          <h1>Create an Account</h1>
-         <form id="createAccountForm" method="POST" action="api/createAccount.php">
+         <form id="createAccountForm" method="POST" action="#">
             <input class="textForm" type="email" name="username" placeholder="Email" required>
             <input class="textForm" type="password" name="password" placeholder="Password" required>
             <input type="text" name="fName" placeholder="First Name" required>
