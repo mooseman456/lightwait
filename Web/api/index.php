@@ -9,7 +9,7 @@ $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/recall', 'recallOrder');
-$app->get('/recall/:email/:password', 'logIn');
+$app->get('/account/:email/:password', 'logIn');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->post('/account/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
