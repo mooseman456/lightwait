@@ -163,12 +163,6 @@ function getMenuData() {
 function getActiveOrders() {
   $mysqli = getConnection();
 
-  // Check mysqli connection
-  if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-  }
-
   $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
             FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.bread_id JOIN Bases 
             ON Orders.base_id=Bases.base_id JOIN Cheeses ON Orders.cheese_id=Cheeses.cheese_id JOIN Fries ON Fries.fry_id=Orders.fry_id 
@@ -191,7 +185,16 @@ function getActiveOrders() {
 }
 
 function createAccount($fName, $lName, $email, $password, $phoneNumber) {
-// INSERT CODE HERE
+  $mysqli = getConnection();
+
+  //Salt and Hash the password
+  $password = hash("sha512", $password);
+
+  $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ($fName, $lName, $email, $password, $phoneNumber)";
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+  
+
+  $mysqli->close();
 }
 
 
