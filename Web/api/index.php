@@ -204,7 +204,9 @@ function logIn($email, $password) {
   $mysqli = getConnection();
 
   $email = $mysqli->escape_string($email);
-  $password = $mysqli->escape_string($password)
+  $password = $mysqli->escape_string($password);
+
+  $password = hash("sha512", $password);
 
   $query = "SELECT user_id FROM Users WHERE email='$email' AND password='$password'";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
