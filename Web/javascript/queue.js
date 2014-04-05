@@ -177,6 +177,18 @@ function getActiveOrders() {
   });
 }
 
+function updateQuantity(type, id) {
+  $.ajax({
+     type: 'PUT',
+     url: rootURL + '/' + type +'/' +id,
+     dataType: "json", // data type of response
+     success: function(data, textStatus, jqXHR){
+        console.log("Order recalled");
+        console.log(data, textStatus, jqXHR);
+     }
+  });
+}
+
 
 
 
