@@ -5,7 +5,7 @@
 const rootURL = "api/index.php"
 
 $(document).ready(function() {
-
+  createAccount('Alec', 'Siems', 'asiems@smu.edu', 'faggot123', '1234567890');
 });
 
 function createAccount(fName, lName, email, password, phoneNumber) {
