@@ -8,16 +8,33 @@
 	<div class="content">
       <div class="accountForm">
    		<h1>Log In</h1>
-   		<form id="loginForm" method="POST" action="api/index.php/logIn">
-   			<input class="textForm" type="text" name="username" placeholder="Username" required><br/>
+   		<form id="loginForm" method="POST" action="#" onsubmint="login()">
+   			<input class="textForm" type="email" name="email" placeholder="Email" required><br/>
    			<input class="textForm" type="password" name="password" placeholder="Password" requried><br/>
    			<input class="formSubmit" type="submit" value="Log In">
    		</form>
    	</div>
       <div class="accountForm">
          <h1>Create an Account</h1>
-
-         <?php include('include/accountForm.php'); ?>
+         <form id="createAccountForm" method="POST" action="api/createAccount.php">
+            <input class="textForm" type="email" name="username" placeholder="Email" required></br>
+            <input class="textForm" type="password" name="password" placeholder="Password" required></br>
+            <ul id="typeOfAcct">
+               <li>
+                  <input type="radio" name="accountType" id="customer" value="chef">
+                  <label for="customer">Customer</label>
+               </li>
+               <li>
+                  <input type="radio" name="accountType" id="chef" value="chef">
+                  <label for="chef">Chef</label>
+               </li>
+               <li>
+                  <input type="radio" name="accountType" id="admin" value="admin">
+                  <label for="admin">Administrator</label>
+               </li>
+            </ul>
+            <input class="formSubmit" type="submit" value="Create Account">
+         </form>
       </div>
    </div>
 
