@@ -35,15 +35,15 @@ function webOrder() {
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (25, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
             (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
             (SELECT fry_id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
   //echo $query;
-  $mysqli->query($query);
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
 
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
-  echo "<a href=http://54.186.252.120.com/Web/api/index.php>Return home</a>";
+  echo "<a href=../../index.php>Return home</a>";
 }
 
 function addOrder() {
@@ -208,13 +208,14 @@ function logIn($email, $password) {
 
   $password = hash("sha512", $password);
 
-  $query = "SELECT user_id FROM Users WHERE email='$email' AND password='$password'";
+  $query = "SELECT user_id, fName FROM Users WHERE email='$email' AND password='$password'";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
   $row = $result->fetch_assoc();
 
   if ($row['user_id']) {
-    echo json_encode("Success");
+    $fName = $row['fName'];
+    echo json_encode($fName);
   } else {
     echo json_encode("Failed");
   }
@@ -223,7 +224,7 @@ function logIn($email, $password) {
 
 function getConnection() {
 	$dbhost="localhost";
-	$dbuser="root";
+	$dbuser="joe";
 	$dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);

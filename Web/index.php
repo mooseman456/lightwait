@@ -1,3 +1,4 @@
+
 <?php
 	$pageTitle = "Home";
 	$navElements = array("queue"=>"queue.php", "order"=>"order.php");

@@ -10,7 +10,7 @@
 
 #import "REST_API.h"
 
-@interface ViewController : UIViewController <CLLocationManagerDelegate>
+@interface ViewController : UIViewController
 {
     bool isOnCampus;
 }

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-   var rootURL = "http://localhost/lightwait/Web/api/index.php";
+   var rootURL = "api/index.php";
 
    function postOrder(json) {
       $.ajax({

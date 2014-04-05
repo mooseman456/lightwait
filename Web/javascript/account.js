@@ -32,7 +32,7 @@ function createAccount(fName, lName, email, password, phoneNumber) {
 function logIn(email, password) {
   $.ajax({
      type: 'GET',
-     url: rootURL + '/' + 'account' + '/' + email + '/' + password,
+     url: rootURL + '/account/' + email + '/' + password,
      dataType: "json", // data type of response
      success: function(data){
         console.log(data);
