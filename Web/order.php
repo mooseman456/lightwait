@@ -1,7 +1,7 @@
 <?php
 	$pageTitle = "Order";
 	$navElements=array("account"=>"account.php","logout"=>"index.php");
-	$javascript='javascript/main';
+	$javascript='javascript/main.js';
 	include('include/header.php');
 ?>
 	<div class="order-wrapper">
