@@ -6,8 +6,6 @@ const rootURL = "api/index.php"
 
 $(document).ready(function() {
 
-  //createAccount('Alec', 'Siems', 'asiems@smu.edu', 'l', '1234567890');
-
   $('#loginForm input[type="submit"]').click(function(e) {
     e.preventDefault();
     var email = $('#loginForm input[name="email"]').val();
@@ -49,6 +47,7 @@ function logIn(email, password) {
      dataType: "json", // data type of response
      success: function(data){
         console.log(data);
+        document.location.href="order.php"
      },
      error: function(jqXHR, textStatus, errorThrown){
         console.log("Account creation failed");
