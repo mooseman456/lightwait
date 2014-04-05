@@ -4,13 +4,10 @@
    $javascript = 'javascript/main.js';
 	include('include/header.php');
 ?>
-
-   <script src='javascript/account.js'></script>
-
 	<div class="content">
       <div class="accountForm">
    		<h1>Log In</h1>
-   		<form id="loginForm" method="POST">
+   		<form id="loginForm" method="POST" action="api/index.php/logIn">
    			<input class="textForm" type="text" name="username" placeholder="Username" required><br/>
    			<input class="textForm" type="password" name="password" placeholder="Password" requried><br/>
    			<input class="formSubmit" type="submit" value="Log In">

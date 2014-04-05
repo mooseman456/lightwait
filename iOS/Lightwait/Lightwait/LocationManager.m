@@ -10,17 +10,16 @@
 
 @implementation LocationManager
 
++ (BOOL)checkIfLocationServicesEnabled {
+    // Check to ensure location services are enabled
+    return [CLLocationManager locationServicesEnabled];
+}
+
 - (void)initializeLocationManager
 {
-    // Check to ensure location services are enabled
-    if(![CLLocationManager locationServicesEnabled]) {
-        [self showAlert:@"Alert" message:@"Location services must be enabled for this app"];
-        return;
-    }
-    
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    [_locationManager startUpdatingLocation];
+    CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    [locationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
