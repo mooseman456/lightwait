@@ -43,7 +43,7 @@ function webOrder() {
 
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
-  echo "<a href=http://54.186.252.120.com/Web/api/index.php>Return home</a>";
+  echo "<a href=../../index.php>Return home</a>";
 }
 
 function addOrder() {
@@ -224,7 +224,7 @@ function logIn($email, $password) {
 function getConnection() {
 	$dbhost="localhost";
 	$dbuser="root";
-	$dbpass="root";
+	$dbpass="arthas77";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
   if($db->connect_errno > 0){
