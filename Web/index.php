@@ -17,8 +17,12 @@
       <div class="accountForm">
          <h1>Create an Account</h1>
          <form id="createAccountForm" method="POST" action="api/createAccount.php">
-            <input class="textForm" type="email" name="username" placeholder="Email" required></br>
-            <input class="textForm" type="password" name="password" placeholder="Password" required></br>
+            <input class="textForm" type="email" name="username" placeholder="Email" required>
+            <input class="textForm" type="password" name="password" placeholder="Password" required>
+            <input type="text" name="fName" placeholder="First Name" required>
+            <input type="text" name="lName" placeholder="Last Name" required>
+            <input type="tel" name="phone" placeholder="Phone Number" required>
+            
             <ul id="typeOfAcct">
                <li>
                   <input type="radio" name="accountType" id="customer" value="chef">
