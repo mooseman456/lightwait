@@ -11,16 +11,16 @@ function loadAvailChart(vClient){
    availTest=vClient;
    console.log(availTest);
    for(var key in availTest){
-       $(".mainForm").append("<div></div>");
-       var currentItem=".mainForm div:last-child";
-       $(currentItem).append("<h2>"+key+"</h2>");
-       for(metaKey in availTest[key]){
+      $(".mainForm").append("<div></div>");
+      var currentItem=".mainForm div:last-child";
+      $(currentItem).append("<h2>"+key+"</h2>");
+      for(metaKey in availTest[key]){
          var allPurpose=availTest[key][metaKey];
          $(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
          $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
-       }
-
+      `}
    }
+}
 
    /*for(var k=0; k<availTest.length; k++){
       var category=availTest[k][0];
