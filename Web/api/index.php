@@ -9,7 +9,7 @@ $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/recall', 'recallOrder');
-$app->get('/recall/:email/:password', 'logIn');
+$app->get('/account/:email/:password', 'logIn');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->post('/account/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
@@ -204,7 +204,7 @@ function logIn($email, $password) {
   $mysqli = getConnection();
 
   $email = $mysqli->escape_string($email);
-  $password = $mysqli->escape_string($password)
+  $password = $mysqli->escape_string($password);
 
   $query = "SELECT user_id FROM Users WHERE email='$email' AND password='$password'";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
