@@ -8,7 +8,7 @@
 	<div class="content">
       <div class="accountForm">
    		<h1>Log In</h1>
-   		<form id="loginForm" method="POST" action="#" onsubmint="login()">
+   		<form id="loginForm" method="POST" action="#">
    			<input class="textForm" type="email" name="email" placeholder="Email" required><br/>
    			<input class="textForm" type="password" name="password" placeholder="Password" requried><br/>
    			<input class="formSubmit" type="submit" value="Log In">
