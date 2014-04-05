@@ -195,6 +195,8 @@ function createAccount($fName, $lName, $email, $password, $phoneNumber) {
   
 
   $mysqli->close();
+
+  echo json_encode("Success");
 }
 
 

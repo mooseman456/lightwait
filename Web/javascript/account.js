@@ -13,12 +13,11 @@ function createAccount(fName, lName, email, password, phoneNumber) {
      type: 'POST',
      url: rootURL + '/' + 'account' + '/' + fName + '/' + lName + '/' + email + '/' + password + '/' + phoneNumber,
      dataType: "json", // data type of response
-     success: function(data, textStatus, jqXHR){
-        console.log("Order recalled");
-        console.log(data, textStatus, jqXHR);
+     success: function(){
+        console.log("Account created");
      },
      error: function(jqXHR, textStatus, errorThrown){
-        console.log("Order upload failed");
+        console.log("Account creation failed");
         console.log(jqXHR, textStatus, errorThrown);
      }
   });
