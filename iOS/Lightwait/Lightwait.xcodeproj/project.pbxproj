@@ -28,6 +28,7 @@
 		7B31713118D3B16200080C78 /* GrabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31713018D3B16200080C78 /* GrabViewController.m */; };
 		7B31713318D3B1D600080C78 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B31713218D3B1D600080C78 /* logo.png */; };
 		7B42091A18EF825200EEA0A9 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B42091918EF825200EEA0A9 /* LocationManager.m */; };
+		7B52CB5C18EFBE7000F1EC85 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B52CB5B18EFBE7000F1EC85 /* LogInViewController.m */; };
 		7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD58A4B18E2779600983618 /* JSONConverter.m */; };
 		7BD58A4F18E277A900983618 /* REST_API.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD58A4E18E277A900983618 /* REST_API.m */; };
 		7BD69E2818E8B02B004E6AA4 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD69E2718E8B02B004E6AA4 /* DataManager.m */; };
@@ -76,6 +77,8 @@
 		7B31713218D3B1D600080C78 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		7B42091818EF825200EEA0A9 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		7B42091918EF825200EEA0A9 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		7B52CB5A18EFBE7000F1EC85 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		7B52CB5B18EFBE7000F1EC85 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		7BD58A4A18E2779600983618 /* JSONConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONConverter.h; sourceTree = "<group>"; };
 		7BD58A4B18E2779600983618 /* JSONConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONConverter.m; sourceTree = "<group>"; };
 		7BD58A4D18E277A900983618 /* REST_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REST_API.h; sourceTree = "<group>"; };
@@ -211,6 +214,8 @@
 				7B31713018D3B16200080C78 /* GrabViewController.m */,
 				7B31712C18D3B15100080C78 /* SavedOrdersViewController.h */,
 				7B31712D18D3B15100080C78 /* SavedOrdersViewController.m */,
+				7B52CB5A18EFBE7000F1EC85 /* LogInViewController.h */,
+				7B52CB5B18EFBE7000F1EC85 /* LogInViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -334,6 +339,7 @@
 				7B31712B18D3B14200080C78 /* CustomOrderViewController.m in Sources */,
 				7BD58A4F18E277A900983618 /* REST_API.m in Sources */,
 				7B31713118D3B16200080C78 /* GrabViewController.m in Sources */,
+				7B52CB5C18EFBE7000F1EC85 /* LogInViewController.m in Sources */,
 				7B31710918D3B0B200080C78 /* ViewController.m in Sources */,
 				7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */,
 				7B31710318D3B0B200080C78 /* AppDelegate.m in Sources */,
