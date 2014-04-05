@@ -20,11 +20,13 @@
     return [REST_API postPath:[kRootURL stringByAppendingString:kOrder] data:data];
 }
 
-+ (BOOL)logIn:(NSString *)username password:(NSString *)passwordString
++ (NSDictionary *)logIn:(NSString *)username password:(NSString *)passwordString
 {
-    NSString* testLogIn = @"/account/alecsiems@smu.edu/testpassword123";
-    NSLog(@"%@", [REST_API getPath:[kRootURL stringByAppendingString:testLogIn]]);
-    return false;
+    NSString *logInString = [@"/account/" stringByAppendingString:username];
+    logInString = [logInString stringByAppendingString:@"/"];
+    logInString = [logInString stringByAppendingString:passwordString];
+    
+    return [REST_API getPath:[kRootURL stringByAppendingString:logInString]];
 }
 
 @end

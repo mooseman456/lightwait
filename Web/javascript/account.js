@@ -8,9 +8,19 @@ $(document).ready(function() {
 
   $('#loginForm input[type="submit"]').click(function(e) {
     e.preventDefault();
-    var email = $('#loginForm input')[0].value;
-    var password = $('#loginForm input')[1].value;
+    var email = $('#loginForm input[name="email"]').value;
+    var password = $('#loginForm input[name="password"]').value;
     logIn(email, password);
+  });
+
+  $('#createAccountForm input[type="submit"]').click(function(e) {
+    e.preventDefault();
+    var fName = $('#createAccountForm input[name="fName"]').value;
+    var lName = $('#createAccountForm input[name="lName"]').value;
+    var email = $('#createAccountForm input[name="email"]').value;
+    var password = $('#createAccountForm input[name="password"]').value;
+    var phone = $('#createAccountForm input[name="phone"]').value;
+    createAccount(fName, lName, email, password, phone);
   });
 });
 

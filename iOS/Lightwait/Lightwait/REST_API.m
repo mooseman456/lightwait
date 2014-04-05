@@ -26,9 +26,6 @@
 
     if ([urlResponse statusCode] >= 200 && [urlResponse statusCode] < 300) {
         // Convert data to JSON string
-        NSLog(@"%@", responseData);
-        NSString *output = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", output);
         return [JSONConverter convertNSDataToNSDictionary:responseData];
     }
     else {
