@@ -5,7 +5,13 @@
 const rootURL = "api/index.php"
 
 $(document).ready(function() {
-  logIn('asiems@smu.edu', 'testpassword123');
+
+  $('#loginForm input[type="submit"]').click(function(e) {
+    e.preventDefault();
+    var email = $('#loginForm input')[0].value;
+    var password = $('#loginForm input')[1].value;
+    logIn(email, password);
+  });
 });
 
 function createAccount(fName, lName, email, password, phoneNumber) {
