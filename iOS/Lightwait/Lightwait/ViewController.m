@@ -7,13 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "DataManager.h"
 
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
-CLLocationManager *_locationManager;
 
 - (void)viewDidLoad
 {
@@ -23,6 +23,7 @@ CLLocationManager *_locationManager;
     // Defaults to yes - FOR TESTING PURPOSES ONLY
     isOnCampus = YES;
     //[self initializeLocationManager];
+    [DataManager logIn:@"" password:@""];
 }
 
 - (void)didReceiveMemoryWarning
