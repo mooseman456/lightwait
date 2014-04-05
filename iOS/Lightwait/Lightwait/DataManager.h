@@ -14,5 +14,5 @@
 
 + (NSDictionary*)getMenu;
 + (NSString *)uploadOrder:(NSString*)data;
-
++ (BOOL)logIn:(NSString *)username password:(NSString *)passwordString;
 @end
