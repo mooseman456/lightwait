@@ -4,6 +4,9 @@
    $javascript = 'javascript/main.js';
 	include('include/header.php');
 ?>
+
+   <script src='javascript/account.js'></script>
+
 	<div class="content">
       <div class="accountForm">
    		<h1>Log In</h1>
