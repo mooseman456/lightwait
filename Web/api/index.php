@@ -190,7 +190,7 @@ function createAccount($fName, $lName, $email, $password, $phoneNumber) {
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ($fName, $lName, $email, $password, $phoneNumber)";
+  $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ('$fName', '$lName', '$email', '$password', '$phoneNumber')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
 
