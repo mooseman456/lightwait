@@ -43,7 +43,8 @@ function webOrder() {
 
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
-  echo "<a href=../../index.php>Return home</a>";
+  echo "<a href=../../index.php>Return home</a><br>";
+  echo "<a href=../../order.php>New Order</a>";
 }
 
 function addOrder() {
