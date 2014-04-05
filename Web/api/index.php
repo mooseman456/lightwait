@@ -81,6 +81,23 @@ function updateOrder($id) {
   echo json_encode($query); 
 }
 
+function updateAvailability($type, $id) {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+
+  if (strtolower($type) == "fries") {
+    $idName = "fry_id";
+  } else {
+    $idName = substr(strtolower($type), 0, -1)."_id";
+  }
+  $query = "UPDATE $type SET available=0 WHERE $idName='$id'";
+  $mysqli->query($query);
+
+  $mysqli->close();
+
+  echo json_encode($query); 
+}
+
 function recallOrder() {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
