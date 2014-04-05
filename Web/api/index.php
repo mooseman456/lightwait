@@ -12,6 +12,7 @@ $app->post('/webOrder', 'webOrder');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/recall', 'recallOrder');
 $app->put('/:id', 'updateOrder');
+$app->put('/:type/:id', 'updateQuantity')
 
 $app->run();
 
@@ -169,6 +170,10 @@ function getActiveOrders() {
   printf($encoded);
 
   $mysqli->close();
+}
+
+function updateQuantity($type, $id) {
+ // INSERT CODE HERE
 }
 
 function getConnection() {
