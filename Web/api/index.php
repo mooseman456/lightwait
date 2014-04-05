@@ -12,7 +12,7 @@ $app->post('/webOrder', 'webOrder');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/recall', 'recallOrder');
 $app->put('/:id', 'updateOrder');
-$app->put('/:type/:id', 'updateQuantity')
+$app->put('/:type/:id', 'updateAvailability');
 
 $app->run();
 
@@ -189,9 +189,6 @@ function getActiveOrders() {
   $mysqli->close();
 }
 
-function updateQuantity($type, $id) {
- // INSERT CODE HERE
-}
 
 function getConnection() {
 	$dbhost="localhost";
