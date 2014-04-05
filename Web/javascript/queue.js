@@ -5,7 +5,6 @@
 //	TODO: Display orders as they come.  As it is now you must refresh the page
 
 
-
 const rootURL = "api/index.php"
 var orders = [];
 var currentPage=1;
@@ -50,7 +49,7 @@ $(document).ready(function() {
 /***************************/
 
 // UPDATE CURRENT WINDOW
-// 
+// Add items in the order array to the window
 function updateCurrentWindow() {
   $('div.window').empty();
   updatePagenumbers();

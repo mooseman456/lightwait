@@ -6,6 +6,6 @@
 //  Copyright (c) 2014 Patrick Leopard II. All rights reserved.
 //
 
-#define kRootURL @"http://localhost:8888/lightwait/Web/api/index.php"
+#define kRootURL @"http://localhost/lightwait/Web/api/index.php"
 #define kMenu @"/menu"
 #define kOrder @"/order"
