@@ -12,6 +12,8 @@ $app->post('/webOrder', 'webOrder');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/recall', 'recallOrder');
 $app->put('/:id', 'updateOrder');
+$app->put('/:type/:id', 'updateAvailability');
+$app->post('/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 
 $app->run();
 
@@ -74,6 +76,23 @@ function updateOrder($id) {
   $app = \Slim\Slim::getInstance();
 
   $query = "UPDATE Orders SET isActive=0 WHERE order_id=$id";
+  $mysqli->query($query);
+
+  $mysqli->close();
+
+  echo json_encode($query); 
+}
+
+function updateAvailability($type, $id) {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+
+  if (strtolower($type) == "fries") {
+    $idName = "fry_id";
+  } else {
+    $idName = substr(strtolower($type), 0, -1)."_id";
+  }
+  $query = "UPDATE $type SET available=0 WHERE $idName='$id'";
   $mysqli->query($query);
 
   $mysqli->close();
@@ -144,12 +163,6 @@ function getMenuData() {
 function getActiveOrders() {
   $mysqli = getConnection();
 
-  // Check mysqli connection
-  if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-  }
-
   $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
             FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.bread_id JOIN Bases 
             ON Orders.base_id=Bases.base_id JOIN Cheeses ON Orders.cheese_id=Cheeses.cheese_id JOIN Fries ON Fries.fry_id=Orders.fry_id 
@@ -170,6 +183,20 @@ function getActiveOrders() {
 
   $mysqli->close();
 }
+
+function createAccount($fName, $lName, $email, $password, $phoneNumber) {
+  $mysqli = getConnection();
+
+  //Salt and Hash the password
+  $password = hash("sha512", $password);
+
+  $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ($fName, $lName, $email, $password, $phoneNumber)";
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+  
+
+  $mysqli->close();
+}
+
 
 function getConnection() {
 	$dbhost="localhost";
