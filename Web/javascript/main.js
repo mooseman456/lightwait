@@ -21,6 +21,7 @@ function loadAvailChart(vClient){
        }
 
    }
+}
 
    /*for(var k=0; k<availTest.length; k++){
       var category=availTest[k][0];
