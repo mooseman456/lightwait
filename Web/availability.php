@@ -1,7 +1,7 @@
 <?php
 	$pageTitle = "Availability";
 	$navElements = array("back"=>"queue.php","logout"=>"index.php");
-	$javascript = 'javascript/main.js';
+	$javascript = 'javascript/availability.js';
 	include 'include/header.php';
 ?>
 	<div class="chartHolder">
