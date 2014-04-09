@@ -1,8 +1,8 @@
 <?php
-	$navElements=array("account"=>"account.php","logout"=>"index.php");
+	$navElements=array("availability"=>"availability.php","logout"=>"index.php",);
 	$pageTitle = "Queue";
 	$javascript='javascript/queue.js';
-	include 'include/header.php';
+	include('include/header.php');
 ?>
 	
 	<div class="window">

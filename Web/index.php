@@ -1,8 +1,8 @@
 
 <?php
 	$pageTitle = "Home";
-	$navElements = array("queue"=>"queue.php");
-    $javascript = 'javascript/account.js';
+	$navElements = array("queue"=>"queue.php","adminstration"=>"administration.php");
+   $javascript = 'javascript/account.js';
 	include('include/header.php');
 ?>
 	<div class="content">
