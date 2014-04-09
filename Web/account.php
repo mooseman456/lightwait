@@ -1,7 +1,7 @@
 <?php
    $pageTitle="Account";
    $navElements = Array("home"=>"index.php","queue" => "queue.php");
-   $javascript = 
+   $javascript = 'javascript/account.js';
    include('include/header.php');
 ?>
 
@@ -11,6 +11,7 @@
 		<input type="text" name="fName" placeholder="First Name">
 		<input type="text" name="lName" placeholder="Last Name">
 		<input type="tel" name="phone" placeholder="Phone">
+		<input type="submit" name="submit" value="Submit Changes">
 	</form>
 
 </body>
