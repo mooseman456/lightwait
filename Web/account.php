@@ -4,8 +4,13 @@
    include('include/header.php');
 ?>
 
-   <h1>Edit your account info here</h1>
-   <?php include('include/accountForm.php'); ?>
+	<form id="editAccountForm" method="POST" action="#">
+		<input type="email" name="email" placeholder="Email">
+		<input type="password" name="password" placeholder="Password">
+		<input type="text" name="fName" placeholder="First Name">
+		<input type="text" name="lName" placeholder="Last Name">
+		<input type="tel" name="phone" placeholder="Phone">
+	</form>
 
 </body>
 </html>
