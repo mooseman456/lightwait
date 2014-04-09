@@ -1,7 +1,7 @@
 
 <?php
 	$pageTitle = "Home";
-	$navElements = array("queue"=>"queue.php","adminstration"=>"administration.php");
+	$navElements = array("queue"=>"queue.php","adminstrator"=>"administrator.php");
    $javascript = 'javascript/account.js';
 	include('include/header.php');
 ?>
