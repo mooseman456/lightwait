@@ -18,6 +18,7 @@ $app->post('/account/:fName/:lName/:email/:password/:phoneNumber', 'createAccoun
 $app->put('/:id', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
 $app->put('/account/:id', 'updateAccount');
+$app->post('/ingredient/:type/:name', 'addIngredient');
 
 $app->run();
 
@@ -314,6 +315,17 @@ function getAvailability() {
 
 function updateAccount() {
 
+}
+
+function addIngredient($type, $name) {
+  $mysqli = getConnection();
+
+  $query = "INSERT INTO ".$type."(`name`) VALUES (`".$name."`)";
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+  
+  $mysqli->close();
+
+  echo json_encode("Success");
 }
 
 
