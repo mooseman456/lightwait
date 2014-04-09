@@ -13,7 +13,15 @@ $(document).ready(function() {
         e.preventDefault();
         var email = $('#loginForm input[name="email"]').val();
         var password = $('#loginForm input[name="password"]').val();
-        logIn(email, password);
+
+        var passPat = /.{8,20}/;
+        password +="";
+        if (passPat.test(password)) {
+            console.log("It works!");
+            logIn(email, password);
+        }
+        else
+            console.log("It fails!");
     });
 
     $('#createAccountForm input[type="submit"]').click(function(e) {

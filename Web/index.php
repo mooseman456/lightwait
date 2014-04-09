@@ -10,7 +10,7 @@
    		<h1>Log In</h1>
    		<form id="loginForm" method="POST" action="#">
    			<input class="textForm" type="email" name="email" placeholder="Email" required ><br/>
-   			<input class="textForm" type="password" name="password" placeholder="Password" pattern=".{8,}" required><br/>
+   			<input class="textForm" type="password" name="password" placeholder="Password" pattern=".{8,20}" required><br/>
    			<input class="formSubmit" type="submit" value="Log In">
    		</form>
    	</div>
