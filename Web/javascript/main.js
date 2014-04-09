@@ -2,29 +2,28 @@
 var rootURL = "api/index.php";
 
 $(document).ready(function(){
-  
-   /********************/
-   /*   Availability   */
-   /********************/
-   if(document.getElementsByClassName("mainForm").length>0){ 
-      var vClient = new XMLHttpRequest();     
-      vClient.open('GET', '../Resources/sampleAvail.json', true);
-      vClient.send();
-      vClient.onreadystatechange = function() {     
-         if(vClient.readyState===4 && vClient.status===200){
-            loadAvailChat(vClient);
-         }
-      }
-   }
+   //Why is this here?
 });
 
 
 //loads in the availability json into html and checks available items
-function loadAvailChat(vClient){
-   availTest=JSON.parse(vClient.responseText);
-   //console.log(availTest);
+function loadAvailChart(vClient){
+   availTest=vClient;
+   console.log(availTest);
+   for(var key in availTest){
+       $(".mainForm").append("<div></div>");
+       var currentItem=".mainForm div:last-child";
+       $(currentItem).append("<h2>"+key+"</h2>");
+       for(metaKey in availTest[key]){
+         var allPurpose=availTest[key][metaKey];
+         $(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
+         $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
+       }
 
-   for(var k=0; k<availTest.length; k++){
+   }
+}
+
+   /*for(var k=0; k<availTest.length; k++){
       var category=availTest[k][0];
       $(".mainForm").append("<div class=\"avail\"></div>");
       var currentItem=".mainForm div:nth-child("+(k+1)+")";
@@ -40,7 +39,7 @@ function loadAvailChat(vClient){
             $(evil).prop("checked", true);
          }
       }
-   }
+   }*/
 
 
 
@@ -75,7 +74,12 @@ function getMenuData() {
       type: 'GET',
       url: rootURL+"/menu",
       dataType: "json", // data type of response
-      success: function(data){  
+      success: function(data){
+
+        if(document.getElementsByClassName("mainForm").length>0){
+         loadAvailChart(data);
+        }  
+        
          $('#menuForm').append("<ul id=\"basesMenu\">");  
          for (var i=0; i<data['Bases'].length; i++){
             $('#menuForm').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i] + "\" value=\"" + data['Bases'][i] + "\" required> <label for=\"" + data['Bases'][i] + "\">" + data['Bases'][i] + "</label></li>");

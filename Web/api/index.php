@@ -8,7 +8,9 @@ $app = new \Slim\Slim();
 $app->get('/orders', 'getOrders');
 $app->get('/menu', 'getMenuData');
 $app->get('/activeorders', 'getActiveOrders');
+$app->get('/activeingredients', 'getActiveIngredients');
 $app->get('/recall', 'recallOrder');
+$app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
@@ -43,7 +45,8 @@ function webOrder() {
 
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
-  echo "<a href=../../index.php>Return home</a>";
+  echo "<a href=../../index.php>Return home</a><br>";
+  echo "<a href=../../order.php>New Order</a>";
 }
 
 function addOrder() {
@@ -222,6 +225,85 @@ function logIn($email, $password) {
     $arr = array("Failed");
     echo json_encode($arr);
   }
+}
+
+function getActiveIngredients() {
+  $mysqli = getConnection();
+
+  $query  = "SELECT name, isAvailable FROM Bases WHERE available = 1;";
+  $query .= "SELECT name, isAvailable FROM Breads WHERE available = 1;";
+  $query .= "SELECT name, isAvailable FROM Cheeses WHERE available = 1;";
+  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1;";
+  $query .= "SELECT name, isAvailable FROM Fries WHERE available = 1";
+
+  // Perform a multiquery to get all the ingredients
+  if ($mysqli->multi_query($query)) {
+    // Arrays that will hold all menu data
+    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
+    $baseArray = array();
+    $breadArray = array();
+    $cheeseArray = array();
+    $toppingArray = array();
+    $friesArray = array();
+    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
+    $menuIndex = -1;
+
+    while ($mysqli->more_results()) {
+      // Store first result set
+      $mysqli->next_result();
+      $menuIndex++;
+      if ($result = $mysqli->store_result()) {
+        while ($row = $result->fetch_row()) {
+          array_push($menuData[$menuTypes[$menuIndex]], $row[0]);
+        }
+        $result->free();
+      }
+    }
+  }
+  $encoded = json_encode($menuData);
+  printf($encoded);
+
+  // Close mysqli connection
+  $mysqli->close();
+}
+
+function getAvailability() {
+  $mysqli = getConnection();
+
+  $query  = "SELECT name, available FROM Bases;";
+  $query .= "SELECT name, available FROM Breads;";
+  $query .= "SELECT name, available FROM Cheeses;";
+  $query .= "SELECT name, available FROM Toppings;";
+  $query .= "SELECT name, available FROM Fries";
+
+  // Perform a multiquery to get all the ingredients
+  if ($mysqli->multi_query($query)) {
+    // Arrays that will hold all menu data
+    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
+    $baseArray = array();
+    $breadArray = array();
+    $cheeseArray = array();
+    $toppingArray = array();
+    $friesArray = array();
+    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
+    $menuIndex = -1;
+
+    while ($mysqli->more_results()) {
+      // Store first result set
+      $mysqli->next_result();
+      $menuIndex++;
+      if ($result = $mysqli->store_result()) {
+        while ($row = $result->fetch_row()) {
+          array_push($menuData[$menuTypes[$menuIndex]], $row[0]);
+        }
+        $result->free();
+      }
+    }
+  }
+  echo json_encode($menuData);
+
+  // Close mysqli connection
+  $mysqli->close();
 }
 
 
