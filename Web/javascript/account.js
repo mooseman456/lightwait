@@ -29,13 +29,13 @@ $(document).ready(function() {
 
     $('#editAccountForm input[type="submit"]').click(function(e) {
         e.preventDefault();
-        var fName = $('#createAccountForm input[name="fName"]').val();
-        var lName = $('#createAccountForm input[name="lName"]').val();
-        var email = $('#createAccountForm input[name="email"]').val();
-        var password = $('#createAccountForm input[name="password"]').val();
-        var phone = $('#createAccountForm input[name="phone"]').val();
+        var fName = $('#editAccountForm input[name="fName"]').val();
+        var lName = $('#editAccountForm input[name="lName"]').val();
+        var email = $('#editAccountForm input[name="email"]').val();
+        var password = $('#editAccountForm input[name="password"]').val();
+        var phone = $('#editAccountForm input[name="phone"]').val();
         console.log(fName+" "+lName+" "+email+" "+password+" "+phone);
-        createAccount(fName, lName, email, password, phone);
+        editAccount(fName, lName, email, password, phone);
     });
 });
 

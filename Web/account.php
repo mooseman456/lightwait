@@ -1,6 +1,6 @@
 <?php
    $pageTitle="Account";
-   $navElements = Array("home"=>"index.php","queue" => "queue.php");
+   $navElements = Array("order" => "order.php","logout"=>"index.php");
    $javascript = 'javascript/account.js';
    include('include/header.php');
 ?>
