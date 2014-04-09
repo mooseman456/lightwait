@@ -287,14 +287,19 @@ function getAvailability() {
     $friesArray = array();
     $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
     $menuIndex = -1;
+    $counter = 0;
 
     while ($mysqli->more_results()) {
       // Store first result set
       $mysqli->next_result();
       $menuIndex++;
+      $counter = 0;
       if ($result = $mysqli->store_result()) {
-        while ($row = $result->fetch_row()) {
-          array_push($menuData[$menuTypes[$menuIndex]], $row[0]);
+        while ($row = $result->fetch_assoc()) {
+          //array_push($menuData[$menuTypes[$menuIndex]], $row['name']);
+          $menuData[$menuTypes[$menuIndex]][$counter]['name'] = $row['name'];
+          $menuData[$menuTypes[$menuIndex]][$counter]['available'] = $row['available'];
+          $counter++;
         }
         $result->free();
       }
