@@ -22,35 +22,35 @@ CREATE TABLE Employees (
 ) ENGINE=InnoDB;
 
 CREATE TABLE Fries (
-	fry_id INT(30) NOT NULL,
+	fry_id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
 	Primary Key(fry_id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Breads (
-	bread_id INT(30) NOT NULL,
+	bread_id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
 	Primary Key(bread_id)
 ) Engine=InnoDB;
 
 CREATE TABLE Bases (
-	base_id INT(30) NOT NULL,
+	base_id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
 	Primary Key (base_id)
 ) Engine=InnoDB;
 
 CREATE TABLE Cheeses (
-	cheese_id INT(30) NOT NULL,
+	cheese_id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
 	Primary Key (cheese_id)
 ) Engine=InnoDB;
 
 CREATE TABLE Toppings (
-	topping_id INT(30) NOT NULL,
+	topping_id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
 	Primary Key (topping_id)
@@ -94,42 +94,42 @@ END $$
 DELIMITER ;
 
 # INSERT some ingredients and Users
-INSERT INTO `Breads` (`bread_id`, `name`, `available`) VALUES
-(1, 'White', 1),
-(2, 'Wheat', 1),
-(3, 'Texas Toast', 1);
+INSERT INTO `Breads` (`name`) VALUES
+('White'),
+('Wheat'),
+('Texas Toast');
 
-INSERT INTO `Bases` (`base_id`, `name`, `available`) VALUES
-(1, 'Grilled Cheese', 1),
-(2, 'Hamburger', 1),
-(3, 'Turkey', 1),
-(4, 'Chicken', 1),
-(5, 'Veggie', 1),
-(6, 'Black Bean', 1);
+INSERT INTO `Bases` (`name`) VALUES
+('Grilled Cheese'),
+('Hamburger'),
+('Turkey'),
+('Chicken'),
+('Veggie'),
+('Black Bean');
 
-INSERT INTO `Cheeses` (`cheese_id`, `name`, `available`) VALUES
-(1, 'American', 1),
-(2, 'Pepper Jack', 1),
-(3, 'Swiss', 1),
-(4, 'No Cheese', 1);
+INSERT INTO `Cheeses` (`name`) VALUES
+('American'),
+('Pepper Jack'),
+('Swiss'),
+('No Cheese');
 
-INSERT INTO `Fries` (`fry_id`, `name`, `available`) VALUES
-(1, 'Regular', 1),
-(2, 'Sweet Potato', 1),
-(3, 'No Fries', 1);
+INSERT INTO `Fries` (`name`) VALUES
+('Regular'),
+('Sweet Potato'),
+('No Fries');
 
-INSERT INTO `Toppings` (`topping_id`, `name`, `available`) VALUES
-(1, 'Lettuce', 1),
-(2, 'Jalapeno', 1),
-(3, 'Tomato', 1),
-(4, 'Bacon', 1),
-(5, 'Pico de Gallo', 1),
-(6, 'Pineapple', 1),
-(7, 'Pickle', 1),
-(8, 'Onion', 1),
-(9, 'Avocado Mayo', 1),
-(10, 'Bistro Sauce', 1),
-(11, 'Chipotle Ranch', 1);
+INSERT INTO `Toppings` (`name`) VALUES
+('Lettuce'),
+('Jalapeno'),
+('Tomato'),
+('Bacon'),
+('Pico de Gallo'),
+('Pineapple'),
+('Pickle'),
+('Onion'),
+('Avocado Mayo'),
+('Bistro Sauce'),
+('Chipotle Ranch');
 
 INSERT INTO `Users` (`fName`, `lName`, `email`, `password`, `phoneNumber`) VALUES
 ('John', 'Pinkerton', 'jpink@poop.com', 'ding', '8795468253'),
