@@ -202,10 +202,9 @@ function createAccount($fName, $lName, $email, $password, $phoneNumber) {
   $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ('$fName', '$lName', '$email', '$password', '$phoneNumber')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
-
   $mysqli->close();
 
-  echo json_encode("Success");
+  echo json_encode($query);
 }
 
 function logIn($email, $password) {
@@ -325,6 +324,7 @@ function getAvailability() {
 }
 
 function updateAccount($id, $password, $fName, $lName, $email, $phoneNumber) {
+    
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
     $request = $app->request()->getBody();
@@ -360,12 +360,11 @@ function addIngredient($type, $name) {
   echo json_encode("Success");
 }
 
-
 function getConnection() {
-	$dbhost="localhost";
-	$dbuser="root";
-	$dbpass="root";
-	$dbname="lightwait";
+	$dbhost='localhost';
+	$dbuser='root';
+	$dbpass='root';
+	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
         die('Unable to connect to database [' . $db->connect_error . ']');
