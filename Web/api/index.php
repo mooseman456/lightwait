@@ -324,10 +324,11 @@ function getAvailability() {
 }
 
 function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
-    
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
     $request = $app->request()->getBody();
+
+    $password = hash("sha512", $password);
 
     //Check if the password is correct
     $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
