@@ -106,7 +106,7 @@ $(document).ready(function() {
 
         console.log(fName+" "+lName+" "+email+" "+password+" "+phone);
         if (createValid === true)
-            editAccount(fName, lName, email, password, phone);
+            updateAccount(password, fName, lName, email, phone);
         else
             alert(errorString);
     });
@@ -128,10 +128,10 @@ function createAccount(fName, lName, email, password, phoneNumber) {
   });
 }
 
-function updateAccount(id, password, fName, lName, email, phoneNumber) {
+function updateAccount(password, fName, lName, email, phoneNumber) {
   $.ajax({
      type: 'PUT',
-     url: rootURL + '/' + 'account' + '/' + id + '/' + password + '/' + fName + '/' + lName + '/' + email + '/' + phoneNumber,
+     url: rootURL + '/updateaccount/' + password + '/' + fName + '/' + lName + '/' + email + '/' + phoneNumber,
      dataType: "json", // data type of response
      success: function(){
         console.log("Account updated");
@@ -158,23 +158,3 @@ function logIn(email, password) {
         }
     });
 }
-
-function editAccount(fName, lName, email, password, phoneNumber) {
-    $.ajax({
-        type: 'PUT',
-        url: rootURL + '/createAccount/' + fName + '/' + lName + '/' + email + '/' + password + '/' + phoneNumber,
-        dataType: "json",
-        success: function(){
-            console.log("Account created");
-            //document.location.href="order.php"
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            console.log("Account creation failed");
-            console.log(jqXHR, textStatus, errorThrown);
-        }
-    });
-}
-
-
-
-
