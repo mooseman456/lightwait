@@ -1,5 +1,8 @@
-
 <?php
+
+  session_cache_limiter(false);
+  session_start();
+
 	$pageTitle = "Home";
 	$navElements = array("queue"=>"queue.php","adminstrator"=>"administrator.php");
    $javascript = 'javascript/account.js';

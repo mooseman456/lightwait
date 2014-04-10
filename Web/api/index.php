@@ -1,5 +1,8 @@
 <?php
 
+session_cache_limiter(false);
+session_start();
+
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
@@ -213,7 +216,7 @@ function logIn($email, $password) {
 
   $password = hash("sha512", $password);
 
-  $query = "SELECT user_id, fName FROM Users WHERE email='$email' AND password='$password'";
+  $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
   $row = $result->fetch_assoc();
@@ -222,6 +225,14 @@ function logIn($email, $password) {
     $fName = $row['fName'];
     $arr = array();
     $arr['fName'] = $fName;
+
+    //Set SESSION variables
+    $_SESSION['fName'] = $row['fName'];
+    $_SESSION['lName'] = $row['lName'];
+    $_SESSION['user_id'] = $row['user_id'];
+    $_SESSION['email'] = $row['email'];
+    $_SESSION['phoneNumber'] = $row['phoneNumber'];
+
     echo json_encode($arr);
   } else {
     $arr = array("Failed");
@@ -313,7 +324,7 @@ function getAvailability() {
   $mysqli->close();
 }
 
-function updateAccount($id, $password, $fName, $lName, $email, $phoneNumber') {
+function updateAccount($id, $password, $fName, $lName, $email, $phoneNumber) {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
   $request = $app->request()->getBody();
@@ -345,9 +356,9 @@ function getConnection() {
 	$dbpass="root";
 	$dbname="lightwait";
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-  if($db->connect_errno > 0){
-    die('Unable to connect to database [' . $db->connect_error . ']');
-  }
+    if($db->connect_errno > 0) {
+        die('Unable to connect to database [' . $db->connect_error . ']');
+    }
   return $db;
 }
 
