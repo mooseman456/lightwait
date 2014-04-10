@@ -314,7 +314,17 @@ function getAvailability() {
 }
 
 function updateAccount() {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
 
+  $query = "";
+
+  $mysqli->query($query);
+
+  $mysqli->close();
+
+  echo json_encode($query); 
 }
 
 function addIngredient($type, $name) {
