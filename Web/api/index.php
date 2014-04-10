@@ -325,17 +325,28 @@ function getAvailability() {
 }
 
 function updateAccount($id, $password, $fName, $lName, $email, $phoneNumber) {
-  $mysqli = getConnection();
-  $app = \Slim\Slim::getInstance();
-  $request = $app->request()->getBody();
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
 
-  $query = "";
+    //Check if the password is correct
+    $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
+    $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
-  $mysqli->query($query);
+    $row = $result->fetch_assoc();
 
-  $mysqli->close();
+    //Correct email and pass provided
+    if ($row['user_id']) {
 
-  echo json_encode($query); 
+        $query = "UPDATE User SET fName='$fName', lName='$lName', phoneNumber='$phoneNumber' WHERE user_id='".$row['user_id']."' ";
+        $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+
+    } else {    //Incorrect email and pass
+
+    }
+
+    $mysqli->close();
+    echo json_encode($query); 
 }
 
 function addIngredient($type, $name) {
