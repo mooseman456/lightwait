@@ -60,8 +60,7 @@ $(document).ready(function() {
             errorString += "Phone number empty!\n";
             createValid = false;
         }
-        console.log(fName+" "+lName+" "+email+" "+password+" "+phone);
-        
+
         if (createValid === false)
             alert(errorString);
 
@@ -104,7 +103,6 @@ $(document).ready(function() {
             createValid = false;
         }
 
-        console.log(fName+" "+lName+" "+email+" "+password+" "+phone);
         if (createValid === true)
             updateAccount(password, fName, lName, email, phone);
         else
@@ -149,11 +147,11 @@ function logIn(email, password) {
         url: rootURL + '/account/' + email + '/' + password,
         dataType: "json", // data type of response
         success: function(data){
-            console.log(data);
+            console.log('Login success');
             document.location.href="order.php"
         },
         error: function(jqXHR, textStatus, errorThrown){
-            console.log("Account creation failed");
+            console.log("Login failed");
             console.log(jqXHR, textStatus, errorThrown);
         }
     });
