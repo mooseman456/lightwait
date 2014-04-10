@@ -323,7 +323,7 @@ function getAvailability() {
   $mysqli->close();
 }
 
-function updateAccount($id, $password, $fName, $lName, $email, $phoneNumber) {
+function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
 
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
