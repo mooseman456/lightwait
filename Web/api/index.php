@@ -340,7 +340,7 @@ function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
     //Correct email and pass provided
     if ($row['user_id']) {
 
-        $query = "UPDATE User SET fName='$fName', lName='$lName', phoneNumber='$phoneNumber' WHERE user_id='".$row['user_id']."' ";
+        $query = "UPDATE Users SET fName='$fName', lName='$lName', phoneNumber='$phoneNumber' WHERE user_id='".$row['user_id']."' ";
         $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
 
     } else {    //Incorrect email and pass
