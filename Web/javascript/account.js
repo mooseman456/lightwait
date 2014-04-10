@@ -128,6 +128,21 @@ function createAccount(fName, lName, email, password, phoneNumber) {
   });
 }
 
+function updateAccount(id, password, fName, lName, email, phoneNumber) {
+  $.ajax({
+     type: 'PUT',
+     url: rootURL + '/' + 'account' + '/' + id + '/' + password + '/' + fName + '/' + lName + '/' + email + '/' + phoneNumber,
+     dataType: "json", // data type of response
+     success: function(){
+        console.log("Account updated");
+     },
+     error: function(jqXHR, textStatus, errorThrown){
+        console.log("Account update failed");
+        console.log(jqXHR, textStatus, errorThrown);
+     }
+  });
+}
+
 function logIn(email, password) {
     $.ajax({
         type: 'GET',
