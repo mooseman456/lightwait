@@ -20,7 +20,7 @@ $app->post('/webOrder', 'webOrder');
 $app->post('/account/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:id', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
-$app->put('/account/:id/:password/:fName:/:lName:/:email/:phoneNumber', 'updateAccount');
+$app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 
 $app->run();
@@ -323,7 +323,7 @@ function getAvailability() {
   $mysqli->close();
 }
 
-function updateAccount($id, $password, $fName, $lName, $email, $phoneNumber) {
+function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
     
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
