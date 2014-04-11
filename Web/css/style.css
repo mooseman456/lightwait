@@ -238,3 +238,32 @@ div.order-wrapper {
 .avail h2{
 	text-align: center;
 }
+
+/**************************/
+/*   Administrator Menu   */
+/**************************/
+
+div.wrapper {
+	width:80%;
+	margin:25px auto;
+}
+
+div.box {
+	border: 1px solid rgba(0,0,0,0.15);
+	box-sizing:border-box;
+	float: left;
+}
+
+div#menu-categories-pane {
+	width:30%;
+}
+
+div#menu-categories-edit-pane {
+	width:70%;
+}
+
+
+
+
+
+

@@ -9,6 +9,7 @@ const rootURL = "api/index.php"
 
 $(document).ready(function() {
 
+    /*   LoginForm   */
     $('#loginForm input[type="submit"]').click(function(e) {
         e.preventDefault();
         var email = $('#loginForm input[name="email"]').val();
@@ -54,7 +55,7 @@ function createAccount(fName, lName, email, password, phoneNumber) {
      dataType: "json", // data type of response
      success: function(){
         console.log("Account created");
-        document.location.href="order.php"
+        document.location.href="order.php";
      },
      error: function(jqXHR, textStatus, errorThrown){
         console.log("Account creation failed");
@@ -70,7 +71,7 @@ function logIn(email, password) {
         dataType: "json", // data type of response
         success: function(data){
             console.log(data);
-            document.location.href="order.php"
+            document.location.href="order.php";
         },
         error: function(jqXHR, textStatus, errorThrown){
             console.log("Account creation failed");
