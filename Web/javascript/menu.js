@@ -45,6 +45,20 @@ function addIngredient(type, name) {
 }
 
 //TODO:
+function updateAvailability(name, availabilityStatus) {
+    $.ajax({
+        type: 'POST',
+        url: rootURL + '/ingredient/' + type + '/' + name,
+        dataType: "json", // data type of response
+        success: function(){
+            console.log("Ingredient added");
+        },
+            error: function(jqXHR, textStatus, errorThrown){
+            console.log("Account creation failed");
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
+}
 
 
 /**************************/
