@@ -16,6 +16,7 @@ function getMenuData() {
         url: rootURL+"/ingredients",
         dataType: "json", // data type of response
         success: function(data){
+            console.log(JSON.stringify(data));
             if($('title').html().toLowerCase()=='menu') {
                 inflateAdminMenu(data);
             } else if($('title').html().toLowerCase()=='availability') {
@@ -29,36 +30,39 @@ function getMenuData() {
 
 //Add an ingredient to the database
 function addIngredient(type, name) {
-  $.ajax({
-     type: 'POST',
-     url: rootURL + '/ingredient/' + type + '/' + name,
-     dataType: "json", // data type of response
-     success: function(){
-        console.log("Ingredient added");
-     },
-     error: function(jqXHR, textStatus, errorThrown){
-        console.log("Account creation failed");
-        console.log(jqXHR, textStatus, errorThrown);
-     }
-  });
+    $.ajax({
+        type: 'POST',
+        url: rootURL + '/ingredient/' + type + '/' + name,
+        dataType: "json", // data type of response
+        success: function(){
+            console.log("Ingredient added");
+        },
+            error: function(jqXHR, textStatus, errorThrown){
+            console.log("Account creation failed");
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
 }
 
-//TODO: Luke doesn't think this has a purpose, but you should correct him.
-function returnItem(ingredient, jsonObject){
-   for(var key in data){
-      for(var k=0; k<data[key].length; k++){
-         if(data[i][k].name===ingredient){
-            return [key, k];
-         }
-      }
-   }
-}
+//TODO:
+
 
 /**************************/
 /*   Inflater functions   */
 /**************************/
 function inflateAdminMenu(data) {
-    //TODO: write this.
+    //FOR type --> div
+        //Type name --> h1
+        //Ingredient -->
+        //FOR items --> section
+            //
+    var pane = $('#menu-categories-edit-pain');
+    var curr;
+    for (var typeName in data) {
+        pane.append('<div id='+'class="box"></div>');
+        curr=pane.nth-child
+    }
+
 }
 
 function inflateChefMenu(data) {
