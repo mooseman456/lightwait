@@ -46,12 +46,12 @@ function addIngredient(type, name) {
 
 //Changes the availability of a an ingredient in the database
 //Name is the name of an ingredient and availabilityStatus is a boolean value
-function updateAvailability(name, availabilityStatus) {
+function updateAvailability(type, name, availabilityStatus) {
     $.ajax({
         type: 'POST',
         url: rootURL + '/updateAvailability/' + name + '/' + availabilityStatus,
         success: function(){
-            console.log("Availability of "+name+" changed to "+availabilityStatus+"." );
+            console.log("Availability of "+type+":"+name+" changed to "+availabilityStatus+".");
         },
             error: function(jqXHR, textStatus, errorThrown){
             console.log("Account creation failed");
@@ -65,18 +65,41 @@ function updateAvailability(name, availabilityStatus) {
 /*   Inflater functions   */
 /**************************/
 function inflateAdminMenu(data) {
-    //FOR type --> div
-        //Type name --> h1
-        //Ingredient -->
-        //FOR items --> section
-            //
-    var pane = $('#menu-categories-edit-pain');
+    //Menu categories edit pane
+    var pane = $('#menu-categories-edit-pane');
     var curr;
+    var item;
     for (var typeName in data) {
-        pane.append('<div id='+'class="box"></div>');
-        curr=pane.nth-child
+        //console.log(data[typeName]);
+        pane.append('<div id="'+typeName+'" class="box"></div>');
+        curr=pane.children().last();
+        curr.append('<h1>'+typeName+'</h1>');
+        curr.append('<div id=ingredientInfo></div>');
+        ingredientInfo=curr.children().last();
+        for(var index in data[typeName]) {
+            ingredientInfo.append('<section><h2>'+data[typeName][index]['name']+'</h2></section>');
+            var section = ingredientInfo.children().last();
+            section.append('<label for="'+item+'-available">Available?</label>');
+            section.append('<input type="checkbox" value="available" id="'+item+'-available"/>');
+            if (data[typeName][index]["available"]== true) {
+                section.children().last().prop("checked",true);
+            }
+            section.append('<input type="button" value="delete" />');
+            section.children().last().click(function() {
+                alert("delete");
+            })
+        }
+        curr.append('<form method="PUTS" action="#"</form>');
+        item = curr.children().last();
+        item.append('<input type="text" placeholder="New Item" />');
+        item.append('<input type="submit" value="Add Item" />');
     }
 
+    //Edit menu nav bar
+    pane = $('#menu-categories-pane');
+    for(var type in data) {
+        pane.append('<div><a href="#'+type+'">'+type+'</a></div>');
+    }
 }
 
 function inflateChefMenu(data) {
@@ -115,4 +138,11 @@ function inflateChefMenu(data) {
         }
 
     });
+}
+
+/***********************/
+/*   Helper function   */
+/***********************/
+function deleteItem(event) {
+    alert("deleting item");
 }
