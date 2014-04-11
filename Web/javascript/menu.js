@@ -106,13 +106,13 @@ function inflateChefMenu(data) {
                 //console.log(data[key][h].name+",--- "+data[key][h].available+", ---"+$(inputPos).is(":checked"));
                 if(data[key][h].available!=$(inputPos).is(":checked")){
                     if(data[key][h].available==1)
-                        switchOff.push(data[key][h].name);
+                        updateAvailability(data[key], data[key][h].name, false);
+                        //switchOff.push(data[key][h].name);
                     if(data[key][h].available==0)
-                        switchOn.push(data[key][h].name);
-                    //console.log(switchOn);
+                        updateAvailability(data[key], data[key][h].name, true);
+                        //switchOn.push(data[key][h].name);
                 }
             }
         }
-
     });
 }
