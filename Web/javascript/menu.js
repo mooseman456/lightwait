@@ -44,14 +44,14 @@ function addIngredient(type, name) {
     });
 }
 
-//TODO:
+//Changes the availability of a an ingredient in the database
+//Name is the name of an ingredient and availabilityStatus is a boolean value
 function updateAvailability(name, availabilityStatus) {
     $.ajax({
         type: 'POST',
-        url: rootURL + '/ingredient/' + type + '/' + name,
-        dataType: "json", // data type of response
+        url: rootURL + '/updateAvailability/' + name + '/' + availabilityStatus,
         success: function(){
-            console.log("Ingredient added");
+            console.log("Availability of "+name+" changed to "+availabilityStatus+"." );
         },
             error: function(jqXHR, textStatus, errorThrown){
             console.log("Account creation failed");
