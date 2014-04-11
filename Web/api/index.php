@@ -22,6 +22,7 @@ $app->put('/:id', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
+$app->post('/logout', 'logout');
 
 $app->run();
 
@@ -237,6 +238,10 @@ function logIn($email, $password) {
     $arr = array("Failed");
     echo json_encode($arr);
   }
+}
+
+function logout() {
+    session_destroy();
 }
 
 function getActiveIngredients() {
