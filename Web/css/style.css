@@ -252,14 +252,20 @@ div.box {
 	border: 1px solid rgba(0,0,0,0.15);
 	box-sizing:border-box;
 	float: left;
+	padding: 1em;
 }
 
 div#menu-categories-pane {
 	width:30%;
 }
 
-div#menu-categories-edit-pane {
+div#menu-categories-edit-pane{
 	width:70%;
+	float:left;
+}
+
+div#menu-categories-edit-pane > div {
+	width:100%;
 }
 
 

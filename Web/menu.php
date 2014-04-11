@@ -13,13 +13,14 @@
 			<div>Toppings</div>
 			<div>Fries</div>
 		</div>
-		<div id="menu-categories-edit-pane" class="box">
-			<section>
-				<h1>Base</h1>
+		<div id="menu-categories-edit-pane">
+			<div class="box">
+				<h1>Category-name</h1>
 				<div id="ingredient-info">
 					<div>
 						<h2>Ing1</h2>
-						<input type="checkbox" name="available" value="available?">
+						<label for="Ing1-available">Available?<label>
+						<input type="checkbox" name="available" value="available?" id="Ing1-available">
 						<input type="button" value="delete">
 					</div>
 					<div>
@@ -42,12 +43,12 @@
 						<input type="checkbox" name="available" value="available?">
 						<input type="button" value="delete">
 					</div>
-					<form action="puts" action="#">
-						<input type="text" name="available" value="available?">
-						<input type="submit" value="Add Item">
-					</form>
 				</div>
-			</section>	
+				<form action="puts" action="#">
+					<input type="text" placeholder="New item">
+					<input type="submit" value="Add Item">
+				</form>
+			</div>	
 		</div>
 	</div>
 </body>
