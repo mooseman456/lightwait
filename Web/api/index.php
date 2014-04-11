@@ -1,5 +1,8 @@
 <?php
 
+session_cache_limiter(false);
+session_start();
+
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
@@ -17,6 +20,8 @@ $app->post('/webOrder', 'webOrder');
 $app->post('/account/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:id', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
+$app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
+$app->post('/ingredient/:type/:name', 'addIngredient');
 
 $app->run();
 
@@ -197,10 +202,9 @@ function createAccount($fName, $lName, $email, $password, $phoneNumber) {
   $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ('$fName', '$lName', '$email', '$password', '$phoneNumber')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
-
   $mysqli->close();
 
-  echo json_encode("Success");
+  echo json_encode($query);
 }
 
 function logIn($email, $password) {
@@ -211,7 +215,7 @@ function logIn($email, $password) {
 
   $password = hash("sha512", $password);
 
-  $query = "SELECT user_id, fName FROM Users WHERE email='$email' AND password='$password'";
+  $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
   $row = $result->fetch_assoc();
@@ -220,6 +224,14 @@ function logIn($email, $password) {
     $fName = $row['fName'];
     $arr = array();
     $arr['fName'] = $fName;
+
+    //Set SESSION variables
+    $_SESSION['fName'] = $row['fName'];
+    $_SESSION['lName'] = $row['lName'];
+    $_SESSION['user_id'] = $row['user_id'];
+    $_SESSION['email'] = $row['email'];
+    $_SESSION['phoneNumber'] = $row['phoneNumber'];
+
     echo json_encode($arr);
   } else {
     $arr = array("Failed");
@@ -311,16 +323,54 @@ function getAvailability() {
   $mysqli->close();
 }
 
+function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
+
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
+
+    $password = hash("sha512", $password);
+
+    //Check if the password is correct
+    $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
+    $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+
+    $row = $result->fetch_assoc();
+
+    //Correct email and pass provided
+    if ($row['user_id']) {
+
+        $query = "UPDATE Users SET fName='$fName', lName='$lName', phoneNumber='$phoneNumber' WHERE user_id='".$row['user_id']."' ";
+        $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+
+    } else {    //Incorrect email and pass
+
+    }
+
+    $mysqli->close();
+    echo json_encode($query); 
+}
+
+function addIngredient($type, $name) {
+  $mysqli = getConnection();
+
+  $query = "INSERT INTO ".$type."(`name`) VALUES (`".$name."`)";
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+  
+  $mysqli->close();
+
+  echo json_encode("Success");
+}
 
 function getConnection() {
-	$dbhost="localhost";
-	$dbuser="root";
-	$dbpass="root";
-	$dbname="lightwait";
+	$dbhost='localhost';
+	$dbuser='root';
+	$dbpass='root';
+	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-  if($db->connect_errno > 0){
-    die('Unable to connect to database [' . $db->connect_error . ']');
-  }
+    if($db->connect_errno > 0) {
+        die('Unable to connect to database [' . $db->connect_error . ']');
+    }
   return $db;
 }
 

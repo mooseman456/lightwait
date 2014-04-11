@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "REST_API.h"
+#import "Strings.h"
 
 @interface ViewController : UIViewController
 {

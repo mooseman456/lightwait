@@ -33,7 +33,7 @@
 - (bool)testMenuConnection
 {
     // Attempt to connect to the website
-    bool isConnected = [REST_API testConnection:@"http://lightwait.alecsiems.com"];
+    bool isConnected = [REST_API testConnection:kConnetionTestLink];
     if (isConnected)
         return true;
     else
