@@ -87,7 +87,7 @@ CREATE PROCEDURE recallOrder()
 BEGIN
 
 UPDATE Orders SET isActive = 1 
-WHERE timeFinished = (SELECT timeFinished FROM (SELECT timeFinished FROM Orders WHERE isActive=0 ORDER BY timeFinished DESC LIMIT 1) AS TimeFinished);
+WHERE timeFinished = (SELECT timeFinished FROM (SELECT timeFinished FROM Orders WHERE isActive=0 ORDER BY timeFinished DESC LIMIT 1) AS TimeFinished) LIMIT 1;
 
 END $$
 
