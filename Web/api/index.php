@@ -329,7 +329,13 @@ function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
     $app = \Slim\Slim::getInstance();
     $request = $app->request()->getBody();
 
+    $password = $mysqli->escape_string($password);
     $password = hash("sha512", $password);
+
+    $fName = $mysqli->escape_string($fName);
+    $lName = $mysqli->escape_string($lName);
+    $email = $mysqli->escape_string($email);
+    $phoneNumber = $mysqli->escape_string($phoneNumber);
 
     //Check if the password is correct
     $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
