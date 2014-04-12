@@ -1,8 +1,8 @@
 <?php
+
     session_cache_limiter(false);
     session_start();
     if (isset($_SESSION['userType'])){
-        
         if ($_SESSION['userType'] == 1) {
             header('Location: order.php');
             die();

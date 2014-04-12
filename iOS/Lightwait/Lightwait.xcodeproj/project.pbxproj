@@ -470,11 +470,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lightwait/Lightwait-Prefix.pch";
 				INFOPLIST_FILE = "Lightwait/Lightwait-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6DA1D759-7926-44F4-B22B-1053D7674F61";
+				PROVISIONING_PROFILE = "903DE1A7-A0A1-4F7E-8B17-B6845B4CBA07";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -484,11 +486,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lightwait/Lightwait-Prefix.pch";
 				INFOPLIST_FILE = "Lightwait/Lightwait-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6DA1D759-7926-44F4-B22B-1053D7674F61";
+				PROVISIONING_PROFILE = "903DE1A7-A0A1-4F7E-8B17-B6845B4CBA07";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
