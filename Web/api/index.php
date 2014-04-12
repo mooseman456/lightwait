@@ -195,13 +195,13 @@ function getActiveOrders() {
   $mysqli->close();
 }
 
-function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumber, $accountType) {
+function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumber) {
   $mysqli = getConnection();
 
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber, accountType) VALUES ('$usertype', '$fName', '$lName', '$email', '$password', '$phoneNumber', $accountType)";
+  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES ('$usertype', '$fName', '$lName', '$email', '$password', '$phoneNumber')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
   $mysqli->close();
