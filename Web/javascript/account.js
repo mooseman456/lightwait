@@ -114,7 +114,7 @@ $(document).ready(function() {
 function createAccount(fName, lName, email, password, phoneNumber) {
   $.ajax({
      type: 'POST',
-     url: rootURL + '/account/' + fName + '/' + lName + '/' + email + '/' + password + '/' + phoneNumber,
+     url: rootURL + '/account/1/' + fName + '/' + lName + '/' + email + '/' + password + '/' + phoneNumber,
      dataType: "json", // data type of response
      success: function(){
         console.log("Account created");

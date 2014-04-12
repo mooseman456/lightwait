@@ -9,7 +9,6 @@ require 'Slim/Slim.php';
 $app = new \Slim\Slim();
 
 $app->get('/orders', 'getOrders');
-$app->get('/menu', 'getMenuData');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/activeingredients', 'getActiveIngredients');
 $app->get('/recall', 'recallOrder');
@@ -17,7 +16,7 @@ $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
-$app->post('/account/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
+$app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:id', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
@@ -123,59 +122,12 @@ function recallOrder() {
   echo json_encode($query); 
 }
 
-function getMenuData() {
-
-  $mysqli = getConnection();
-
-  // Check mysqli connection
-  if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-  }
-
-  $query  = "SELECT name FROM Bases WHERE available = 1;";
-  $query .= "SELECT name FROM Breads WHERE available = 1;";
-  $query .= "SELECT name FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name FROM Toppings WHERE available = 1;";
-  $query .= "SELECT name FROM Fries WHERE available = 1";
-
-  // Perform a multiquery to get all the ingredients
-  if ($mysqli->multi_query($query)) {
-    // Arrays that will hold all menu data
-    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
-    $baseArray = array();
-    $breadArray = array();
-    $cheeseArray = array();
-    $toppingArray = array();
-    $friesArray = array();
-    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
-    $menuIndex = -1;
-
-    while ($mysqli->more_results()) {
-      // Store first result set
-      $mysqli->next_result();
-      $menuIndex++;
-      if ($result = $mysqli->store_result()) {
-        while ($row = $result->fetch_row()) {
-          array_push($menuData[$menuTypes[$menuIndex]], $row[0]);
-        }
-        $result->free();
-      }
-    }
-  }
-  $encoded = json_encode($menuData);
-  printf($encoded);
-
-  // Close mysqli connection
-  $mysqli->close();
-}
-
 function getActiveOrders() {
   $mysqli = getConnection();
 
   $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
-            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.bread_id JOIN Bases 
-            ON Orders.base_id=Bases.base_id JOIN Cheeses ON Orders.cheese_id=Cheeses.cheese_id JOIN Fries ON Fries.fry_id=Orders.fry_id 
+            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases 
+            ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id 
             WHERE Orders.isActive='1'";
 
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
@@ -194,13 +146,13 @@ function getActiveOrders() {
   $mysqli->close();
 }
 
-function createAccount($fName, $lName, $email, $password, $phoneNumber) {
+function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumber) {
   $mysqli = getConnection();
 
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber) VALUES ('$fName', '$lName', '$email', '$password', '$phoneNumber')";
+  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES ('$usertype', '$fName', '$lName', '$email', '$password', '$phoneNumber')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
   $mysqli->close();
@@ -238,10 +190,6 @@ function logIn($email, $password) {
     $arr = array("Failed");
     echo json_encode($arr);
   }
-}
-
-function logout() {
-    session_destroy();
 }
 
 function getActiveIngredients() {
@@ -287,11 +235,11 @@ function getActiveIngredients() {
 function getAvailability() {
   $mysqli = getConnection();
 
-  $query  = "SELECT name, available FROM Bases;";
-  $query .= "SELECT name, available FROM Breads;";
-  $query .= "SELECT name, available FROM Cheeses;";
-  $query .= "SELECT name, available FROM Toppings;";
-  $query .= "SELECT name, available FROM Fries";
+  $query  = "SELECT id, name, available FROM Bases;";
+  $query .= "SELECT id, name, available FROM Breads;";
+  $query .= "SELECT id, name, available FROM Cheeses;";
+  $query .= "SELECT id, name, available FROM Toppings;";
+  $query .= "SELECT id, name, available FROM Fries";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
@@ -313,7 +261,7 @@ function getAvailability() {
       $counter = 0;
       if ($result = $mysqli->store_result()) {
         while ($row = $result->fetch_assoc()) {
-          //array_push($menuData[$menuTypes[$menuIndex]], $row['name']);
+          $menuData[$menuTypes[$menuIndex]][$counter]['id'] = $row['id'];
           $menuData[$menuTypes[$menuIndex]][$counter]['name'] = $row['name'];
           $menuData[$menuTypes[$menuIndex]][$counter]['available'] = $row['available'];
           $counter++;
@@ -371,6 +319,10 @@ function addIngredient($type, $name) {
   $mysqli->close();
 
   echo json_encode("Success");
+}
+
+function logout() {
+  session_destroy();
 }
 
 function getConnection() {

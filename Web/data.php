@@ -5,20 +5,19 @@
         header('Location: index.php');
         die();
     }
-
-	$navElements=array(
+	
+    $navElements=array(
 		"home"=>"administrator.php",
 		"data"=>"data.php",
 		"users"=>"users.php",
 		"menu"=>"menu.php",
 		"logout"=>"index.php");
-	$pageTitle="Administrator";
-	$javascript="javascript/administrator.js";
+	$pageTitle="Data";
+	$javascript="";
 	include('include/header.php');
 ?>
-	<h1>EF THE POLICE!</h1>
 
-
+<p>This is where you can view order data.</p>
 </body>
 
 </html>
