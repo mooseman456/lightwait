@@ -15,13 +15,6 @@ CREATE TABLE Users (
 	Primary Key (user_id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE Employees (
-	emp_id INT(30) NOT NULL AUTO_INCREMENT,
-	fName VARCHAR(255),
-	lName VARCHAR(255),
-	Primary Key (emp_id)
-) ENGINE=InnoDB;
-
 CREATE TABLE Fries (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
