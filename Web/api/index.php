@@ -186,14 +186,9 @@ function logIn($email, $password) {
     $_SESSION['email'] = $row['email'];
     $_SESSION['phoneNumber'] = $row['phoneNumber'];
     $_SESSION['userType'] = $row['userType'];
-    echo $_SESSION['userType'];
-    echo $row['userType'];
 
     echo json_encode($arr);
-  } else {
-    $arr = array("Failed");
-    echo json_encode($arr);
-  }
+  } 
 }
 
 function getActiveIngredients() {

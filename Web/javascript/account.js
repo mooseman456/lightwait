@@ -14,10 +14,12 @@ $(document).ready(function() {
     // Declards regex patters for different portions of the account creation/login
     var passPat = /.{8,20}/;
     var namePat = /^[a-z ,.'-]+$/i;
-    $('#loginForm input[type="submit"]').click(function(e) {
+    $('#loginForm input[type~="submit"]').click(function(e) {
         e.preventDefault();
         var email = $('#loginForm input[name="email"]').val();
         var password = $('#loginForm input[name="password"]').val();
+
+        console.log(email+ " "+password);
 
         if (passPat.test(password))
             logIn(email, password);
