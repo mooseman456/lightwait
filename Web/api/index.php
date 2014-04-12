@@ -23,6 +23,7 @@ $app->put('/:type/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
+//$app->delete('/delete/:type/:id', 'deleteItem');
 
 $app->run();
 
@@ -174,8 +175,8 @@ function getActiveOrders() {
   $mysqli = getConnection();
 
   $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
-            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.bread_id JOIN Bases 
-            ON Orders.base_id=Bases.base_id JOIN Cheeses ON Orders.cheese_id=Cheeses.cheese_id JOIN Fries ON Fries.fry_id=Orders.fry_id 
+            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases 
+            ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id 
             WHERE Orders.isActive='1'";
 
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
@@ -283,11 +284,11 @@ function getActiveIngredients() {
 function getAvailability() {
   $mysqli = getConnection();
 
-  $query  = "SELECT name, available FROM Bases;";
-  $query .= "SELECT name, available FROM Breads;";
-  $query .= "SELECT name, available FROM Cheeses;";
-  $query .= "SELECT name, available FROM Toppings;";
-  $query .= "SELECT name, available FROM Fries";
+  $query  = "SELECT id, name, available FROM Bases;";
+  $query .= "SELECT id, name, available FROM Breads;";
+  $query .= "SELECT id, name, available FROM Cheeses;";
+  $query .= "SELECT id, name, available FROM Toppings;";
+  $query .= "SELECT id, name, available FROM Fries";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
@@ -372,6 +373,12 @@ function addIngredient($type, $name) {
 function logout() {
   session_destroy();
 }
+
+/*
+function deleteItem($type, $id) {
+
+}
+*/
 
 function getConnection() {
 	$dbhost='localhost';

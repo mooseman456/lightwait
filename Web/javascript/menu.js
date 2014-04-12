@@ -61,6 +61,20 @@ function updateAvailability(type, name, availabilityStatus) {
     });
 }
 
+function deleteItem(type, id) {
+    $.ajax({
+        type: 'POST',
+        url: rootURL + '/delete/' + type + '/' + id,
+        success: function(){
+            console.log("Item deleted");
+        },
+            error: function(jqXHR, textStatus, errorThrown){
+            console.log("Item deletion failed");
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
+}
+
 
 /**************************/
 /*   Inflater functions   */
