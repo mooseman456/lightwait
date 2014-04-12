@@ -125,7 +125,7 @@ INSERT INTO `Toppings` (`name`) VALUES
 ('Bistro Sauce'),
 ('Chipotle Ranch');
 
-INSERT INTO `Users` (`fName`, `lName`, `email`, `password`, `phoneNumber`, 'accountType') VALUES
+INSERT INTO `Users` (`fName`, `lName`, `email`, `password`, `phoneNumber`, `accountType`) VALUES
 ('John', 'Pinkerton', 'jpink@poop.com', '8f2e4ecc49d6e42e24850ab59fea8e09b4c0bcbf3e77815a0999e0843e1365485ab2cc5cf23bb3e9646420156d08009fbc494ed50875adb863f675ecc3dc4d0a', '8795468253', 1), #dingaling
 ('Jimmy', 'Devlin', 'jdevlin@ding.com', 'affc85bf91ab449ebb5f42a4cba7d9309bbbbf218f78d8cda8748a4ed7981b0f320122b3d15686366368468a3c4dc3d183c6a327c09f3c58f23013924f64252d', '8796531523', 1),	#pooperdoop
 ('Ryan', 'Sligh', 'rsligh@sneaky.com', 'fe60d0fa303deaf2f2963fa006e6832cfdf412a1fd91310e6d8153ded0cfad64abdff779599523be199754b389d41ec5f52465f995b98e7512da8629118ca712', '2564532156', 1),	#burglery

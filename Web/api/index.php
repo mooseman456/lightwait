@@ -9,7 +9,6 @@ require 'Slim/Slim.php';
 $app = new \Slim\Slim();
 
 $app->get('/orders', 'getOrders');
-$app->get('/menu', 'getMenuData');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/activeingredients', 'getActiveIngredients');
 $app->get('/recall', 'recallOrder');
@@ -23,7 +22,6 @@ $app->put('/:type/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
-//$app->delete('/delete/:type/:id', 'deleteItem');
 
 $app->run();
 
@@ -122,53 +120,6 @@ function recallOrder() {
   $mysqli->close();
 
   echo json_encode($query); 
-}
-
-function getMenuData() {
-
-  $mysqli = getConnection();
-
-  // Check mysqli connection
-  if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-  }
-
-  $query  = "SELECT name FROM Bases WHERE available = 1;";
-  $query .= "SELECT name FROM Breads WHERE available = 1;";
-  $query .= "SELECT name FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name FROM Toppings WHERE available = 1;";
-  $query .= "SELECT name FROM Fries WHERE available = 1";
-
-  // Perform a multiquery to get all the ingredients
-  if ($mysqli->multi_query($query)) {
-    // Arrays that will hold all menu data
-    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
-    $baseArray = array();
-    $breadArray = array();
-    $cheeseArray = array();
-    $toppingArray = array();
-    $friesArray = array();
-    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
-    $menuIndex = -1;
-
-    while ($mysqli->more_results()) {
-      // Store first result set
-      $mysqli->next_result();
-      $menuIndex++;
-      if ($result = $mysqli->store_result()) {
-        while ($row = $result->fetch_row()) {
-          array_push($menuData[$menuTypes[$menuIndex]], $row[0]);
-        }
-        $result->free();
-      }
-    }
-  }
-  $encoded = json_encode($menuData);
-  printf($encoded);
-
-  // Close mysqli connection
-  $mysqli->close();
 }
 
 function getActiveOrders() {
@@ -310,7 +261,7 @@ function getAvailability() {
       $counter = 0;
       if ($result = $mysqli->store_result()) {
         while ($row = $result->fetch_assoc()) {
-          //array_push($menuData[$menuTypes[$menuIndex]], $row['name']);
+          $menuData[$menuTypes[$menuIndex]][$counter]['id'] = $row['id'];
           $menuData[$menuTypes[$menuIndex]][$counter]['name'] = $row['name'];
           $menuData[$menuTypes[$menuIndex]][$counter]['available'] = $row['available'];
           $counter++;
@@ -373,12 +324,6 @@ function addIngredient($type, $name) {
 function logout() {
   session_destroy();
 }
-
-/*
-function deleteItem($type, $id) {
-
-}
-*/
 
 function getConnection() {
 	$dbhost='localhost';
