@@ -1,5 +1,10 @@
 <?php
-	$navElements=array("back"=>"administrator.php","data"=>"data.php","logout"=>"index.php");
+	$navElements=array(
+		"home"=>"administrator.php",
+		"data"=>"data.php",
+		"users"=>"users.php",
+		"menu"=>"menu.php",
+		"logout"=>"index.php");
 	$pageTitle="Menu";
 	$javascript="javascript/menu.js";
 	include('include/header.php');

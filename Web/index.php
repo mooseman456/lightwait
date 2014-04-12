@@ -4,8 +4,7 @@
   session_start();
 
 	$pageTitle = "Home";
-	$navElements = array("queue"=>"queue.php","adminstrator"=>"administrator.php");
-   $javascript = 'javascript/account.js';
+  $javascript = 'javascript/account.js';
 	include('include/header.php');
 ?>
 	<div class="content">
@@ -25,12 +24,6 @@
                 <input type="text" name="fName" placeholder="First Name" required>
                 <input type="text" name="lName" placeholder="Last Name" required>
                 <input type="tel" name="phone" placeholder="Phone Number" required>
-                <input type="radio" name="accountType" id="customer" value="chef">
-                <label for="customer">Customer</label>
-                <input type="radio" name="accountType" id="chef" value="chef">
-                <label for="chef">Chef</label>
-                <input type="radio" name="accountType" id="admin" value="admin">
-                <label for="admin">Administrator</label>
                 <input class="formSubmit" type="submit" value="Create Account">
             </form>
         </div>
