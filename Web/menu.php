@@ -1,7 +1,7 @@
 <?php
 	session_cache_limiter(false);
     session_start();
-    if (!isset($_SESSION['userType']) || $_SESSION['userType'] != 2) {
+    if (!isset($_SESSION['userType']) || $_SESSION['userType'] != 3) {
         header('Location: index.php');
         die();
     }

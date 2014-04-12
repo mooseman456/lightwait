@@ -315,15 +315,15 @@ function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
 }
 
 function addIngredient($type, $name) {
-  $mysqli = getConnection();
+    $mysqli = getConnection();
 
-  $query = "INSERT INTO ".$type."(`name`) VALUES (`".$name."`)";
-  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
-  
-  $mysqli->close();
+    $query = "INSERT INTO ".$type."(`name`) VALUES (`".$name."`)";
+    $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
-  echo json_encode("Success");
-}
+    $mysqli->close();
+
+    echo json_encode("Success");
+    }
 
 function logout() {
     session_destroy();

@@ -16,6 +16,6 @@ $(document).ready(function(){
 		     	console.log("Logout failed");
 		     	console.log(jqXHR, textStatus, errorThrown);
 		    }
- });
+ 		});
     });
 });
