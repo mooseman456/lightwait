@@ -193,23 +193,37 @@ nav a:hover {
 /*   Order   */
 /*************/
 div.order-page {
-	border: 2px solid rgba(0,0,0,0.15);
+	/*border: 2px solid rgba(0,0,0,0.15);*/
 	width:40%;
 	margin:2em auto;
-	box-sizing:border-box;
+	/*box-sizing:border-box;*/
+	background-color: #EBF5FF;
+	border-radius: 10px;
 }
 
 div.order-page ul{
+	margin-left: 5px;
+	margin-right
+	border: 2px solid rgba(0,0,0,0.15);
+	border-radius: 10px;
 	list-style-type: none;
 }
 
 div.order-page h2{
-	margin-left: 5px;
+	padding-left: 10px;
+	background-color:#2491FF;
+	color: #FFFFFF;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	margin-bottom: 0px;
 }
-
 
 .order-page h1 {
 	text-align: center;
+}
+
+div.order-page input[type="submit"]{
+	margin-right: 20%;
 }
 
 .order-wrapper p {
@@ -218,9 +232,17 @@ div.order-page h2{
 	text-align: center;
 }
 
+
 div.order-wrapper {
 	width:80%;
 	margin:0 10%;
+}
+
+/********************/
+/*   Availability   */
+/********************/
+.avail h2{
+	text-align: center;
 }
 
 .mainForm div{
@@ -239,17 +261,10 @@ div.order-wrapper {
 	font-size: 16px;
 }
 
-
-/********************/
-/*   Availability   */
-/********************/
-.avail h2{
-	text-align: center;
-}
-
 /**************************/
 /*   Administrator Menu   */
 /**************************/
+
 
 div.wrapper {
 	width:80%;
