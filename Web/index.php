@@ -2,16 +2,16 @@
 
   session_cache_limiter(false);
   session_start();
-  if ($_SESSION['userType'] == 0) {
+  if ($_SESSION['userType'] == 1) {
     header('Location: order.php');
     die();
   }
 
-  else if ($_SESSION['userType'] == 1){
+  else if ($_SESSION['userType'] == 2){
 
   }
 
-  else if ($_SESSION['userType'] == 2){
+  else if ($_SESSION['userType'] == 3){
 
   }
 	
