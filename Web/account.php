@@ -1,8 +1,14 @@
 <?php
-   $pageTitle="Account";
-   $navElements = Array("order" => "order.php","logout"=>"index.php");
-   $javascript = 'javascript/account.js';
-   include('include/header.php');
+    session_cache_limiter(false);
+    session_start();
+    if (!isset($_SESSION['userType']) || $_SESSION['userType'] != 3) {
+        header('Location: index.php');
+        die();
+    }
+    $pageTitle="Account";
+    $navElements = Array("order" => "order.php","logout"=>"index.php");
+    $javascript = 'javascript/account.js';
+    include('include/header.php');
 ?>
 
 	<form id="editAccountForm" method="PUT" action="#">
