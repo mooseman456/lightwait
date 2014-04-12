@@ -6,11 +6,14 @@
 		"menu"=>"menu.php",
 		"logout"=>"index.php");
 	$pageTitle="Menu";
-	$javascript="javascript/menu.js";
+	$javascript="javascript/users.js";
 	include('include/header.php');
 ?>
 
-	<p>This is where you can add Chef and Admin accounts</p>
+	<h1>Create Chef Account</h1>
+
+	<h1>Create Administrator Account</h1>
+	<form action="#"></form>
 </body>
 
 </html>
