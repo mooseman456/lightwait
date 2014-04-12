@@ -1,4 +1,10 @@
 <?php
+	session_cache_limiter(false);
+    session_start();
+    if (!isset($_SESSION['userType']) || $_SESSION['userType'] != 2) {
+        header('Location: index.php');
+        die();
+    }
 	$navElements=array(
 		"home"=>"administrator.php",
 		"data"=>"data.php",
