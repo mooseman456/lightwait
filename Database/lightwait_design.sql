@@ -11,6 +11,7 @@ CREATE TABLE Users (
 	email VARCHAR(255),
 	password VARCHAR(255),
 	phoneNumber VARCHAR(255),
+	accountType INT(1) NOT NULL DEFAULT 1,
 	Primary Key (user_id)
 ) ENGINE=InnoDB;
 
@@ -136,7 +137,8 @@ INSERT INTO `Users` (`fName`, `lName`, `email`, `password`, `phoneNumber`) VALUE
 ('Jimmy', 'Devlin', 'jdevlin@ding.com', 'poop', '8796531523'),
 ('Ryan', 'Sligh', 'rsligh@sneaky.com', 'burgler', '2564532156'),
 ('Patrick', 'Leopard', 'pleopard@spots.com', 'grrr', '8256431589'),
-('Joe', 'TheSaint', 'jsaint@holy.com', 'angel', '3958203958');
+('Joe', 'TheSaint', 'jsaint@holy.com', 'angel', '3958203958'),
+('Sir', 'Elington', 'selington@fancy.com', 'goodgracious', '7956824534');
 
 INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced) 
 				VALUES	(1, 1, 1, 1, 1, '2014-03-30 12:04:03'),
