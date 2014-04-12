@@ -17,7 +17,7 @@ $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
-$app->post('/account/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
+$app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:id', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
@@ -195,13 +195,13 @@ function getActiveOrders() {
   $mysqli->close();
 }
 
-function createAccount($fName, $lName, $email, $password, $phoneNumber, $accountType) {
+function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumber) {
   $mysqli = getConnection();
 
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (fName, lName, email, password, phoneNumber, accountType) VALUES ('$fName', '$lName', '$email', '$password', '$phoneNumber', $accountType)";
+  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES ('$usertype', '$fName', '$lName', '$email', '$password', '$phoneNumber')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
   $mysqli->close();

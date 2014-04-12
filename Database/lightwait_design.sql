@@ -6,20 +6,13 @@ use lightwait;
 
 CREATE TABLE Users (
 	user_id INT(30) NOT NULL AUTO_INCREMENT,
+	userType INT(1) NOT NULL DEFAULT 1,
 	fName VARCHAR(255),
 	lName VARCHAR(255),
 	email VARCHAR(255),
 	password VARCHAR(255),
 	phoneNumber VARCHAR(255),
-	accountType INT(1) NOT NULL DEFAULT 1,
 	Primary Key (user_id)
-) ENGINE=InnoDB;
-
-CREATE TABLE Employees (
-	emp_id INT(30) NOT NULL AUTO_INCREMENT,
-	fName VARCHAR(255),
-	lName VARCHAR(255),
-	Primary Key (emp_id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Fries (
@@ -146,6 +139,3 @@ INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced)
 						(3, 2, 3, 2, 2, '2014-03-30 12:04:05'),
 						(4, 3, 4, 3, 2, '2014-03-30 12:04:06'),
 						(5, 3, 4, 2, 3, '2014-03-30 12:04:07');
-
-
-
