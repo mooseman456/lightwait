@@ -78,7 +78,8 @@ function inflateAdminMenu(data) {
         curr.append('<div id=ingredientInfo></div>');
         ingredientInfo=curr.children().last();
         for(var index in data[typeName]) {
-            ingredientInfo.append('<section><h2>'+data[typeName][index]['name']+'</h2></section>');
+            item = data[typeName][index]['name'];
+            ingredientInfo.append('<section><h2>'+item+'</h2></section>');
             var section = ingredientInfo.children().last();
             section.append('<label for="'+item+'-available">Available?</label>');
             section.append('<input type="checkbox" value="available" id="'+item+'-available"/>');
@@ -86,7 +87,7 @@ function inflateAdminMenu(data) {
                 section.children().last().prop("checked",true);
             }
             section.children().last().change(function() {
-                alert("You changed the checkbox");
+                //alert("You changed the checkbox");
             });
             section.append('<input type="button" value="delete" />');
             section.children().last().click(function() {
