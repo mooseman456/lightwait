@@ -1,7 +1,8 @@
 <?php
-
-session_cache_limiter(false);
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_cache_limiter(false);
+    session_start();
+}
 
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
@@ -185,6 +186,8 @@ function logIn($email, $password) {
     $_SESSION['email'] = $row['email'];
     $_SESSION['phoneNumber'] = $row['phoneNumber'];
     $_SESSION['userType'] = $row['userType'];
+    echo $_SESSION['userType'];
+    echo $row['userType'];
 
     echo json_encode($arr);
   } else {
@@ -323,7 +326,7 @@ function addIngredient($type, $name) {
 }
 
 function logout() {
-  session_destroy();
+    session_destroy();
 }
 
 function getConnection() {
