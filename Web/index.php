@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
   session_cache_limiter(false);
   session_start();
   if ($_SESSION['userType'] == 1) {
@@ -8,16 +9,34 @@
   }
 
   else if ($_SESSION['userType'] == 2){
+=======
+    session_cache_limiter(false);
+    session_start();
+    if ($_SESSION['userType'] == 0) {
+        header('Location: order.php');
+        die();
+    }
+    else if ($_SESSION['userType'] == 1){
 
-  }
+    }
+>>>>>>> baff53604a62ceef2c3c1466d897aef04cc5fc7f
 
+    else if ($_SESSION['userType'] == 2){
+
+<<<<<<< HEAD
   else if ($_SESSION['userType'] == 3){
 
   }
 	
   $pageTitle = "Home";
+=======
+    }
+    $pageTitle = "Home";
+    $javascript = 'javascript/account.js';
+    $pageTitle = "Home";
+>>>>>>> baff53604a62ceef2c3c1466d897aef04cc5fc7f
 	$navElements = array("queue"=>"queue.php","adminstrator"=>"administrator.php");
-   $javascript = 'javascript/account.js';
+    $javascript = 'javascript/account.js';
 	include('include/header.php');
 ?>
 	<div class="content">
@@ -37,12 +56,6 @@
                 <input type="text" name="fName" placeholder="First Name" required>
                 <input type="text" name="lName" placeholder="Last Name" required>
                 <input type="tel" name="phone" placeholder="Phone Number" required>
-                <input type="radio" name="accountType" id="customer" value="chef">
-                <label for="customer">Customer</label>
-                <input type="radio" name="accountType" id="chef" value="chef">
-                <label for="chef">Chef</label>
-                <input type="radio" name="accountType" id="admin" value="admin">
-                <label for="admin">Administrator</label>
                 <input class="formSubmit" type="submit" value="Create Account">
             </form>
         </div>

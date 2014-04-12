@@ -5,13 +5,12 @@
 		"users"=>"users.php",
 		"menu"=>"menu.php",
 		"logout"=>"index.php");
-	$pageTitle="Administrator";
-	$javascript="javascript/administrator.js";
+	$pageTitle="Menu";
+	$javascript="javascript/menu.js";
 	include('include/header.php');
 ?>
-	<h1>EF THE POLICE!</h1>
 
-
+	<p>This is where you can add Chef and Admin accounts</p>
 </body>
 
 </html>
