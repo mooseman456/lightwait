@@ -3,7 +3,8 @@ var rootURL = "api/index.php";
 
 $(document).ready(function(){
     //Logout click listener
-    $('a[href="index.php"]').click( function()  {
+    $('a[href~="index.php"]').click( function(e)  {
+      e.preventDefault();
     	$.ajax({
     		type: 'PUT',
     		url: rootURL + '/logout',

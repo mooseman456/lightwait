@@ -27,7 +27,7 @@ function inflateOrderMenu(data) {
         if (data['Bases'][i]['available'] === '1')
             $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i]['name'] + "\" value=\"" + data['Bases'][i]['name'] + "\" required> <label for=\"" + data['Bases'][i]['name'] + "\">" + data['Bases'][i]['name'] + "</label></li>");
     }
-    $('#menuForm').append("<h2>Stop Loafin' Around</h2></ul><ul id=\"breadsMenu\">");
+    $('#menuForm').append("<h2>Choose Your Bread</h2></ul><ul id=\"breadsMenu\">");
     for (var i=0; i<data['Breads'].length; i++){
         $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
     }
