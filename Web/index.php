@@ -14,7 +14,6 @@
     
     }
     $pageTitle = "Home";
-	$navElements = array("queue"=>"queue.php","adminstrator"=>"administrator.php");
     $javascript = 'javascript/account.js';
 	include('include/header.php');
 ?>
