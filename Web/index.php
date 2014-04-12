@@ -2,8 +2,20 @@
 
   session_cache_limiter(false);
   session_start();
+  if ($_SESSION['userType'] == 0) {
+    header('Location: order.php');
+    die();
+  }
 
-	$pageTitle = "Home";
+  else if ($_SESSION['userType'] == 1){
+
+  }
+
+  else if ($_SESSION['userType'] == 2){
+
+  }
+	
+  $pageTitle = "Home";
 	$navElements = array("queue"=>"queue.php","adminstrator"=>"administrator.php");
    $javascript = 'javascript/account.js';
 	include('include/header.php');
