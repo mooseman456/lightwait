@@ -125,13 +125,14 @@ INSERT INTO `Toppings` (`name`) VALUES
 ('Bistro Sauce'),
 ('Chipotle Ranch');
 
-INSERT INTO `Users` (`fName`, `lName`, `email`, `password`, `phoneNumber`) VALUES
-('John', 'Pinkerton', 'jpink@poop.com', 'ding', '8795468253'),
-('Jimmy', 'Devlin', 'jdevlin@ding.com', 'poop', '8796531523'),
-('Ryan', 'Sligh', 'rsligh@sneaky.com', 'burgler', '2564532156'),
-('Patrick', 'Leopard', 'pleopard@spots.com', 'grrr', '8256431589'),
-('Joe', 'TheSaint', 'jsaint@holy.com', 'angel', '3958203958'),
-('Sir', 'Elington', 'selington@fancy.com', 'goodgracious', '7956824534');
+INSERT INTO `Users` (`fName`, `lName`, `email`, `password`, `phoneNumber`, 'accountType') VALUES
+('John', 'Pinkerton', 'jpink@poop.com', '8f2e4ecc49d6e42e24850ab59fea8e09b4c0bcbf3e77815a0999e0843e1365485ab2cc5cf23bb3e9646420156d08009fbc494ed50875adb863f675ecc3dc4d0a', '8795468253', 1), #dingaling
+('Jimmy', 'Devlin', 'jdevlin@ding.com', 'affc85bf91ab449ebb5f42a4cba7d9309bbbbf218f78d8cda8748a4ed7981b0f320122b3d15686366368468a3c4dc3d183c6a327c09f3c58f23013924f64252d', '8796531523', 1),	#pooperdoop
+('Ryan', 'Sligh', 'rsligh@sneaky.com', 'fe60d0fa303deaf2f2963fa006e6832cfdf412a1fd91310e6d8153ded0cfad64abdff779599523be199754b389d41ec5f52465f995b98e7512da8629118ca712', '2564532156', 1),	#burglery
+('Patrick', 'Leopard', 'pleopard@spots.com', 'b47e14dbc224feb27c45b9fe9bdce8372cd87a03efc44227a2e2dbe5f192f4a25f755b8cd2c7dae33552035aaa2a832d895891c42a1a961f864235ea69b36aa3', '8256431589', 1),	#imabeargrr
+('Joe', 'TheSaint', 'jsaint@holy.com', 'a6ccab3fbb15fe44c74585a4e2ef99f8ec9c21191c9389151532cb242a8bec4e4da662d3e7036e9cbf17bbf8c6d0b46b92b9e49d55bbf35ddb94f518e0ce82b4', '3958203958', 1),	#damnangel
+('Kyle', 'Shunka', 'skunkalunka@kyle.com', '495c2f42ed8ff8c2b0bb40aa4bc0ddd8cd386e1ef63f034ba294942e33b155705b1f9acc63057c2e5670f24be13dc4770feda615aa79224756fd7ee3c93248ab', '8965742156', 2),	#shunkalunka
+('Sir', 'Elington', 'selington@fancy.com', '813305dff3bf943f12b27e9506a06bfc39c7a5e54f9daad099c135fc341dd3381a9ee2c9521ba0283c2464a6be03f5d52bd5ea8f23035c57992584567329a7df', '7956824534', 3); #goodgracious
 
 INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced) 
 				VALUES	(1, 1, 1, 1, 1, '2014-03-30 12:04:03'),
