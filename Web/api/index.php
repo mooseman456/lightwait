@@ -184,6 +184,7 @@ function logIn($email, $password) {
     $_SESSION['user_id'] = $row['user_id'];
     $_SESSION['email'] = $row['email'];
     $_SESSION['phoneNumber'] = $row['phoneNumber'];
+    $_SESSION['userType'] = $['userType'];
 
     echo json_encode($arr);
   } else {
