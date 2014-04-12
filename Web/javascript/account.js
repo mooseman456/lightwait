@@ -26,6 +26,8 @@ $(document).ready(function() {
             alert("Invalid password! Must be 8 - 20 characters long!");
     });
 
+
+
     $('#createAccountForm input[type="submit"]').click(function(e) {
         e.preventDefault();
         var createValid = true;
