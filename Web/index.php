@@ -2,17 +2,23 @@
 
     session_cache_limiter(false);
     session_start();
-    if ($_SESSION['userType'] == 1) {
-        header('Location: order.php');
-        die();
+    if (isset($_SESSION['userType'])){
+        
+        if ($_SESSION['userType'] == 1) {
+            header('Location: order.php');
+            die();
+        }
+        else if ($_SESSION['userType'] == 2){
+            header('Location: queue.php');
+            die();
+        } 
+        
+        else if ($_SESSION['userType'] == 3){
+            header('Location: administrator.php');
+            die();
+        }
     }
-    else if ($_SESSION['userType'] == 2){
     
-    } 
-    
-    else if ($_SESSION['userType'] == 3){
-    
-    }
     $pageTitle = "Home";
     $javascript = 'javascript/account.js';
 	include('include/header.php');

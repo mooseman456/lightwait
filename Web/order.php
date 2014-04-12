@@ -1,4 +1,12 @@
 <?php
+	session_start();
+	session_cache_limiter(false);
+
+	if (!isset($_SESSION['userType']) && $_SESSION['userType'] != 1){
+		header('Location: index.php');
+		die();
+	}
+	
 	$pageTitle = "Order";
 	$navElements=array("account"=>"account.php","logout"=>"index.php");
 	$javascript = 'javascript/order.js';
