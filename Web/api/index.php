@@ -240,10 +240,6 @@ function logIn($email, $password) {
   }
 }
 
-function logout() {
-    session_destroy();
-}
-
 function getActiveIngredients() {
   $mysqli = getConnection();
 
@@ -371,6 +367,10 @@ function addIngredient($type, $name) {
   $mysqli->close();
 
   echo json_encode("Success");
+}
+
+function logout() {
+  session_destroy();
 }
 
 function getConnection() {
