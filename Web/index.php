@@ -19,7 +19,7 @@
     }
     
     $pageTitle = "Home";
-	$navElements = array("queue"=>"queue.php","adminstrator"=>"administrator.php");
+	   $navElements = null;
     $javascript = 'javascript/account.js';
 	include('include/header.php');
 ?>
