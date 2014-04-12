@@ -3,6 +3,7 @@ var rootURL = "api/index.php"
 
 $(document).ready(function(){
     getMenuData();
+
 });
 
 /************/
@@ -84,10 +85,13 @@ function inflateAdminMenu(data) {
             if (data[typeName][index]["available"]== true) {
                 section.children().last().prop("checked",true);
             }
+            section.children().last().change(function() {
+                alert("You changed the checkbox");
+            });
             section.append('<input type="button" value="delete" />');
             section.children().last().click(function() {
                 alert("delete");
-            })
+            });
         }
         curr.append('<form method="PUTS" action="#"</form>');
         item = curr.children().last();
@@ -129,20 +133,13 @@ function inflateChefMenu(data) {
                 //console.log(data[key][h].name+",--- "+data[key][h].available+", ---"+$(inputPos).is(":checked"));
                 if(data[key][h].available!=$(inputPos).is(":checked")){
                     if(data[key][h].available==1)
-                        switchOff.push(data[key][h].name);
+                        updateAvailability(data[key], data[key][h].name, false);
+                        //switchOff.push(data[key][h].name);
                     if(data[key][h].available==0)
-                        switchOn.push(data[key][h].name);
-                    //console.log(switchOn);
+                        updateAvailability(data[key], data[key][h].name, true);
+                        //switchOn.push(data[key][h].name);
                 }
             }
         }
-
     });
-}
-
-/***********************/
-/*   Helper function   */
-/***********************/
-function deleteItem(event) {
-    alert("deleting item");
 }
