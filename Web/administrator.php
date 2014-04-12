@@ -13,7 +13,7 @@
 		"menu"=>"menu.php",
 		"logout"=>"index.php");
 	$pageTitle="Administrator";
-	$javascript="javascript/administrator.js";
+	$javascript="";
 	include('include/header.php');
 ?>
 	<h1>EF THE POLICE!</h1>

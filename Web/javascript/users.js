@@ -1,3 +1,15 @@
+//  Users Javascript
+//  Lightwait Project
+//  Created 4/12/14
+
+//  Contains JS for users.php to create admin and chef accounts
+
+const rootURL = "api/index.php"
+$(document).ready(function() {
+
+});
+
+
 function adminCreateAccount(type, fName, lName, email, password, phoneNumber) {
   $.ajax({
      type: 'POST',
