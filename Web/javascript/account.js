@@ -149,7 +149,7 @@ function logIn(email, password) {
         dataType: "json", // data type of response
         success: function(data){
             console.log('Login success');
-            document.location.href="order.php"
+            document.location.href="index.php"
         },
         error: function(jqXHR, textStatus, errorThrown){
             console.log("Login failed");
