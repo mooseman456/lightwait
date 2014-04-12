@@ -22,38 +22,38 @@ CREATE TABLE Employees (
 ) ENGINE=InnoDB;
 
 CREATE TABLE Fries (
-	fry_id INT(30) NOT NULL AUTO_INCREMENT,
+	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
-	Primary Key(fry_id)
+	Primary Key(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Breads (
-	bread_id INT(30) NOT NULL AUTO_INCREMENT,
+	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
-	Primary Key(bread_id)
+	Primary Key(id)
 ) Engine=InnoDB;
 
 CREATE TABLE Bases (
-	base_id INT(30) NOT NULL AUTO_INCREMENT,
+	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
-	Primary Key (base_id)
+	Primary Key (id)
 ) Engine=InnoDB;
 
 CREATE TABLE Cheeses (
-	cheese_id INT(30) NOT NULL AUTO_INCREMENT,
+	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
-	Primary Key (cheese_id)
+	Primary Key (id)
 ) Engine=InnoDB;
 
 CREATE TABLE Toppings (
-	topping_id INT(30) NOT NULL AUTO_INCREMENT,
+	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
-	Primary Key (topping_id)
+	Primary Key (id)
 ) Engine=InnoDB;
 
 CREATE TABLE OrderToppings (
@@ -74,10 +74,10 @@ CREATE TABLE Orders (
 	isActive BOOLEAN DEFAULT 1,
 	Primary Key (order_id),
 	Foreign Key (user_id) REFERENCES Users(user_id),
-	Foreign Key (bread_id) REFERENCES Breads(bread_id),
-	Foreign Key (base_id) REFERENCES Bases(base_id),
-	Foreign Key (cheese_id) REFERENCES Cheeses(cheese_id),
-	Foreign Key (fry_id) REFERENCES Fries(fry_id)
+	Foreign Key (bread_id) REFERENCES Breads(id),
+	Foreign Key (base_id) REFERENCES Bases(id),
+	Foreign Key (cheese_id) REFERENCES Cheeses(id),
+	Foreign Key (fry_id) REFERENCES Fries(id)
 ) Engine=InnoDB;
 
 # Procedures

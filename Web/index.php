@@ -1,10 +1,23 @@
 <?php
 
-  session_cache_limiter(false);
-  session_start();
+    session_cache_limiter(false);
+    session_start();
+    if ($_SESSION['userType'] == 0) {
+        header('Location: order.php');
+        die();
+    }
+    else if ($_SESSION['userType'] == 1){
 
-	$pageTitle = "Home";
-  $javascript = 'javascript/account.js';
+    }
+
+    else if ($_SESSION['userType'] == 2){
+
+    }
+    $pageTitle = "Home";
+    $javascript = 'javascript/account.js';
+    $pageTitle = "Home";
+	$navElements = array("queue"=>"queue.php","adminstrator"=>"administrator.php");
+    $javascript = 'javascript/account.js';
 	include('include/header.php');
 ?>
 	<div class="content">
