@@ -22,10 +22,13 @@
    <nav>
       <h1>lightwait</h1>
       <ul>
-         <?php
+        <?php
+          if ($navElements != null) {
             foreach($navElements as $key => $value) {
                echo '<li><a href='.$value.'>'.$key.'</a></li>';
-         } ?>
+            }
+          }
+        ?>
       </ul>
    </nav>
 
