@@ -194,11 +194,19 @@ nav a:hover {
 /*************/
 div.order-page {
 	border: 2px solid rgba(0,0,0,0.15);
-	float:left;
 	width:40%;
-	margin:2em 5%;
+	margin:2em auto;
 	box-sizing:border-box;
 }
+
+div.order-page ul{
+	list-style-type: none;
+}
+
+div.order-page h2{
+	margin-left: 5px;
+}
+
 
 .order-page h1 {
 	text-align: center;
