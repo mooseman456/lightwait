@@ -47,15 +47,15 @@ function addIngredient(type, name) {
 
 //Changes the availability of a an ingredient in the database
 //Name is the name of an ingredient and availabilityStatus is a boolean value
-function updateAvailability(type, name, availabilityStatus) {
+function updateAvailability(type, id) {
     $.ajax({
         type: 'POST',
-        url: rootURL + '/updateAvailability/' + name + '/' + availabilityStatus,
+        url: rootURL + '/updateAvailability/' + type + '/' + id,
         success: function(){
-            console.log("Availability of "+type+":"+name+" changed to "+availabilityStatus+".");
+            console.log("Availability of "+type+":"+id+" changed");
         },
             error: function(jqXHR, textStatus, errorThrown){
-            console.log("Account creation failed");
+            console.log("Availability change faild");
             console.log(jqXHR, textStatus, errorThrown);
         }
     });
@@ -95,17 +95,19 @@ function inflateAdminMenu(data) {
             item = data[typeName][index]['name'];
             ingredientInfo.append('<section><h2>'+item+'</h2></section>');
             var section = ingredientInfo.children().last();
-            section.append('<label for="'+item+'-available">Available?</label>');
+            section.append('<label for="'+item+'-available">available</label>');
             section.append('<input type="checkbox" value="available" id="'+item+'-available"/>');
-            if (data[typeName][index]["available"]== true) {
-                section.children().last().prop("checked",true);
+            if (data[typeName][index]['available']== true) {
+                section.children().last().prop('checked',true);
             }
             section.children().last().change(function() {
-                //alert("You changed the checkbox");
+                var isChecked = section.children().last().prop('checked');
+                updateAvailability(typeName, item, isChecked);
             });
+
             section.append('<input type="button" value="delete" />');
             section.children().last().click(function() {
-                alert("delete");
+                console.log("delete is not currently supported");
             });
         }
         curr.append('<form method="PUTS" action="#"</form>');
