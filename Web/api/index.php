@@ -1,8 +1,7 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
+
     session_cache_limiter(false);
     session_start();
-}
 
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
