@@ -177,7 +177,3 @@ function updateQuantity(type, id) {
 		}
 	});
 }
-
-
-
-

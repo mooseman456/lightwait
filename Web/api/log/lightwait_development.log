@@ -11,3 +11,4 @@
 2014-04-14T18:28:38+02:00 INSERT INTO PushQueue (device_token, payload, time_queued) VALUES ('a6c4095635857d3dc54e40ffc99c94a378606059aab9a886143e5c27451e5a36', '{"aps":{"alert":"Your order is ready for pick up at Macs Place","sound":"default"}}', CURRENT_TIMESTAMP())
 2014-04-14T18:28:52+02:00 INSERT INTO PushQueue (device_token, payload, time_queued) VALUES ('a6c4095635857d3dc54e40ffc99c94a378606059aab9a886143e5c27451e5a36', '{"aps":{"alert":"Your order is ready for pick up at Macs Place","sound":"default"}}', CURRENT_TIMESTAMP())
 2014-04-14T18:29:20+02:00 INSERT INTO PushQueue (device_token, payload, time_queued) VALUES ('a6c4095635857d3dc54e40ffc99c94a378606059aab9a886143e5c27451e5a36', '{"aps":{"alert":"Your order is ready for pick up at Macs Place","sound":"default"}}', CURRENT_TIMESTAMP())
+2014-04-14T18:49:02+02:00 chicken

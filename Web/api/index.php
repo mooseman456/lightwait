@@ -92,7 +92,12 @@ function updateOrder($orderID, $userID) {
   // device token is available. Then add to PushQueue
   if($result) {
     $deviceToken = $result->fetch_array();
-    $alert = "Your order is ready for pick up at Macs Place";
+
+    // Query for the user's order base
+    $query = "SELECT name FROM Bases WHERE id =  (SELECT base_id FROM Orders WHERE order_id =  " . $orderID . ")";
+    $base = $mysqli->query($query)->fetch_array() or trigger_error($mysqli->error."[$query]");
+
+    $alert = 'Your ' . strtolower($base[0]) . ' is ready for pick up at Macs Place';
     $body['aps'] = array(
       'alert' => $alert, 
       'sound' => 'default'
