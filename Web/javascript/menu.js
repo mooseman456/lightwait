@@ -99,6 +99,7 @@ function inflateAdminMenu(data) {
             if (data[typeName][index]['available']== true) {
                 section.children().last().prop('checked',true);
             }
+            //Change availability check action
             (function() {
                 var checkbox = section.children().last();
                 var type = typeName;
@@ -111,15 +112,19 @@ function inflateAdminMenu(data) {
             })();
 
             section.append('<input type="button" value="delete" />');
-            section.children().last().click(function() {
-                console.log("Delete is not currently supported");
-            });
+            (function() {
+                var thisSection = section;
+                thisSection.children().last().click(function() {
+                    alert("Delete is not currently supported. Contact lightwait support for assistance.");
+                    //TODO: Delete action
+                });
+            })();
         }
         curr.append('<form id="add'+typeName+'Form"method="PUTS" action="#"</form>');
         item = curr.children().last();
         item.append('<input type="text" name="ingredient" placeholder="New Item" />');
         item.append('<input type="submit" value="Add Item" />');
-        //Add item click
+        //Add item click action
         (function() {
             var type = typeName;
             var form = item;
