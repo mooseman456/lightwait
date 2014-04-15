@@ -16,7 +16,7 @@ function getMenuData() {
         url: rootURL+"/ingredients",
         dataType: "json", // data type of response
         success: function(data){
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
             if($('title').html().toLowerCase()=='menu') {
                 inflateAdminMenu(data);
             } else if($('title').html().toLowerCase()=='availability') {
@@ -54,7 +54,7 @@ function updateAvailability(type, id) {
             console.log("Availability of "+type+":"+id+" changed");
         },
             error: function(jqXHR, textStatus, errorThrown){
-            console.log("Availability change faild");
+            console.log("Availability change failed");
             console.log(jqXHR, textStatus, errorThrown);
         }
     });
@@ -99,10 +99,16 @@ function inflateAdminMenu(data) {
             if (data[typeName][index]['available']== true) {
                 section.children().last().prop('checked',true);
             }
-            section.children().last().change(function() {
-                var isChecked = section.children().last().prop('checked');
-                updateAvailability(typeName, item, isChecked);
-            });
+            (function() {
+                var checkbox = section.children().last();
+                var type = typeName;
+                var id = data[typeName][index]['id'];
+                checkbox.change(function(e) {
+                    var isChecked = checkbox.prop('checked');
+                    console.log('Box checked: '+isChecked);
+                    updateAvailability(type, id);
+                });
+            })();
 
             section.append('<input type="button" value="delete" />');
             section.children().last().click(function() {
@@ -132,17 +138,7 @@ function inflateAdminMenu(data) {
         pane.append('<div><a href="#'+type+'">'+type+'</a></div>');
     }
 }
-function simpleAlert(e) {
-    e.preventDefault();
-    alert("damn functors");
-}
 
-function addItemFunct(typeName) {
-    return function(e) {
-        e.preventDefault();
-        alert("found it");
-    }
-}
 
 function inflateChefMenu(data) {
     for(var key in data){
