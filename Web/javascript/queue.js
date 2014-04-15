@@ -64,6 +64,7 @@ function updateCurrentWindow() {
 // Takes an element from the order array and appends it to the end of the order window
 function pushOrderToWindow(index) {
 	var orderId = orders[index].order_id;
+	var userId = orders[index].user_id;
 	var timeStamp = orders[index].timePlaced;
 	var orderElement = $('<section class="queue" id="order'+orderId+'"><h1>Order #'+orderId+'</h1><ul></ul></section>');
 	$('div.window').append(orderElement);
@@ -81,7 +82,7 @@ function pushOrderToWindow(index) {
 	orderElement.children('button').click(function(event) {
 		orderElement.remove();
 		orders.splice(index,1);
-		updateOrder(orderId); //Server stuff
+		updateOrder(orderId, userId); //Server stuff
 		updateSidebar();
 		updateCurrentWindow();
 	});
@@ -120,16 +121,13 @@ function updatePagenumbers() {
 /*   AJAX   */
 /************/
 // Update Order
-function updateOrder(id) {
+function updateOrder(orderid, userid) {
 	$.ajax({
 		type: 'PUT',
 		contentType: 'application/json',
-		url: rootURL + "/" + id,
-		dataType: "text",
-		data: id,
-		success: function(data, textStatus, jqXHR){
-			console.log("Order uploaded");
-			console.log(data, textStatus, jqXHR);
+		url: rootURL + '/' + orderid + '/' + userid,
+		success: function(){
+
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log("Order upload failed");
@@ -144,9 +142,8 @@ function recallOrder() {
 		type: 'GET',
 		url: rootURL + "/recall",
 		async: false,
-		success: function(data, textStatus, jqXHR){
-			console.log("Order recalled");
-			console.log(data, textStatus, jqXHR);
+		success: function(){
+
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log("Order recall failed");
@@ -180,7 +177,3 @@ function updateQuantity(type, id) {
 		}
 	});
 }
-
-
-
-

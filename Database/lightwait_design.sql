@@ -12,6 +12,7 @@ CREATE TABLE Users (
 	email VARCHAR(255),
 	password VARCHAR(255),
 	phoneNumber VARCHAR(255),
+	device_token varchar(64),
 	Primary Key (user_id)
 ) ENGINE=InnoDB;
 
@@ -73,6 +74,15 @@ CREATE TABLE Orders (
 	Foreign Key (cheese_id) REFERENCES Cheeses(id),
 	Foreign Key (fry_id) REFERENCES Fries(id)
 ) Engine=InnoDB;
+
+CREATE TABLE PushQueue (
+  message_id int(11) NOT NULL AUTO_INCREMENT,
+  device_token varchar(64) NOT NULL,
+  payload varchar(256) NOT NULL,
+  time_queued datetime NOT NULL,
+  time_sent datetime DEFAULT NULL,
+  PRIMARY KEY (`message_id`)
+) ENGINE=InnoDB;
 
 # Procedures
 DELIMITER $$

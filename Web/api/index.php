@@ -17,7 +17,7 @@ $app->get('/account/:email/:password', 'logIn');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
-$app->put('/:id', 'updateOrder');
+$app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/:type/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
@@ -80,16 +80,39 @@ function addOrder() {
 
 }
 
-function updateOrder($id) {
+function updateOrder($orderID, $userID) {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
 
-  $query = "UPDATE Orders SET isActive=0 WHERE order_id=$id";
+  // Query for the user's device token
+  $query = "SELECT device_token FROM Users WHERE user_id = " . $userID;
+  $result = $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+
+  // Check to see if user has registered for push notifications, returns true if
+  // device token is available. Then add to PushQueue
+  if($result) {
+    $deviceToken = $result->fetch_array();
+
+    // Query for the user's order base
+    $query = "SELECT name FROM Bases WHERE id =  (SELECT base_id FROM Orders WHERE order_id =  " . $orderID . ")";
+    $base = $mysqli->query($query)->fetch_array() or trigger_error($mysqli->error."[$query]");
+
+    $alert = 'Your ' . strtolower($base[0]) . ' is ready for pick up at Macs Place';
+    $body['aps'] = array(
+      'alert' => $alert, 
+      'sound' => 'default'
+    );
+
+    $payload = json_encode($body);
+    $query = "INSERT INTO PushQueue (device_token, payload, time_queued) VALUES ('" . $deviceToken[0] . "', '" . $payload . "', CURRENT_TIMESTAMP())";
+    $mysqli->query($query);
+  }
+
+  // Remove the order from the queue
+  $query = "UPDATE Orders SET isActive=0 WHERE order_id=$orderID";
   $mysqli->query($query);
 
   $mysqli->close();
-
-  echo json_encode($query); 
 }
 
 function updateAvailability($type, $id) {
@@ -118,14 +141,12 @@ function recallOrder() {
   $mysqli->query($query);
 
   $mysqli->close();
-
-  echo json_encode($query); 
 }
 
 function getActiveOrders() {
   $mysqli = getConnection();
 
-  $query = "SELECT Orders.order_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
+  $query = "SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
             FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases 
             ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id 
             WHERE Orders.isActive='1'";
@@ -333,6 +354,16 @@ function getConnection() {
         die('Unable to connect to database [' . $db->connect_error . ']');
     }
   return $db;
+}
+
+function writeToLog($message)
+{
+  global $config;
+  if ($fp = fopen('log/lightwait_development.log', 'at'))
+  {
+    fwrite($fp, date('c') . ' ' . $message . PHP_EOL);
+    fclose($fp);
+  }
 }
 
 ?>
