@@ -3,12 +3,13 @@ var rootURL = "api/index.php";
 
 $(document).ready(function(){
     //Logout click listener
-    $('a[href~="index.php"]').click( function(e)  {
-      e.preventDefault();
+    $('a:contains("logout")').click( function(e) {
+    	alert("logout");
+    	e.preventDefault();
     	$.ajax({
     		type: 'PUT',
     		url: rootURL + '/logout',
-		    dataType: "text", // data type of response
+		    dataType: "json", // data type of response
 		    success: function(){
 		    	console.log("Logged out");
 		     	document.location.href="index.php";
