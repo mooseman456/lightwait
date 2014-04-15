@@ -3,7 +3,6 @@ var rootURL = "api/index.php"
 
 $(document).ready(function(){
     getMenuData();
-
 });
 
 /************/
@@ -24,7 +23,7 @@ function getMenuData() {
                 inflateChefMenu(data);
             } else {
                 console.log("ERROR: Could not load menu data for this page.");
-            }
+            }   
         }
    });
 }
@@ -39,7 +38,7 @@ function addIngredient(type, name) {
             console.log("Ingredient added");
         },
             error: function(jqXHR, textStatus, errorThrown){
-            console.log("Account creation failed");
+            console.log("Could not add ingredient");
             console.log(jqXHR, textStatus, errorThrown);
         }
     });
@@ -107,19 +106,41 @@ function inflateAdminMenu(data) {
 
             section.append('<input type="button" value="delete" />');
             section.children().last().click(function() {
-                console.log("delete is not currently supported");
+                console.log("Delete is not currently supported");
             });
         }
-        curr.append('<form method="PUTS" action="#"</form>');
+        curr.append('<form id="add'+typeName+'Form"method="PUTS" action="#"</form>');
         item = curr.children().last();
-        item.append('<input type="text" placeholder="New Item" />');
+        item.append('<input type="text" name="ingredient" placeholder="New Item" />');
         item.append('<input type="submit" value="Add Item" />');
+        //Add item click
+        (function() {
+            var type = typeName;
+            var form = item;
+            item.submit(function(e) {
+                e.preventDefault();
+                var name = form.children('input[name="ingredient"]').val().toLowerCase();
+                console.log("type: "+type+", name: "+name)
+                addIngredient(type, name);
+            });
+        })();
     }
 
     //Edit menu nav bar
     pane = $('#menu-categories-pane');
     for(var type in data) {
         pane.append('<div><a href="#'+type+'">'+type+'</a></div>');
+    }
+}
+function simpleAlert(e) {
+    e.preventDefault();
+    alert("damn functors");
+}
+
+function addItemFunct(typeName) {
+    return function(e) {
+        e.preventDefault();
+        alert("found it");
     }
 }
 
