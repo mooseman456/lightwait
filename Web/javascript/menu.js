@@ -34,6 +34,7 @@ function addIngredient(type, name) {
         type: 'POST',
         url: rootURL + '/ingredient/' + type + '/' + name,
         dataType: "json", // data type of response
+        async: false,
         success: function(){
             console.log("Ingredient added");
         },
@@ -132,6 +133,7 @@ function inflateAdminMenu(data) {
                 e.preventDefault();
                 var name = form.children('input[name="ingredient"]').val().toLowerCase();
                 addIngredient(type, name);
+                location.reload();
             });
         })();
     }
