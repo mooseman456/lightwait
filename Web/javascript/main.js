@@ -7,9 +7,9 @@ $(document).ready(function(){
     	alert("logout");
     	e.preventDefault();
     	$.ajax({
-    		type: 'PUT',
+    		type: 'POST',
     		url: rootURL + '/logout',
-		    dataType: "json", // data type of response
+		    dataType: "text", // data type of response
 		    success: function(){
 		    	console.log("Logged out");
 		     	document.location.href="index.php";
