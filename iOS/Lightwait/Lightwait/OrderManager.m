@@ -20,16 +20,10 @@
 
 + (NSString *)orderBuilder:(NSMutableDictionary *)dictionary
 {
-    NSDate *currentTime = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    NSString *currentTimeString = [dateFormat stringFromDate:currentTime];
-    
 #warning This is a temporary solution
     
     NSMutableDictionary *uploadDictionary = [[NSMutableDictionary alloc] init];
     
-    [uploadDictionary setObject:currentTimeString forKey:@"timePlaced"];
     [uploadDictionary setObject:@"1" forKey:@"user_id"];
     [uploadDictionary setObject:[dictionary objectForKey:@"Base"] forKey:@"base"];
     [uploadDictionary setObject:[dictionary objectForKey:@"Bread"] forKey:@"bread"];

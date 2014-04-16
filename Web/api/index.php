@@ -15,8 +15,8 @@ $app->get('/recall', 'recallOrder');
 $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
 $app->get('/accountinfo', 'getAccountInfo');
-$app->post('/order', 'addOrder');
-$app->post('/webOrder', 'webOrder');
+$app->post('/order', 'addMobileOrder');
+$app->post('/webOrder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:id', 'updateAvailability');
@@ -39,7 +39,7 @@ function getOrders() {
 	}
 }
 
-function webOrder() {
+function addWebOrder() {
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
@@ -55,14 +55,14 @@ function webOrder() {
   echo "<a href=../../order.php>New Order</a>";
 }
 
-function addOrder() {
+function addMobileOrder() {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
 
   $query = "INSERT INTO Orders (user_id, timePlaced, bread_id, base_id, cheese_id, fry_id)
-            VALUES (" . $order['user_id'] . ", '" . $order['timePlaced'] . "', " . $order['bread'] . ", " . $order['base'] . ", " . $order['cheese'] . ", " . $order['fries'].")";
+            VALUES (" . $order['user_id'] . ", '" . date('Y/m/d H:i:s') . "', " . $order['bread'] . ", " . $order['base'] . ", " . $order['cheese'] . ", " . $order['fries'].")";
 
 
   $mysqli->query($query);
