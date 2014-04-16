@@ -262,6 +262,34 @@ div.order-wrapper {
 }
 
 /**************************/
+/*		  Account         */
+/**************************/
+#editAccountForm{
+	margin: 0 auto;
+	padding-bottom: 1px;
+	width: 25%;
+	text-align: center;
+	background-color: #EBF5FF;
+	border-radius: 10px; 
+}
+
+#editAccountForm input{
+	display:block;
+	margin: 10px auto;
+
+}
+
+#editAccountForm h2{
+	background-color:#2491FF;
+	color: #FFFFFF;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+}
+
+
+
+
+/**************************/
 /*   Administrator Menu   */
 /**************************/
 

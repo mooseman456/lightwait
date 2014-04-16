@@ -10,8 +10,9 @@
     $javascript = 'javascript/account.js';
     include('include/header.php');
 ?>
-
+    
 	<form id="editAccountForm" method="PUT" action="#">
+        <h2>Edit Account Information</h2>
 		<input type="email" name="email" placeholder="Email">
 		<input type="password" name="password" placeholder="Password">
 		<input type="text" name="fName" placeholder="First Name">
