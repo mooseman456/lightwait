@@ -13,11 +13,14 @@
 		"menu"=>"menu.php",
 		"logout"=>"index.php");
 	$pageTitle="Data";
-	$javascript="";
+	$javascript="javascript/data.js";
 	include('include/header.php');
 ?>
 
 <p>This is where you can view order data.</p>
+<div class="visual" id="pieChart"></div>
+<div class="visual" id="barGraph"></div>
+<div class="visual" id="table"></div>
 </body>
 
 </html>

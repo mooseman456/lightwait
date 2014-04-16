@@ -34,10 +34,11 @@ function addIngredient(type, name) {
         type: 'POST',
         url: rootURL + '/ingredient/' + type + '/' + name,
         dataType: "json", // data type of response
+        async: false,
         success: function(){
             console.log("Ingredient added");
         },
-            error: function(jqXHR, textStatus, errorThrown){
+        error: function(jqXHR, textStatus, errorThrown){
             console.log("Could not add ingredient");
             console.log(jqXHR, textStatus, errorThrown);
         }
@@ -48,7 +49,7 @@ function addIngredient(type, name) {
 //Name is the name of an ingredient and availabilityStatus is a boolean value
 function updateAvailability(type, id) {
     $.ajax({
-        type: 'POST',
+        type: 'PUT',
         url: rootURL + '/updateAvailability/' + type + '/' + id,
         success: function(){
             console.log("Availability of "+type+":"+id+" changed");
@@ -131,8 +132,8 @@ function inflateAdminMenu(data) {
             item.submit(function(e) {
                 e.preventDefault();
                 var name = form.children('input[name="ingredient"]').val().toLowerCase();
-                console.log("type: "+type+", name: "+name)
                 addIngredient(type, name);
+                location.reload();
             });
         })();
     }

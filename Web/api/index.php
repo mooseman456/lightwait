@@ -14,11 +14,12 @@ $app->get('/activeingredients', 'getActiveIngredients');
 $app->get('/recall', 'recallOrder');
 $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
+$app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:orderid/:userid', 'updateOrder');
-$app->put('/:type/:id', 'updateAvailability');
+$app->put('/updateAvailability/:type/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
@@ -59,25 +60,24 @@ function addOrder() {
   $app = \Slim\Slim::getInstance();
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
-  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$order['user_id'].", \"". $order['timePlaced'] ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
-            (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
-            (SELECT fry_id FROM Fries WHERE name = \"".$order['fries']."\"))";
+
+  $query = "INSERT INTO Orders (user_id, timePlaced, bread_id, base_id, cheese_id, fry_id)
+            VALUES (" . $order['user_id'] . ", '" . $order['timePlaced'] . "', " . $order['bread'] . ", " . $order['base'] . ", " . $order['cheese'] . ", " . $order['fries'].")";
+
 
   $mysqli->query($query);
+
+  echo json_encode($query);
 
   $orderID = $mysqli->insert_id;
 
   foreach($order['toppings'] as $key=>$val) {
-    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('$orderID', (SELECT topping_id FROM Toppings WHERE name='".$order['toppings'][$key]."'))";
+    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
     $mysqli->query($query);
-
-    $return = json_encode($query);
-    echo $return;
+    
   }
 
   $mysqli->close();
-
 }
 
 function updateOrder($orderID, $userID) {
@@ -119,12 +119,7 @@ function updateAvailability($type, $id) {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
 
-  if (strtolower($type) == "fries") {
-    $idName = "fry_id";
-  } else {
-    $idName = substr(strtolower($type), 0, -1)."_id";
-  }
-  $query = "UPDATE $type SET available=0 WHERE $idName='$id'";
+  $query = "UPDATE $type SET available=0 WHERE id=$id";
   $mysqli->query($query);
 
   $mysqli->close();
@@ -209,6 +204,21 @@ function logIn($email, $password) {
 
     echo json_encode($arr);
   } 
+}
+
+function getAccountInfo() {
+  if (!isset($_SESSION['user_id'])) {
+    //Set SESSION variables
+    $_SESSION['fName'] = $account['fName'];
+    $_SESSION['lName'] = $account['lName'];
+    $_SESSION['user_id'] = $account['user_id'];
+    $_SESSION['email'] = $account['email'];
+    $_SESSION['phoneNumber'] = $account['phoneNumber'];
+    $_SESSION['userType'] = $account['userType'];
+    echo json_encode($account);
+  } else {
+    echo json_encode("Failed");
+  }
 }
 
 function getActiveIngredients() {
@@ -358,7 +368,6 @@ function getConnection() {
 
 function writeToLog($message)
 {
-  global $config;
   if ($fp = fopen('log/lightwait_development.log', 'at'))
   {
     fwrite($fp, date('c') . ' ' . $message . PHP_EOL);

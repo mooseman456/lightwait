@@ -179,7 +179,7 @@
     
     // Use the table's tag to retrieve the index of the array within menuDataArray, then set the
     // cell's title to be the object at the index of the table's row
-    cell.textLabel.text = [[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]];
+    cell.textLabel.text = [[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row] ]objectForKey:@"name"];
     
     return cell;
 }
@@ -196,10 +196,11 @@
     // If not selecting from the toppings page, only one selection allowed
     if (tableView.allowsMultipleSelection == FALSE) {
         // Add the selected item as the object and the type of item for the key
-        [orderDictionary setObject:[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] forKey:[headerArray objectAtIndex:tableView.tag]];
+        [orderDictionary setObject:[[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] objectForKey:@"id"] forKey:[headerArray objectAtIndex:tableView.tag]];
+        NSLog(@"%@", [[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] objectForKey:@"name"]);
         [self scrollToNextPage];
     }
-    // If selecting from toppings page, extra code is required to handle selecting and deselecting
+    // If selecting from toppings page, extra logic is required to handle selecting and deselecting
     else {
         // If the user selects none, deselect the other cells
         // Else, deselect none
@@ -233,7 +234,7 @@
             [tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[toppingsArray indexOfObject:@"None"] inSection:0] animated:YES];
         }
         // Add the toppings to an array and add it to the order dictionary
-        [selectedToppings addObject:[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]]];
+        [selectedToppings addObject:[[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] objectForKey:@"id"]];
         [orderDictionary setObject:selectedToppings forKey:[headerArray objectAtIndex:tableView.tag]];
     }
     
@@ -353,7 +354,6 @@
 - (void)initializeMenuArrays
 {
     NSDictionary *menuDictionary = [DataManager getMenu];
-    NSLog(@"%@", menuDictionary);
     if (menuDictionary) {
         // Menu data arrays
         headerArray = [[NSArray alloc] initWithObjects:@"Base", @"Bread", @"Cheese", @"Toppings", @"Fries", nil];

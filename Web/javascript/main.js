@@ -4,7 +4,6 @@ var rootURL = "api/index.php";
 $(document).ready(function(){
     //Logout click listener
     $('a:contains("logout")').click( function(e) {
-    	alert("logout");
     	e.preventDefault();
     	$.ajax({
     		type: 'POST',
