@@ -14,6 +14,7 @@ $app->get('/activeingredients', 'getActiveIngredients');
 $app->get('/recall', 'recallOrder');
 $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
+$app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
@@ -42,9 +43,9 @@ function webOrder() {
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
-            (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
-            (SELECT fry_id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
+            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
   //echo $query;
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
 
@@ -60,9 +61,9 @@ function addOrder() {
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$order['user_id'].", \"". $order['timePlaced'] ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
-            (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
-            (SELECT fry_id FROM Fries WHERE name = \"".$order['fries']."\"))";
+            VALUES (".$order['user_id'].", \"". $order['timePlaced'] ."\", 1, (SELECT id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
+            (SELECT id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
+            (SELECT id FROM Fries WHERE name = \"".$order['fries']."\"))";
 
   $mysqli->query($query);
 
@@ -204,6 +205,21 @@ function logIn($email, $password) {
 
     echo json_encode($arr);
   } 
+}
+
+function getAccountInfo() {
+  if (!isset($_SESSION['user_id'])) {
+    //Set SESSION variables
+    $_SESSION['fName'] = $account['fName'];
+    $_SESSION['lName'] = $account['lName'];
+    $_SESSION['user_id'] = $account['user_id'];
+    $_SESSION['email'] = $account['email'];
+    $_SESSION['phoneNumber'] = $account['phoneNumber'];
+    $_SESSION['userType'] = $account['userType'];
+    echo json_encode($account);
+  } else {
+    echo json_encode("Failed");
+  }
 }
 
 function getActiveIngredients() {
