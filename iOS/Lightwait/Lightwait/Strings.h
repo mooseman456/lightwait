@@ -8,5 +8,5 @@
 
 #define kConnetionTestLink @"http://localhost:8888/lightwait/Web"
 #define kRootURL @"http://localhost:8888/lightwait/Web/api/index.php"
-#define kMenu @"/menu"
+#define kMenu @"/ingredients"
 #define kOrder @"/order"

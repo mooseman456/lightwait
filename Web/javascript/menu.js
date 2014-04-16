@@ -38,7 +38,7 @@ function addIngredient(type, name) {
         success: function(){
             console.log("Ingredient added");
         },
-            error: function(jqXHR, textStatus, errorThrown){
+        error: function(jqXHR, textStatus, errorThrown){
             console.log("Could not add ingredient");
             console.log(jqXHR, textStatus, errorThrown);
         }

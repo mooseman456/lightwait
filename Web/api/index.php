@@ -60,25 +60,23 @@ function addOrder() {
   $app = \Slim\Slim::getInstance();
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
-  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$order['user_id'].", \"". $order['timePlaced'] ."\", 1, (SELECT id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
-            (SELECT id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
-            (SELECT id FROM Fries WHERE name = \"".$order['fries']."\"))";
+
+  $query = "INSERT INTO Orders (user_id, timePlaced, bread_id, base_id, cheese_id, fry_id)
+            VALUES (" . $order['user_id'] . ", '" . $order['timePlaced'] . "', " . $order['bread'] . ", " . $order['base'] . ", " . $order['cheese'] . ", " . $order['fries'].")";
 
   $mysqli->query($query);
+
+  echo json_encode($query);
 
   $orderID = $mysqli->insert_id;
 
   foreach($order['toppings'] as $key=>$val) {
-    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('$orderID', (SELECT topping_id FROM Toppings WHERE name='".$order['toppings'][$key]."'))";
+    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
     $mysqli->query($query);
-
-    $return = json_encode($query);
-    echo $return;
+    
   }
 
   $mysqli->close();
-
 }
 
 function updateOrder($orderID, $userID) {
@@ -369,7 +367,6 @@ function getConnection() {
 
 function writeToLog($message)
 {
-  global $config;
   if ($fp = fopen('log/lightwait_development.log', 'at'))
   {
     fwrite($fp, date('c') . ' ' . $message . PHP_EOL);
