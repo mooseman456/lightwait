@@ -18,7 +18,7 @@ $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:orderid/:userid', 'updateOrder');
-$app->put('/:type/:id', 'updateAvailability');
+$app->put('/updateAvailability/:type/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
@@ -119,12 +119,7 @@ function updateAvailability($type, $id) {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
 
-  if (strtolower($type) == "fries") {
-    $idName = "fry_id";
-  } else {
-    $idName = substr(strtolower($type), 0, -1)."_id";
-  }
-  $query = "UPDATE $type SET available=0 WHERE $idName='$id'";
+  $query = "UPDATE $type SET available=0 WHERE id=$id";
   $mysqli->query($query);
 
   $mysqli->close();
@@ -347,7 +342,7 @@ function logout() {
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='root';
+	$dbpass='arthas77';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
