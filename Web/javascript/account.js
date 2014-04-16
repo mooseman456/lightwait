@@ -115,6 +115,9 @@ $(document).ready(function() {
     });
 });
 
+/************/
+/*   AJAX   */
+/************/
 function createAccount(fName, lName, email, password, phoneNumber) {
   $.ajax({
      type: 'POST',
@@ -139,6 +142,7 @@ function updateAccount(password, fName, lName, email, phoneNumber) {
      dataType: "json", // data type of response
      success: function(){
         console.log("Account updated");
+        document.location.href="index.php"
      },
      error: function(jqXHR, textStatus, errorThrown){
         console.log("Account update failed");
@@ -161,4 +165,17 @@ function logIn(email, password) {
             console.log(jqXHR, textStatus, errorThrown);
         }
     });
+}
+
+/****************/
+/*   Inflater   */
+/****************/
+
+function fillWithUserData(form) {
+    var fName,lName,email,phone,password;
+    form.children('input[name="fName"]').value = fName;
+    form.children('input[name="lName]').value = lName;
+    form.children('input[name="email"]').value = email;
+    form.children('input[name="password"]').value = paswword;
+    form.children('input[name="phone"]').value = phone;
 }

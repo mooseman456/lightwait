@@ -131,7 +131,6 @@ function inflateAdminMenu(data) {
             item.submit(function(e) {
                 e.preventDefault();
                 var name = form.children('input[name="ingredient"]').val().toLowerCase();
-                console.log("type: "+type+", name: "+name)
                 addIngredient(type, name);
             });
         })();
