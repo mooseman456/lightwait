@@ -42,9 +42,9 @@ function webOrder() {
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
-            (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
-            (SELECT fry_id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
+            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
   //echo $query;
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
 
@@ -60,9 +60,9 @@ function addOrder() {
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$order['user_id'].", \"". $order['timePlaced'] ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
-            (SELECT base_id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
-            (SELECT fry_id FROM Fries WHERE name = \"".$order['fries']."\"))";
+            VALUES (".$order['user_id'].", \"". $order['timePlaced'] ."\", 1, (SELECT id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
+            (SELECT id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
+            (SELECT id FROM Fries WHERE name = \"".$order['fries']."\"))";
 
   $mysqli->query($query);
 
@@ -332,12 +332,12 @@ function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
 function addIngredient($type, $name) {
     $mysqli = getConnection();
 
-    $query = "INSERT INTO ".$type."(`name`) VALUES (`".$name."`)";
+    $query = "INSERT INTO ".$type." (`name`) VALUES ('".$name."')";
     $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
     $mysqli->close();
 
-    echo json_encode("Success");
+    echo json_encode($result);
     }
 
 function logout() {
