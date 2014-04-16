@@ -177,6 +177,7 @@ function getAccountInfo() {
             console.log(JSON.stringify(data));
         },
         error: function(jqXHR, textStatus, errorThrown){
+            alert("Login failed. Make sure your password and email are correct.");
             console.log("Login failed");
             console.log(jqXHR, textStatus, errorThrown);
         }
