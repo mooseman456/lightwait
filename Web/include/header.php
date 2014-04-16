@@ -1,7 +1,3 @@
-<?php
-   echo $_SESSION['userType'];
-?>
-
 <!Doctype html>
 <html>
 <head>

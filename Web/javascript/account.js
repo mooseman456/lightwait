@@ -9,6 +9,8 @@ const rootURL = "api/index.php"
 
 $(document).ready(function() {
 
+    getAccountInfo();
+
 
     /*   LoginForm   */
     // Declards regex patters for different portions of the account creation/login
@@ -159,6 +161,22 @@ function logIn(email, password) {
         success: function(data){
             console.log('Login success');
             document.location.href="index.php";
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log("Login failed");
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
+}
+
+function getAccountInfo() {
+    $.ajax({
+        type: 'GET',
+        url: rootURL + '/accountinfo',
+        dataType: "json", // data type of response
+        success: function(data){
+            console.log('Login success');
+            console.log(JSON.stringify(data));
         },
         error: function(jqXHR, textStatus, errorThrown){
             console.log("Login failed");
