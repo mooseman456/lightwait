@@ -332,12 +332,12 @@ function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
 function addIngredient($type, $name) {
     $mysqli = getConnection();
 
-    $query = "INSERT INTO ".$type."(`name`) VALUES (`".$name."`)";
+    $query = "INSERT INTO ".$type." (`name`) VALUES ('".$name."')";
     $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
     $mysqli->close();
 
-    echo json_encode("Success");
+    echo json_encode($result);
     }
 
 function logout() {
