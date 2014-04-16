@@ -49,7 +49,7 @@ function addIngredient(type, name) {
 //Name is the name of an ingredient and availabilityStatus is a boolean value
 function updateAvailability(type, id) {
     $.ajax({
-        type: 'POST',
+        type: 'PUT',
         url: rootURL + '/updateAvailability/' + type + '/' + id,
         success: function(){
             console.log("Availability of "+type+":"+id+" changed");
