@@ -15,8 +15,8 @@ $app->get('/recall', 'recallOrder');
 $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
 $app->get('/accountinfo', 'getAccountInfo');
-$app->post('/order', 'addOrder');
-$app->post('/webOrder', 'webOrder');
+$app->post('/order', 'addMobileOrder');
+$app->post('/webOrder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:id', 'updateAvailability');
@@ -39,13 +39,13 @@ function getOrders() {
 	}
 }
 
-function webOrder() {
+function addWebOrder() {
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
-            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
-            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
+            (SELECT fry_id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
   //echo $query;
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
 
@@ -55,30 +55,29 @@ function webOrder() {
   echo "<a href=../../order.php>New Order</a>";
 }
 
-function addOrder() {
+function addMobileOrder() {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
-  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$order['user_id'].", \"". $order['timePlaced'] ."\", 1, (SELECT id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
-            (SELECT id FROM Bases WHERE name = \"".$order['base'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$order['cheese']."\"), 
-            (SELECT id FROM Fries WHERE name = \"".$order['fries']."\"))";
+
+  $query = "INSERT INTO Orders (user_id, timePlaced, bread_id, base_id, cheese_id, fry_id)
+            VALUES (" . $order['user_id'] . ", '" . date('Y/m/d H:i:s') . "', " . $order['bread'] . ", " . $order['base'] . ", " . $order['cheese'] . ", " . $order['fries'].")";
+
 
   $mysqli->query($query);
+
+  echo json_encode($query);
 
   $orderID = $mysqli->insert_id;
 
   foreach($order['toppings'] as $key=>$val) {
-    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('$orderID', (SELECT topping_id FROM Toppings WHERE name='".$order['toppings'][$key]."'))";
+    $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
     $mysqli->query($query);
-
-    $return = json_encode($query);
-    echo $return;
+    
   }
 
   $mysqli->close();
-
 }
 
 function updateOrder($orderID, $userID) {
@@ -358,7 +357,7 @@ function logout() {
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='arthas77';
+	$dbpass='root';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
@@ -369,7 +368,6 @@ function getConnection() {
 
 function writeToLog($message)
 {
-  global $config;
   if ($fp = fopen('log/lightwait_development.log', 'at'))
   {
     fwrite($fp, date('c') . ' ' . $message . PHP_EOL);
