@@ -14,6 +14,7 @@ $app->get('/activeingredients', 'getActiveIngredients');
 $app->get('/recall', 'recallOrder');
 $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
+$app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addOrder');
 $app->post('/webOrder', 'webOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
@@ -209,6 +210,21 @@ function logIn($email, $password) {
 
     echo json_encode($arr);
   } 
+}
+
+function getAccountInfo() {
+  if (!isset($_SESSION['user_id'])) {
+    //Set SESSION variables
+    $_SESSION['fName'] = $account['fName'];
+    $_SESSION['lName'] = $account['lName'];
+    $_SESSION['user_id'] = $account['user_id'];
+    $_SESSION['email'] = $account['email'];
+    $_SESSION['phoneNumber'] = $account['phoneNumber'];
+    $_SESSION['userType'] = $account['userType'];
+    echo json_encode($account);
+  } else {
+    echo json_encode("Failed");
+  }
 }
 
 function getActiveIngredients() {
