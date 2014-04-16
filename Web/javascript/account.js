@@ -9,8 +9,6 @@ const rootURL = "api/index.php"
 
 $(document).ready(function() {
 
-    getAccountInfo();
-
 
     /*   LoginForm   */
     // Declards regex patters for different portions of the account creation/login
