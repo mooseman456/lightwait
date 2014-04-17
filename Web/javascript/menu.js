@@ -47,10 +47,10 @@ function addIngredient(type, name) {
 
 //Changes the availability of a an ingredient in the database
 //Name is the name of an ingredient and availabilityStatus is a boolean value
-function updateAvailability(type, id) {
+function updateAvailability(type, isChecked, id) {
     $.ajax({
         type: 'PUT',
-        url: rootURL + '/updateAvailability/' + type + '/' + id,
+        url: rootURL + '/updateAvailability/' + type + '/' + isChecked + '/' + id,
         success: function(){
             console.log("Availability of "+type+":"+id+" changed");
         },
@@ -108,7 +108,7 @@ function inflateAdminMenu(data) {
                 checkbox.change(function(e) {
                     var isChecked = checkbox.prop('checked');
                     console.log('Box checked: '+isChecked);
-                    updateAvailability(type, id);
+                    updateAvailability(type, isChecked, id);
                 });
             })();
 
