@@ -19,7 +19,7 @@ $app->post('/order', 'addMobileOrder');
 $app->post('/webOrder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->put('/:orderid/:userid', 'updateOrder');
-$app->put('/updateAvailability/:type/:id', 'updateAvailability');
+$app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
@@ -115,11 +115,11 @@ function updateOrder($orderID, $userID) {
   $mysqli->close();
 }
 
-function updateAvailability($type, $id) {
+function updateAvailability($type, $available, $id) {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
 
-  $query = "UPDATE $type SET available=0 WHERE id=$id";
+  $query = "UPDATE $type SET available=$available WHERE id=$id";
   $mysqli->query($query);
 
   $mysqli->close();
