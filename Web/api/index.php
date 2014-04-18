@@ -410,7 +410,7 @@ function dynamicQuery() {
     $dQuery = "SELECT ";
 
     if($jsonQuery['count'] == true) {
-        $dQuery .= "COUNT(*)";
+        $dQuery .= "COUNT(*) AS count";
     } else {
         $dQuery .= "*";
     }
@@ -464,8 +464,19 @@ function dynamicQuery() {
         $dQuery = substr($dQuery, 0, -4);
         $dQuery .= ")";
     }    
-    
-    echo json_encode($dQuery);
+
+    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
+
+    $finalResults = array();
+    while ($row = $result->fetch_assoc()) {
+          array_push($finalResults, $row);
+    }
+
+    $result->free();
+
+    echo json_encode($finalResults);
+
+    $mysqli->close();
 }
 
 function getConnection() {
