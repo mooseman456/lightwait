@@ -188,36 +188,46 @@ function logIn($email, $password) {
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
   $row = $result->fetch_assoc();
+  try {
+    if ($row['user_id']) {
+      $fName = $row['fName'];
+      $arr = array();
+      $arr['fName'] = $fName;
 
-  if ($row['user_id']) {
-    $fName = $row['fName'];
-    $arr = array();
-    $arr['fName'] = $fName;
+      //Set SESSION variables
+      $_SESSION['fName'] = $row['fName'];
+      $_SESSION['lName'] = $row['lName'];
+      $_SESSION['user_id'] = $row['user_id'];
+      $_SESSION['email'] = $row['email'];
+      $_SESSION['phoneNumber'] = $row['phoneNumber'];
+      $_SESSION['userType'] = $row['userType'];
 
-    //Set SESSION variables
-    $_SESSION['fName'] = $row['fName'];
-    $_SESSION['lName'] = $row['lName'];
-    $_SESSION['user_id'] = $row['user_id'];
-    $_SESSION['email'] = $row['email'];
-    $_SESSION['phoneNumber'] = $row['phoneNumber'];
-    $_SESSION['userType'] = $row['userType'];
-
-    echo json_encode($arr);
-  } 
+      echo json_encode($arr);
+    }
+    else
+      throw new Exception('Bad login.');
+  } catch(Exception $e) {
+    echo 'Caught exception: ', $e->getMessage(), "\n";
+  }
+  
 }
 
 function getAccountInfo() {
-  if (!isset($_SESSION['user_id'])) {
-    //Set SESSION variables
-    $_SESSION['fName'] = $account['fName'];
-    $_SESSION['lName'] = $account['lName'];
-    $_SESSION['user_id'] = $account['user_id'];
-    $_SESSION['email'] = $account['email'];
-    $_SESSION['phoneNumber'] = $account['phoneNumber'];
-    $_SESSION['userType'] = $account['userType'];
-    echo json_encode($account);
-  } else {
-    echo json_encode("Failed");
+  try{
+    if (isset($_SESSION['user_id'])) {
+      //Set SESSION variables
+      $account['fName'] = $_SESSION['fName'];
+      $account['lName'] = $_SESSION['lName'];
+      $account['user_id'] = $_SESSION['user_id'];
+      $account['email'] = $_SESSION['email'];
+      $account['phoneNumber'] = $_SESSION['phoneNumber'];
+      $account['userType'] = $_SESSION['userType'];
+      echo json_encode($account);
+    } else {
+      throw new Exception('Why is this here?');
+    }
+  } catch(Exception $e) {
+    echo 'Caught exception: ', $e->getMessage();
   }
 }
 
