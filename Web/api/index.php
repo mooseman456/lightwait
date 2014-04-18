@@ -18,6 +18,7 @@ $app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addMobileOrder');
 $app->post('/webOrder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
+$app->post('/account', 'createMobileAccount');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
@@ -176,6 +177,24 @@ function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumbe
   echo json_encode($query);
 }
 
+function createMobileAccount() {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $accountInfo = json_decode($request, true);
+
+  //Salt and Hash the password
+  $password = hash("sha512", $accountInfo['password']);
+
+  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber, device_token) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "', '" . $accountInfo['device_token'] . "')";
+
+  $mysqli->query($query);
+
+  echo json_encode($query);
+
+  $mysqli->close();
+}
+
 function logIn($email, $password) {
   $mysqli = getConnection();
 
@@ -188,36 +207,46 @@ function logIn($email, $password) {
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
   $row = $result->fetch_assoc();
+  try {
+    if ($row['user_id']) {
+      $fName = $row['fName'];
+      $arr = array();
+      $arr['fName'] = $fName;
 
-  if ($row['user_id']) {
-    $fName = $row['fName'];
-    $arr = array();
-    $arr['fName'] = $fName;
+      //Set SESSION variables
+      $_SESSION['fName'] = $row['fName'];
+      $_SESSION['lName'] = $row['lName'];
+      $_SESSION['user_id'] = $row['user_id'];
+      $_SESSION['email'] = $row['email'];
+      $_SESSION['phoneNumber'] = $row['phoneNumber'];
+      $_SESSION['userType'] = $row['userType'];
 
-    //Set SESSION variables
-    $_SESSION['fName'] = $row['fName'];
-    $_SESSION['lName'] = $row['lName'];
-    $_SESSION['user_id'] = $row['user_id'];
-    $_SESSION['email'] = $row['email'];
-    $_SESSION['phoneNumber'] = $row['phoneNumber'];
-    $_SESSION['userType'] = $row['userType'];
-
-    echo json_encode($arr);
-  } 
+      echo json_encode($arr);
+    }
+    else
+      throw new Exception('Bad login.');
+  } catch(Exception $e) {
+    echo 'Caught exception: ', $e->getMessage(), "\n";
+  }
+  
 }
 
 function getAccountInfo() {
-  if (!isset($_SESSION['user_id'])) {
-    //Set SESSION variables
-    $_SESSION['fName'] = $account['fName'];
-    $_SESSION['lName'] = $account['lName'];
-    $_SESSION['user_id'] = $account['user_id'];
-    $_SESSION['email'] = $account['email'];
-    $_SESSION['phoneNumber'] = $account['phoneNumber'];
-    $_SESSION['userType'] = $account['userType'];
-    echo json_encode($account);
-  } else {
-    echo json_encode("Failed");
+  try{
+    if (isset($_SESSION['user_id'])) {
+      //Set SESSION variables
+      $account['fName'] = $_SESSION['fName'];
+      $account['lName'] = $_SESSION['lName'];
+      $account['user_id'] = $_SESSION['user_id'];
+      $account['email'] = $_SESSION['email'];
+      $account['phoneNumber'] = $_SESSION['phoneNumber'];
+      $account['userType'] = $_SESSION['userType'];
+      echo json_encode($account);
+    } else {
+      throw new Exception('Why is this here?');
+    }
+  } catch(Exception $e) {
+    echo 'Caught exception: ', $e->getMessage();
   }
 }
 
@@ -352,6 +381,16 @@ function addIngredient($type, $name) {
 
 function logout() {
     session_destroy();
+}
+
+function dynamicQuery() {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $query = json_decode($query, true);
+
+
+
 }
 
 function getConnection() {

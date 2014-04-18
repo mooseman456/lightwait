@@ -17,7 +17,7 @@ function drawPieChart() {
 	data.addColumn('number', 'Quantity');
 	data.addRows([
 		['Hamburger', 3],
-		['Black Bean', 1],
+		['Black Bean', 5],
 		['Turkey', 1],
 		['Chicken', 1],
 		['Veggie', 2]

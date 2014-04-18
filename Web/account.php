@@ -9,8 +9,8 @@
     $navElements = Array("order" => "order.php","logout"=>"index.php");
     $javascript = 'javascript/account.js';
     include('include/header.php');
+
 ?>
-    
 	<form id="editAccountForm" method="PUT" action="#">
         <h2>Edit Account Information</h2>
 		<input type="email" name="email" placeholder="Email">
