@@ -407,3 +407,19 @@ div#menu-categories-edit-pane{
 div#menu-categories-edit-pane > div {
 	width:100%;
 }
+
+/*****************/
+/*   Data Page   */
+/*****************/
+div.ingredientList {
+	border: 1px solid rgba(0,0,0,0.15);
+}
+
+
+
+
+
+
+
+
+

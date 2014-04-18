@@ -1,14 +1,28 @@
 google.load('visualization', '1.0', {'packages':['corechart','table']});
 
 $(document).ready(function(){
-  console.log("javascript started");
-  google.setOnLoadCallback(drawPieChart);
-  google.setOnLoadCallback(drawBarGraph);
-  google.setOnLoadCallback(drawTable);
+	inflateForm();
+	google.setOnLoadCallback(drawPieChart);
+	google.setOnLoadCallback(drawBarGraph);
+	google.setOnLoadCallback(drawTable);
 });
 
-//google.load('visualization', '1.0', {'packages':['corechart']});
+/*****************/
+/*   Inflaters   */
+/*****************/
+function inflateForm() {
+	
+}
 
+
+/************/
+/*   Form   */
+/************/
+
+
+/******************************/
+/*   Google chart functions   */
+/******************************/
 function drawPieChart() {
 
 	// // Create the data table.
