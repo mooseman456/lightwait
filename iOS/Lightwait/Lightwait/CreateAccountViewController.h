@@ -10,6 +10,10 @@
 #import "DataManager.h"
 
 @interface CreateAccountViewController : UIViewController
+{
+    NSString *deviceTokenString;
+}
+
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;

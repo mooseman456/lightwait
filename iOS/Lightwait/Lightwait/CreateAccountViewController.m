@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    deviceTokenString = @"";
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,6 +64,13 @@
     [accountInformation setObject:emailString forKey:@"email"];
     [accountInformation setObject:phoneNumberString forKey:@"phoneNumber"];
     [accountInformation setObject:passwordString forKey:@"password"];
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    if (![deviceTokenString isEqualToString:@""]) {
+        [accountInformation setObject:deviceTokenString forKey:@"device_token"];
+    }
     
     [DataManager createAccount:accountInformation];
 }
@@ -108,6 +117,19 @@
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
     [alertView show];
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    deviceTokenString = [[[[deviceToken description]
+                            stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                            stringByReplacingOccurrencesOfString: @">" withString: @""]
+                            stringByReplacingOccurrencesOfString: @" " withString: @""];
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"Failed to get token, error: %@", error);
 }
 
 @end
