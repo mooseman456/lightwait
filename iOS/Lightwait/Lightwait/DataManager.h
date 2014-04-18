@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "REST_API.h"
 #import "Strings.h"
+#import "JSONConverter.h"
 
 @interface DataManager : NSObject
 
 + (NSDictionary*)getMenu;
 + (NSString *)uploadOrder:(NSString*)data;
 + (NSDictionary *)logIn:(NSString *)username password:(NSString *)passwordString;
++ (NSDictionary *)createAccount:(NSMutableDictionary *)accountInformation;
 
 @end

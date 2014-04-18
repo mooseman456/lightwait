@@ -18,8 +18,9 @@ $app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addMobileOrder');
 $app->post('/webOrder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
+$app->post('/account', 'createMobileAccount');
 $app->put('/:orderid/:userid', 'updateOrder');
-$app->put('/updateAvailability/:type/:id', 'updateAvailability');
+$app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
@@ -43,9 +44,9 @@ function addWebOrder() {
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT bread_id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
-            (SELECT base_id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT cheese_id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
-            (SELECT fry_id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
+            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
   //echo $query;
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
 
@@ -115,11 +116,11 @@ function updateOrder($orderID, $userID) {
   $mysqli->close();
 }
 
-function updateAvailability($type, $id) {
+function updateAvailability($type, $available, $id) {
   $mysqli = getConnection();
   $app = \Slim\Slim::getInstance();
 
-  $query = "UPDATE $type SET available=0 WHERE id=$id";
+  $query = "UPDATE $type SET available=$available WHERE id=$id";
   $mysqli->query($query);
 
   $mysqli->close();
@@ -174,6 +175,24 @@ function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumbe
   $mysqli->close();
 
   echo json_encode($query);
+}
+
+function createMobileAccount() {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $accountInfo = json_decode($request, true);
+
+  //Salt and Hash the password
+  $password = hash("sha512", $accountInfo['password']);
+
+  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "')";
+
+  $mysqli->query($query);
+
+  echo json_encode($query);
+
+  $mysqli->close();
 }
 
 function logIn($email, $password) {
