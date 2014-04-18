@@ -147,16 +147,29 @@ function inflateAdminMenu(data) {
 
 
 function inflateChefMenu(data) {
+    console.log(data);
     for(var key in data){
         $(".mainForm").append("<div></div>");
-        var currentItem=".mainForm div:last-child";
+        var currentItem=".mainForm > div:last-child";
         $(currentItem).append("<h2>"+key+"</h2>");
         for(var i=0; i<data[key].length; i++){
             var allPurpose=data[key][i].name;
-            $(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
-            $(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
+            //$(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
+            //$(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
+            //console.log(currentItem);
+            var coolString=allPurpose+"<div class=\"onoffswitch\">\
+            <input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\""+allPurpose+"\">\
+            <label class=\"onoffswitch-label\" for=\""+allPurpose+"\">\
+                <div class=\"onoffswitch-inner\"></div>\
+                <div class=\"onoffswitch-switch\"></div>\
+            </label>\
+            </div>";
+            $(currentItem).append(coolString);
             if(data[key][i].available==1){
-                var evil=$(currentItem+" input:nth-last-child(2)");
+                
+                var evil=$(currentItem+" > div:nth-last-child(1) > input");
+                //console.log(data[key][i].name);
+                //console.log($(evil));
                 $(evil).prop("checked", true);
             }
         }
@@ -169,14 +182,15 @@ function inflateChefMenu(data) {
         for(var key in data){
             g++;
             for(var h=0; h<data[key].length; h++){
-                var inputPos="body > div > form > div:nth-child("+(g)+") > input:nth-child("+((h*3)+3)+")";
+                var inputPos="body > div > form > div:nth-child("+(g)+") > div:nth-child("+(h+2)+") > input";
                 //console.log(data[key][h].name+",--- "+data[key][h].available+", ---"+$(inputPos).is(":checked"));
                 if(data[key][h].available!=$(inputPos).is(":checked")){
+                    console.log(data[key]);
                     if(data[key][h].available==1)
-                        updateAvailability(data[key], data[key][h].name, false);
+                        updateAvailability(key, false, data[key][h].id);
                         //switchOff.push(data[key][h].name);
                     if(data[key][h].available==0)
-                        updateAvailability(data[key], data[key][h].name, true);
+                        updateAvailability(key, true, data[key][h].id);
                         //switchOn.push(data[key][h].name);
                 }
             }
