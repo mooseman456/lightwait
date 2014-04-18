@@ -48,7 +48,7 @@
 			<label for="count">Count</label>
 		</fieldset>
 		
-		<fieldset>
+		<fieldset name="Sorting">
 			<input type="radio" name="sort" value="sortAscend" id="sortAscend"/ >
 			<label for="sortAscend">Sort Ascending</label>
 			<input type="radio" name="sort" value="sortDescend" id="sortDescend" />
@@ -59,9 +59,10 @@
 
 
 
-		<fieldset id="ingredientsFormArea">
+		<fieldset id="ingredientsFormArea" name="Ingredients">
 
 		</fieldset>
+
 		<!-- <fieldset>
 			<input type="text" name="hasAllIngredients" placeholder="Has All" id="hasAllIngredient" />
 			<input type="button" value="Add">

@@ -1,23 +1,73 @@
 google.load('visualization', '1.0', {'packages':['corechart','table']});
 
 $(document).ready(function(){
-	inflateForm();
-	google.setOnLoadCallback(drawPieChart);
-	google.setOnLoadCallback(drawBarGraph);
-	google.setOnLoadCallback(drawTable);
+	getMenuData();
+	// google.setOnLoadCallback(drawPieChart);
+	// google.setOnLoadCallback(drawBarGraph);
+	// google.setOnLoadCallback(drawTable);
 });
 
 /*****************/
 /*   Inflaters   */
 /*****************/
-function inflateForm() {
-	
+function inflateForm(menu) {
+	var field = $('fieldset#ingredientFormArea');
+	console.log(menu);
+	for(var type in menu) {
+		for (var item in type) {
+			console.log(menu[type][item]);
+		}
+	}
 }
 
 
 /************/
 /*   Form   */
 /************/
+
+/***********/
+/*  AJAX   */
+/***********/
+
+//Get menu data from the database and call inflate function
+function getMenuData() {
+    $.ajax({
+        type: 'GET',
+        url: rootURL+"/ingredients",
+        dataType: "json", // data type of response
+        success: function(data){
+            //console.log(JSON.stringify(data));
+            inflateForm(data);
+        }
+   });
+}
+
+// function testDQuery() {
+//     $.ajax({
+//         type: 'POST',
+//         url: rootURL + '/dquery',
+//         dataType: "json", // data type of response
+//         data: formToJSON(),
+//         success: function(data){
+//             console.log(data);
+//         },
+//         error: function(jqXHR, textStatus, errorThrown){
+//             alert("Login failed. Make sure your password and email are correct.");
+//             console.log("Login failed");
+//             console.log(jqXHR, textStatus, errorThrown);
+//         }
+//     });
+// }
+
+// function formToJSON() {
+//      return JSON.stringify({
+// 		"count":true, 
+// 		"returnType":"base_id",
+// 		"startTime":"2014-03-30 12:04:03", 
+// 		"endTime": "2014-04-30 12:04:03",
+// 		"hasAnyIngredients":["1", "2"]
+//     });
+// }
 
 
 /******************************/
