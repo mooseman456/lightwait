@@ -29,4 +29,10 @@
     return [REST_API getPath:[kRootURL stringByAppendingString:logInString]];
 }
 
++ (NSString *)createAccount:(NSMutableDictionary *)accountInformation
+{
+    return [REST_API postPath:[kRootURL stringByAppendingString:kAccount] data:[JSONConverter convertNSMutableDictionaryToJSON:accountInformation]];
+}
+
+
 @end

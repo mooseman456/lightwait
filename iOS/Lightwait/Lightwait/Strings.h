@@ -10,3 +10,4 @@
 #define kRootURL @"http://localhost:8888/lightwait/Web/api/index.php"
 #define kMenu @"/ingredients"
 #define kOrder @"/order"
+#define kAccount @"/account"
