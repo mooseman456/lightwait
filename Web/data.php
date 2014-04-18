@@ -32,8 +32,12 @@
 		<input type="radio" name="category" value="Fries" id="friesCheckbox"/>
 		<label for="friesCheckbox">Fries</label>
 
-		<input type="date" name="beginDate" />
-		<input type="date" name="endDate" />
+		<input type="date" name="beginDate" id="startTime"/>
+		<input type="time" name="startTime" id="startTime">
+		<label for="beginDate">Before</label>
+		<input type="date" name="afterDate" id="afterDate"/>
+		<input type="time" name="afterTime" id="afterTime">
+		<label for="beginDate">After</label>
 		<input type="submit" value="Retrieve" />
 	</form>
 </div>

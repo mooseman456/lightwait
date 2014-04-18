@@ -1,0 +1,1 @@
+{ "count":false, "startTime":timestamp, "endTime": timestamp, "sortAscend":false, "sortDescend":true, "hasAllIngredients":["ing1","ing2","ing3"], "hasNotAllIngredients":["ing1","ing2","ing3"], "hasAnyIngredient":["ing1","ing2","ing3"], "hasNotAnyIngredient":["ing1","ing2","ing3"] }
