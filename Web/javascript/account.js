@@ -20,14 +20,14 @@ $(document).ready(function() {
         var password = $('#loginForm input[name="password"]').val();
 
         console.log(email+ " "+password);
-
-        if (passPat.test(password))
+        if (email == "" || email == null)
+            alert("Empty email. Please input your email");
+        
+        else if (passPat.test(password))
             logIn(email, password);
-
         else
             alert("Invalid password! Must be 8 - 20 characters long!");
     });
-
 
 
     $('#createAccountForm input[type="submit"]').click(function(e) {
@@ -161,6 +161,7 @@ function logIn(email, password) {
             document.location.href="index.php";
         },
         error: function(jqXHR, textStatus, errorThrown){
+            alert("Login failed. Make sure your password and email are correct.");
             console.log("Login failed");
             console.log(jqXHR, textStatus, errorThrown);
         }

@@ -13,6 +13,40 @@ body {
 	font-family:'Ubuntu',Arial;
 }
 
+/* CODE FOUND HERE: 
+/*	http://www.webdesignerdepot.com/2012/11/how-to-create-a-simple-css3-tooltip/
+/*/
+
+.tooltip {
+	display:inline;
+	position:relative;
+}
+
+.tooltip:hover:before{
+    border: solid;
+    border-color: #333 transparent;
+    border-width: 6px 6px 0 6px;
+    bottom: 20px;
+    content: "";
+    left: 50%;
+    position: absolute;
+    z-index: 99;
+}
+
+.tooltip:hover:after{
+    background: #333;
+    background: rgba(0,0,0,.8);
+    border-radius: 5px;
+    bottom: 26px;
+    color: #fff;
+    content: attr(title);
+    left: 20%;
+    padding: 5px 15px;
+    position: absolute;
+    z-index: 98;
+    width: 220px;
+}
+
 /*********************/
 /*   Navbar/Header   */
 /*********************/
@@ -242,24 +276,74 @@ div.order-wrapper {
 /*   Availability   */
 /********************/
 .avail h2{
+	margin: 10px 0;
 	text-align: center;
 }
 
-.mainForm div{
+.mainForm > div{
 	display:block;
 	float:left;
-	width: 10%;
-	height:200px;
+	/*width: 10%;
+	height:200px;*/
+	margin: 0 10px;
 	border-right: 1px solid rgba(0,0,0,0.15);
 
-	padding: 10px;
 }
-.mainForm input[type="checkbox"]{
-	float:right;
-}
-.mainForm label{
+
+/*For Switch Buttons*/
+
+.mainForm > div > label{
 	font-size: 16px;
 }
+
+.onoffswitch {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    margin-bottom: 5px;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.onoffswitch-inner {
+    width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "STOCK";
+    padding-left: 10px;
+    background-color: #2FCCFF; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "OUT";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    width: 18px; margin: 6px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 20px;
+    position: absolute; top: 0; bottom: 0; right: 56px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+
 
 /**************************/
 /*		  Account         */
@@ -318,9 +402,3 @@ div#menu-categories-edit-pane{
 div#menu-categories-edit-pane > div {
 	width:100%;
 }
-
-
-
-
-
-
