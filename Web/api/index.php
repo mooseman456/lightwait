@@ -24,6 +24,7 @@ $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
+$app->post('/dquery', 'dynamicQuery');
 
 $app->run();
 
@@ -384,13 +385,70 @@ function logout() {
 }
 
 function dynamicQuery() {
-  $mysqli = getConnection();
-  $app = \Slim\Slim::getInstance();
-  $request = $app->request()->getBody();
-  $query = json_decode($query, true);
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
+    $jsonQuery = json_decode($request, true);
+
+    $dQuery = "SELECT ";
+
+    if($jsonQuery['count'] == true) {
+        $dQuery .= "COUNT(*)";
+    } else {
+        $dQuery .= "*";
+    }
+
+    //$jsonQuery['returnType'];
+
+    // FROM Orders
+    $dQuery .= " FROM Orders ";
+
+    // WHERE parameters
+    $dQuery .= "WHERE ";
+    
+
+    // If a start time is given
+    if ($jsonQuery['startTime']) {
+        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "'";
+    }
+
+    // If both a start time and end time is given
+    if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
+        $dQuery .= " AND ";
+    }
+
+    // If a start time is given, but not an end time
+    if($jsonQuery['startTime'] && !$jsonQuery['endTime']) {
+        $dQuery .= ") AND ";
+    }
+
+    // If an end time is given
+    if ($jsonQuery['endTime']) {
+        $dQuery .= "timePlaced <= '" . $jsonQuery['endTime']  . "'";
+    }
+
+    // If both a start time and end time is given
+    if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
+        $dQuery .= ")";
+    }
+
+    // If both an end time ingredients are given
+    if ($jsonQuery['endTime'] && $jsonQuery['hasAnyIngredients']) {
+        $dQuery .= " AND ";
+    }
 
 
+    if ($jsonQuery['hasAnyIngredients']) {
+        $dQuery .= "(";
+        foreach($jsonQuery['hasAnyIngredients'] as $key=>$val) {
+                $dQuery .= $jsonQuery['returnType'] . "=" .  $jsonQuery['hasAnyIngredients'][$key] . " OR ";
+        }
 
+        $dQuery = substr($dQuery, 0, -4);
+        $dQuery .= ")";
+    }    
+    
+    echo json_encode($dQuery);
 }
 
 function getConnection() {
