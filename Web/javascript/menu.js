@@ -154,27 +154,38 @@ function inflateChefMenu(data) {
         $(currentItem).append("<h2>"+key+"</h2>");
         for(var i=0; i<data[key].length; i++){
             var allPurpose=data[key][i].name;
-            //$(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
-            //$(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
-            //console.log(currentItem);
-            var coolString=allPurpose+"<div class=\"onoffswitch\">\
-            <input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\""+allPurpose+"\">\
-            <label class=\"onoffswitch-label\" for=\""+allPurpose+"\">\
-                <div class=\"onoffswitch-inner\"></div>\
-                <div class=\"onoffswitch-switch\"></div>\
-            </label>\
-            </div>";
-            $(currentItem).append(coolString);
-            if(data[key][i].available==1){
-                
-                var evil=$(currentItem+" > div:nth-last-child(1) > input");
-                //console.log(data[key][i].name);
-                //console.log($(evil));
-                $(evil).prop("checked", true);
+            if(allPurpose.indexOf("No ") === -1){
+                //$(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
+                //$(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
+                var coolString="<div>"+allPurpose+"<div class=\"onoffswitch\">\
+                <input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\""+allPurpose+"\">\
+                <label class=\"onoffswitch-label\" for=\""+allPurpose+"\">\
+                    <div class=\"onoffswitch-inner\"></div>\
+                    <div class=\"onoffswitch-switch\"></div>\
+                </label>\
+                </div></div>";
+                $(currentItem).append(coolString);
+                if(data[key][i].available==1){
+                    
+                    var evil=$(currentItem+" > div:nth-last-child(1) > div > input");
+                    //console.log(data[key][i].name);
+                    //console.log($(evil));
+                    $(evil).prop("checked", true);
+                }
+                (function() {
+                    var checkbox = $(currentItem+" > div:last-child > div > input");
+                    var type = key;
+                    var id = data[key][i].id;
+                    checkbox.change(function(e) {
+                        var isChecked = checkbox.prop('checked');
+                        console.log('Box checked: '+isChecked);
+                        updateAvailability(type, isChecked, id);
+                    });
+                })();
             }
         }
     }
-    $(".mainForm").append("<input id=\"availButton\" type=\"submit\">");
+    /*$(".mainForm").append("<input id=\"availButton\" type=\"submit\">");
     $("#availButton").click(function(){
         var switchOn = new Array;
         var switchOff = new Array;
@@ -182,7 +193,7 @@ function inflateChefMenu(data) {
         for(var key in data){
             g++;
             for(var h=0; h<data[key].length; h++){
-                var inputPos="body > div > form > div:nth-child("+(g)+") > div:nth-child("+(h+2)+") > input";
+                var inputPos="body > div > form > div:nth-child("+(g)+") > div:nth-child("+(h+2)+") > div > input";
                 //console.log(data[key][h].name+",--- "+data[key][h].available+", ---"+$(inputPos).is(":checked"));
                 if(data[key][h].available!=$(inputPos).is(":checked")){
                     console.log(data[key]);
@@ -195,5 +206,5 @@ function inflateChefMenu(data) {
                 }
             }
         }
-    });
+    });*/
 }
