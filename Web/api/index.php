@@ -186,7 +186,7 @@ function createMobileAccount() {
   //Salt and Hash the password
   $password = hash("sha512", $accountInfo['password']);
 
-  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "')";
+  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber, device_token) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "', '" . $accountInfo['device_token'] . "')";
 
   $mysqli->query($query);
 
@@ -381,6 +381,16 @@ function addIngredient($type, $name) {
 
 function logout() {
     session_destroy();
+}
+
+function dynamicQuery() {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $query = json_decode($query, true);
+
+
+
 }
 
 function getConnection() {
