@@ -410,7 +410,7 @@ function dynamicQuery() {
     $dQuery = "SELECT ";
 
     if($jsonQuery['count'] == true) {
-        $dQuery .= "COUNT(*)";
+        $dQuery .= "COUNT(*) AS count";
     } else {
         $dQuery .= "*";
     }
@@ -464,14 +464,25 @@ function dynamicQuery() {
         $dQuery = substr($dQuery, 0, -4);
         $dQuery .= ")";
     }    
-    
-    echo json_encode($dQuery);
+
+    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
+
+    $finalResults = array();
+    while ($row = $result->fetch_assoc()) {
+          array_push($finalResults, $row);
+    }
+
+    $result->free();
+
+    echo json_encode($finalResults);
+
+    $mysqli->close();
 }
 
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='arthas77';
+	$dbpass='root';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
