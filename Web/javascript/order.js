@@ -37,7 +37,7 @@ function inflateOrderMenu(data) {
     }
     $('#menuForm').append("<h2>Top It Off With Toppings</h2></ul><ul id=\"toppingsMenu\">");
     for (var i=0; i<data['Toppings'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"checkbox\" name=\"toppingType\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
+        $('#menuForm ul:last-child').append("<li> <input type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
     }
     $('#menuForm').append("<h2>Ya Want Fries With That?</h2></ul><ul id=\"fryMenu\">");
     for (var i=0; i<data['Fries'].length; i++){
