@@ -3,9 +3,63 @@
 "startTime":timestamp, 
 "endTime": timestamp, 
 "sortAscend":false, 
-"sortDescend":true, 
+"sortDescend":true,
+"countParameters":["ing1","ing2","ing3"],
 "hasAllIngredients":["ing1","ing2","ing3"], 
 "hasNotAllIngredients":["ing1","ing2","ing3"], 
 "hasAnyIngredient":["ing1","ing2","ing3"], 
 "hasNotAnyIngredient":["ing1","ing2","ing3"]
+
 }
+
+//Sample data
+{
+"count":true, 
+"returnType":"base_id",
+"startTime":"2014-03-30 12:04:03", 
+"endTime": "2014-04-30 12:04:03",
+"hasAllIngredients":["1","2","4"]
+}
+
+/*
+Sample call
+function testDQuery() {
+    $.ajax({
+        type: 'POST',
+        url: rootURL + '/dquery',
+        dataType: "json", // data type of response
+        data: formToJSON(),
+        success: function(data){
+            console.log(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert("Login failed. Make sure your password and email are correct.");
+            console.log("Login failed");
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
+}
+
+function formToJSON() {
+     return JSON.stringify({
+		"count":true, 
+		"returnType":"base_id",
+		"startTime":"2014-03-30 12:04:03", 
+		"endTime": "2014-04-30 12:04:03",
+		"hasAnyIngredients":["1", "2"]
+    });
+   }
+*/
+
+/*
+Requirements:
+	Always set count to either true or false - cannot be null
+	returnType cannot be null if count is set to false
+	Set dates to null if they are not to be used
+	If using count, only one datum can be returned per call
+
+
+
+
+    
+*/

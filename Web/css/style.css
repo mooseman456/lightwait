@@ -275,18 +275,23 @@ div.order-wrapper {
 /********************/
 /*   Availability   */
 /********************/
-.avail h2{
-	margin: 10px 0;
+.avail div h2{
+	margin: 1px; 
 	text-align: center;
 }
 
-.mainForm > div{
+.mainForm > div > div{
 	display:block;
 	float:left;
-	/*width: 10%;
-	height:200px;*/
-	margin: 0 10px;
+	margin: 0 5px;
+}
+
+.mainForm > div{
+	display: block;
+	float: left;
 	border-right: 1px solid rgba(0,0,0,0.15);
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+	border-top: 1px solid rgba(0,0,0,0.15);
 
 }
 
@@ -402,3 +407,19 @@ div#menu-categories-edit-pane{
 div#menu-categories-edit-pane > div {
 	width:100%;
 }
+
+/*****************/
+/*   Data Page   */
+/*****************/
+div.ingredientList {
+	border: 1px solid rgba(0,0,0,0.15);
+}
+
+
+
+
+
+
+
+
+

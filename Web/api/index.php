@@ -24,6 +24,8 @@ $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
+$app->post('/dquery', 'dynamicQuery');
+$app->post('/fillDB', 'fillDB');
 
 $app->run();
 
@@ -62,6 +64,10 @@ function addWebOrder() {
 
 	}
 
+  //foreach($_POST['toppingType'] as $key=>$val){
+  //  $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
+  //  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+  //}
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
   echo "<a href=../../index.php>Return home</a><br>";
@@ -408,13 +414,81 @@ function logout() {
 }
 
 function dynamicQuery() {
-  $mysqli = getConnection();
-  $app = \Slim\Slim::getInstance();
-  $request = $app->request()->getBody();
-  $query = json_decode($query, true);
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
+    $jsonQuery = json_decode($request, true);
+
+    $dQuery = "SELECT ";
+
+    if($jsonQuery['count'] == true) {
+        $dQuery .= "COUNT(*) AS count";
+    } else {
+        $dQuery .= "*";
+    }
+
+    //$jsonQuery['returnType'];
+
+    // FROM Orders
+    $dQuery .= " FROM Orders ";
+
+    // WHERE parameters
+    $dQuery .= "WHERE ";
+    
+
+    // If a start time is given
+    if ($jsonQuery['startTime']) {
+        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "'";
+    }
+
+    // If both a start time and end time is given
+    if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
+        $dQuery .= " AND ";
+    }
+
+    // If a start time is given, but not an end time
+    if($jsonQuery['startTime'] && !$jsonQuery['endTime']) {
+        $dQuery .= ") AND ";
+    }
+
+    // If an end time is given
+    if ($jsonQuery['endTime']) {
+        $dQuery .= "timePlaced <= '" . $jsonQuery['endTime']  . "'";
+    }
+
+    // If both a start time and end time is given
+    if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
+        $dQuery .= ")";
+    }
+
+    // If both an end time ingredients are given
+    if ($jsonQuery['endTime'] && $jsonQuery['hasAnyIngredients']) {
+        $dQuery .= " AND ";
+    }
 
 
+    if ($jsonQuery['hasAnyIngredients']) {
+        $dQuery .= "(";
+        foreach($jsonQuery['hasAnyIngredients'] as $key=>$val) {
+                $dQuery .= $jsonQuery['returnType'] . "=" .  $jsonQuery['hasAnyIngredients'][$key] . " OR ";
+        }
 
+        $dQuery = substr($dQuery, 0, -4);
+        $dQuery .= ")";
+    }    
+
+    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
+
+    $finalResults = array();
+    while ($row = $result->fetch_assoc()) {
+          array_push($finalResults, $row);
+    }
+
+    $result->free();
+
+    echo json_encode($finalResults);
+
+    $mysqli->close();
 }
 
 function getConnection() {
@@ -429,13 +503,20 @@ function getConnection() {
   return $db;
 }
 
-function writeToLog($message)
-{
+function writeToLog($message){
   if ($fp = fopen('log/lightwait_development.log', 'at'))
   {
     fwrite($fp, date('c') . ' ' . $message . PHP_EOL);
     fclose($fp);
   }
+}
+
+function fillDB() {
+  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
+            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
+            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
+            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+
 }
 
 ?>

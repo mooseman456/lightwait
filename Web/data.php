@@ -48,7 +48,7 @@
 			<label for="count">Count</label>
 		</fieldset>
 		
-		<fieldset>
+		<fieldset name="Sorting">
 			<input type="radio" name="sort" value="sortAscend" id="sortAscend"/ >
 			<label for="sortAscend">Sort Ascending</label>
 			<input type="radio" name="sort" value="sortDescend" id="sortDescend" />
@@ -57,21 +57,35 @@
 			<label for="sortNone">No Sorting</label>
 		</fieldset>
 
-		<fieldset>
+
+
+		<fieldset id="ingredientsFormArea" name="Ingredients">
+
+		</fieldset>
+
+		<!-- <fieldset>
 			<input type="text" name="hasAllIngredients" placeholder="Has All" id="hasAllIngredient" />
 			<input type="button" value="Add">
+			<div class="ingredientList">Ingredients</div>
 			<input type="text" name="hasNotAllIngredients" placeholder="Has Not All" id="hasNotAllIngredients" />
 			<input type="button" value="Add">
+			<div class="ingredientList">Ingredients</div>
 			<input type="text" name="hasAnyIngredient" placeholder="Has Any" id="hasAnyIngredient" />
 			<input type="button" value="Add">
+			<div class="ingredientList">Ingredients</div>
 			<input type="text" name"hasNotAnyIngredient" placeholder="Has Not Any" id"hasNotAnyIngredient" />
 			<input type="button" value="Add">
-		</fieldset>
+			<div class="ingredientList">Ingredients</div>
+		</fieldset> -->
 
 
 		<input type="submit" value="Retrieve" />
 	</form>
 </div>
+
+<div id="table"></div> 
+<div id="pieChart"></div>
+<div id="barGraph"></div>
 
 </body>
 
