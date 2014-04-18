@@ -47,8 +47,20 @@ function addWebOrder() {
             VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
             (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
             (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
-  //echo $query;
-  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+	
+	$mysqli->query($query);
+
+	$orderID = $mysqli->insert_id;
+
+	if (!empty($_POST['toppingType']))
+	{
+		foreach($_POST['toppingType'] as $topping) {
+			$query = "INSERT INTO OrderToppings(order_id, topping_id)
+					VALUES(".$orderID.", "."(SELECT id FROM Toppings WHERE name = \"". $topping."\"))";
+					$mysqli->query($query);
+		}
+
+	}
 
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
@@ -396,7 +408,7 @@ function dynamicQuery() {
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='root';
+	$dbpass='arthas77';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
