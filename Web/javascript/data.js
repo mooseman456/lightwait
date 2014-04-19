@@ -1,6 +1,7 @@
 google.load('visualization', '1.0', {'packages':['corechart','table']});
 
 $(document).ready(function(){
+	testDQuery();
 	getMenuData();
 	// google.setOnLoadCallback(drawPieChart);
 	// google.setOnLoadCallback(drawBarGraph);
@@ -42,32 +43,37 @@ function getMenuData() {
    });
 }
 
-// function testDQuery() {
-//     $.ajax({
-//         type: 'POST',
-//         url: rootURL + '/dquery',
-//         dataType: "json", // data type of response
-//         data: formToJSON(),
-//         success: function(data){
-//             console.log(data);
-//         },
-//         error: function(jqXHR, textStatus, errorThrown){
-//             alert("Login failed. Make sure your password and email are correct.");
-//             console.log("Login failed");
-//             console.log(jqXHR, textStatus, errorThrown);
-//         }
-//     });
-// }
+function testDQuery() {
+    $.ajax({
+        type: 'POST',
+        url: rootURL + '/dquery',
+        dataType: "json", // data type of response
+        data: formToJSON(),
+        success: function(data){
+            console.log(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert("Login failed. Make sure your password and email are correct.");
+            console.log("Login failed");
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
+}
 
-// function formToJSON() {
-//      return JSON.stringify({
-// 		"count":true, 
-// 		"returnType":"base_id",
-// 		"startTime":"2014-03-30 12:04:03", 
-// 		"endTime": "2014-04-30 12:04:03",
-// 		"hasAnyIngredients":["1", "2"]
-//     });
-// }
+function formToJSON() {
+     return JSON.stringify({
+		"count":false,
+		"startTime":"2014-03-30 12:04:03", 
+		"endTime":"2014-04-30 12:04:03",
+		"searchForAll":false,
+		"searchForAny":true,
+		"queryArray":{
+							"base_id": ["1"],
+							"bread_id":["1"],
+							"fry_id":["1"]
+							}
+    });
+}
 
 
 /******************************/

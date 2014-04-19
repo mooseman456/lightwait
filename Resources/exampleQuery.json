@@ -54,9 +54,9 @@ function formToJSON() {
 /*
 Requirements:
 	Always set count to either true or false - cannot be null
-	returnType cannot be null if count is set to false
 	Set dates to null if they are not to be used
 	If using count, only one datum can be returned per call
+    Set queryArray to null to only use dates
 
 
 

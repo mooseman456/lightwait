@@ -422,28 +422,22 @@ function dynamicQuery() {
     $dQuery = "SELECT ";
 
     if($jsonQuery['count'] == true) {
-        $dQuery .= "COUNT(*) AS count";
+        $dQuery .= "COUNT(*) AS count ";
     } else {
-        $dQuery .= "*";
+        $dQuery .= "* ";
     }
 
-    //$jsonQuery['returnType'];
-
-    // FROM Orders
-    $dQuery .= " FROM Orders ";
-
-    // WHERE parameters
-    $dQuery .= "WHERE ";
-    
+    // FROM Orders WHERE
+    $dQuery .= "FROM Orders WHERE ";
 
     // If a start time is given
     if ($jsonQuery['startTime']) {
-        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "'";
+        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "' ";
     }
 
     // If both a start time and end time is given
     if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
-        $dQuery .= " AND ";
+        $dQuery .= "AND ";
     }
 
     // If a start time is given, but not an end time
@@ -458,24 +452,38 @@ function dynamicQuery() {
 
     // If both a start time and end time is given
     if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
-        $dQuery .= ")";
+        $dQuery .= ") ";
     }
 
     // If both an end time ingredients are given
-    if ($jsonQuery['endTime'] && $jsonQuery['hasAnyIngredients']) {
-        $dQuery .= " AND ";
+    if ($jsonQuery['endTime'] && $jsonQuery['queryArray']) {
+        $dQuery .= "AND ";
     }
 
-
-    if ($jsonQuery['hasAnyIngredients']) {
-        $dQuery .= "(";
-        foreach($jsonQuery['hasAnyIngredients'] as $key=>$val) {
-                $dQuery .= $jsonQuery['returnType'] . "=" .  $jsonQuery['hasAnyIngredients'][$key] . " OR ";
+    if ($jsonQuery['queryArray']) {
+        // Test whether each ingredient query should be separated by AND or OR
+        if ($jsonQuery['searchForAll'] == true) {
+            $separator = "AND ";
+        } else if ($jsonQuery['searchForAny'] == true) {
+            $separator = "OR ";
+        } else {
+            die('Bad query.');
         }
 
-        $dQuery = substr($dQuery, 0, -4);
+        $dQuery .= "(";
+        foreach ($jsonQuery['queryArray'] as $key=>$val) {
+            foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
+                //$key is the base_id, bread_id, etc
+                $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $separator;
+            }
+        }
+
+        // Remove the last AND/OR
+        $dQuery = substr($dQuery, 0, -(strlen($separator)+1));
         $dQuery .= ")";
-    }    
+    }
+
+    writeToLog($dQuery);
 
     $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
 
