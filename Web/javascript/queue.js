@@ -71,10 +71,12 @@ function pushOrderToWindow(index) {
 	$.each(orders[index], function(key,val) {
 		if ($.isArray(val)) {
 			val.forEach( function(item) {
-			   $(orderElement.children('ul')).append('<li>'+item+'</li>');
+				if (item !== null)
+			   		$(orderElement.children('ul')).append('<li>'+item+'</li>');
 			});
 		} else {
-			$(orderElement.children('ul')).append('<li>'+val+'</li>');
+			if (val !== null)
+				$(orderElement.children('ul')).append('<li>'+val+'</li>');
 		}
 	});
 	orderElement.append('<button class="bump">Bump</button>');

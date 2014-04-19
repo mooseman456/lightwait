@@ -160,12 +160,24 @@ function recallOrder() {
 function getActiveOrders() {
   $mysqli = getConnection();
 
-  $query = "SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
-            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases 
-            ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id 
-            WHERE Orders.isActive='1'";
+  $query = "SET @sql = NULL";
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
-  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+  $query = "SELECT GROUP_CONCAT(DISTINCT CONCAT('MAX(CASE WHEN OrderToppings.topping_id = ''', Toppings.id, ''' THEN Toppings.name END) AS \'',Toppings.name, '\'') ) INTO @sql FROM Toppings";
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $query = "SET @sql = CONCAT('SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced,', @sql, 'FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id JOIN OrderToppings ON Orders.order_id = OrderToppings.order_id JOIN Toppings ON OrderToppings.topping_id = Toppings.id WHERE Orders.isActive=1 GROUP BY OrderToppings.order_id ORDER BY Orders.order_id')";
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $query = "PREPARE stmt FROM @sql";
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $query = "EXECUTE stmt";
+  $result = $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $query = "DEALLOCATE PREPARE stmt";
+
+  $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
   
   while ($row = $result->fetch_assoc()) {
            // $row['ingredients'][] = $row['bread_name'];
@@ -410,28 +422,22 @@ function dynamicQuery() {
     $dQuery = "SELECT ";
 
     if($jsonQuery['count'] == true) {
-        $dQuery .= "COUNT(*) AS count";
+        $dQuery .= "COUNT(*) AS count ";
     } else {
-        $dQuery .= "*";
+        $dQuery .= "* ";
     }
 
-    //$jsonQuery['returnType'];
-
-    // FROM Orders
-    $dQuery .= " FROM Orders ";
-
-    // WHERE parameters
-    $dQuery .= "WHERE ";
-    
+    // FROM Orders WHERE
+    $dQuery .= "FROM Orders WHERE ";
 
     // If a start time is given
     if ($jsonQuery['startTime']) {
-        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "'";
+        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "' ";
     }
 
     // If both a start time and end time is given
     if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
-        $dQuery .= " AND ";
+        $dQuery .= "AND ";
     }
 
     // If a start time is given, but not an end time
@@ -446,24 +452,38 @@ function dynamicQuery() {
 
     // If both a start time and end time is given
     if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
-        $dQuery .= ")";
+        $dQuery .= ") ";
     }
 
     // If both an end time ingredients are given
-    if ($jsonQuery['endTime'] && $jsonQuery['hasAnyIngredients']) {
-        $dQuery .= " AND ";
+    if ($jsonQuery['endTime'] && $jsonQuery['queryArray']) {
+        $dQuery .= "AND ";
     }
 
-
-    if ($jsonQuery['hasAnyIngredients']) {
-        $dQuery .= "(";
-        foreach($jsonQuery['hasAnyIngredients'] as $key=>$val) {
-                $dQuery .= $jsonQuery['returnType'] . "=" .  $jsonQuery['hasAnyIngredients'][$key] . " OR ";
+    if ($jsonQuery['queryArray']) {
+        // Test whether each ingredient query should be separated by AND or OR
+        if ($jsonQuery['searchForAll'] == true) {
+            $separator = "AND ";
+        } else if ($jsonQuery['searchForAny'] == true) {
+            $separator = "OR ";
+        } else {
+            die('Bad query.');
         }
 
-        $dQuery = substr($dQuery, 0, -4);
+        $dQuery .= "(";
+        foreach ($jsonQuery['queryArray'] as $key=>$val) {
+            foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
+                //$key is the base_id, bread_id, etc
+                $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $separator;
+            }
+        }
+
+        // Remove the last AND/OR
+        $dQuery = substr($dQuery, 0, -(strlen($separator)+1));
         $dQuery .= ")";
-    }    
+    }
+
+    writeToLog($dQuery);
 
     $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
 
