@@ -1,9 +1,11 @@
 google.load('visualization', '1.0', {'packages':['corechart','table']});
+var numSerchGroups=1;
 
 $(document).ready(function(){
 	drawPieChart();
 	testDQuery();
 
+	// Click Listeners
 	$('div#chartPicker a').click(function(e) {
 		e.preventDefault();
 		var response = e.target.id;
@@ -22,7 +24,11 @@ $(document).ready(function(){
 				break;
 		}
 	});
-});
+
+	$('input[type=button][name=add]').click(function(e) {
+		alert("TODO");
+	});
+}); //End .ready()
 
 /*****************/
 /*   Inflaters   */
