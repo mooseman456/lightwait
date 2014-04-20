@@ -59,10 +59,10 @@
 
 <div id="visuals">
 	<div id="chartPicker">
-		<a href="#pieChart">Pie Chart</a>
-		<a href="#">Table</a>
-		<a href="#">Bar Graph</a>
-		<a href="#">Line Graph</a>
+		<a id="pieChart">Pie Chart</a>
+		<a id="table">Table</a>
+		<a id="barGraph">Bar Graph</a>
+		<a id="lineGraph">Line Graph</a>
 	</div>
 	<div class="chart" id="chart"></div> 
 </div>

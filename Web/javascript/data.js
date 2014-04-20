@@ -6,11 +6,20 @@ $(document).ready(function(){
 
 	$('div#chartPicker a').click(function(e) {
 		e.preventDefault();
-		var response = e.target.innerHTML;
-		if (response==="Pie Chart") {
-			drawPieChart();
-		} else if (resonse === "Bar Graph") {
-			drawBarGraph();
+		var response = e.target.id;
+		switch(response) {
+			case "pieChart":
+				drawPieChart();
+				break;
+			case "barGraph":
+				drawBarGraph();
+				break;
+			case "table":
+				drawTable();
+				break;
+			case "lineGraph":
+				alert("Luke hasn't done that yet");
+				break;
 		}
 	});
 });
