@@ -427,7 +427,6 @@ div#queryInput label {
 div#visuals {
 	float:left;
 	width: 56%;
-	border: 1px solid rgba(0,0,0,0.15);
 	box-sizing:border-box;
 	margin-top: 36px; 
 }
@@ -435,6 +434,20 @@ div#visuals {
 div.data {
 	margin: 2.5%;
 	margin-top: 36px;
+}
+
+div#chartPicker a {
+	padding: 10px;
+	margin-right: 4px;
+	background-color: #2491FF;
+	color:rgba(255,255,255,0.95);
+	display: inline-block;
+	vertical-align: middle;
+	text-decoration: none;
+}
+
+div#chartPicker a:hover {
+	background-color: #2491DD;
 }
 
 

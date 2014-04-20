@@ -2,9 +2,17 @@ google.load('visualization', '1.0', {'packages':['corechart','table']});
 
 $(document).ready(function(){
 	drawPieChart();
-	drawBarGraph();
-	getMenuData();
 	testDQuery();
+
+	$('div#chartPicker a').click(function(e) {
+		e.preventDefault();
+		var response = e.target.innerHTML;
+		if (response==="Pie Chart") {
+			drawPieChart();
+		} else if (resonse === "Bar Graph") {
+			drawBarGraph();
+		}
+	});
 });
 
 /*****************/
@@ -91,7 +99,7 @@ function drawPieChart() {
 	               'height':400};
 
 	// Instantiate and draw our chart, passing in some options.
-	var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+	var chart = new google.visualization.PieChart(document.getElementById('chart'));
 	chart.draw(data, options);
 }
 
@@ -109,7 +117,7 @@ function drawBarGraph() {
 		hAxis: {title: 'Year', titleTextStyle: {color: 'red'}}
 	};
 
-	var chart = new google.visualization.ColumnChart(document.getElementById('barGraph'));
+	var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
 	chart.draw(data, options);
 }
 
@@ -135,7 +143,7 @@ function drawTable() {
 	data.setCell(4, 1, 12000, '$12,000');
 	data.setCell(4, 2, false);
 
-	var table = new google.visualization.Table(document.getElementById('table'));
+	var table = new google.visualization.Table(document.getElementById('chart'));
 	table.draw(data, {showRowNumber: true});
 
 	google.visualization.events.addListener(table, 'select', function() {

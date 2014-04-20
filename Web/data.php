@@ -58,10 +58,13 @@
 </div>
 
 <div id="visuals">
-
-	<div class="chart" id="table"></div> 
-	<div class="chart" id="pieChart"></div>
-	<div class="chart" id="barGraph"></div>
+	<div id="chartPicker">
+		<a href="#pieChart">Pie Chart</a>
+		<a href="#">Table</a>
+		<a href="#">Bar Graph</a>
+		<a href="#">Line Graph</a>
+	</div>
+	<div class="chart" id="chart"></div> 
 </div>
 
 </body>
