@@ -411,8 +411,27 @@ div#menu-categories-edit-pane > div {
 /*****************/
 /*   Data Page   */
 /*****************/
-div.ingredientList {
+div#queryInput {
+	float:left;
+	width: 30%;
+}
+
+div#queryInput input{
+	float:left;
+	clear:left;
+}
+
+div#queryInput label {
+	float:left;
+}
+
+div#visuals {
+	float:left;
+	width: 60%;
 	border: 1px solid rgba(0,0,0,0.15);
+	box-sizing:border-box;
+	margin-left: 5%;
+	margin-top: 36px; 
 }
 
 

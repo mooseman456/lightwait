@@ -17,8 +17,6 @@
 	include('include/header.php');
 ?>
 
-<p>This is where you can view order data.</p>
-
 <div id="queryInput">	
 	<form action="#" method="GET">
 		<!-- <fieldset>
@@ -34,7 +32,9 @@
 			<label for="friesCheckbox">Fries</label>
 		</fieldset> -->
 
+
 		<fieldset>
+			<legend>Date and Time</legend>
 			<input type="date" name="beginDate" id="startTime"/>
 			<input type="time" name="startTime" id="startTime"/>
 			<label for="beginDate">Before</label>
@@ -44,11 +44,13 @@
 		</fieldset>
 
 		<fieldset>
+			<legend>Count</legend>
 			<input type="checkbox" name="count" value="count" id="count">
 			<label for="count">Count</label>
 		</fieldset>
 		
 		<fieldset name="Sorting">
+			<legend>Sort</legend>
 			<input type="radio" name="sort" value="sortAscend" id="sortAscend"/ >
 			<label for="sortAscend">Sort Ascending</label>
 			<input type="radio" name="sort" value="sortDescend" id="sortDescend" />
@@ -59,8 +61,13 @@
 
 
 
-		<fieldset id="ingredientsFormArea" name="Ingredients">
+		<fieldset id="hasIngredientsFormArea">
+			<legend>Contains</legend>
+		</fieldset>
 
+		<fieldset id="hasNotIngredientsFormArea">
+			<legend>Does not Contain</legend>
+			
 		</fieldset>
 
 		<!-- <fieldset>
@@ -83,9 +90,12 @@
 	</form>
 </div>
 
-<div id="table"></div> 
-<div id="pieChart"></div>
-<div id="barGraph"></div>
+<div id="visuals">
+
+	<div class="chart" id="table"></div> 
+	<div class="chart" id="pieChart"></div>
+	<div class="chart" id="barGraph"></div>
+</div>
 
 </body>
 
