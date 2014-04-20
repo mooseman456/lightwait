@@ -6,23 +6,33 @@ $(document).ready(function(){
 	testDQuery();
 
 	// Click Listeners
-	$('div#chartPicker a').click(function(e) {
+	$('a#pieChart').click(function(e) {
 		e.preventDefault();
-		var response = e.target.id;
-		switch(response) {
-			case "pieChart":
-				drawPieChart();
-				break;
-			case "barGraph":
-				drawBarGraph();
-				break;
-			case "table":
-				drawTable();
-				break;
-			case "lineGraph":
-				drawLineGraph();
-				break;
-		}
+		drawPieChart();
+	});
+	$('a#barGraph').click(function(e) {
+		e.preventDefault();
+		drawBarGraph();
+	});
+	$('a#lineGraph').click(function(e){
+		e.preventDefault();
+		drawLineGraph();
+	});
+	$('a#table').click(function(e){
+		e.preventDefault();
+		drawTable();
+	});
+	$('a#simpleSearch').click(function(e){
+		e.preventDefault();
+		console.log("click");
+		$('div#advancedSearchContainer').hide();
+		$('div#simpleSearchContainer').show();
+	});
+	$('a#advancedSearch').click(function(e){
+		console.log("click");
+		$('div#simpleSearchContainer').hide();
+		$('div#advancedSearchContainer').show();
+		e.preventDefault();
 	});
 
 	$('input[type=button][name=add]').click(function(e) {

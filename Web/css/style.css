@@ -13,6 +13,10 @@ body {
 	font-family:'Ubuntu',Arial;
 }
 
+div {
+	box-sizing:border-box;
+}
+
 /* CODE FOUND HERE: 
 /*	http://www.webdesignerdepot.com/2012/11/how-to-create-a-simple-css3-tooltip/
 /*/
@@ -413,7 +417,8 @@ div#menu-categories-edit-pane > div {
 /*****************/
 div#queryInput {
 	float:left;
-	width: 34%;
+	width: 35%;
+	border-right: 1px solid rgba(0,0,0,0.15);
 }
 
 /*div#queryInput input{
@@ -426,17 +431,19 @@ div#queryInput label {
 
 div#visuals {
 	float:left;
-	width: 56%;
+	width: 65%;
 	box-sizing:border-box;
-	margin-top: 36px; 
 }
 
-div.data {
+div.box {
+	padding: 18px;
+}
+/*div.data {
 	margin: 2.5%;
 	margin-top: 36px;
-}
+}*/
 
-div#chartPicker a {
+div.floatingNavigation a {
 	padding: 10px;
 	margin-right: 4px;
 	background-color: #2491FF;
@@ -446,8 +453,12 @@ div#chartPicker a {
 	text-decoration: none;
 }
 
-div#chartPicker a:hover {
+div.floatingNavigation a:hover {
 	background-color: #2491DD;
+}
+
+div#advancedSearchContainer {
+	display:none;
 }
 
 
