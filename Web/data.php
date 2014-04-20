@@ -20,16 +20,17 @@
 <div class="box data" id="queryInput">	
 	<form action="#" method="GET" name="searchGroup1">
 		<fieldset>
-			<label for="with">With</label>
-			<input type="text" placeholder="ingredients" name="with" id="with" />
+			<legend>With</legend>
+			<textarea placeholder="ingredients" name="with"></textarea>
+			<!-- <input type="textarea" placeholder="ingredients" name="with" id="with" /> -->
 			<input type="radio" name="andor" value="and" id="andRadioWith" />
 			<label for="andRadioWith">And</label>
 			<input type="radio" name="andor" value="or" id="orRadioWith" />
 			<label for="orRadioWith">Or</label>
 		</fieldset>
 		<fieldset>
-			<label for="without">Without</label>
-			<input type="text" placeholder="ingredients" name="without" id="without" />
+			<legend>Without</legend>
+			<textarea placeholder="ingredients" name="without"></textarea>
 			<input type="radio" name="andor" value="and" id="andRadioWithout" />
 			<label for="andRadioWithout">And</label>
 			<input type="radio" name="andor" value="or" id="orRadioWithout" />
