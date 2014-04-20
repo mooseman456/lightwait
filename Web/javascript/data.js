@@ -52,6 +52,10 @@ function inflateForm(menu) {
 	}
 }
 
+function inflateAdvancedSearchForm(id) {
+	
+}
+
 /************/
 /*   Form   */
 /************/
