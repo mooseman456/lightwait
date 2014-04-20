@@ -18,7 +18,7 @@ $(document).ready(function(){
 				drawTable();
 				break;
 			case "lineGraph":
-				alert("Luke hasn't done that yet");
+				drawLineGraph();
 				break;
 		}
 	});
@@ -159,8 +159,23 @@ function drawTable() {
 		var row = table.getSelection()[0].row;
 		alert('You selected ' + data.getValue(row, 0));
 	});
+}
 
+function drawLineGraph() {
+	var data = google.visualization.arrayToDataTable([
+		['Year', 'Sales', 'Expenses'],
+		['2004',  1000,      400],
+		['2005',  1170,      460],
+		['2006',  660,       1120],
+		['2007',  1030,      540]
+	]);
 
+	var options = {
+		title: 'Company Performance'
+	};
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart'));
+		chart.draw(data, options);
 }
 
 /********************/
