@@ -413,25 +413,28 @@ div#menu-categories-edit-pane > div {
 /*****************/
 div#queryInput {
 	float:left;
-	width: 30%;
+	width: 34%;
 }
 
-div#queryInput input{
+/*div#queryInput input{
 	float:left;
-	clear:left;
 }
 
 div#queryInput label {
 	float:left;
-}
+}*/
 
 div#visuals {
 	float:left;
-	width: 60%;
+	width: 56%;
 	border: 1px solid rgba(0,0,0,0.15);
 	box-sizing:border-box;
-	margin-left: 5%;
 	margin-top: 36px; 
+}
+
+div.data {
+	margin: 2.5%;
+	margin-top: 36px;
 }
 
 
