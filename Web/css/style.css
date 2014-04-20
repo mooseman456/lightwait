@@ -435,8 +435,9 @@ div#visuals {
 	box-sizing:border-box;
 }
 
-div.box {
+div.boxy {
 	padding: 18px;
+	height:100%;
 }
 /*div.data {
 	margin: 2.5%;

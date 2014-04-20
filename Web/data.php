@@ -17,7 +17,7 @@
 	include('include/header.php');
 ?>
 
-<div class="box data" id="queryInput">
+<div class="boxy data" id="queryInput">
 	<div class="floatingNavigation">
 		<a id="simpleSearch">Simple</a>
 		<a id="advancedSearch">Advanced</a>
@@ -93,11 +93,11 @@
 		<input type="button" name="query" value="Query" />
 	</div>
 	<div id="simpleSearchContainer">
-		<p>Simple Search</p>
+		<p>Simple search has not been implemented yet.</p>
 	</div>
 </div>
 
-<div class="box" id="visuals">
+<div class="boxy" id="visuals">
 	<div class="floatingNavigation">
 		<a id="pieChart">Pie Chart</a>
 		<a id="barGraph">Bar Graph</a>
