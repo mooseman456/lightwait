@@ -2,7 +2,27 @@ var rootURL = "api/index.php";
 
 $(document).ready(function(){
     getMenuData();
+
+    $("#popup").click(function(){
+        //document.getElementById('light').style.display='block';
+        //document.getElementById('fade').style.display='block'
+        //$("#light").show();
+        //$("#fade").show();
+        $("#light").fadeIn( 300 , null );
+        $("#fade").fadeIn( 300 , null );
+
+    });
+
+    $("#popdown").click(function(){
+        //document.getElementById('light').style.display='none';
+        //document.getElementById('fade').style.display='none'
+        $("#light").fadeOut( 300 , null );
+        $("#fade").fadeOut( 300 , null );
+    });
+
 });
+
+
 
 function getMenuData() {
     $.ajax({
