@@ -420,7 +420,7 @@ function getAvailability() {
   $query  = "SELECT id, name, available FROM Bases;";
   $query .= "SELECT id, name, available FROM Breads;";
   $query .= "SELECT id, name, available FROM Cheeses;";
-  $query .= "SELECT id, name, available FROM Toppings;";
+  $query .= "SELECT id, name, available FROM Toppings WHERE ID != 12;";
   $query .= "SELECT id, name, available FROM Fries";
 
   // Perform a multiquery to get all the ingredients
