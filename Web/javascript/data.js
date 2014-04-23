@@ -1,7 +1,7 @@
 google.load('visualization', '1.0', {'packages':['corechart','table']});
-var numSerchGroups=1;
 var mNumQueryGroups=1;
 var mQueryGroupId=1;
+const maxNumQueryGroups=8;
 
 $(document).ready(function(){
 	drawPieChart();
@@ -43,17 +43,21 @@ $(document).ready(function(){
 	// Add new query group
 	$('input[type=button][name=add]').click(function(e) {
 		console.log("add");
-		mNumQueryGroups++;
-		var htmlQueryGroupForm = advancedQueryFromTemplate.replace(/idNum/g,++mQueryGroupId);
-		$(e.target).before(htmlQueryGroupForm);
-		$(e.target).prev().children('[name=delete]').click(function(e) {
-			console.log("remove");
-			if (mNumQueryGroups > 1) {
-				$(e.target).parent().remove();
-				mNumQueryGroups--;
-			}
-			console.log("groups: "+mNumQueryGroups);
-		});
+		if (mNumQueryGroups < maxNumQueryGroups) {
+			mNumQueryGroups++;
+			var htmlQueryGroupForm = advancedQueryFromTemplate.replace(/idNum/g,++mQueryGroupId);
+			$(e.target).before(htmlQueryGroupForm);
+			$(e.target).prev().children('[name=delete]').click(function(e) {
+				console.log("remove");
+				if (mNumQueryGroups > 1) {
+					$(e.target).parent().remove();
+					mNumQueryGroups--;
+				}
+			});
+		} else {
+			alert("You can only have "+maxNumQueryGroups+" query groups.");
+		}
+		console.log("groups: "+mNumQueryGroups);
 	});
 
 	// Delete query group
