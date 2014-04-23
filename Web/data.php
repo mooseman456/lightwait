@@ -17,84 +17,62 @@
 	include('include/header.php');
 ?>
 
-<div id="queryInput">	
-	<form action="#" method="GET">
-		<!-- <fieldset>
-			<input type="radio" name="category" value="Base" id="baseCheckbox" />
-			<label for="baseCheckbox">Base</label>
-			<input type="radio" name="category" value="Bread" id="breadCheckbox"/>
-			<label for="breadCheckbox">Bread</label>
-			<input type="radio" name="category" value="Cheese" id="cheeseCheckbox" />
-			<label for="cheeseCheckbox">Cheese</label>
-			<input type="radio" name="category" value="Toppings" id="toppingsCheckbox"/>
-			<label for="toppingsCheckbox">Toppings</label>
-			<input type="radio" name="category" value="Fries" id="friesCheckbox"/>
-			<label for="friesCheckbox">Fries</label>
-		</fieldset> -->
-
-
-		<fieldset>
-			<legend>Date and Time</legend>
-			<input type="date" name="beginDate" id="startTime"/>
-			<input type="time" name="startTime" id="startTime"/>
-			<label for="beginDate">Before</label>
-			<input type="date" name="afterDate" id="afterDate"/>
-			<input type="time" name="afterTime" id="afterTime"/>
-			<label for="beginDate">After</label>
-		</fieldset>
-
-		<fieldset>
-			<legend>Count</legend>
-			<input type="checkbox" name="count" value="count" id="count">
-			<label for="count">Count</label>
-		</fieldset>
-		
-		<fieldset name="Sorting">
-			<legend>Sort</legend>
-			<input type="radio" name="sort" value="sortAscend" id="sortAscend"/ >
-			<label for="sortAscend">Sort Ascending</label>
-			<input type="radio" name="sort" value="sortDescend" id="sortDescend" />
-			<label for="sortDescend">Sort Descending</label>
-			<input type="radio" name="sort" value="sortNone" id="sortNone" />
-			<label for="sortNone">No Sorting</label>
-		</fieldset>
-
-
-
-		<fieldset id="hasIngredientsFormArea">
-			<legend>Contains</legend>
-		</fieldset>
-
-		<fieldset id="hasNotIngredientsFormArea">
-			<legend>Does not Contain</legend>
-			
-		</fieldset>
-
-		<!-- <fieldset>
-			<input type="text" name="hasAllIngredients" placeholder="Has All" id="hasAllIngredient" />
-			<input type="button" value="Add">
-			<div class="ingredientList">Ingredients</div>
-			<input type="text" name="hasNotAllIngredients" placeholder="Has Not All" id="hasNotAllIngredients" />
-			<input type="button" value="Add">
-			<div class="ingredientList">Ingredients</div>
-			<input type="text" name="hasAnyIngredient" placeholder="Has Any" id="hasAnyIngredient" />
-			<input type="button" value="Add">
-			<div class="ingredientList">Ingredients</div>
-			<input type="text" name"hasNotAnyIngredient" placeholder="Has Not Any" id"hasNotAnyIngredient" />
-			<input type="button" value="Add">
-			<div class="ingredientList">Ingredients</div>
-		</fieldset> -->
-
-
-		<input type="submit" value="Retrieve" />
-	</form>
+<div class="boxy data" id="queryInput">
+	<div class="floatingNavigation">
+		<a id="simpleQuery">Simple</a>
+		<a id="advancedQuery">Advanced</a>
+	</div>
+	<div id="advancedQueryContainer">
+		<form action="#" method="GET" name="queryGroup-1">
+			<fieldset>
+				<legend>With</legend>
+				<textarea placeholder="ingredients" name="with"></textarea>
+				<input type="radio" name="andor" value="and" id="andRadioWith-1" />
+				<label for="andRadioWith-1">And</label>
+				<input type="radio" name="andor" value="or" id="orRadioWith-1" />
+				<label for="orRadioWith-1">Or</label>
+			</fieldset>
+			<fieldset>
+				<legend>Without</legend>
+				<textarea placeholder="ingredients" name="without"></textarea>
+				<input type="radio" name="andor" value="and" id="andRadioWithout-1" />
+				<label for="andRadioWithout-1">And</label>
+				<input type="radio" name="andor" value="or" id="orRadioWithout-1" />
+				<label for="orRadioWithout-1">Or</label>
+			</fieldset>
+			<fieldset>
+				<label for="dateGT-1">After</label>
+				<input type="date" name="dateGT" id="dateGT-1" />
+				<input type="time" name="timeGT" id="timeGT-1" />
+			</fieldset>
+			<fieldset>
+				<label for="dateLT-1">Before</label>
+				<input type="date" name="dateLT" id="dateLT-1" />
+				<input type="time" name="timeLT" id="timeLT-1" />
+			</fieldset>
+			<input type="button" name="delete" value="Remove This Query Group" />
+		</form>
+		<input type="button" name="add" value="Add Query Group" />
+		<input type="button" name="query" value="Query" />
+	</div>
+	<div id="simpleQueryContainer">
+		<form action="#" name="simpleQuery">
+			<fieldset id="simpleQuery-types">
+				<legend>Query by type</legend>
+			</fieldset>
+			<input type="submit" name="query" value="Query" />
+		</form>
+	</div>
 </div>
 
-<div id="visuals">
-
-	<div class="chart" id="table"></div> 
-	<div class="chart" id="pieChart"></div>
-	<div class="chart" id="barGraph"></div>
+<div class="boxy" id="visuals">
+	<div class="floatingNavigation">
+		<a id="pieChart">Pie Chart</a>
+		<a id="barGraph">Bar Graph</a>
+		<a id="lineGraph">Line Graph</a>
+		<!-- <a id="table">Table</a> -->
+	</div>
+	<div class="chart" id="chart"></div> 
 </div>
 
 </body>
