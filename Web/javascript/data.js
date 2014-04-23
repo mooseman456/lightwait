@@ -1,18 +1,13 @@
 google.load('visualization', '1.0', {'packages':['corechart','table']});
 var numSerchGroups=1;
-var mMenu;
-var mNumSearchGroups=1;
-var mSearchGroupId=1;
+var mNumQueryGroups=1;
+var mQueryGroupId=1;
 
 $(document).ready(function(){
 	drawPieChart();
 	//testDQuery();
 
 	getMenuData(); //Data in mMenu
-	inflateSimpleSearch(mMenu);
-
-	testDQuery();
-
 
 	// Chart types navigation
 	$('a#pieChart').click(function(e) {
@@ -32,15 +27,15 @@ $(document).ready(function(){
 		drawTable();
 	});
 
-	// Search type navigation
-	$('a#simpleSearch').click(function(e){
+	// Query type navigation
+	$('a#simpleQuery').click(function(e){
 		e.preventDefault();
-		$('div#advancedSearchContainer').hide();
-		$('div#simpleSearchContainer').show();
+		$('div#advancedQueryContainer').hide();
+		$('div#simpleQueryContainer').show();
 	});
-	$('a#advancedSearch').click(function(e){
-		$('div#simpleSearchContainer').hide();
-		$('div#advancedSearchContainer').show();
+	$('a#advancedQuery').click(function(e){
+		$('div#simpleQueryContainer').hide();
+		$('div#advancedQueryContainer').show();
 		e.preventDefault();
 	});
 
@@ -48,38 +43,40 @@ $(document).ready(function(){
 	// Add new query group
 	$('input[type=button][name=add]').click(function(e) {
 		console.log("add");
-		mNumSearchGroups++;
-		var htmlQueryGroupForm = advancedQueryFromTemplate.replace(/idNum/g,++mSearchGroupId);
+		mNumQueryGroups++;
+		var htmlQueryGroupForm = advancedQueryFromTemplate.replace(/idNum/g,++mQueryGroupId);
 		$(e.target).before(htmlQueryGroupForm);
 		$(e.target).prev().children('[name=delete]').click(function(e) {
 			console.log("remove");
-			if (mNumSearchGroups > 1) {
+			if (mNumQueryGroups > 1) {
 				$(e.target).parent().remove();
-				mNumSearchGroups--;
+				mNumQueryGroups--;
 			}
-			console.log("groups: "+mNumSearchGroups);
+			console.log("groups: "+mNumQueryGroups);
 		});
 	});
 
-	// Delete search group
-	// Will remove search group as long as there is more than 1 search group
+	// Delete query group
+	// Will remove query group as long as there is more than 1 query group
 	$('input[type=button][name=delete').click(function(e) {
 		console.log("remove");
-		if (mNumSearchGroups > 1) {
+		if (mNumQueryGroups > 1) {
 			$(e.target).parent().remove();
-			mNumSearchGroups--;
+			mNumQueryGroups--;
 		}
-		console.log("groups: "+mNumSearchGroups);
+		console.log("groups: "+mNumQueryGroups);
 	});
-	// Submit query
-	$('div#advancedSearchContainer input[name=query]').click(function(e) {
+	// Submit advanced query
+	$('div#advancedQueryContainer input[name=query]').click(function(e) {
 		e.preventDefault();
 		alert("Advanced query");
+
+		// Get info from form
 	});
 
 	/*   Simple Query Form   */
-	// Submit query 
-	$('form[name=simpleSearch] input[name=query]').click(function(e) {
+	// Submit simple query 
+	$('form[name=simpleQuery] input[name=query]').click(function(e) {
 		e.preventDefault();
 		alert("Simple query");
 		//TODO: Get info from database
@@ -91,6 +88,7 @@ $(document).ready(function(){
 /*****************/
 /*   Inflaters   */
 /*****************/
+// !! This is deprecated
 function inflateForm(menu) {
 	var hasField = $('fieldset#hasIngredientsFormArea');
 	var hasNotField = $('fieldset#hasNotIngredientsFormArea');
@@ -110,16 +108,12 @@ function inflateForm(menu) {
 	}
 }
 
-function inflateSimpleSearch(menu) {
-	var field = $('fieldset#simpleSearch-types');
+function inflateSimpleQuery(menu) {
+	var field = $('fieldset#simpleQuery-types');
 	for(var type in menu) {
-		field.append('<input type="radio" name="type" id="simpleSearch-types-'+type+'"value="'+type+'"/>');
-		field.append('<label for="simpleSearch-types-'+type+'">'+type+'</label>');
+		field.append('<input type="radio" name="type" id="simpleQuery-types-'+type+'"value="'+type+'"/>');
+		field.append('<label for="simpleQuery-types-'+type+'">'+type+'</label>');
 	}
-}
-
-function inflateAdvancedSearchForm(id) {
-	
 }
 
 /************/
@@ -136,10 +130,9 @@ function getMenuData() {
         type: 'GET',
         url: rootURL+"/ingredients",
         dataType: "json", // data type of response
-        async: false,
         success: function(data){
             //console.log(JSON.stringify(data));
-            mMenu = data;
+            inflateSimpleQuery(data);
         }
    });
 }
@@ -264,8 +257,8 @@ var query1 = {
 	"count":true,
 	"startTime":"2014-03-30 12:04:03", 
 	"endTime":"2014-04-30 12:04:03",
-	"searchForAll":false,
-	"searchForAny":true,
+	"queryForAll":false,
+	"queryForAny":true,
 	"queryArray":{
 		"base_id": ["1"],
 		"bread_id":["1"],
@@ -277,25 +270,24 @@ var query2 = {
 	"count":true,
 	"startTime":null, 
 	"endTime":null,
-	"searchForAll":false,
-	"searchForAny":true,
+	"queryForAll":false,
+	"queryForAny":true,
 }
 
 var baseQuery = {
 	"count":true,
 	"startTime":null,
 	"endTime":null,
-	"searchForAll":false,
-	"searchForAny":true,
+	"queryForAll":false,
+	"queryForAny":true,
 	"queryArray": {
 		"base_id":['1'],
 	}
 }
 
-var advancedQueryFromTemplate = '<form action="#" method="GET" name="searchGroup-idNum"><fieldset><legend>With</legend><textarea placeholder="ingredients" name="with"></textarea><input type="radio" name="andor" value="and" id="andRadioWith-idNum" /><label for="andRadioWith-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWith-idNum" /><label for="orRadioWith-idNum">Or</label></fieldset><fieldset><legend>Without</legend><textarea placeholder="ingredients" name="without"></textarea><input type="radio" name="andor" value="and" id="andRadioWithout-idNum" /><label for="andRadioWithout-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWithout-idNum" /><label for="orRadioWithout-idNum">Or</label></fieldset><fieldset><label for="dateGT-idNum">After</label><input type="date" name="dateGT" id="dateGT-idNum" /><input type="time" name="timeGT" id="timeGT-idNum" /></fieldset>';
+var advancedQueryFromTemplate = '<form action="#" method="GET" name="queryGroup-idNum"><fieldset><legend>With</legend><textarea placeholder="ingredients" name="with"></textarea><input type="radio" name="andor" value="and" id="andRadioWith-idNum" /><label for="andRadioWith-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWith-idNum" /><label for="orRadioWith-idNum">Or</label></fieldset><fieldset><legend>Without</legend><textarea placeholder="ingredients" name="without"></textarea><input type="radio" name="andor" value="and" id="andRadioWithout-idNum" /><label for="andRadioWithout-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWithout-idNum" /><label for="orRadioWithout-idNum">Or</label></fieldset><fieldset><label for="dateGT-idNum">After</label><input type="date" name="dateGT" id="dateGT-idNum" /><input type="time" name="timeGT" id="timeGT-idNum" /></fieldset>';
 advancedQueryFromTemplate+= '<fieldset><label for="dateLT-idNum">Before</label><input type="date" name="dateLT" id="dateLT-idNum" /><input type="time" name="timeLT" id="timeLT-idNum" /></fieldset>';
-advancedQueryFromTemplate+= '<fieldset><label for="color-idNum">Color</label><input type="color" name="color" /></fieldset>';
-advancedQueryFromTemplate+=	'<input type="button" name="delete" value="Remove This Search Group" /></form>';
+advancedQueryFromTemplate+=	'<input type="button" name="delete" value="Remove This Query Group" /></form>';
 
 
 

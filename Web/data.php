@@ -19,11 +19,11 @@
 
 <div class="boxy data" id="queryInput">
 	<div class="floatingNavigation">
-		<a id="simpleSearch">Simple</a>
-		<a id="advancedSearch">Advanced</a>
+		<a id="simpleQuery">Simple</a>
+		<a id="advancedQuery">Advanced</a>
 	</div>
-	<div id="advancedSearchContainer">
-		<form action="#" method="GET" name="searchGroup-1">
+	<div id="advancedQueryContainer">
+		<form action="#" method="GET" name="queryGroup-1">
 			<fieldset>
 				<legend>With</legend>
 				<textarea placeholder="ingredients" name="with"></textarea>
@@ -50,15 +50,15 @@
 				<input type="date" name="dateLT" id="dateLT-1" />
 				<input type="time" name="timeLT" id="timeLT-1" />
 			</fieldset>
-			<input type="button" name="delete" value="Remove This Search Group" />
+			<input type="button" name="delete" value="Remove This Query Group" />
 		</form>
-		<input type="button" name="add" value="Add Search Group" />
+		<input type="button" name="add" value="Add Query Group" />
 		<input type="button" name="query" value="Query" />
 	</div>
-	<div id="simpleSearchContainer">
-		<form action="#" name="simpleSearch">
-			<fieldset id="simpleSearch-types">
-				<legend>Types</legend>
+	<div id="simpleQueryContainer">
+		<form action="#" name="simpleQuery">
+			<fieldset id="simpleQuery-types">
+				<legend>Query by type</legend>
 			</fieldset>
 			<input type="submit" name="query" value="Query" />
 		</form>
