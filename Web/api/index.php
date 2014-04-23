@@ -63,6 +63,10 @@ function addWebOrder() {
 		}
 
 	}
+  else {
+    $query = "INSERT INTO OrderToppings(order_id, topping_id) VALUES(".$orderID.", 12);";
+    $mysqli->query($query);
+  }
 
   //foreach($_POST['toppingType'] as $key=>$val){
   //  $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
