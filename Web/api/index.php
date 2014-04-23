@@ -171,7 +171,7 @@ function getActiveOrders() {
   $query = "SELECT GROUP_CONCAT(DISTINCT CONCAT('MAX(CASE WHEN OrderToppings.topping_id = ''', Toppings.id, ''' THEN Toppings.name END) AS \'',Toppings.name, '\'') ) INTO @sql FROM Toppings";
   $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
-  $query = "SET @sql = CONCAT('SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced,', @sql, 'FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id JOIN OrderToppings ON Orders.order_id = OrderToppings.order_id JOIN Toppings ON OrderToppings.topping_id = Toppings.id WHERE Orders.isActive=1 GROUP BY Orders.order_id ORDER BY Orders.order_id')";
+  $query = "SET @sql = CONCAT('SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced,', @sql, 'FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id JOIN OrderToppings ON Orders.order_id = OrderToppings.order_id JOIN Toppings ON OrderToppings.topping_id = Toppings.id WHERE Orders.isActive=1 GROUP BY OrderToppings  .order_id ORDER BY Orders.order_id')";
   $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
   $query = "PREPARE stmt FROM @sql";
@@ -182,7 +182,7 @@ function getActiveOrders() {
 
   $query = "DEALLOCATE PREPARE stmt";
 
-  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+  $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
   
   while ($row = $result->fetch_assoc()) {
            // $row['ingredients'][] = $row['bread_name'];
@@ -197,6 +197,25 @@ function getActiveOrders() {
 
   $mysqli->close();
 }
+
+function createMobileAccount() {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $accountInfo = json_decode($request, true);
+
+  //Salt and Hash the password
+  $password = hash("sha512", $accountInfo['password']);
+
+  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber, device_token) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "', '" . $accountInfo['device_token'] . "')";
+
+  $mysqli->query($query);
+
+  echo json_encode($query);
+
+  $mysqli->close();
+}
+
 
 function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumber) {
   $mysqli = getConnection();
@@ -225,36 +244,47 @@ function logIn($email, $password) {
 
   $row = $result->fetch_assoc();
 
-  if ($row['user_id']) {
-    $fName = $row['fName'];
-    $arr = array();
-    $arr['fName'] = $fName;
+  try {
+    if ($row['user_id']) {
+      $fName = $row['fName'];
+      $arr = array();
+      $arr['fName'] = $fName;
 
-    //Set SESSION variables
-    $_SESSION['fName'] = $row['fName'];
-    $_SESSION['lName'] = $row['lName'];
-    $_SESSION['user_id'] = $row['user_id'];
-    $_SESSION['email'] = $row['email'];
-    $_SESSION['phoneNumber'] = $row['phoneNumber'];
-    $_SESSION['userType'] = $row['userType'];
+      //Set SESSION variables
+      $_SESSION['fName'] = $row['fName'];
+      $_SESSION['lName'] = $row['lName'];
+      $_SESSION['user_id'] = $row['user_id'];
+      $_SESSION['email'] = $row['email'];
+      $_SESSION['phoneNumber'] = $row['phoneNumber'];
+      $_SESSION['userType'] = $row['userType'];
 
-    echo json_encode($arr);
-  } 
+      echo json_encode($arr);
+    }
+    else
+      throw new Exception('Bad login.');
+  } catch(Exception $e) {
+    echo 'Caught exception: ', $e->getMessage(), "\n";
+  }
+
 }
 
 function getAccountInfo() {
-  if (!isset($_SESSION['user_id'])) {
-    //Set SESSION variables
-    $_SESSION['fName'] = $account['fName'];
-    $_SESSION['lName'] = $account['lName'];
-    $_SESSION['user_id'] = $account['user_id'];
-    $_SESSION['email'] = $account['email'];
-    $_SESSION['phoneNumber'] = $account['phoneNumber'];
-    $_SESSION['userType'] = $account['userType'];
-    echo json_encode($account);
-  } else {
-    echo json_encode("Failed");
-  }
+  try{
+    if (isset($_SESSION['user_id'])) {
+      //Set SESSION variables
+      $account['fName'] = $_SESSION['fName'];
+      $account['lName'] = $_SESSION['lName'];
+      $account['user_id'] = $_SESSION['user_id'];
+      $account['email'] = $_SESSION['email'];
+      $account['phoneNumber'] = $_SESSION['phoneNumber'];
+      $account['userType'] = $_SESSION['userType'];
+      echo json_encode($account);
+    } else {
+      throw new Exception('Why is this here?');
+    }
+  } catch(Exception $e) {
+    echo 'Caught exception: ', $e->getMessage();
+
 }
 
 function getActiveIngredients() {
@@ -296,6 +326,93 @@ function getActiveIngredients() {
   // Close mysqli connection
   $mysqli->close();
 }
+
+function dynamicQuery() {
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
+    $jsonQuery = json_decode($request, true);
+
+    $dQuery = "SELECT ";
+
+    if($jsonQuery['count'] == true) {
+        $dQuery .= "COUNT(*) AS count ";
+    } else {
+        $dQuery .= "* ";
+    }
+
+    // FROM Orders WHERE
+    $dQuery .= "FROM Orders WHERE ";
+
+    // If a start time is given
+    if ($jsonQuery['startTime']) {
+        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "' ";
+    }
+
+    // If both a start time and end time is given
+    if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
+        $dQuery .= "AND ";
+    }
+
+    // If a start time is given, but not an end time
+    if($jsonQuery['startTime'] && !$jsonQuery['endTime']) {
+        $dQuery .= ") AND ";
+    }
+
+    // If an end time is given
+    if ($jsonQuery['endTime']) {
+        $dQuery .= "timePlaced <= '" . $jsonQuery['endTime']  . "'";
+    }
+
+    // If both a start time and end time is given
+    if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
+        $dQuery .= ") ";
+    }
+
+    // If both an end time ingredients are given
+    if ($jsonQuery['endTime'] && $jsonQuery['queryArray']) {
+        $dQuery .= "AND ";
+    }
+
+    if ($jsonQuery['queryArray']) {
+        // Test whether each ingredient query should be separated by AND or OR
+        if ($jsonQuery['searchForAll'] == true) {
+            $separator = "AND ";
+        } else if ($jsonQuery['searchForAny'] == true) {
+            $separator = "OR ";
+        } else {
+            die('Bad query.');
+        }
+
+        $dQuery .= "(";
+        foreach ($jsonQuery['queryArray'] as $key=>$val) {
+            foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
+                //$key is the base_id, bread_id, etc
+                $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $separator;
+            }
+        }
+
+        // Remove the last AND/OR
+        $dQuery = substr($dQuery, 0, -(strlen($separator)+1));
+        $dQuery .= ")";
+    }
+
+    writeToLog($dQuery);
+
+    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
+
+    $finalResults = array();
+    while ($row = $result->fetch_assoc()) {
+          array_push($finalResults, $row);
+    }
+
+    $result->free();
+
+    echo json_encode($finalResults);
+
+    $mysqli->close();
+}
+
 
 function getAvailability() {
   $mysqli = getConnection();
@@ -393,7 +510,7 @@ function logout() {
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='arthas77';
+	$dbpass='root';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
