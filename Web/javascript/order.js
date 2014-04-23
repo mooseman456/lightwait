@@ -29,19 +29,23 @@ function inflateOrderMenu(data) {
     }
     $('#menuForm').append("<h2>Choose Your Bread</h2></ul><ul id=\"breadsMenu\">");
     for (var i=0; i<data['Breads'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
+        if (data['Breads'][i]['available'] === '1')
+            $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
     }
     $('#menuForm').append("<h2>Slap Some Cheese On It</h2></ul><ul id=\"cheeseMenu\">");
     for (var i=0; i<data['Cheeses'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");
+        if (data['Cheeses'][i]['available'] === '1')
+            $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");
     }
     $('#menuForm').append("<h2>Top It Off With Toppings</h2></ul><ul id=\"toppingsMenu\">");
     for (var i=0; i<data['Toppings'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
+        if (data['Toppings'][i]['available'] === '1')
+            $('#menuForm ul:last-child').append("<li> <input type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
     }
     $('#menuForm').append("<h2>Ya Want Fries With That?</h2></ul><ul id=\"fryMenu\">");
     for (var i=0; i<data['Fries'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
+        if (data['Fries'][i]['available'] === '1')
+            $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
     }
 
     $('#menuForm').append("</ul><input type=\"submit\" value=\"Submit Order\">");
