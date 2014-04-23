@@ -50,10 +50,6 @@
 				<input type="date" name="dateLT" id="dateLT-1" />
 				<input type="time" name="timeLT" id="timeLT-1" />
 			</fieldset>
-			<fieldset>
-				<label for="color-1">Color</label>
-				<input type="color" name="color" />
-			</fieldset>
 			<input type="button" name="delete" value="Remove This Search Group" />
 		</form>
 		<input type="button" name="add" value="Add Search Group" />
