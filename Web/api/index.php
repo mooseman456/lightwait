@@ -23,6 +23,8 @@ $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
+$app->post('/dquery', 'dynamicQuery');
+$app->get('/fillDB', 'fillDB');
 
 $app->run();
 
@@ -375,4 +377,30 @@ function writeToLog($message)
   }
 }
 
+<<<<<<< HEAD
+=======
+function fillDB() {
+  $mysqli = getConnection();
+  for ($i = 0; $i < 10; $i++) {
+    $randBread = rand(1, 3);
+    $randBase = rand(1, 6);
+    $randCheese = rand(1,4);
+    $randFry = rand(1, 3);
+    $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
+            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 0, ".$randBread .", ". $randBase .", ".$randCheese.",
+            ".$randFry.")";
+    $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+    $orderID = $mysqli->insert_id;
+    sleep(2);
+    $randNumTops = rand(0, 11);
+    for ($i = 0; $i < $randNumTops; $i++) {
+      $query = "INSERT INTO OrderToppings(order_id, topping_id) VALUES(".$orderID.", ". $i.");";
+      $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+    }
+  }
+  echo "Database fill complete";
+}
+
+>>>>>>> 0596793fb495545a3612c9c5a128e3bd5b689f5f
 ?>
