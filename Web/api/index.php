@@ -19,6 +19,7 @@ $app->post('/order', 'addMobileOrder');
 $app->post('/webOrder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
 $app->post('/account', 'createMobileAccount');
+$app->put('/account/devicetoken', 'updateDeviceToken');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
@@ -219,6 +220,25 @@ function createMobileAccount() {
   $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber, device_token) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "', '" . $accountInfo['device_token'] . "')";
 
   $mysqli->query($query);
+
+  $userID = $mysqli->insert_id;
+
+  $returnArray['userID'] = $userID;
+
+  echo json_encode($returnArray);
+
+  $mysqli->close();
+}
+
+function updateDeviceToken() {
+  $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $accountInfo = json_decode($request, true);
+
+  $query = "UPDATE Users SET device_token='".$accountInfo['device_token']."' WHERE user_id='".$accountInfo['userID']."' ";
+
+  $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
   echo json_encode($query);
 

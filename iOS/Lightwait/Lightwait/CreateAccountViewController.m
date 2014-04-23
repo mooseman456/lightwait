@@ -64,15 +64,11 @@
     [accountInformation setObject:emailString forKey:@"email"];
     [accountInformation setObject:phoneNumberString forKey:@"phoneNumber"];
     [accountInformation setObject:passwordString forKey:@"password"];
+    [accountInformation setObject:@"NULL" forKey:@"device_token"];
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    
-    if (![deviceTokenString isEqualToString:@""]) {
-        [accountInformation setObject:deviceTokenString forKey:@"device_token"];
-    }
-    
-    [DataManager createAccount:accountInformation];
+    NSDictionary* accountIDDictionary = [DataManager createAccount:accountInformation];
+    [[NSUserDefaults standardUserDefaults] setObject:[accountIDDictionary objectForKey:@"userID"] forKey:@"userID"];
+    [PushHandler registerForNotifications];
 }
 
 - (BOOL)checkIfCompleteInformation:(NSString *)firstNameString lastName:(NSString *)lastNameString email:(NSString *)emailString phoneNumber:(NSString *)phoneNumberString password:(NSString*)passwordString
@@ -125,11 +121,6 @@
                             stringByReplacingOccurrencesOfString: @"<" withString: @""]
                             stringByReplacingOccurrencesOfString: @">" withString: @""]
                             stringByReplacingOccurrencesOfString: @" " withString: @""];
-}
-
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
-{
-	NSLog(@"Failed to get token, error: %@", error);
 }
 
 @end

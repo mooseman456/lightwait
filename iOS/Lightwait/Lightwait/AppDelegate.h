@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PushHandler.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
