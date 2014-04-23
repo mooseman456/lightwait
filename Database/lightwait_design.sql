@@ -133,7 +133,8 @@ INSERT INTO `Toppings` (`name`) VALUES
 ('Onion'),
 ('Avocado Mayo'),
 ('Bistro Sauce'),
-('Chipotle Ranch');
+('Chipotle Ranch'),
+('No Toppings');
 
 INSERT INTO `Users` (`userType`, `fName`, `lName`, `email`, `password`, `phoneNumber`) VALUES
 (1, 'John', 'Pinkerton', 'jpink@poop.com', 'password', '8795468253'),
@@ -152,8 +153,9 @@ INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced)
 						(4, 3, 4, 3, 2, '2014-03-30 12:04:06'),
 						(5, 3, 4, 2, 3, '2014-03-30 12:04:07');
 
-
-
-
-
-
+INSERT INTO OrderToppings(order_id, topping_id) VALUES
+(1, 12),
+(2, 12),
+(3, 12),
+(4, 12),
+(5, 12);

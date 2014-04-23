@@ -115,7 +115,11 @@ function updateSidebar() {
 
 // UPDATE PAGENUMBERS
 function updatePagenumbers() {
-  $('#page_number').html((currentPage) + "/" + Math.ceil(orders.length/8));
+	var maxPage = Math.ceil(orders.length/8);
+	if (maxPage < 1) {
+		maxPage = 1;
+	}
+ 	$('#page_number').html((currentPage) + "/" + maxPage);
 }
 
 
