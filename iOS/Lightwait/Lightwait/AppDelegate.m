@@ -14,6 +14,9 @@
 {
     // Override point for customization after application launch.
     
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
     return YES;
 }
 
@@ -44,15 +47,29 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-    // Here we will upload this token to the database for push notifications
-	NSLog(@"My token is: %@", deviceToken);
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]) {
+        
+        NSString* deviceTokenString = [[[[deviceToken description]
+                                          stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                                          stringByReplacingOccurrencesOfString: @">" withString: @""]
+                                          stringByReplacingOccurrencesOfString: @" " withString: @""];
+        
+        [PushHandler updateUserDeviceTokenInDatabase:[[NSUserDefaults standardUserDefaults] stringForKey:@"userID"] deviceToken:deviceTokenString];
+    }
 }
+
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
 	NSLog(@"Failed to get token, error: %@", error);
+}
+
+- (void)updateDeviceTokenInDatabase
+{
+    
 }
 
 @end

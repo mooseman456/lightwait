@@ -80,6 +80,32 @@
     return [self sendRequest:request];
 }
 
++ (NSDictionary *)putPath:(NSString*)resource data:(NSString*)dataString
+{
+    // Create the link that will be used for the request
+    NSURL *nsurl = [NSURL URLWithString:[[NSString stringWithFormat:@"%@", resource] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    // Create the request
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nsurl];
+    
+    // Set the request type to PUT
+    [request setHTTPMethod:@"PUT"];
+    
+    // Convert the information to post to NSData
+    NSData *putData = [dataString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *putLength = [NSString stringWithFormat:@"%lu", (unsigned long)[putData length]];
+    
+    // Set the values to the HTTP body
+    [request setValue:putLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:putData];
+    
+    NSLog(@"%@", dataString);
+    
+    // Return the results of the request
+    return [self sendRequest:request];
+}
+
 + (bool)testConnection:(NSString*)resource
 {
     // Create the link that will be used for the request

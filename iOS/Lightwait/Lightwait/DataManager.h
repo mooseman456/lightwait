@@ -17,5 +17,6 @@
 + (NSString *)uploadOrder:(NSString*)data;
 + (NSDictionary *)logIn:(NSString *)username password:(NSString *)passwordString;
 + (NSDictionary *)createAccount:(NSMutableDictionary *)accountInformation;
++ (NSDictionary *)updateDeviceToken:(NSMutableDictionary*)accountInformation;
 
 @end
