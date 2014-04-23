@@ -10,6 +10,9 @@
 #import "DataManager.h"
 
 @interface LogInViewController : UIViewController
+{
+    bool successfulLogIn;
+}
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;

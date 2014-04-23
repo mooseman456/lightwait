@@ -24,6 +24,11 @@
     //[self initializeLocationManager];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self checkUserSignIn];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -44,9 +49,14 @@
 - (IBAction)pushCustomOrder:(id)sender
 {
     // First check to see if the menu can be loaded, then check if the user is on campus
-    if ([self testMenuConnection] && [[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]) {
+    if ([self testMenuConnection]) {
         //if (isOnCampus == true) {
-            [self performSegueWithIdentifier:@"customOrderSegue" sender:self];
+            if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]) {
+                [self performSegueWithIdentifier:@"customOrderSegue" sender:self];
+            }
+            else {
+                [self showAlert:@"Account" message:@"Please sign in or create an account"];
+            }
         //}
         //else {
         //    [self showAlert:@"Alert" message:@"You must be on campus to order from Mac's Place"];
@@ -57,6 +67,13 @@
     }
 }
 
+- (IBAction)pushSignOut:(id)sender
+{
+    [self showAlert:@"Account" message:@"You have logged out"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userID"];
+    [self checkUserSignIn];
+}
+
 - (void)showAlert:(NSString *)title message:(NSString *)messageString
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
@@ -65,6 +82,21 @@
                                               cancelButtonTitle:@"Dismiss"
                                               otherButtonTitles:nil, nil];
     [alertView show];
+}
+
+- (void)checkUserSignIn
+{
+    // If the user is signed in
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]) {
+        self.logInButton.hidden = TRUE;
+        self.createAccountButton.hidden = TRUE;
+        self.signOutButton.hidden = FALSE;
+    }
+    else {
+        self.logInButton.hidden = FALSE;
+        self.createAccountButton.hidden = FALSE;
+        self.signOutButton.hidden = TRUE;
+    }
 }
 
 @end

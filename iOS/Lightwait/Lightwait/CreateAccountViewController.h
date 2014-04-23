@@ -13,6 +13,7 @@
 @interface CreateAccountViewController : UIViewController
 {
     NSString *deviceTokenString;
+    bool successfulAccountCreation;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;

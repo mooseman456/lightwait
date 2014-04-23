@@ -15,7 +15,11 @@
 {
     bool isOnCampus;
 }
+@property (weak, nonatomic) IBOutlet UIButton *logInButton;
+@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
+@property (weak, nonatomic) IBOutlet UIButton *signOutButton;
 
 - (IBAction)pushCustomOrder:(id)sender;
+- (IBAction)pushSignOut:(id)sender;
 
 @end

@@ -35,28 +35,36 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 #warning Add error checking
 
 - (IBAction)pushLogInButton:(id)sender
 {
-    [self showAlert:[@"Hello " stringByAppendingString:[[DataManager logIn:self.usernameTextField.text password:self.passwordTextField.text] objectForKey:@"fName"]] message:@"You have \"logged in\""];
+    NSDictionary* accountInformation = [DataManager logIn:self.usernameTextField.text password:self.passwordTextField.text];
+    
+    if (accountInformation) {
+        [[NSUserDefaults standardUserDefaults] setObject:[accountInformation objectForKey:@"userID"] forKey:@"userID"];
+        [self showAlert:[@"Hello " stringByAppendingString:[accountInformation objectForKey:@"fName"]] message:@"You have logged in"];
+        successfulLogIn = TRUE;
+    }
+    else {
+        successfulLogIn = FALSE;
+        [self showAlert:@"Log In Failed" message:@"Email and password did not match"];
+    }
+    
 }
 
 - (void)showAlert:(NSString *)title message:(NSString *)messageString
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0 && successfulLogIn) {
+        // Successful sign in
+        [self.navigationController popToRootViewControllerAnimated:TRUE];
+    }
 }
 
 @end

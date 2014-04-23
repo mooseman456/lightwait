@@ -271,6 +271,7 @@ function logIn($email, $password) {
       $fName = $row['fName'];
       $arr = array();
       $arr['fName'] = $fName;
+      $arr['userID'] = $row['user_id'];
 
       //Set SESSION variables
       $_SESSION['fName'] = $row['fName'];
