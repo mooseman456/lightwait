@@ -100,8 +100,6 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:putData];
     
-    NSLog(@"%@", dataString);
-    
     // Return the results of the request
     return [self sendRequest:request];
 }

@@ -86,6 +86,8 @@ function addMobileOrder() {
   $request = $app->request()->getBody();
   $order = json_decode($request, true);
 
+  date_default_timezone_set('America/Chicago');
+
   $query = "INSERT INTO Orders (user_id, timePlaced, bread_id, base_id, cheese_id, fry_id)
             VALUES (" . $order['user_id'] . ", '" . date('Y/m/d H:i:s') . "', " . $order['bread'] . ", " . $order['base'] . ", " . $order['cheese'] . ", " . $order['fries'].")";
 
