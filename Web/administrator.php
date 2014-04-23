@@ -16,7 +16,7 @@
 	$javascript="";
 	include('include/header.php');
 ?>
-	<h1>EF THE POLICE!</h1>
+	<h1>Adminstrator Home</h1>
 
 
 </body>
