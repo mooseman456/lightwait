@@ -64,7 +64,6 @@
     [accountInformation setObject:emailString forKey:@"email"];
     [accountInformation setObject:phoneNumberString forKey:@"phoneNumber"];
     [accountInformation setObject:passwordString forKey:@"password"];
-    [accountInformation setObject:@"NULL" forKey:@"device_token"];
     
     NSDictionary* accountIDDictionary = [DataManager createAccount:accountInformation];
     [[NSUserDefaults standardUserDefaults] setObject:[accountIDDictionary objectForKey:@"userID"] forKey:@"userID"];
