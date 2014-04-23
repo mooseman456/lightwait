@@ -263,7 +263,7 @@ function getActiveIngredients() {
   $query  = "SELECT name, isAvailable FROM Bases WHERE available = 1;";
   $query .= "SELECT name, isAvailable FROM Breads WHERE available = 1;";
   $query .= "SELECT name, isAvailable FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1;";
+  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1 AND id != 12;";
   $query .= "SELECT name, isAvailable FROM Fries WHERE available = 1";
 
   // Perform a multiquery to get all the ingredients
@@ -393,7 +393,7 @@ function logout() {
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='root';
+	$dbpass='arthas77';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
@@ -411,8 +411,6 @@ function writeToLog($message)
   }
 }
 
-<<<<<<< HEAD
-=======
 function fillDB() {
   $mysqli = getConnection();
   for ($i = 0; $i < 10; $i++) {
@@ -436,5 +434,4 @@ function fillDB() {
   echo "Database fill complete";
 }
 
->>>>>>> 0596793fb495545a3612c9c5a128e3bd5b689f5f
 ?>
