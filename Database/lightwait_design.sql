@@ -138,12 +138,10 @@ INSERT INTO `Toppings` (`name`) VALUES
 
 INSERT INTO `Users` (`userType`, `fName`, `lName`, `email`, `password`, `phoneNumber`) VALUES
 (1, 'John', 'Pinkerton', 'jpink@poop.com', 'password', '8795468253'),
-(1, 'Jimmy', 'Devlin', 'jdevlin@ding.com', 'password', '8796531523'),
-(1, 'Ryan', 'Sligh', 'rsligh@sneaky.com', 'password', '2564532156'),
-(1, 'Patrick', 'Leopard', 'pleopard@spots.com', 'password', '8256431589'),
-(1, 'Joe', 'TheSaint', 'jsaint@holy.com', 'password', '3958203958'),
-(2, 'Kyle', 'Shunka', 'skunkalunka@kyle.com', 'password', '8965742156'),
-(3, 'Sir', 'Elington', 'selington@fancy.com', 'password', '7956824534');
+(2, 'Charlie', 'Chef', 'charlie@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', '5555555555'),
+(2, 'Charise', 'Chef', 'charise@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', '6666666666'),
+(3, 'Adam', 'Admin', 'adam@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', '7777777777'),
+(3, 'Adele', 'Admin', 'adele@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', '8888888888');
 
 
 INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced) 
