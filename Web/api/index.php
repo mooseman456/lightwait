@@ -25,7 +25,7 @@ $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateA
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
-$app->post('/fillDB', 'fillDB');
+$app->get('/fillDB', 'fillDB');
 
 $app->run();
 
@@ -520,11 +520,26 @@ function writeToLog($message){
 }
 
 function fillDB() {
-  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
-            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
-            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+  $mysqli = getConnection();
+  for ($i = 0; $i < 10; $i++) {
+    $randBread = rand(1, 3);
+    $randBase = rand(1, 6);
+    $randCheese = rand(1,4);
+    $randFry = rand(1, 3);
+    $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
+            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 0, ".$randBread .", ". $randBase .", ".$randCheese.",
+            ".$randFry.")";
+    $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
+    $orderID = $mysqli->insert_id;
+    sleep(2);
+    $randNumTops = rand(0, 11);
+    for ($i = 0; $i < $randNumTops; $i++) {
+      $query = "INSERT INTO OrderToppings(order_id, topping_id) VALUES(".$orderID.", ". $i.");";
+      $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+    }
+  }
+  echo "Database fill complete";
 }
 
 ?>
