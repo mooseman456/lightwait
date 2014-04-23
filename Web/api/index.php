@@ -18,14 +18,11 @@ $app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addMobileOrder');
 $app->post('/webOrder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
-$app->post('/account', 'createMobileAccount');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
 $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
-$app->post('/dquery', 'dynamicQuery');
-$app->post('/fillDB', 'fillDB');
 
 $app->run();
 
@@ -49,25 +46,9 @@ function addWebOrder() {
             VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
             (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
             (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
-	
-	$mysqli->query($query);
+  //echo $query;
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
 
-	$orderID = $mysqli->insert_id;
-
-	if (!empty($_POST['toppingType']))
-	{
-		foreach($_POST['toppingType'] as $topping) {
-			$query = "INSERT INTO OrderToppings(order_id, topping_id)
-					VALUES(".$orderID.", "."(SELECT id FROM Toppings WHERE name = \"". $topping."\"))";
-					$mysqli->query($query);
-		}
-
-	}
-
-  //foreach($_POST['toppingType'] as $key=>$val){
-  //  $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
-  //  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
-  //}
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
   echo "<a href=../../index.php>Return home</a><br>";
@@ -160,24 +141,12 @@ function recallOrder() {
 function getActiveOrders() {
   $mysqli = getConnection();
 
-  $query = "SET @sql = NULL";
-  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+  $query = "SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
+            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases 
+            ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id 
+            WHERE Orders.isActive='1'";
 
-  $query = "SELECT GROUP_CONCAT(DISTINCT CONCAT('MAX(CASE WHEN OrderToppings.topping_id = ''', Toppings.id, ''' THEN Toppings.name END) AS \'',Toppings.name, '\'') ) INTO @sql FROM Toppings";
-  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
-
-  $query = "SET @sql = CONCAT('SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced,', @sql, 'FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id JOIN OrderToppings ON Orders.order_id = OrderToppings.order_id JOIN Toppings ON OrderToppings.topping_id = Toppings.id WHERE Orders.isActive=1 GROUP BY OrderToppings.order_id ORDER BY Orders.order_id')";
-  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
-
-  $query = "PREPARE stmt FROM @sql";
-  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
-
-  $query = "EXECUTE stmt";
-  $result = $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
-
-  $query = "DEALLOCATE PREPARE stmt";
-
-  $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+  $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
   
   while ($row = $result->fetch_assoc()) {
            // $row['ingredients'][] = $row['bread_name'];
@@ -207,24 +176,6 @@ function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumbe
   echo json_encode($query);
 }
 
-function createMobileAccount() {
-  $mysqli = getConnection();
-  $app = \Slim\Slim::getInstance();
-  $request = $app->request()->getBody();
-  $accountInfo = json_decode($request, true);
-
-  //Salt and Hash the password
-  $password = hash("sha512", $accountInfo['password']);
-
-  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber, device_token) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "', '" . $accountInfo['device_token'] . "')";
-
-  $mysqli->query($query);
-
-  echo json_encode($query);
-
-  $mysqli->close();
-}
-
 function logIn($email, $password) {
   $mysqli = getConnection();
 
@@ -237,46 +188,36 @@ function logIn($email, $password) {
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
   $row = $result->fetch_assoc();
-  try {
-    if ($row['user_id']) {
-      $fName = $row['fName'];
-      $arr = array();
-      $arr['fName'] = $fName;
 
-      //Set SESSION variables
-      $_SESSION['fName'] = $row['fName'];
-      $_SESSION['lName'] = $row['lName'];
-      $_SESSION['user_id'] = $row['user_id'];
-      $_SESSION['email'] = $row['email'];
-      $_SESSION['phoneNumber'] = $row['phoneNumber'];
-      $_SESSION['userType'] = $row['userType'];
+  if ($row['user_id']) {
+    $fName = $row['fName'];
+    $arr = array();
+    $arr['fName'] = $fName;
 
-      echo json_encode($arr);
-    }
-    else
-      throw new Exception('Bad login.');
-  } catch(Exception $e) {
-    echo 'Caught exception: ', $e->getMessage(), "\n";
-  }
-  
+    //Set SESSION variables
+    $_SESSION['fName'] = $row['fName'];
+    $_SESSION['lName'] = $row['lName'];
+    $_SESSION['user_id'] = $row['user_id'];
+    $_SESSION['email'] = $row['email'];
+    $_SESSION['phoneNumber'] = $row['phoneNumber'];
+    $_SESSION['userType'] = $row['userType'];
+
+    echo json_encode($arr);
+  } 
 }
 
 function getAccountInfo() {
-  try{
-    if (isset($_SESSION['user_id'])) {
-      //Set SESSION variables
-      $account['fName'] = $_SESSION['fName'];
-      $account['lName'] = $_SESSION['lName'];
-      $account['user_id'] = $_SESSION['user_id'];
-      $account['email'] = $_SESSION['email'];
-      $account['phoneNumber'] = $_SESSION['phoneNumber'];
-      $account['userType'] = $_SESSION['userType'];
-      echo json_encode($account);
-    } else {
-      throw new Exception('Why is this here?');
-    }
-  } catch(Exception $e) {
-    echo 'Caught exception: ', $e->getMessage();
+  if (!isset($_SESSION['user_id'])) {
+    //Set SESSION variables
+    $_SESSION['fName'] = $account['fName'];
+    $_SESSION['lName'] = $account['lName'];
+    $_SESSION['user_id'] = $account['user_id'];
+    $_SESSION['email'] = $account['email'];
+    $_SESSION['phoneNumber'] = $account['phoneNumber'];
+    $_SESSION['userType'] = $account['userType'];
+    echo json_encode($account);
+  } else {
+    echo json_encode("Failed");
   }
 }
 
@@ -413,92 +354,6 @@ function logout() {
     session_destroy();
 }
 
-function dynamicQuery() {
-    $mysqli = getConnection();
-    $app = \Slim\Slim::getInstance();
-    $request = $app->request()->getBody();
-    $jsonQuery = json_decode($request, true);
-
-    $dQuery = "SELECT ";
-
-    if($jsonQuery['count'] == true) {
-        $dQuery .= "COUNT(*) AS count ";
-    } else {
-        $dQuery .= "* ";
-    }
-
-    // FROM Orders WHERE
-    $dQuery .= "FROM Orders WHERE ";
-
-    // If a start time is given
-    if ($jsonQuery['startTime']) {
-        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "' ";
-    }
-
-    // If both a start time and end time is given
-    if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
-        $dQuery .= "AND ";
-    }
-
-    // If a start time is given, but not an end time
-    if($jsonQuery['startTime'] && !$jsonQuery['endTime']) {
-        $dQuery .= ") AND ";
-    }
-
-    // If an end time is given
-    if ($jsonQuery['endTime']) {
-        $dQuery .= "timePlaced <= '" . $jsonQuery['endTime']  . "'";
-    }
-
-    // If both a start time and end time is given
-    if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
-        $dQuery .= ") ";
-    }
-
-    // If both an end time ingredients are given
-    if ($jsonQuery['endTime'] && $jsonQuery['queryArray']) {
-        $dQuery .= "AND ";
-    }
-
-    if ($jsonQuery['queryArray']) {
-        // Test whether each ingredient query should be separated by AND or OR
-        if ($jsonQuery['searchForAll'] == true) {
-            $separator = "AND ";
-        } else if ($jsonQuery['searchForAny'] == true) {
-            $separator = "OR ";
-        } else {
-            die('Bad query.');
-        }
-
-        $dQuery .= "(";
-        foreach ($jsonQuery['queryArray'] as $key=>$val) {
-            foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
-                //$key is the base_id, bread_id, etc
-                $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $separator;
-            }
-        }
-
-        // Remove the last AND/OR
-        $dQuery = substr($dQuery, 0, -(strlen($separator)+1));
-        $dQuery .= ")";
-    }
-
-    writeToLog($dQuery);
-
-    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
-
-    $finalResults = array();
-    while ($row = $result->fetch_assoc()) {
-          array_push($finalResults, $row);
-    }
-
-    $result->free();
-
-    echo json_encode($finalResults);
-
-    $mysqli->close();
-}
-
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
@@ -511,20 +366,13 @@ function getConnection() {
   return $db;
 }
 
-function writeToLog($message){
+function writeToLog($message)
+{
   if ($fp = fopen('log/lightwait_development.log', 'at'))
   {
     fwrite($fp, date('c') . ' ' . $message . PHP_EOL);
     fclose($fp);
   }
-}
-
-function fillDB() {
-  $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
-            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
-            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
-
 }
 
 ?>
