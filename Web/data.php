@@ -23,68 +23,35 @@
 		<a id="advancedSearch">Advanced</a>
 	</div>
 	<div id="advancedSearchContainer">
-		<form action="#" method="GET" name="searchGroup1">
+		<form action="#" method="GET" name="searchGroup-1">
 			<fieldset>
 				<legend>With</legend>
 				<textarea placeholder="ingredients" name="with"></textarea>
-				<input type="radio" name="andor" value="and" id="andRadioWith1" />
-				<label for="andRadioWith1">And</label>
-				<input type="radio" name="andor" value="or" id="orRadioWith1" />
-				<label for="orRadioWith1">Or</label>
+				<input type="radio" name="andor" value="and" id="andRadioWith-1" />
+				<label for="andRadioWith-1">And</label>
+				<input type="radio" name="andor" value="or" id="orRadioWith-1" />
+				<label for="orRadioWith-1">Or</label>
 			</fieldset>
 			<fieldset>
 				<legend>Without</legend>
 				<textarea placeholder="ingredients" name="without"></textarea>
-				<input type="radio" name="andor" value="and" id="andRadioWithout1" />
-				<label for="andRadioWithout1">And</label>
-				<input type="radio" name="andor" value="or" id="orRadioWithout1" />
-				<label for="orRadioWithout1">Or</label>
+				<input type="radio" name="andor" value="and" id="andRadioWithout-1" />
+				<label for="andRadioWithout-1">And</label>
+				<input type="radio" name="andor" value="or" id="orRadioWithout-1" />
+				<label for="orRadioWithout-1">Or</label>
 			</fieldset>
 			<fieldset>
-				<label for="dateGT1">After</label>
-				<input type="date" name="dateGT" id="dateGT1" />
-				<input type="time" name="timeGT" id="timeGT1" />
+				<label for="dateGT-1">After</label>
+				<input type="date" name="dateGT" id="dateGT-1" />
+				<input type="time" name="timeGT" id="timeGT-1" />
 			</fieldset>
 			<fieldset>
-				<label for="dateLT1">Before</label>
-				<input type="date" name="dateLT" id="dateLT1" />
-				<input type="time" name="timeLT" id="timeLT1" />
+				<label for="dateLT-1">Before</label>
+				<input type="date" name="dateLT" id="dateLT-1" />
+				<input type="time" name="timeLT" id="timeLT-1" />
 			</fieldset>
 			<fieldset>
-				<label for="color1">Color</label>
-				<input type="color" name="color" />
-			</fieldset>
-			<input type="button" name="delete" value="Remove This Search Group" />
-		</form>
-		<form action="#" method="GET" name="searchGroup2">
-			<fieldset>
-				<legend>With</legend>
-				<textarea placeholder="ingredients" name="with"></textarea>
-				<input type="radio" name="andor" value="and" id="andRadioWith2" />
-				<label for="andRadioWith2">And</label>
-				<input type="radio" name="andor" value="or" id="orRadioWith2" />
-				<label for="orRadioWith2">Or</label>
-			</fieldset>
-			<fieldset>
-				<legend>Without</legend>
-				<textarea placeholder="ingredients" name="without"></textarea>
-				<input type="radio" name="andor" value="and" id="andRadioWithout2" />
-				<label for="andRadioWithout2">And</label>
-				<input type="radio" name="andor" value="or" id="orRadioWithout2" />
-				<label for="orRadioWithout2">Or</label>
-			</fieldset>
-			<fieldset>
-				<label for="dateGT2">After</label>
-				<input type="date" name="dateGT" id="dateGT2" />
-				<input type="time" name="timeGT" id="timeGT2" />
-			</fieldset>
-			<fieldset>
-				<label for="dateLT2">Before</label>
-				<input type="date" name="dateLT" id="dateLT2" />
-				<input type="time" name="timeLT" id="timeLT2" />
-			</fieldset>
-			<fieldset>
-				<label for="color2">Color</label>
+				<label for="color-1">Color</label>
 				<input type="color" name="color" />
 			</fieldset>
 			<input type="button" name="delete" value="Remove This Search Group" />
@@ -93,7 +60,12 @@
 		<input type="button" name="query" value="Query" />
 	</div>
 	<div id="simpleSearchContainer">
-		<p>Simple search has not been implemented yet.</p>
+		<form action="#" name="simpleSearch">
+			<fieldset id="simpleSearch-types">
+				<legend>Types</legend>
+			</fieldset>
+			<input type="submit" name="query" value="Query" />
+		</form>
 	</div>
 </div>
 
@@ -102,7 +74,7 @@
 		<a id="pieChart">Pie Chart</a>
 		<a id="barGraph">Bar Graph</a>
 		<a id="lineGraph">Line Graph</a>
-		<a id="table">Table</a>
+		<!-- <a id="table">Table</a> -->
 	</div>
 	<div class="chart" id="chart"></div> 
 </div>

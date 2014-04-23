@@ -432,6 +432,7 @@ div#queryInput label {
 div#visuals {
 	float:left;
 	width: 65%;
+	height: 60%;
 	box-sizing:border-box;
 }
 

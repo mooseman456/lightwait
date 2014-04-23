@@ -1,11 +1,20 @@
 google.load('visualization', '1.0', {'packages':['corechart','table']});
 var numSerchGroups=1;
+var mMenu;
+var mNumSearchGroups=1;
+var mSearchGroupId=1;
 
 $(document).ready(function(){
 	drawPieChart();
+	//testDQuery();
+
+	getMenuData(); //Data in mMenu
+	inflateSimpleSearch(mMenu);
+
 	testDQuery();
 
-	// Click Listeners
+
+	// Chart types navigation
 	$('a#pieChart').click(function(e) {
 		e.preventDefault();
 		drawPieChart();
@@ -22,21 +31,60 @@ $(document).ready(function(){
 		e.preventDefault();
 		drawTable();
 	});
+
+	// Search type navigation
 	$('a#simpleSearch').click(function(e){
 		e.preventDefault();
-		console.log("click");
 		$('div#advancedSearchContainer').hide();
 		$('div#simpleSearchContainer').show();
 	});
 	$('a#advancedSearch').click(function(e){
-		console.log("click");
 		$('div#simpleSearchContainer').hide();
 		$('div#advancedSearchContainer').show();
 		e.preventDefault();
 	});
 
+	/*   Advanced Query Form   */
+	// Add new query group
 	$('input[type=button][name=add]').click(function(e) {
-		alert("TODO");
+		console.log("add");
+		mNumSearchGroups++;
+		var htmlQueryGroupForm = advancedQueryFromTemplate.replace(/idNum/g,++mSearchGroupId);
+		$(e.target).before(htmlQueryGroupForm);
+		$(e.target).prev().children('[name=delete]').click(function(e) {
+			console.log("remove");
+			if (mNumSearchGroups > 1) {
+				$(e.target).parent().remove();
+				mNumSearchGroups--;
+			}
+			console.log("groups: "+mNumSearchGroups);
+		});
+	});
+
+	// Delete search group
+	// Will remove search group as long as there is more than 1 search group
+	$('input[type=button][name=delete').click(function(e) {
+		console.log("remove");
+		if (mNumSearchGroups > 1) {
+			$(e.target).parent().remove();
+			mNumSearchGroups--;
+		}
+		console.log("groups: "+mNumSearchGroups);
+	});
+	// Submit query
+	$('div#advancedSearchContainer input[name=query]').click(function(e) {
+		e.preventDefault();
+		alert("Advanced query");
+	});
+
+	/*   Simple Query Form   */
+	// Submit query 
+	$('form[name=simpleSearch] input[name=query]').click(function(e) {
+		e.preventDefault();
+		alert("Simple query");
+		//TODO: Get info from database
+		//TODO: Get json ready to draw things
+		//TODO: draw things
 	});
 }); //End .ready()
 
@@ -62,6 +110,14 @@ function inflateForm(menu) {
 	}
 }
 
+function inflateSimpleSearch(menu) {
+	var field = $('fieldset#simpleSearch-types');
+	for(var type in menu) {
+		field.append('<input type="radio" name="type" id="simpleSearch-types-'+type+'"value="'+type+'"/>');
+		field.append('<label for="simpleSearch-types-'+type+'">'+type+'</label>');
+	}
+}
+
 function inflateAdvancedSearchForm(id) {
 	
 }
@@ -80,14 +136,16 @@ function getMenuData() {
         type: 'GET',
         url: rootURL+"/ingredients",
         dataType: "json", // data type of response
+        async: false,
         success: function(data){
             //console.log(JSON.stringify(data));
-            inflateForm(data);
+            mMenu = data;
         }
    });
 }
 
 function testDQuery() {
+	console.log("hello?");
     $.ajax({
         type: 'POST',
         url: rootURL + '/dquery',
@@ -105,7 +163,7 @@ function testDQuery() {
 
 function formToJSON() {
 
-     return JSON.stringify(query2);
+     return JSON.stringify(baseQuery);
 }
 
 
@@ -150,6 +208,23 @@ function drawBarGraph() {
 	chart.draw(data, options);
 }
 
+function drawLineGraph() {
+	var data = google.visualization.arrayToDataTable([
+		['Year', 'Sales', 'Expenses'],
+		['2004',  1000,      400],
+		['2005',  1170,      460],
+		['2006',  660,       1120],
+		['2007',  1030,      540]
+	]);
+
+	var options = {
+		title: 'Company Performance'
+	};
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart'));
+		chart.draw(data, options);
+}
+
 function drawTable() {
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Name');
@@ -181,23 +256,6 @@ function drawTable() {
 	});
 }
 
-function drawLineGraph() {
-	var data = google.visualization.arrayToDataTable([
-		['Year', 'Sales', 'Expenses'],
-		['2004',  1000,      400],
-		['2005',  1170,      460],
-		['2006',  660,       1120],
-		['2007',  1030,      540]
-	]);
-
-	var options = {
-		title: 'Company Performance'
-	};
-
-	var chart = new google.visualization.LineChart(document.getElementById('chart'));
-		chart.draw(data, options);
-}
-
 /********************/
 /*   Test Queries   */
 /********************/
@@ -223,7 +281,21 @@ var query2 = {
 	"searchForAny":true,
 }
 
+var baseQuery = {
+	"count":true,
+	"startTime":null,
+	"endTime":null,
+	"searchForAll":false,
+	"searchForAny":true,
+	"queryArray": {
+		"base_id":['1'],
+	}
+}
 
+var advancedQueryFromTemplate = '<form action="#" method="GET" name="searchGroup-idNum"><fieldset><legend>With</legend><textarea placeholder="ingredients" name="with"></textarea><input type="radio" name="andor" value="and" id="andRadioWith-idNum" /><label for="andRadioWith-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWith-idNum" /><label for="orRadioWith-idNum">Or</label></fieldset><fieldset><legend>Without</legend><textarea placeholder="ingredients" name="without"></textarea><input type="radio" name="andor" value="and" id="andRadioWithout-idNum" /><label for="andRadioWithout-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWithout-idNum" /><label for="orRadioWithout-idNum">Or</label></fieldset><fieldset><label for="dateGT-idNum">After</label><input type="date" name="dateGT" id="dateGT-idNum" /><input type="time" name="timeGT" id="timeGT-idNum" /></fieldset>';
+advancedQueryFromTemplate+= '<fieldset><label for="dateLT-idNum">Before</label><input type="date" name="dateLT" id="dateLT-idNum" /><input type="time" name="timeLT" id="timeLT-idNum" /></fieldset>';
+advancedQueryFromTemplate+= '<fieldset><label for="color-idNum">Color</label><input type="color" name="color" /></fieldset>';
+advancedQueryFromTemplate+=	'<input type="button" name="delete" value="Remove This Search Group" /></form>';
 
 
 
