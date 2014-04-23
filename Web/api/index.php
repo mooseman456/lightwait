@@ -75,7 +75,6 @@ function addWebOrder() {
 
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
-  echo "<a href=../../index.php>Return home</a><br>";
   echo "<a href=../../order.php>New Order</a>";
 }
 
@@ -171,7 +170,7 @@ function getActiveOrders() {
   $query = "SELECT GROUP_CONCAT(DISTINCT CONCAT('MAX(CASE WHEN OrderToppings.topping_id = ''', Toppings.id, ''' THEN Toppings.name END) AS \'',Toppings.name, '\'') ) INTO @sql FROM Toppings";
   $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
-  $query = "SET @sql = CONCAT('SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced,', @sql, 'FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id JOIN OrderToppings ON Orders.order_id = OrderToppings.order_id JOIN Toppings ON OrderToppings.topping_id = Toppings.id WHERE Orders.isActive=1 GROUP BY OrderToppings  .order_id ORDER BY Orders.order_id')";
+  $query = "SET @sql = CONCAT('SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced,', @sql, 'FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id JOIN OrderToppings ON Orders.order_id = OrderToppings.order_id JOIN Toppings ON OrderToppings.topping_id = Toppings.id WHERE Orders.isActive=1 GROUP BY Orders.order_id ORDER BY Orders.order_id')";
   $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
   $query = "PREPARE stmt FROM @sql";
@@ -420,7 +419,7 @@ function getAvailability() {
   $query  = "SELECT id, name, available FROM Bases;";
   $query .= "SELECT id, name, available FROM Breads;";
   $query .= "SELECT id, name, available FROM Cheeses;";
-  $query .= "SELECT id, name, available FROM Toppings;";
+  $query .= "SELECT id, name, available FROM Toppings WHERE ID != 12;";
   $query .= "SELECT id, name, available FROM Fries";
 
   // Perform a multiquery to get all the ingredients
