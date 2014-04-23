@@ -164,11 +164,23 @@ function recallOrder() {
 
 function getActiveOrders() {
   $mysqli = getConnection();
+  
+  $query = "SET @sql = NULL";
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
-  $query = "SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced 
-            FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases 
-            ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id 
-            WHERE Orders.isActive='1'";
+  $query = "SELECT GROUP_CONCAT(DISTINCT CONCAT('MAX(CASE WHEN OrderToppings.topping_id = ''', Toppings.id, ''' THEN Toppings.name END) AS \'',Toppings.name, '\'') ) INTO @sql FROM Toppings";
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $query = "SET @sql = CONCAT('SELECT Orders.order_id, Orders.user_id, Users.fName, Users.lName, Breads.name as bread_name, Bases.name as base_name, Cheeses.name as cheese_name, Fries.name as fry_type, Orders.timePlaced,', @sql, 'FROM Orders JOIN Users ON Orders.user_id=Users.user_id JOIN Breads ON Orders.bread_id=Breads.id JOIN Bases ON Orders.base_id=Bases.id JOIN Cheeses ON Orders.cheese_id=Cheeses.id JOIN Fries ON Fries.id=Orders.fry_id JOIN OrderToppings ON Orders.order_id = OrderToppings.order_id JOIN Toppings ON OrderToppings.topping_id = Toppings.id WHERE Orders.isActive=1 GROUP BY Orders.order_id ORDER BY Orders.order_id')";
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $query = "PREPARE stmt FROM @sql";
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $query = "EXECUTE stmt";
+  $result = $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $query = "DEALLOCATE PREPARE stmt";
 
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
   
