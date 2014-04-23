@@ -148,10 +148,11 @@ function inflateAdminMenu(data) {
 
 function inflateChefMenu(data) {
     console.log(data);
+    $(".mainForm").append("<div></div>");
+    var currentItem=".mainForm > div:last-child";
     for(var key in data){
-        $(".mainForm").append("<div></div>");
-        var currentItem=".mainForm > div:last-child";
-        $(currentItem).append("<h2>"+key+"</h2>");
+      
+        //$(currentItem).append("<h2>"+key+"</h2>");
         for(var i=0; i<data[key].length; i++){
             var allPurpose=data[key][i].name;
             if(allPurpose.indexOf("No ") === -1){
