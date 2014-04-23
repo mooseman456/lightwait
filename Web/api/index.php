@@ -284,7 +284,7 @@ function getAccountInfo() {
     }
   } catch(Exception $e) {
     echo 'Caught exception: ', $e->getMessage();
-
+  }
 }
 
 function getActiveIngredients() {
@@ -550,5 +550,6 @@ function fillDB() {
   }
   echo "Database fill complete";
 }
+
 
 ?>
