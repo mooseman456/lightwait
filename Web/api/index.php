@@ -411,8 +411,6 @@ function writeToLog($message)
   }
 }
 
-<<<<<<< HEAD
-=======
 function fillDB() {
   $mysqli = getConnection();
   for ($i = 0; $i < 10; $i++) {
@@ -436,5 +434,4 @@ function fillDB() {
   echo "Database fill complete";
 }
 
->>>>>>> 0596793fb495545a3612c9c5a128e3bd5b689f5f
 ?>
