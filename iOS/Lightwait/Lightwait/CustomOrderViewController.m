@@ -197,7 +197,6 @@
     if (tableView.allowsMultipleSelection == FALSE) {
         // Add the selected item as the object and the type of item for the key
         [orderDictionary setObject:[[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] objectForKey:@"id"] forKey:[headerArray objectAtIndex:tableView.tag]];
-        NSLog(@"%@", [[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] objectForKey:@"name"]);
         [self scrollToNextPage];
     }
     // If selecting from toppings page, extra logic is required to handle selecting and deselecting

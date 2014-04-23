@@ -44,7 +44,7 @@
 - (IBAction)pushCustomOrder:(id)sender
 {
     // First check to see if the menu can be loaded, then check if the user is on campus
-    if ([self testMenuConnection]) {
+    if ([self testMenuConnection] && [[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]) {
         //if (isOnCampus == true) {
             [self performSegueWithIdentifier:@"customOrderSegue" sender:self];
         //}

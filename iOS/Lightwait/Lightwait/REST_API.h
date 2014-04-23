@@ -13,6 +13,7 @@
 
 + (NSDictionary*)getPath:(NSString*)resource;
 + (NSString *)postPath:(NSString*)resource data:(NSString*)dataString;
++ (NSDictionary *)putPath:(NSString*)resource data:(NSString*)dataString;
 + (bool)testConnection:(NSString*)resource;
 
 @end

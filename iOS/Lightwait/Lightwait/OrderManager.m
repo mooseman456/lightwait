@@ -24,13 +24,13 @@
     
     NSMutableDictionary *uploadDictionary = [[NSMutableDictionary alloc] init];
     
-    [uploadDictionary setObject:@"1" forKey:@"user_id"];
+    [uploadDictionary setObject:[[NSUserDefaults standardUserDefaults] stringForKey:@"userID"] forKey:@"user_id"];
     [uploadDictionary setObject:[dictionary objectForKey:@"Base"] forKey:@"base"];
     [uploadDictionary setObject:[dictionary objectForKey:@"Bread"] forKey:@"bread"];
     [uploadDictionary setObject:[dictionary objectForKey:@"Cheese"] forKey:@"cheese"];
     [uploadDictionary setObject:[dictionary objectForKey:@"Toppings"] forKey:@"toppings"];
     [uploadDictionary setObject:[dictionary objectForKey:@"Fries"] forKey:@"fries"];
-    
+
     return [JSONConverter convertNSMutableDictionaryToJSON:uploadDictionary];
 }
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DataManager.h"
+#import "PushHandler.h"
 
 @interface CreateAccountViewController : UIViewController
 {

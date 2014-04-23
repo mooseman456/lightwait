@@ -27,6 +27,7 @@
 		7B31712E18D3B15100080C78 /* SavedOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31712D18D3B15100080C78 /* SavedOrdersViewController.m */; };
 		7B31713118D3B16200080C78 /* GrabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B31713018D3B16200080C78 /* GrabViewController.m */; };
 		7B31713318D3B1D600080C78 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B31713218D3B1D600080C78 /* logo.png */; };
+		7B3433B019074CE2000E28EF /* PushHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3433AF19074CE2000E28EF /* PushHandler.m */; };
 		7B42091A18EF825200EEA0A9 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B42091918EF825200EEA0A9 /* LocationManager.m */; };
 		7B52CB5C18EFBE7000F1EC85 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B52CB5B18EFBE7000F1EC85 /* LogInViewController.m */; };
 		7B72CF9318FEF5E900FE91FA /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B72CF9218FEF5E900FE91FA /* CreateAccountViewController.m */; };
@@ -76,6 +77,8 @@
 		7B31712F18D3B16200080C78 /* GrabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrabViewController.h; sourceTree = "<group>"; };
 		7B31713018D3B16200080C78 /* GrabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrabViewController.m; sourceTree = "<group>"; };
 		7B31713218D3B1D600080C78 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		7B3433AE19074CE2000E28EF /* PushHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushHandler.h; sourceTree = "<group>"; };
+		7B3433AF19074CE2000E28EF /* PushHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushHandler.m; sourceTree = "<group>"; };
 		7B42091818EF825200EEA0A9 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		7B42091918EF825200EEA0A9 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		7B52CB5A18EFBE7000F1EC85 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -228,6 +231,8 @@
 		7BE8FC0C18E8E9B3003F2916 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				7B3433AE19074CE2000E28EF /* PushHandler.h */,
+				7B3433AF19074CE2000E28EF /* PushHandler.m */,
 				7BD58A4A18E2779600983618 /* JSONConverter.h */,
 				7BD58A4B18E2779600983618 /* JSONConverter.m */,
 				7BE8FC0718E8DFAD003F2916 /* OrderManager.h */,
@@ -346,6 +351,7 @@
 				7B31713118D3B16200080C78 /* GrabViewController.m in Sources */,
 				7B52CB5C18EFBE7000F1EC85 /* LogInViewController.m in Sources */,
 				7B31710918D3B0B200080C78 /* ViewController.m in Sources */,
+				7B3433B019074CE2000E28EF /* PushHandler.m in Sources */,
 				7B72CF9318FEF5E900FE91FA /* CreateAccountViewController.m in Sources */,
 				7BD58A4C18E2779600983618 /* JSONConverter.m in Sources */,
 				7B31710318D3B0B200080C78 /* AppDelegate.m in Sources */,

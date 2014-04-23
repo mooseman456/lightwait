@@ -36,7 +36,7 @@
     
     // Convert the data to a dictionary
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-
+    
     // If a string, return it - else return an error
     if (dictionary) {
         return dictionary;

@@ -34,5 +34,10 @@
     return [REST_API postPath:[kRootURL stringByAppendingString:kAccount] data:[JSONConverter convertNSMutableDictionaryToJSON:accountInformation]];
 }
 
++ (NSDictionary *)updateDeviceToken:(NSMutableDictionary*)accountInformation
+{
+    return [REST_API putPath:[kRootURL stringByAppendingString:kDeviceToken] data:[JSONConverter convertNSMutableDictionaryToJSON:accountInformation]];
+}
+
 
 @end
