@@ -285,18 +285,35 @@ div.order-wrapper {
 }
 
 .mainForm > div > div{
-	display:block;
-	float:left;
 	margin: 0 5px;
+	text-align: left;
+	font-size: 24px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
+.mainForm > div > div > div{
+	float: right;
+}
+
+
 .mainForm > div{
+	padding: 10px;
+	margin-top: 10px;
+	-webkit-column-count: 3;
+	-webkit-column-gap: 20px;
+	-webkit-column-rule-color:  #ccc;
+    -webkit-column-rule-style:  solid;
+    -webkit-column-rule-width:  1px;
 	display: block;
 	float: left;
-	border-right: 1px solid rgba(0,0,0,0.15);
+	/*border-right: 1px solid rgba(0,0,0,0.15);
 	border-bottom: 1px solid rgba(0,0,0,0.15);
-	border-top: 1px solid rgba(0,0,0,0.15);
+	border-top: 1px solid rgba(0,0,0,0.15);*/
+}
 
+.mainForm > div > div:first-child{
+	margin-top: 0px;
 }
 
 /*For Switch Buttons*/
@@ -330,7 +347,7 @@ div.order-wrapper {
 .onoffswitch-inner:before {
     content: "STOCK";
     padding-left: 10px;
-    background-color: #2FCCFF; color: #FFFFFF;
+    background-color: #2491FF; color: #FFFFFF;
 }
 .onoffswitch-inner:after {
     content: "OUT";
