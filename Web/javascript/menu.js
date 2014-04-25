@@ -132,6 +132,7 @@ function inflateAdminMenu(data) {
             item.submit(function(e) {
                 e.preventDefault();
                 var name = form.children('input[name="ingredient"]').val().toLowerCase();
+                name = name.replace(/\b./g,function(m){ return m.toUpperCase(); });
                 addIngredient(type, name);
                 location.reload();
             });
@@ -144,6 +145,7 @@ function inflateAdminMenu(data) {
         pane.append('<div><a href="#'+type+'">'+type+'</a></div>');
     }
 }
+
 
 
 function inflateChefMenu(data) {
