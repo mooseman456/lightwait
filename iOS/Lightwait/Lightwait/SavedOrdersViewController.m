@@ -91,8 +91,16 @@
 
 - (void)showAlert:(NSString *)title message:(NSString *)messageString
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:messageString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        // Successful account creation
+        [self.navigationController popToRootViewControllerAnimated:TRUE];
+    }
 }
 
 @end
