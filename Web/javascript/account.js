@@ -127,10 +127,9 @@ function createAccount(fName, lName, email, password, phoneNumber) {
         console.log("Account created");
         document.location.href="index.php";
      },
-     error: function(jqXHR, textStatus, errorThrown){
-        console.log(fName + lName + email + password + phoneNumber);
+     error: function(jqXHR, errorThrown){
         console.log("Account creation failed");
-        console.log(jqXHR, textStatus, errorThrown);
+        console.log(jqXHR, errorThrown);
      }
   });
 }
@@ -160,10 +159,10 @@ function logIn(email, password) {
             console.log('Login success');
             document.location.href="index.php";
         },
-        error: function(jqXHR, textStatus, errorThrown){
+        error: function(jqXHR, errorThrown){
             alert("Login failed. Make sure your password and email are correct.");
             console.log("Login failed");
-            console.log(jqXHR, textStatus, errorThrown);
+            console.log(jqXHR, errorThrown);
         }
     });
 }
