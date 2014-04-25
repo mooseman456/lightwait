@@ -164,7 +164,7 @@ function recallOrder() {
 function getActiveOrders() {
   $mysqli = getConnection();
   
-  $query = "SET GLOBAL group_concat_max_len = 10000";
+  $query = "SET SESSION group_concat_max_len = 10000";
   $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
   $query = "SET @sql = NULL";
@@ -512,7 +512,7 @@ function logout() {
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='root';
+	$dbpass='arthas77';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
