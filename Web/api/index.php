@@ -594,7 +594,7 @@ function writeToLog($message)
 
 function fillDB() {
   $mysqli = getConnection();
-  for ($i = 0; $i < 10; $i++) {
+  for ($i = 0; $i < 50; $i++) {
     $randBread = rand(1, 3);
     $randBase = rand(1, 6);
     $randCheese = rand(1,4);

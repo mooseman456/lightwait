@@ -88,6 +88,7 @@ $(document).ready(function(){
 	$('form[name=simpleQuery] input[name=query]').click(function(e) {
 		e.preventDefault();
 		var type = $('input[name=type]:checked').val();
+		console.log("pressed simple query button");
 		simpleQuery(mMenuData[type]);
 		//TODO: Get json ready to draw things
 		//TODO: draw things
@@ -159,6 +160,7 @@ function simpleQuery(typeId) {
 		success: function(data) {
 			console.log("Done!");
 			console.log(data);
+			drawPieChart(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("You effed up.");
