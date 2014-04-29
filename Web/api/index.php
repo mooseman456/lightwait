@@ -566,10 +566,11 @@ function fillDB() {
     $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
     $orderID = $mysqli->insert_id;
-    sleep(2);
-    $randNumTops = rand(0, 11);
-    for ($i = 0; $i < $randNumTops; $i++) {
-      $query = "INSERT INTO OrderToppings(order_id, topping_id) VALUES(".$orderID.", ". $i.");";
+    echo "$orderID\n";
+    //sleep(2);
+    $randNumTops = rand(0, 10);
+    for ($j = 1; $j < $randNumTops; $j++) {
+      $query = "INSERT INTO OrderToppings(order_id, topping_id) VALUES(".$orderID.", ". $j .")";
       $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
     }
   }
