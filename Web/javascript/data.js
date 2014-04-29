@@ -2,9 +2,14 @@ google.load('visualization', '1.0', {'packages':['corechart','table']});
 var mNumQueryGroups=1;
 var mQueryGroupId=1;
 const maxNumQueryGroups=8;
+var mMenuData;
+var samplePieData = '[["Hamburger", 50],["Black Bean", 20],["Turkey", 60],["Chicken", 52]]';
+var jSamplePieData = JSON.parse(samplePieData);
+var sampleChartData = '[["Year", "Sales", "Expenses"],["2004",  1000,      400],["2005",  1170,      460],["2006",  660,       1120],["2007",  1030,      540]]';
+var jSampChartData = JSON.parse(sampleChartData);
 
 $(document).ready(function(){
-	drawPieChart();
+	drawPieChart(jSamplePieData);
 	//testDQuery();
 
 	getMenuData(); //Data in mMenu
@@ -12,15 +17,15 @@ $(document).ready(function(){
 	// Chart types navigation
 	$('a#pieChart').click(function(e) {
 		e.preventDefault();
-		drawPieChart();
+		drawPieChart(jSamplePieData);
 	});
 	$('a#barGraph').click(function(e) {
 		e.preventDefault();
-		drawBarGraph();
+		drawBarGraph(jSampChartData);
 	});
 	$('a#lineGraph').click(function(e){
 		e.preventDefault();
-		drawLineGraph();
+		drawLineGraph(jSampChartData);
 	});
 	$('a#table').click(function(e){
 		e.preventDefault();
@@ -82,8 +87,10 @@ $(document).ready(function(){
 	// Submit simple query 
 	$('form[name=simpleQuery] input[name=query]').click(function(e) {
 		e.preventDefault();
-		alert("Simple query");
-		//TODO: Get info from database
+		var type = $('input[name=type]:checked').val();
+		for (var ing in mMenuData[type]) {
+			console.log(mMenuData[type][ing]["id"]);
+		}
 		//TODO: Get json ready to draw things
 		//TODO: draw things
 	});
@@ -138,6 +145,9 @@ function getMenuData() {
         success: function(data){
             //console.log(JSON.stringify(data));
             inflateSimpleQuery(data);
+            mMenuData = data;
+            console.log(JSON.stringify(data));
+            console.log(data);
         }
    });
 }
@@ -164,19 +174,16 @@ function formToJSON() {
      return JSON.stringify(baseQuery);
 }
 
-
 /******************************/
 /*   Google chart functions   */
 /******************************/
-function drawPieChart() {
-	var json = '[["Hamburger", 50],["Black Bean", 20],["Turkey", 60],["Chicken", 52],["Veggie", 89]]';
-	var jObject = JSON.parse(json);
+function drawPieChart(jData) {
 
 	// Create the data table.
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Base');
 	data.addColumn('number', 'Quantity');
-	data.addRows(jObject);
+	data.addRows(jData);
 
 	//Set chart options
 	var options = {'title':'All bases - pie chart',
@@ -188,14 +195,8 @@ function drawPieChart() {
 	chart.draw(data, options);
 }
 
-function drawBarGraph() {
-	var data = google.visualization.arrayToDataTable([
-		['Year', 'Sales', 'Expenses'],
-		['2004',  1000,      400],
-		['2005',  1170,      460],
-		['2006',  660,       1120],
-		['2007',  1030,      540]
-	]);
+function drawBarGraph(jData) {
+	var data = google.visualization.arrayToDataTable(jData);
 
 	var options = {
 		title: 'Company Performance',
@@ -206,14 +207,8 @@ function drawBarGraph() {
 	chart.draw(data, options);
 }
 
-function drawLineGraph() {
-	var data = google.visualization.arrayToDataTable([
-		['Year', 'Sales', 'Expenses'],
-		['2004',  1000,      400],
-		['2005',  1170,      460],
-		['2006',  660,       1120],
-		['2007',  1030,      540]
-	]);
+function drawLineGraph(jData) {
+	var data = google.visualization.arrayToDataTable(jData);
 
 	var options = {
 		title: 'Company Performance'
