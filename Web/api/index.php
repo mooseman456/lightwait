@@ -26,7 +26,7 @@ $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateA
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
-$app->post('/squery/:type', 'simpleQuery');
+$app->get('/squery/:type', 'simpleQuery');
 $app->get('/fillDB', 'fillDB');
 
 $app->run();
@@ -451,17 +451,17 @@ function dynamicQuery() {
 function simpleQuery($type) {
   $mysqli = getConnection();
 
-  if ($type == "base_id") {
-    $selector = "Bases";
-  } else if ($type == "bread_id") {
-    $selector = "Breads";
-  } else if ($type == "cheese_id") {
-    $selector = "Cheeses";
-  } else if ($type == "fry_id") {
-    $selector = "Fries";
+  if ($type == "Bases") {
+    $selector = "base_id";
+  } else if ($type == "Breads") {
+    $selector = "bread_id";
+  } else if ($type == "Cheeses") {
+    $selector = "cheese_id";
+  } else if ($type == "Fries") {
+    $selector = "fry_id";
   }
 
-  $dQuery = "SELECT $selector.name " . ", COUNT(*) AS count FROM Orders JOIN $selector ON Orders.". $type ."= $selector.id GROUP BY " . $type;
+  $dQuery = "SELECT $type.name " . ", COUNT(*) AS count FROM Orders JOIN $type ON Orders.". $selector ."= $type.id GROUP BY " . $selector;
 
   $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
 

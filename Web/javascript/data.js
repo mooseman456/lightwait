@@ -11,7 +11,7 @@ var jSampChartData = JSON.parse(sampleChartData);
 $(document).ready(function(){
 	drawPieChart(jSamplePieData);
 	//testDQuery();
-
+	simpleQuery("Breads");
 	getMenuData(); //Data in mMenu
 
 	// Chart types navigation
