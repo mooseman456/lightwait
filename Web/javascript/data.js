@@ -5,7 +5,7 @@ const maxNumQueryGroups=8;
 
 $(document).ready(function(){
 	drawPieChart();
-	//testDQuery();
+	testDQuery();
 
 	getMenuData(); //Data in mMenu
 
@@ -146,7 +146,7 @@ function testDQuery() {
 	console.log("hello?");
     $.ajax({
         type: 'POST',
-        url: rootURL + '/dquery',
+        url: rootURL + '/squery',
         dataType: "json", // data type of response
         data: formToJSON(),
         success: function(data){
@@ -161,7 +161,9 @@ function testDQuery() {
 
 function formToJSON() {
 
-     return JSON.stringify(baseQuery);
+     return JSON.stringify({
+		"returnType":"base_id"
+	});
 }
 
 
@@ -283,11 +285,9 @@ var baseQuery = {
 	"count":true,
 	"startTime":null,
 	"endTime":null,
-	"queryForAll":false,
-	"queryForAny":true,
-	"queryArray": {
-		"base_id":['1'],
-	}
+	"searchForAll":false,
+	"searchForAny":true,
+	"returnType":"base_id"
 }
 
 var advancedQueryFromTemplate = '<form action="#" method="GET" name="queryGroup-idNum"><fieldset><legend>With</legend><textarea placeholder="ingredients" name="with"></textarea><input type="radio" name="andor" value="and" id="andRadioWith-idNum" /><label for="andRadioWith-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWith-idNum" /><label for="orRadioWith-idNum">Or</label></fieldset><fieldset><legend>Without</legend><textarea placeholder="ingredients" name="without"></textarea><input type="radio" name="andor" value="and" id="andRadioWithout-idNum" /><label for="andRadioWithout-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWithout-idNum" /><label for="orRadioWithout-idNum">Or</label></fieldset><fieldset><label for="dateGT-idNum">After</label><input type="date" name="dateGT" id="dateGT-idNum" /><input type="time" name="timeGT" id="timeGT-idNum" /></fieldset>';
