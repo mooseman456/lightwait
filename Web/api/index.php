@@ -466,8 +466,11 @@ function simpleQuery($type) {
   $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
 
   $finalResults = array();
+  $resultRow = array();
   while ($row = $result->fetch_assoc()) {
-        array_push($finalResults, $row);
+        $resultRow[0]=$row['name'];
+        $resultRow[1]=$row['count'];
+        array_push($finalResults, $resultRow);
   }
 
   $result->free();
