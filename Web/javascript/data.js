@@ -11,7 +11,7 @@ var jSampChartData = JSON.parse(sampleChartData);
 $(document).ready(function(){
 	drawPieChart(jSamplePieData);
 	//testDQuery();
-
+	simpleQuery("Breads");
 	getMenuData(); //Data in mMenu
 
 	// Chart types navigation
@@ -169,11 +169,7 @@ function simpleQuery(type) {
 function testDQuery() {
     $.ajax({
         type: 'POST',
-<<<<<<< HEAD
         url: rootURL + '/squery/base_id',
-=======
-        url: rootURL + '/dquery',
->>>>>>> FETCH_HEAD
         dataType: "json", // data type of response
         data: formToJSON(),
         success: function(data){
