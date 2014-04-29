@@ -362,9 +362,9 @@ function dynamicQuery() {
     $dQuery = "SELECT ";
 
     if($jsonQuery['count'] == true) {
-        $dQuery .= "COUNT(*) AS count ";
+    $dQuery .= "COUNT(*) AS count ";
     } else {
-        $dQuery .= "* ";
+    $dQuery .= "* ";
     }
 
     // FROM Orders WHERE
@@ -372,54 +372,61 @@ function dynamicQuery() {
 
     // If a start time is given
     if ($jsonQuery['startTime']) {
-        $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "' ";
+    $dQuery .= "(timePlaced >= '" . $jsonQuery['startTime'] . "' ";
     }
 
     // If both a start time and end time is given
     if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
-        $dQuery .= "AND ";
+    $dQuery .= "AND ";
     }
 
     // If a start time is given, but not an end time
     if($jsonQuery['startTime'] && !$jsonQuery['endTime']) {
-        $dQuery .= ") AND ";
+    $dQuery .= ") AND ";
     }
 
     // If an end time is given
     if ($jsonQuery['endTime']) {
-        $dQuery .= "timePlaced <= '" . $jsonQuery['endTime']  . "'";
+      $dQuery .= "timePlaced <= '" . $jsonQuery['endTime']  . "'";
     }
 
-    // If both a start time and end time is given
+        // If both a start time and end time is given
     if ($jsonQuery['startTime'] && $jsonQuery['endTime']) {
+      $dQuery .= ") ";
+    }
+
+        // If both an end time ingredients are given
+    if ($jsonQuery['endTime'] && $jsonQuery['queryArray']) {
+      $dQuery .= "AND ";
+    }
+
+    if ($jsonQuery['queryArray']) {
+      $dQuery .= "(";
+        foreach ($jsonQuery['queryArray'] as $key=>$val) {
+          foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
+                //$key is the base_id, bread_id, etc
+            $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $jsonQuery['withConjunction'] . " ";
+          }
+        }
+
+        // Remove the last AND/OR
+        $dQuery = substr($dQuery, 0, -(strlen($jsonQuery['withConjunction'])+1));
         $dQuery .= ") ";
     }
 
-    // If both an end time ingredients are given
-    if ($jsonQuery['endTime'] && $jsonQuery['queryArray']) {
-        $dQuery .= "AND ";
-    }
-
-    // Test whether each ingredient query should be separated by AND or OR
-    if ($jsonQuery['searchForAll'] == true) {
-        $separator = "AND ";
-    } else if ($jsonQuery['searchForAny'] == true) {
-        $separator = "OR ";
-    } else {
-        die('Bad query.');
-    }
-
-    $dQuery .= "(";
-    foreach ($jsonQuery['queryArray'] as $key=>$val) {
-        foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
+    if ($jsonQuery['notQueryArray']) {
+      $dQuery .= "AND (";
+        foreach ($jsonQuery['notQueryArray'] as $key=>$val) {
+          foreach ($jsonQuery['notQueryArray'][$key] as $innerKey => $value) {
             //$key is the base_id, bread_id, etc
-            $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $separator;
+            $dQuery .= $key . "!=" .  $jsonQuery['notQueryArray'][$key][$innerKey] . " " . $jsonQuery['withoutConjunction'] . " ";
+          }
         }
-    }
 
-    // Remove the last AND/OR
-    $dQuery = substr($dQuery, 0, -(strlen($separator)+1));
-    $dQuery .= ")";
+            // Remove the last AND/OR
+        $dQuery = substr($dQuery, 0, -(strlen($jsonQuery['withoutConjunction'])+1));
+        $dQuery .= ")";
+    }
 
     writeToLog(json_encode($jsonQuery));
 
@@ -427,12 +434,12 @@ function dynamicQuery() {
 
     $finalResults = array();
     while ($row = $result->fetch_assoc()) {
-          array_push($finalResults, $row);
+      array_push($finalResults, $row);
     }
 
     $result->free();
 
-    echo json_encode($finalResults);
+    echo json_encode($dQuery);
 
     $mysqli->close();
 }
