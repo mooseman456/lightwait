@@ -12,7 +12,7 @@
 #import "DataManager.h"
 #import "OrderManager.h"
 
-@interface CustomOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface CustomOrderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UITextFieldDelegate>
 {
     NSArray *headerArray;
     NSArray *baseArray;
@@ -24,6 +24,7 @@
     NSMutableArray *selectedToppings;
     NSMutableDictionary *orderDictionary;
     NSMutableDictionary *uploadDictionary;
+    UITextView *commentsView;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
