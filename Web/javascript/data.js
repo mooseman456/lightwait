@@ -88,10 +88,7 @@ $(document).ready(function(){
 	$('form[name=simpleQuery] input[name=query]').click(function(e) {
 		e.preventDefault();
 		var type = $('input[name=type]:checked').val();
-		for (var ing in mMenuData[type]) {
-			console.log(mMenuData[type][ing]["id"]);
-			
-		}
+		simpleQuery(mMenuData[type]);
 		//TODO: Get json ready to draw things
 		//TODO: draw things
 	});
@@ -137,15 +134,6 @@ function inflateSimpleQuery(menu) {
 /*  AJAX   */
 /***********/
 
-function getIngredientCount(ingId) {
-	$.ajax( {
-		type: 'GET',
-		url: rootURL+'/dquery/',
-		dataType: "json"
-		data: 
-	});
-}
-
 //Get menu data from the database and call inflate function
 function getMenuData() {
     $.ajax({
@@ -162,8 +150,23 @@ function getMenuData() {
    });
 }
 
+function simpleQuery(type) {
+	console.log("simpleQuery AJAX");
+	$.ajax({
+		type: 'GET',
+		url: rootURL+"/squery/"+type,
+		dataType: "json",
+		success: function(data) {
+			console.log("Done!");
+			console.log(data);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log("You effed up.");
+		}
+	});
+}
+
 function testDQuery() {
-	console.log("hello?");
     $.ajax({
         type: 'POST',
         url: rootURL + '/dquery',
