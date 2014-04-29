@@ -3,29 +3,29 @@ var mNumQueryGroups=1;
 var mQueryGroupId=1;
 const maxNumQueryGroups=8;
 var mMenuData;
+var mCurrentData;
+var mCurrentType;
 var samplePieData = '[["Hamburger", 50],["Black Bean", 20],["Turkey", 60],["Chicken", 52]]';
 var jSamplePieData = JSON.parse(samplePieData);
 var sampleChartData = '[["Year", "Sales", "Expenses"],["2004",  1000,      400],["2005",  1170,      460],["2006",  660,       1120],["2007",  1030,      540]]';
 var jSampChartData = JSON.parse(sampleChartData);
 
 $(document).ready(function(){
-	drawPieChart(jSamplePieData);
-	testDQuery();
-	simpleQuery("Breads");
-	//getMenuData(); //Data in mMenu
+	getMenuData(); //Data in mMenu
+	simpleQuery("Bases");
 
 	// Chart types navigation
 	$('a#pieChart').click(function(e) {
 		e.preventDefault();
-		drawPieChart(jSamplePieData);
+		drawPieChart(mCurrentData);
 	});
 	$('a#barGraph').click(function(e) {
 		e.preventDefault();
-		drawBarGraph(jSampChartData);
-	});
+		drawBarGraph(mCurrentData);
+	});	
 	$('a#lineGraph').click(function(e){
 		e.preventDefault();
-		drawLineGraph(jSampChartData);
+		drawLineGraph(mCurrentData);
 	});
 	$('a#table').click(function(e){
 		e.preventDefault();
@@ -87,9 +87,9 @@ $(document).ready(function(){
 	// Submit simple query 
 	$('form[name=simpleQuery] input[name=query]').click(function(e) {
 		e.preventDefault();
-		var type = $('input[name=type]:checked').val();
+		mCurrentType = $('input[name=type]:checked').val();
 		console.log("pressed simple query button");
-		simpleQuery(type);
+		simpleQuery(mCurrentType);
 		//TODO: Get json ready to draw things
 		//TODO: draw things
 	});
@@ -161,6 +161,7 @@ function simpleQuery(typeId) {
 			console.log("Done!");
 			console.log(JSON.stringify(data));
 			drawPieChart(data);
+			mCurrentData = data;
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("You effed up.");
@@ -196,7 +197,7 @@ function drawPieChart(jData) {
 
 	// Create the data table.
 	var data = new google.visualization.DataTable();
-	data.addColumn('string', 'Base');
+	data.addColumn('string', mCurrentType);
 	data.addColumn('number', 'Quantity');
 	data.addRows(jData);
 
@@ -211,11 +212,16 @@ function drawPieChart(jData) {
 }
 
 function drawBarGraph(jData) {
-	var data = google.visualization.arrayToDataTable(jData);
+
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', mCurrentType);
+	data.addColumn('number', 'Quantity');
+	data.addRows(jData);
 
 	var options = {
-		title: 'Company Performance',
-		hAxis: {title: 'Year', titleTextStyle: {color: 'red'}}
+		title: '',
+		hAxis: {title: 'Type', titleTextStyle: {color: 'red'}},
+		vAxis: {title: 'Quantity', titleTextStyle: {color: 'red'}}
 	};
 
 	var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
@@ -223,7 +229,10 @@ function drawBarGraph(jData) {
 }
 
 function drawLineGraph(jData) {
-	var data = google.visualization.arrayToDataTable(jData);
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', mCurrentType);
+	data.addColumn('number', 'Quantity');
+	data.addRows(jData);
 
 	var options = {
 		title: 'Company Performance'
