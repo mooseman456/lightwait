@@ -193,15 +193,15 @@ function formToJSON() {
 	"endTime":"2014-04-30 12:04:03",
 	"withConjunction":"AND",
 	"withoutConjunction":"AND",
-	"queryArray":{
-		"base_id": ["1"],
-		"bread_id":["1"],
-		"fry_id":["1"]
+	"queryArray": {
+		"base_id":["Cheeseburger"],
+		"bread_id":["Wheat"],
+		"fry_id":["No Fries"]
 	},
 	"notQueryArray":{
-		"base_id": ["2"],
-		"bread_id":["2"],
-		"fry_id":["2"]
+		"base_id": ["Hamburger"],
+		"bread_id":["White"],
+		"fry_id":["Fries"]
 	}
 });
 }

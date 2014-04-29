@@ -404,8 +404,9 @@ function dynamicQuery() {
       $dQuery .= "(";
         foreach ($jsonQuery['queryArray'] as $key=>$val) {
           foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
-                //$key is the base_id, bread_id, etc
-            $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $jsonQuery['withConjunction'] . " ";
+            //$key is the base_id, bread_id, etc
+            $tableName = getTableName($key);
+            $dQuery .= $key . "=" . "(SELECT id FROM " . $tableName . " WHERE name = '" . $jsonQuery['queryArray'][$key][$innerKey] . "') " . $jsonQuery['withConjunction'] . " ";
           }
         }
 
@@ -419,7 +420,8 @@ function dynamicQuery() {
         foreach ($jsonQuery['notQueryArray'] as $key=>$val) {
           foreach ($jsonQuery['notQueryArray'][$key] as $innerKey => $value) {
             //$key is the base_id, bread_id, etc
-            $dQuery .= $key . "!=" .  $jsonQuery['notQueryArray'][$key][$innerKey] . " " . $jsonQuery['withoutConjunction'] . " ";
+            $tableName = getTableName($key);
+            $dQuery .= $key . "!=" . "(SELECT id FROM " . $tableName . " WHERE name = '" . $jsonQuery['notQueryArray'][$key][$innerKey] . "') " . $jsonQuery['withoutConjunction'] . " ";
           }
         }
 
@@ -442,6 +444,19 @@ function dynamicQuery() {
     echo json_encode($dQuery);
 
     $mysqli->close();
+}
+
+function getTableName($name) {
+    writeToLog($name);
+    if ($name == "base_id") {
+    return "Bases";
+  } else if ($name == "bread_id") {
+    return "Breads";
+  } else if ($name == "cheese_id") {
+    return "Cheeses";
+  } else if ($name == "fry_id") {
+    return "Fries";
+  }
 }
 
 
