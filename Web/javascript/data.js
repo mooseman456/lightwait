@@ -90,6 +90,7 @@ $(document).ready(function(){
 		var type = $('input[name=type]:checked').val();
 		for (var ing in mMenuData[type]) {
 			console.log(mMenuData[type][ing]["id"]);
+			
 		}
 		//TODO: Get json ready to draw things
 		//TODO: draw things
@@ -135,6 +136,15 @@ function inflateSimpleQuery(menu) {
 /***********/
 /*  AJAX   */
 /***********/
+
+function getIngredientCount(ingId) {
+	$.ajax( {
+		type: 'GET',
+		url: rootURL+'/dquery/',
+		dataType: "json"
+		data: 
+	});
+}
 
 //Get menu data from the database and call inflate function
 function getMenuData() {
