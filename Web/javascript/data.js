@@ -113,6 +113,7 @@ function inflateForm(menu) {
 }
 
 function inflateSimpleQuery(menu) {
+	console.log("inflate");
 	var field = $('fieldset#simpleQuery-types');
 	for(var type in menu) {
 		field.append('<input type="radio" name="type" id="simpleQuery-types-'+type+'"value="'+type+'"/>');
