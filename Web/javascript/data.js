@@ -146,7 +146,7 @@ function testDQuery() {
 	console.log("hello?");
     $.ajax({
         type: 'POST',
-        url: rootURL + '/squery',
+        url: rootURL + '/squery/base_id',
         dataType: "json", // data type of response
         data: formToJSON(),
         success: function(data){

@@ -26,7 +26,7 @@ $app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateA
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
-$app->post('/squery', 'simpleQuery');
+$app->post('/squery/:type', 'simpleQuery');
 $app->get('/fillDB', 'fillDB');
 
 $app->run();
@@ -448,38 +448,33 @@ function dynamicQuery() {
 }
 
 
-function simpleQuery() {
+function simpleQuery($type) {
   $mysqli = getConnection();
-    $app = \Slim\Slim::getInstance();
-    $request = $app->request()->getBody();
-    $jsonQuery = json_decode($request, true);
 
-    if ($jsonQuery['returnType'] == "base_id") {
-      $selector = "Bases";
-    } else if ($jsonQuery['returnType'] == "bread_id") {
-      $selector = "Breads";
-    } else if ($jsonQuery['returnType'] == "cheese_id") {
-      $selector = "Cheeses";
-    } else if ($jsonQuery['returnType'] == "fry_id") {
-      $selector = "Fries";
-    }
+  if ($type == "base_id") {
+    $selector = "Bases";
+  } else if ($type == "bread_id") {
+    $selector = "Breads";
+  } else if ($type == "cheese_id") {
+    $selector = "Cheeses";
+  } else if ($type == "fry_id") {
+    $selector = "Fries";
+  }
 
-    $dQuery = "SELECT $selector.name " . ", COUNT(*) AS count FROM Orders JOIN $selector ON Orders.". $jsonQuery['returnType'] ."= $selector.id GROUP BY " . $jsonQuery['returnType'] ;
+  $dQuery = "SELECT $selector.name " . ", COUNT(*) AS count FROM Orders JOIN $selector ON Orders.". $type ."= $selector.id GROUP BY " . $type;
 
-    writeToLog(json_encode($jsonQuery));
+  $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
 
-    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
+  $finalResults = array();
+  while ($row = $result->fetch_assoc()) {
+        array_push($finalResults, $row);
+  }
 
-    $finalResults = array();
-    while ($row = $result->fetch_assoc()) {
-          array_push($finalResults, $row);
-    }
+  $result->free();
 
-    $result->free();
+  echo json_encode($finalResults);
 
-    echo json_encode($finalResults);
-
-    $mysqli->close();
+  $mysqli->close();
 }
 
 
