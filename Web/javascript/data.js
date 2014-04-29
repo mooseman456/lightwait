@@ -3,29 +3,34 @@ var mNumQueryGroups=1;
 var mQueryGroupId=1;
 const maxNumQueryGroups=8;
 var mMenuData;
-var mCurrentData;
+var mCurrentData = null;
 var mCurrentType;
 var samplePieData = '[["Hamburger", 50],["Black Bean", 20],["Turkey", 60],["Chicken", 52]]';
 var jSamplePieData = JSON.parse(samplePieData);
-var sampleChartData = '[["Year", "Sales", "Expenses"],["2004",  1000,      400],["2005",  1170,      460],["2006",  660,       1120],["2007",  1030,      540]]';
-var jSampChartData = JSON.parse(sampleChartData);
+var sampleChartData = '[["Hamburger", 50],["Black Bean", 20],["Turkey", 60],["Chicken", 52]]';
+var jSampleChartData = JSON.parse(sampleChartData);
 
 $(document).ready(function(){
 	getMenuData(); //Data in mMenu
-	simpleQuery("Bases");
 
 	// Chart types navigation
 	$('a#pieChart').click(function(e) {
 		e.preventDefault();
-		drawPieChart(mCurrentData);
+		if (mCurrentData !== null) {
+			drawPieChart(mCurrentData);
+		}
 	});
 	$('a#barGraph').click(function(e) {
 		e.preventDefault();
-		drawBarGraph(mCurrentData);
+		if (mCurrentData !== null) {
+			drawBarGraph(mCurrentData);
+		}
 	});	
 	$('a#lineGraph').click(function(e){
 		e.preventDefault();
-		drawLineGraph(mCurrentData);
+		if (mCurrentData !== null) {
+			drawLineGraph(mCurrentData);
+		}
 	});
 	$('a#table').click(function(e){
 		e.preventDefault();
@@ -88,7 +93,6 @@ $(document).ready(function(){
 	$('form[name=simpleQuery] input[name=query]').click(function(e) {
 		e.preventDefault();
 		mCurrentType = $('input[name=type]:checked').val();
-		console.log("pressed simple query button");
 		simpleQuery(mCurrentType);
 		//TODO: Get json ready to draw things
 		//TODO: draw things

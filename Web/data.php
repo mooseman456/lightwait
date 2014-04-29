@@ -72,7 +72,9 @@
 		<a id="lineGraph">Line Graph</a>
 		<!-- <a id="table">Table</a> -->
 	</div>
-	<div class="chart" id="chart"></div> 
+	<div class="chart" id="chart">
+		<p>Submit a query to the left in order to see a visualization.</p>
+	</div> 
 </div>
 
 </body>
