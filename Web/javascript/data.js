@@ -83,7 +83,18 @@ $(document).ready(function(){
 	// Submit advanced query
 	$('div#advancedQueryContainer input[name=query]').click(function(e) {
 		e.preventDefault();
-		alert("Advanced query");
+		var forms = $('div#advancedQueryContainer form');
+		forms.each(function(i) {
+			console.log(this);
+			var after = $(this).find('input[name=dateGT][type=date]').val();
+			after += " "+$(this).find('input[name=timeGT][type=time]').val();
+			var before = $(this).find('input[name=dateLT][type=date]').val();
+			before += " "+$(this).find('input[name=timeLT][type=time]').val();
+			var withConjunction = $('input[name=withAndor]:checked').val();
+			var withoutConjunction = $('input[name=withoutAndor]:checked').val();
+
+			//TODO: ajax call and chart filling
+		});
 
 		// Get info from form
 	});
@@ -94,8 +105,6 @@ $(document).ready(function(){
 		e.preventDefault();
 		mCurrentType = $('input[name=type]:checked').val();
 		simpleQuery(mCurrentType);
-		//TODO: Get json ready to draw things
-		//TODO: draw things
 	});
 }); //End .ready()
 
@@ -336,7 +345,7 @@ var baseQuery = {
 	}
 }
 
-var advancedQueryFromTemplate = '<form action="#" method="GET" name="queryGroup-idNum"><fieldset><legend>With</legend><textarea placeholder="ingredients" name="with"></textarea><input type="radio" name="andor" value="and" id="andRadioWith-idNum" /><label for="andRadioWith-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWith-idNum" /><label for="orRadioWith-idNum">Or</label></fieldset><fieldset><legend>Without</legend><textarea placeholder="ingredients" name="without"></textarea><input type="radio" name="andor" value="and" id="andRadioWithout-idNum" /><label for="andRadioWithout-idNum">And</label><input type="radio" name="andor" value="or" id="orRadioWithout-idNum" /><label for="orRadioWithout-idNum">Or</label></fieldset><fieldset><label for="dateGT-idNum">After</label><input type="date" name="dateGT" id="dateGT-idNum" /><input type="time" name="timeGT" id="timeGT-idNum" /></fieldset>';
+var advancedQueryFromTemplate = '<form action="#" method="GET" name="queryGroup-idNum"><fieldset><legend>With</legend><textarea placeholder="ingredients" name="with"></textarea><input type="radio" name="withAndor" value="and" id="andRadioWith-idNum" /><label for="andRadioWith-idNum">And</label><input type="radio" name="withAndor" value="or" id="orRadioWith-idNum" /><label for="orRadioWith-idNum">Or</label></fieldset><fieldset><legend>Without</legend><textarea placeholder="ingredients" name="without"></textarea><input type="radio" name="withoutAndor" value="and" id="andRadioWithout-idNum" /><label for="andRadioWithout-idNum">And</label><input type="radio" name="wihtoutAndor" value="or" id="orRadioWithout-idNum" /><label for="orRadioWithout-idNum">Or</label></fieldset><fieldset><label for="dateGT-idNum">After</label><input type="date" name="dateGT" id="dateGT-idNum" /><input type="time" name="timeGT" id="timeGT-idNum" /></fieldset>';
 advancedQueryFromTemplate+= '<fieldset><label for="dateLT-idNum">Before</label><input type="date" name="dateLT" id="dateLT-idNum" /><input type="time" name="timeLT" id="timeLT-idNum" /></fieldset>';
 advancedQueryFromTemplate+=	'<input type="button" name="delete" value="Remove This Query Group" /></form>';
 

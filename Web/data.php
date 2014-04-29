@@ -27,17 +27,17 @@
 			<fieldset>
 				<legend>With</legend>
 				<textarea placeholder="ingredients" name="with"></textarea>
-				<input type="radio" name="andor" value="and" id="andRadioWith-1" />
+				<input type="radio" name="withAndor" value="and" id="andRadioWith-1" />
 				<label for="andRadioWith-1">And</label>
-				<input type="radio" name="andor" value="or" id="orRadioWith-1" />
+				<input type="radio" name="withAndor" value="or" id="orRadioWith-1" />
 				<label for="orRadioWith-1">Or</label>
 			</fieldset>
 			<fieldset>
 				<legend>Without</legend>
 				<textarea placeholder="ingredients" name="without"></textarea>
-				<input type="radio" name="andor" value="and" id="andRadioWithout-1" />
+				<input type="radio" name="withoutAndor" value="and" id="andRadioWithout-1" />
 				<label for="andRadioWithout-1">And</label>
-				<input type="radio" name="andor" value="or" id="orRadioWithout-1" />
+				<input type="radio" name="withoutAndor" value="or" id="orRadioWithout-1" />
 				<label for="orRadioWithout-1">Or</label>
 			</fieldset>
 			<fieldset>
