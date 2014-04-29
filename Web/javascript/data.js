@@ -150,11 +150,11 @@ function getMenuData() {
    });
 }
 
-function simpleQuery(type) {
+function simpleQuery(typeId) {
 	console.log("simpleQuery AJAX");
 	$.ajax({
 		type: 'GET',
-		url: rootURL+"/squery/"+type,
+		url: rootURL+"/squery/"+typeId,
 		dataType: "json",
 		success: function(data) {
 			console.log("Done!");
@@ -169,11 +169,7 @@ function simpleQuery(type) {
 function testDQuery() {
     $.ajax({
         type: 'POST',
-<<<<<<< HEAD
-        url: rootURL + '/squery/base_id',
-=======
         url: rootURL + '/dquery',
->>>>>>> FETCH_HEAD
         dataType: "json", // data type of response
         data: formToJSON(),
         success: function(data){
