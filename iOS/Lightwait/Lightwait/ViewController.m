@@ -23,12 +23,12 @@
     isOnCampus = YES;
     hasConnection = false;
     [self testMenuConnection];
+    [self initializeLocationManager];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self checkUserSignIn];
-    [self initializeLocationManager];
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,11 +102,13 @@
 {
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
+    NSLog(@"Initializing");
     [_locationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    NSLog(@"Starting");
     CLLocation *currentLocation = [locations lastObject];
     
     // Break down the user's location into latitude and longitude

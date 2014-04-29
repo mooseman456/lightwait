@@ -35,7 +35,7 @@
     [self createPagingScrollView];
     
     // Set the properties of the page indicator
-    self.pageIndicator.numberOfPages=([headerArray count]+1);
+    self.pageIndicator.numberOfPages=[headerArray count];
     self.pageIndicator.currentPage=0;
     self.pageIndicator.enabled=NO;
 }
@@ -90,23 +90,11 @@
         [tableView reloadData];
     }
     
-    
-    
-    frame.origin.x = self.scrollView.frame.size.width * 5;
-    
-    // Creates a new tableView and sets the delegate and data souce to self
-    commentsView = [[UITextView alloc] initWithFrame:frame];
-    commentsView.tag = [headerArray count]+1;
-    commentsView.returnKeyType = UIReturnKeyDone;
-    // Sets the view of each page and background color
-    [self.scrollView addSubview:commentsView];
-    
-    
     // Enables horizontal scrolling
     self.scrollView.pagingEnabled = YES;
     
     // Makes the contentSize as wide as the number of pages * the width of the screen, with height of the view
-    self.scrollView.contentSize =  CGSizeMake(self.scrollView.frame.size.width * ([headerArray count]+1), self.scrollView.frame.size.height);
+    self.scrollView.contentSize =  CGSizeMake(self.scrollView.frame.size.width * [headerArray count], self.scrollView.frame.size.height);
     
     // Hides the horizontal scroll bar
     self.scrollView.showsHorizontalScrollIndicator = FALSE;
@@ -290,7 +278,7 @@
 {
     // Check to see if the user is on the last page - TRUE when selecting fries
     // Update the next button to equal done if true or next if false
-    if (self.pageIndicator.currentPage == 5) {
+    if (self.pageIndicator.currentPage == 4) {
         self.rightButton.title = @"Done";
     }
     else {
@@ -426,16 +414,6 @@
     else {
         return false;
     }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextView *)textView
-{
-    if (textView == commentsView) {
-        NSLog(@"Done");
-        [commentsView resignFirstResponder];
-    }
-    
-    return false;
 }
 
 @end
