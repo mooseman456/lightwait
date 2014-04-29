@@ -11,7 +11,7 @@ var jSampChartData = JSON.parse(sampleChartData);
 $(document).ready(function(){
 	drawPieChart(jSamplePieData);
 	testDQuery();
-	simpleQuery("Breads");
+	//simpleQuery("Breads");
 	//getMenuData(); //Data in mMenu
 
 	// Chart types navigation
@@ -186,7 +186,23 @@ function testDQuery() {
 
 function formToJSON() {
 
-     return JSON.stringify(query1);
+     return JSON.stringify({
+	"count":true,
+	"startTime":"2014-03-30 12:04:03", 
+	"endTime":"2014-04-30 12:04:03",
+	"withConjunction":"AND",
+	"withoutConjunction":"AND",
+	"queryArray":{
+		"base_id": ["1"],
+		"bread_id":["1"],
+		"fry_id":["1"]
+	},
+	"notQueryArray":{
+		"base_id": ["2"],
+		"bread_id":["2"],
+		"fry_id":["2"]
+	}
+});
 }
 
 /******************************/
@@ -274,10 +290,17 @@ var query1 = {
 	"endTime":"2014-04-30 12:04:03",
 	"queryForAll":false,
 	"queryForAny":true,
+	"withConjunction":"AND",
+	"withoutConjuction":"AND",
 	"queryArray":{
 		"base_id": ["1"],
 		"bread_id":["1"],
 		"fry_id":["1"]
+	},
+	"notQueryArray":{
+		"base_id": ["2"],
+		"bread_id":["2"],
+		"fry_id":["2"]
 	}
 }
 
