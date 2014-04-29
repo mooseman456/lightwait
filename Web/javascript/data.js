@@ -89,7 +89,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		var type = $('input[name=type]:checked').val();
 		console.log("pressed simple query button");
-		simpleQuery(mMenuData[type]);
+		simpleQuery(type);
 		//TODO: Get json ready to draw things
 		//TODO: draw things
 	});
@@ -159,7 +159,7 @@ function simpleQuery(typeId) {
 		dataType: "json",
 		success: function(data) {
 			console.log("Done!");
-			console.log(data);
+			console.log(JSON.stringify(data));
 			drawPieChart(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
