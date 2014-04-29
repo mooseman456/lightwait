@@ -361,22 +361,14 @@ function dynamicQuery() {
 
     $dQuery = "SELECT ";
 
-    if($jsonQuery['returnType']) {
-      $dQuery .= $jsonQuery['returnType']. " ";
-    } else {
     if($jsonQuery['count'] == true) {
         $dQuery .= "COUNT(*) AS count ";
     } else {
         $dQuery .= "* ";
     }
-  }
 
     // FROM Orders WHERE
-    $dQuery .= "FROM Orders ";
-
-    if(!$jsonQuery['returnType']) {
-      $dQuery .= "WHERE ";
-    }
+    $dQuery .= "FROM Orders WHERE ";
 
     // If a start time is given
     if ($jsonQuery['startTime']) {
@@ -408,28 +400,26 @@ function dynamicQuery() {
         $dQuery .= "AND ";
     }
 
-    if ($jsonQuery['queryArray']!=null) {
-        // Test whether each ingredient query should be separated by AND or OR
-        if ($jsonQuery['searchForAll'] == true) {
-            $separator = "AND ";
-        } else if ($jsonQuery['searchForAny'] == true) {
-            $separator = "OR ";
-        } else {
-            die('Bad query.');
-        }
-
-        $dQuery .= "(";
-        foreach ($jsonQuery['queryArray'] as $key=>$val) {
-            foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
-                //$key is the base_id, bread_id, etc
-                $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $separator;
-            }
-        }
-
-        // Remove the last AND/OR
-        $dQuery = substr($dQuery, 0, -(strlen($separator)+1));
-        $dQuery .= ")";
+    // Test whether each ingredient query should be separated by AND or OR
+    if ($jsonQuery['searchForAll'] == true) {
+        $separator = "AND ";
+    } else if ($jsonQuery['searchForAny'] == true) {
+        $separator = "OR ";
+    } else {
+        die('Bad query.');
     }
+
+    $dQuery .= "(";
+    foreach ($jsonQuery['queryArray'] as $key=>$val) {
+        foreach ($jsonQuery['queryArray'][$key] as $innerKey => $value) {
+            //$key is the base_id, bread_id, etc
+            $dQuery .= $key . "=" .  $jsonQuery['queryArray'][$key][$innerKey] . " " . $separator;
+        }
+    }
+
+    // Remove the last AND/OR
+    $dQuery = substr($dQuery, 0, -(strlen($separator)+1));
+    $dQuery .= ")";
 
     writeToLog(json_encode($jsonQuery));
 
@@ -469,7 +459,7 @@ function simpleQuery($type) {
   $resultRow = array();
   while ($row = $result->fetch_assoc()) {
         $resultRow[0]=$row['name'];
-        $resultRow[1]=$row['count'];
+        $resultRow[1]=(int)$row['count'];
         array_push($finalResults, $resultRow);
   }
 

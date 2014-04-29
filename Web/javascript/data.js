@@ -10,9 +10,9 @@ var jSampChartData = JSON.parse(sampleChartData);
 
 $(document).ready(function(){
 	drawPieChart(jSamplePieData);
-	//testDQuery();
+	testDQuery();
 	simpleQuery("Breads");
-	getMenuData(); //Data in mMenu
+	//getMenuData(); //Data in mMenu
 
 	// Chart types navigation
 	$('a#pieChart').click(function(e) {
@@ -186,7 +186,7 @@ function testDQuery() {
 
 function formToJSON() {
 
-     return JSON.stringify(baseQuery);
+     return JSON.stringify(query1);
 }
 
 /******************************/
