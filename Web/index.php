@@ -19,31 +19,31 @@
     }
     
     $pageTitle = "Home";
-	   $navElements = null;
+	$navElements = null;
     $javascript = 'javascript/account.js';
 	include('include/header.php');
 ?>
-	<div class="content">
-      <div class="accountForm">
-   		<h1>Log In</h1>
-   		<form name="loginForm" id="loginForm" method="POST" action="#" >
-   			<input class="textForm tooltip" type="email" name="email"  placeholder="Email" title="Please input your email" required ><br/>
-   			<input class="textForm tooltip" type="password" name="password" placeholder="Password" title="Please input your password" pattern=".{8,20}" required><br/>
-   			<input class="formSubmit tooltip" type="submit" value="Log In">
+	<div id="loginWrapper">
+      <div class="floatingBox">
+   		<form id="loginForm">
+   			<input class="textForm tooltip" type="email" name="email"  placeholder="Email" title="Please input your email" required />
+   			<input class="textForm tooltip" type="password" name="password" placeholder="Password" title="Please input your password" pattern=".{8,20}" required/>
+   			<input class="formSubmit tooltip" type="submit" value="login">
    		</form>
    	</div>
-        <div class="accountForm">
-            <h1>Create an Account</h1>
-            <form id="createAccountForm" method="POST" action="#">
+        <div class="floatingBox">
+            <form id="createAccountForm">
                 <input class="textForm tooltip" type="email" name="email" placeholder="Email" title="Please input a valid email address" required>
                 <input class="textForm tooltip" type="password" name="password" pattern=".{8,20}" placeholder="Password" title="Password between 8 and 20 characters" required>
                 <input class="tooltip" type="text" name="fName" placeholder="First Name" title="Please provide your first name" required>
                 <input class="tooltip" type="text" name="lName" placeholder="Last Name" title="Plase provide your last name" required>
-                <input class="tooltip" type="tel" name="phone" placeholder="Phone Number" title="Plase input a valid phone-number" required>
-                <input class="formSubmit" type="submit" value="Create Account">
+                <input class="formSubmit" type="submit" value="create account">
             </form>
         </div>
-   </div>
+    </div>
+    <div id="aboutWrapper">
+        <p>This is text about lightwait.  Later I'll probably ask Joe to write more here, but for now I'm just going to be rambling for a bit.  Lightwait is amazing and you should order things here.  Lightwait has a very high potiential to change your life.  Just saying...</p>
+    </div>
 
 </body>
 </html>

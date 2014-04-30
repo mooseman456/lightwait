@@ -11,6 +11,7 @@ body {
 	margin:0;
 	font-size:16px;
 	font-family:'Ubuntu',Arial;
+	background-color: rgba(0,0,150,.02);
 }
 
 div {
@@ -186,7 +187,94 @@ nav a:hover {
 /*    LogIn Page   */
 /*******************/
 
-.content {
+/*  About pane   */
+div#aboutWrapper {
+	width: 40%;
+	position: absolute;
+	right: 8%;
+	left:auto;
+	top: 160px;
+	color: rgba(0,0,0,0.65);
+}
+
+/*  Div box thing  */
+div.floatingBox {
+	border: 1px solid rgba(0,0,0,0.15);
+	background-color: white;
+}
+
+div.darkFloatingBox h1 {
+	margin:0;
+	padding:0;
+}
+
+div#loginWrapper {
+	width:35%;
+	margin-left: 8%;
+	margin-top: 12px;
+}
+
+div#loginWrapper > div {
+	margin:20px 0;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+	box-sizing:border-box;
+	display:block;
+	height:3em;
+	width:100%;
+	padding:0;
+	margin:0;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+	border-collapse: collapse;
+	text-indent: 22px;
+	font-size: 16px;
+	font-family: 'Lato';
+}
+
+input[type='text']:hover, input[type='email']:hover, input[type='password']:hover {
+	transition: border-left-width 0.2s ease;
+	border-left: 2px solid rgba(0,0,0,0.3);
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+	transition: border-left-width 0.2s ease, border-bottom-color 2s ease;
+	border-left: 5px solid rgba(0,0,0,0.4);
+	border-bottom-color: rgba(0,0,0,0.26);
+	outline:0;
+}
+
+div.floatingBox input[type='button'], div.floatingBox input[type='submit'] {
+	margin: 16px auto;
+	width: 66%;
+	cursor: pointer;
+}
+
+input[type='button'], input[type='submit'] {
+	background-color: rgba(36,145,255,0.76);
+	outline:none;
+	border:none;
+	height:3em;
+	font-family: 'Ubuntu';
+	font-size: 16px;
+	margin:0;
+	color:rgba(0,0,0,0.5);
+	display: block;
+	/*color:rgba(255,255,255,0.95);*/
+}
+
+input[type='button']:hover, input[type='submit']:hover {
+	background-color: rgba(36,145,255,0.7);
+}
+
+
+
+
+
+/*.content {
 	display: block:;
 	width:50%;
 	min-height: wrap;
@@ -225,7 +313,7 @@ nav a:hover {
 
 .textForm{
 	margin-bottom: 10px;
-}
+}*/
 
 /*************/
 /*   Order   */

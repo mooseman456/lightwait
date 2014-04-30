@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title><?php echo $pageTitle ?></title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'>
 	<script src="http://code.jquery.com/jquery-2.1.0.js"></script>
 	<script type="text/javascript" src="javascript/main.js"></script>
