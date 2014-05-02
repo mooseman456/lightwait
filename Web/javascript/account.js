@@ -104,6 +104,54 @@ $(document).ready(function() {
         //else
         //    alert(errorString);
     });
+
+    $('#adminCreateAccountForm input[type="submit"]').click(function(e) {
+        var createValid = true;
+        var errorString = "";
+
+        
+        var email = $('#createAccountForm input[name="email"]').val();
+        if (email === "") {
+            errorString += "Email empty!\n";
+            createValid = false;
+        }
+        
+        var password = $('#createAccountForm input[name="password"]').val();
+        if (!passPat.test(password)) {
+            errorString += "Invalid password! Must be 8 - 20 characters long!\n";
+            createValid = false;
+        }
+        
+        var fName = $('#createAccountForm input[name="fName"]').val();
+        if (!namePat.test(fName)) {
+            errorString += "Invalid first name! Only letters, apostrophes, commas, and periods allowed!\n";
+            createValid = false;
+        }
+       
+        var lName = $('#createAccountForm input[name="lName"]').val();
+        if (!namePat.test(lName)) {
+            errorString += "Invalid last name! Only letters, apostrophes, commas, and periods allowed!\n";
+            createValid = false;
+        }
+
+        var type = $('#createAccountForm input[name="accountType"]').val();
+        console.log(type);
+        if (type === "chef")
+            val = 2;
+        else if (type === "admin")
+            val = 3;
+        else
+            createValid = false;
+
+        if (createValid === true) {
+            e.preventDefault();
+            //adminCreateAccount(fName, lName, email, password, val);
+            alert("OH YEAH!");
+        }
+        else {
+            alert("OH NO!");
+        }
+    })
 });
 
 /************/
@@ -113,6 +161,22 @@ function createAccount(fName, lName, email, password) {
   $.ajax({
      type: 'POST',
      url: rootURL + '/account/1/' + fName + '/' + lName + '/' + email + '/' + password,
+     dataType: "json", // data type of response
+     success: function(){
+        console.log("Account created");
+        document.location.href="index.php";
+     },
+     error: function(jqXHR, errorThrown){
+        console.log("Account creation failed");
+        console.log(jqXHR, errorThrown);
+     }
+  });
+}
+
+function adminCreateAccount(fName, lName, email, password, type) {
+    $.ajax({
+     type: 'POST',
+     url: rootURL + '/account/' + type + '/' + fName + '/' + lName + '/' + email + '/' + password,
      dataType: "json", // data type of response
      success: function(){
         console.log("Account created");
