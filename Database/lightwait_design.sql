@@ -11,7 +11,6 @@ CREATE TABLE Users (
 	lName VARCHAR(255),
 	email VARCHAR(255),
 	password VARCHAR(255),
-	phoneNumber VARCHAR(255),
 	device_token varchar(64),
 	Primary Key (user_id)
 ) ENGINE=InnoDB;
