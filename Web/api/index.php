@@ -638,13 +638,13 @@ function removeIngredient($type, $id) {
 
   if (strtolower($type) = "base") {
     $type = "Bases";
-  } else if (strtolower($type) = "bread") {
+  } else if (strtolower($type) == "bread") {
     $type = "Breads";
-  } else if (strtolower($type) = "cheese") {
+  } else if (strtolower($type) == "cheese") {
     $type = "Cheeses";
-  } else if (strtolower($type) = "fry" || strtolower($type) = "fries" ) {
+  } else if (strtolower($type) == "fry" || strtolower($type) == "fries" ) {
     $type = "Fries";
-  } else if (strtolower($type) = "topping") {
+  } else if (strtolower($type) == "topping") {
     $type = "Toppings";
   }
 
