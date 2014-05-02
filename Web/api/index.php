@@ -223,7 +223,6 @@ function getActiveOrders() {
     }
 
     echo json_encode($row);
-    echo "<hr>";
   }
 
   //$encoded = json_encode($array);
