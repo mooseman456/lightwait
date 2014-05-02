@@ -247,15 +247,33 @@ function updateDeviceToken() {
 function createAccount($usertype, $fName, $lName, $email, $password) {
   $mysqli = getConnection();
 
+  $fName = $mysqli->escape_string($fName);
+  $lName = $mysqli->escape_string($lName);
+  $email = $mysqli->escape_string($email);
+  $password = $mysqli->escape_string($password);
+
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
+  //Check if email is already used
+  $query = "SELECT COUNT(*) as count FROM Users WHERE email='$email'";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
-  
-  $mysqli->close();
+  $row = $result->fetch_assoc();
 
-  echo json_encode($query);
+  if ($row['count'] == 0) {
+
+    $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
+    $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+
+  } else {
+
+    echo "Account could not be created";
+  }
+
+  echo $query;
+
+  $mysqli->close();
+  
 }
 
 function logIn($email, $password) {
@@ -637,7 +655,7 @@ function fillDB() {
 function removeIngredient($type, $id) {
   $mysqli = getConnection();
 
-  if (strtolower($type) = "base") {
+  if (strtolower($type) == "base") {
     $type = "Bases";
   } else if (strtolower($type) == "bread") {
     $type = "Breads";
