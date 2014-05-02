@@ -318,11 +318,11 @@ function getAccountInfo() {
 function getActiveIngredients() {
   $mysqli = getConnection();
 
-  $query  = "SELECT name, isAvailable FROM Bases WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Breads WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1 AND id != 12;";
-  $query .= "SELECT name, isAvailable FROM Fries WHERE available = 1";
+  $query  = "SELECT name, isAvailable FROM Bases WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Breads WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Cheeses WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1 AND id != 12 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Fries WHERE available = 1 AND isActive = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
