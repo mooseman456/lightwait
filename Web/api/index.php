@@ -28,6 +28,7 @@ $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
 $app->get('/squery/:type', 'simpleQuery');
 $app->get('/fillDB', 'fillDB');
+$app->put('/removeingredient/:type/:id', 'removeIngredient');
 
 $app->run();
 
@@ -630,6 +631,28 @@ function fillDB() {
     }
   }
   echo "Database fill complete";
+}
+
+function removeIngredient($type, $id) {
+  $mysqli = getConnection();
+
+  if (strtolower($type) = "base") {
+    $type = "Bases";
+  } else if (strtolower($type) = "bread") {
+    $type = "Breads";
+  } else if (strtolower($type) = "cheese") {
+    $type = "Cheeses";
+  } else if (strtolower($type) = "fry" || strtolower($type) = "fries" ) {
+    $type = "Fries";
+  } else if (strtolower($type) = "topping") {
+    $type = "Toppings";
+  }
+
+  $query = "UPDATE $type SET isActive=0 WHERE id=$id";
+
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $mysqli->close();
 }
 
 
