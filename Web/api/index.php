@@ -17,12 +17,12 @@ $app->get('/account/:email/:password', 'logIn');
 $app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addMobileOrder');
 $app->post('/webOrder', 'addWebOrder');
-$app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
+$app->post('/account/:usertype/:fName/:lName/:email/:password', 'createAccount');
 $app->post('/account', 'createMobileAccount');
 $app->put('/account/devicetoken', 'updateDeviceToken');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
-$app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
+$app->put('/updateaccount/:password/:fName/:lName/:email', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
@@ -243,13 +243,13 @@ function updateDeviceToken() {
   $mysqli->close();
 }
 
-function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumber) {
+function createAccount($usertype, $fName, $lName, $email, $password) {
   $mysqli = getConnection();
 
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES ('$usertype', '$fName', '$lName', '$email', '$password', '$phoneNumber')";
+  $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
   $mysqli->close();
@@ -538,7 +538,7 @@ function getAvailability() {
   $mysqli->close();
 }
 
-function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
+function updateAccount($password, $fName, $lName, $email) {
 
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
@@ -561,7 +561,7 @@ function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
     //Correct email and pass provided
     if ($row['user_id']) {
 
-        $query = "UPDATE Users SET fName='$fName', lName='$lName', phoneNumber='$phoneNumber' WHERE user_id='".$row['user_id']."' ";
+        $query = "UPDATE Users SET fName='$fName', lName='$lName', WHERE user_id='".$row['user_id']."' ";
         $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
 
     } else {    //Incorrect email and pass

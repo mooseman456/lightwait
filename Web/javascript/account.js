@@ -15,23 +15,23 @@ $(document).ready(function() {
     var passPat = /.{8,20}/;
     var namePat = /^[a-z ,.'-]+$/i;
     $('#loginForm input[type~="submit"]').click(function(e) {
-        e.preventDefault();
         var email = $('#loginForm input[name="email"]').val();
         var password = $('#loginForm input[name="password"]').val();
-
+        
         console.log(email+ " "+password);
         if (email == "" || email == null)
-            alert("Empty email. Please input your email");
+            console.log("Empty email. Please input your email");
         
-        else if (passPat.test(password))
+        else if (passPat.test(password)) {
+            e.preventDefault();
             logIn(email, password);
-        else
-            alert("Invalid password! Must be 8 - 20 characters long!");
+        }
+        //else
+        //    alert("Invalid password! Must be 8 - 20 characters long!");
     });
 
 
     $('#createAccountForm input[type="submit"]').click(function(e) {
-        e.preventDefault();
         var createValid = true;
         var errorString = "";
 
@@ -59,22 +59,17 @@ $(document).ready(function() {
             errorString += "Invalid last name! Only letters, apostrophes, commas, and periods allowed!\n";
             createValid = false;
         }
-        
-        var phone = $('#createAccountForm input[name="phone"]').val();
-        if (phone === "") {
-            errorString += "Phone number empty!\n";
-            createValid = false;
+
+        if (createValid === true) {
+            e.preventDefault();
+            createAccount(fName, lName, email, password);
         }
 
-        if (createValid === false)
-            alert(errorString);
-
-        else
-            createAccount(fName, lName, email, password, phone);
+        //else
+        //    createAccount(fName, lName, email, password, phone);
     });
 
     $('#editAccountForm input[type="submit"]').click(function(e) {
-        e.preventDefault();
         var errorString = "";
         var createValid = true;
        
@@ -101,27 +96,23 @@ $(document).ready(function() {
             errorString += "Invalid password! Must be 8 - 20 characters long!\n";
             createValid = false;
         }
-        
-        var phone = $('#editAccountForm input[name="phone"]').val();
-        if (phone === "") {
-            errorString += "Phone number empty!\n";
-            createValid = false;
-        }
 
-        if (createValid === true)
-            updateAccount(password, fName, lName, email, phone);
-        else
-            alert(errorString);
+        if (createValid === true) {
+            e.preventDefault();
+            updateAccount(password, fName, lName, email);
+        }
+        //else
+        //    alert(errorString);
     });
 });
 
 /************/
 /*   AJAX   */
 /************/
-function createAccount(fName, lName, email, password, phoneNumber) {
+function createAccount(fName, lName, email, password) {
   $.ajax({
      type: 'POST',
-     url: rootURL + '/account/1/' + fName + '/' + lName + '/' + email + '/' + password + '/' + phoneNumber,
+     url: rootURL + '/account/1/' + fName + '/' + lName + '/' + email + '/' + password,
      dataType: "json", // data type of response
      success: function(){
         console.log("Account created");
@@ -134,10 +125,10 @@ function createAccount(fName, lName, email, password, phoneNumber) {
   });
 }
 
-function updateAccount(password, fName, lName, email, phoneNumber) {
+function updateAccount(password, fName, lName, email) {
   $.ajax({
      type: 'PUT',
-     url: rootURL + '/updateaccount/' + password + '/' + fName + '/' + lName + '/' + email + '/' + phoneNumber,
+     url: rootURL + '/updateaccount/' + password + '/' + fName + '/' + lName + '/' + email,
      dataType: "json", // data type of response
      success: function(){
         console.log("Account updated");
