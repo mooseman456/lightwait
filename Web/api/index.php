@@ -17,7 +17,7 @@ $app->get('/account/:email/:password', 'logIn');
 $app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addMobileOrder');
 $app->post('/webOrder', 'addWebOrder');
-$app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
+$app->post('/account/:usertype/:fName/:lName/:email/:password', 'createAccount');
 $app->post('/account', 'createMobileAccount');
 $app->put('/account/devicetoken', 'updateDeviceToken');
 $app->put('/:orderid/:userid', 'updateOrder');
@@ -242,13 +242,13 @@ function updateDeviceToken() {
   $mysqli->close();
 }
 
-function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumber) {
+function createAccount($usertype, $fName, $lName, $email, $password) {
   $mysqli = getConnection();
 
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES ('$usertype', '$fName', '$lName', '$email', '$password', '$phoneNumber')";
+  $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   
   $mysqli->close();

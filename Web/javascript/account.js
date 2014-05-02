@@ -17,13 +17,15 @@ $(document).ready(function() {
     $('#loginForm input[type~="submit"]').click(function(e) {
         var email = $('#loginForm input[name="email"]').val();
         var password = $('#loginForm input[name="password"]').val();
-        /*
+        
         console.log(email+ " "+password);
         if (email == "" || email == null)
-            alert("Empty email. Please input your email");
+            console.log("Empty email. Please input your email");
         
-        else if (passPat.test(password)) */
+        else if (passPat.test(password)) {
+            e.preventDefault();
             logIn(email, password);
+        }
         //else
         //    alert("Invalid password! Must be 8 - 20 characters long!");
     });
@@ -58,10 +60,11 @@ $(document).ready(function() {
             createValid = false;
         }
 
-        if (createValid === true)
-            createAccount(fName, lName, email, password, phone);
+        if (createValid === true) {
+            e.preventDefault();
+            createAccount(fName, lName, email, password);
+        }
 
-        
         //else
         //    createAccount(fName, lName, email, password, phone);
     });
@@ -100,8 +103,10 @@ $(document).ready(function() {
             createValid = false;
         }
 
-        if (createValid === true)
+        if (createValid === true) {
+            e.preventDefault();
             updateAccount(password, fName, lName, email, phone);
+        }
         else
             alert(errorString);
     });
@@ -110,10 +115,10 @@ $(document).ready(function() {
 /************/
 /*   AJAX   */
 /************/
-function createAccount(fName, lName, email, password, phoneNumber) {
+function createAccount(fName, lName, email, password) {
   $.ajax({
      type: 'POST',
-     url: rootURL + '/account/1/' + fName + '/' + lName + '/' + email + '/' + password + '/' + phoneNumber,
+     url: rootURL + '/account/1/' + fName + '/' + lName + '/' + email + '/' + password,
      dataType: "json", // data type of response
      success: function(){
         console.log("Account created");
