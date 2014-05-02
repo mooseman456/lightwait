@@ -15,9 +15,9 @@ $(document).ready(function() {
     var passPat = /.{8,20}/;
     var namePat = /^[a-z ,.'-]+$/i;
     $('#loginForm input[type~="submit"]').click(function(e) {
-        /*var email = $('#loginForm input[name="email"]').val();
+        var email = $('#loginForm input[name="email"]').val();
         var password = $('#loginForm input[name="password"]').val();
-
+        /*
         console.log(email+ " "+password);
         if (email == "" || email == null)
             alert("Empty email. Please input your email");
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
 
     $('#createAccountForm input[type="submit"]').click(function(e) {
-        /*var createValid = true;
+        var createValid = true;
         var errorString = "";
 
         
@@ -57,18 +57,13 @@ $(document).ready(function() {
             errorString += "Invalid last name! Only letters, apostrophes, commas, and periods allowed!\n";
             createValid = false;
         }
+
+        if (createValid === true)
+            createAccount(fName, lName, email, password, phone);
+
         
-        var phone = $('#createAccountForm input[name="phone"]').val();
-        if (phone === "") {
-            errorString += "Phone number empty!\n";
-            createValid = false;
-        }
-
-        if (createValid === false)
-            alert(errorString);
-
-        else*/
-        createAccount(fName, lName, email, password, phone);
+        //else
+        //    createAccount(fName, lName, email, password, phone);
     });
 
     $('#editAccountForm input[type="submit"]').click(function(e) {
