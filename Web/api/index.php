@@ -28,6 +28,8 @@ $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
 $app->get('/squery/:type', 'simpleQuery');
 $app->get('/fillDB', 'fillDB');
+$app->put('/removeingredient/:type/:id', 'removeIngredient');
+$app->get('/allingredients', 'getAllIngredients');
 
 $app->run();
 
@@ -316,11 +318,11 @@ function getAccountInfo() {
 function getActiveIngredients() {
   $mysqli = getConnection();
 
-  $query  = "SELECT name, isAvailable FROM Bases WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Breads WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1 AND id != 12;";
-  $query .= "SELECT name, isAvailable FROM Fries WHERE available = 1";
+  $query  = "SELECT name, isAvailable FROM Bases WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Breads WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Cheeses WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1 AND id != 12 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Fries WHERE available = 1 AND isActive = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
@@ -609,7 +611,7 @@ function writeToLog($message)
 
 function fillDB() {
   $mysqli = getConnection();
-  for ($i = 0; $i < 50; $i++) {
+  for ($i = 0; $i < 30; $i++) {
     $randBread = rand(1, 3);
     $randBase = rand(1, 6);
     $randCheese = rand(1,4);
@@ -630,6 +632,67 @@ function fillDB() {
     }
   }
   echo "Database fill complete";
+}
+
+function removeIngredient($type, $id) {
+  $mysqli = getConnection();
+
+  if (strtolower($type) = "base") {
+    $type = "Bases";
+  } else if (strtolower($type) == "bread") {
+    $type = "Breads";
+  } else if (strtolower($type) == "cheese") {
+    $type = "Cheeses";
+  } else if (strtolower($type) == "fry" || strtolower($type) == "fries" ) {
+    $type = "Fries";
+  } else if (strtolower($type) == "topping") {
+    $type = "Toppings";
+  }
+
+  $query = "UPDATE $type SET isActive=0 WHERE id=$id";
+
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $mysqli->close();
+}
+
+function getAllIngredients() {
+  $mysqli = getConnection();
+
+  $query  = "SELECT name, isAvailable FROM Bases;";
+  $query .= "SELECT name, isAvailable FROM Breads;";
+  $query .= "SELECT name, isAvailable FROM Cheeses;";
+  $query .= "SELECT name, isAvailable FROM Toppings;";
+  $query .= "SELECT name, isAvailable FROM Fries";
+
+  // Perform a multiquery to get all the ingredients
+  if ($mysqli->multi_query($query)) {
+    // Arrays that will hold all menu data
+    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
+    $baseArray = array();
+    $breadArray = array();
+    $cheeseArray = array();
+    $toppingArray = array();
+    $friesArray = array();
+    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
+    $menuIndex = -1;
+
+    while ($mysqli->more_results()) {
+      // Store first result set
+      $mysqli->next_result();
+      $menuIndex++;
+      if ($result = $mysqli->store_result()) {
+        while ($row = $result->fetch_row()) {
+          array_push($menuData[$menuTypes[$menuIndex]], $row[0]);
+        }
+        $result->free();
+      }
+    }
+  }
+  $encoded = json_encode($menuData);
+  printf($encoded);
+
+  $mysqli->close();
 }
 
 

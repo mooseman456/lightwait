@@ -12,11 +12,11 @@
 	include('include/header.php');
 ?>
 	
-	<div class="window">
+	<div id="queueWindow">
 		<h1>No pending orders</h1>
 	</div>
 
-	<div class="sidebar">
+	<div id="sidebar">
 		<div id="quantityList">
 
 		</div>
