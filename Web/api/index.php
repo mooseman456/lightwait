@@ -292,10 +292,10 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
 
   } else {
 
-    echo "Account could not be created";
+    echo json_encode("Account could not be created");
   }
 
-  echo $query;
+  echo json_encode($query);
 
   $mysqli->close();
   
