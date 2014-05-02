@@ -66,7 +66,7 @@ $(document).ready(function() {
         }
 
         //else
-        //    createAccount(fName, lName, email, password, phone);
+        //    createAccount(fName, lName, email, password);
     });
 
     $('#editAccountForm input[type="submit"]').click(function(e) {
@@ -182,10 +182,9 @@ function getAccountInfo() {
 /****************/
 
 function fillWithUserData(form) {
-    var fName,lName,email,phone,password;
+    var fName,lName,email,password;
     form.children('input[name="fName"]').value = fName;
     form.children('input[name="lName]').value = lName;
     form.children('input[name="email"]').value = email;
     form.children('input[name="password"]').value = paswword;
-    form.children('input[name="phone"]').value = phone;
 }

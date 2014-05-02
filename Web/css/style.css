@@ -112,7 +112,8 @@ nav a:hover {
 }
 
 section.queue:hover {
-	background-color: rgba(0,32,255,0.04);
+	transition: background-color 0.4s ease-out;
+	background-color: rgba(0,32,255,0.03);
 	cursor: pointer;
 }
 
@@ -195,6 +196,8 @@ div#aboutWrapper {
 	left:auto;
 	top: 160px;
 	color: rgba(0,0,0,0.65);
+	font-size: 1.2em;
+	line-height: 1.6em;
 }
 
 /*  Div box thing  */
@@ -233,7 +236,7 @@ input[type="text"], input[type="email"], input[type="password"] {
 	border-bottom: 1px solid rgba(0,0,0,0.15);
 	border-collapse: collapse;
 	text-indent: 24px;
-	font-size: 18px;
+	font-size: 1.3em;
 	font-family: 'Lato';
 }
 
@@ -255,13 +258,17 @@ div.floatingBox input[type='button'], div.floatingBox input[type='submit'] {
 	cursor: pointer;
 }
 
+div.floatingBox input[type='button']:active, div.floatingBox input[type='submit']:active {
+	background-color: rgba(36,145,255,0.8);
+}
+
 input[type='button'], input[type='submit'] {
 	background-color: rgba(36,145,255,0.76);
 	outline:none;
 	border:none;
 	height:3em;
 	font-family: 'Ubuntu';
-	font-size: 16px;
+	font-size: 1.2em;
 	margin:0;
 	color:rgba(0,0,0,0.5);
 	display: block;

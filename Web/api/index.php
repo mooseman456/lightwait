@@ -326,7 +326,6 @@ function logIn($email, $password) {
       $_SESSION['lName'] = $row['lName'];
       $_SESSION['user_id'] = $row['user_id'];
       $_SESSION['email'] = $row['email'];
-      $_SESSION['phoneNumber'] = $row['phoneNumber'];
       $_SESSION['userType'] = $row['userType'];
 
       echo json_encode($arr);
