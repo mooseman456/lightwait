@@ -13,7 +13,7 @@
 ?>
     <div class="accountWrapper">
         <div class="floatingBox">
-        	<form id="editAccountForm" method="PUT" action="#">
+        	<form id="editAccountForm" method="PUT">
         		<input type="email" name="email" placeholder="Email">
         		<input type="password" name="password" placeholder="Password">
         		<input type="text" name="fName" placeholder="First Name">

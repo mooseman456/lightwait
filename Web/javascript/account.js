@@ -15,24 +15,22 @@ $(document).ready(function() {
     var passPat = /.{8,20}/;
     var namePat = /^[a-z ,.'-]+$/i;
     $('#loginForm input[type~="submit"]').click(function(e) {
-        e.preventDefault();
-        var email = $('#loginForm input[name="email"]').val();
+        /*var email = $('#loginForm input[name="email"]').val();
         var password = $('#loginForm input[name="password"]').val();
 
         console.log(email+ " "+password);
         if (email == "" || email == null)
             alert("Empty email. Please input your email");
         
-        else if (passPat.test(password))
+        else if (passPat.test(password)) */
             logIn(email, password);
-        else
-            alert("Invalid password! Must be 8 - 20 characters long!");
+        //else
+        //    alert("Invalid password! Must be 8 - 20 characters long!");
     });
 
 
     $('#createAccountForm input[type="submit"]').click(function(e) {
-        e.preventDefault();
-        var createValid = true;
+        /*var createValid = true;
         var errorString = "";
 
         
@@ -69,12 +67,11 @@ $(document).ready(function() {
         if (createValid === false)
             alert(errorString);
 
-        else
-            createAccount(fName, lName, email, password, phone);
+        else*/
+        createAccount(fName, lName, email, password, phone);
     });
 
     $('#editAccountForm input[type="submit"]').click(function(e) {
-        e.preventDefault();
         var errorString = "";
         var createValid = true;
        
