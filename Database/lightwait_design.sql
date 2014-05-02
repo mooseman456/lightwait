@@ -20,6 +20,7 @@ CREATE TABLE Fries (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key(id)
 ) ENGINE=InnoDB;
 
@@ -27,6 +28,7 @@ CREATE TABLE Breads (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key(id)
 ) Engine=InnoDB;
 
@@ -34,6 +36,7 @@ CREATE TABLE Bases (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key (id)
 ) Engine=InnoDB;
 
@@ -41,6 +44,7 @@ CREATE TABLE Cheeses (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key (id)
 ) Engine=InnoDB;
 
@@ -48,6 +52,7 @@ CREATE TABLE Toppings (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key (id)
 ) Engine=InnoDB;
 
