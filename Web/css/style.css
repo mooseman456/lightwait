@@ -143,7 +143,7 @@ section.queue:hover {
 /***************/
 /*   Sidebar   */
 /***************/
-#sidebar {
+div#sidebar {
 	width:20%;
 	height:100%;
 	position:absolute;
@@ -151,34 +151,36 @@ section.queue:hover {
 	right:0;
 	min-width:200px;
 	min-height:600px;
-	background-color: rgba(36,145,255,0.3);
-	background-color: rgba(0,0,0,0.3);
+	background-color: rgba(0,0,0,0.8);
+	color:rgba(255,255,255,0.84);
+	font-family: 'Lato'
 }
 
-#sidebar #quantityList{
+div#sidebar div#quantityList{
 	margin-left: 5%;
 	font-size: 20px;
 }
 
-#sidebar img {
+div#sidebar img {
 	height: 3.5em;
 	width:auto;
 	float: left;
 }
 
-#sidebar img:hover {
+div#sidebar img:hover {
 	opacity: .6;
+	cursor: pointer;
 }
 
-#page_number {
+div#page_number {
 	font-size: 3em;
 }
 
-.navigation div {
+div.navigation div {
 	float: left;
 }
 
-.navigation {
+div.navigation {
 	position: absolute;
 	bottom:0;
 	margin: 0.5em 0;
@@ -252,12 +254,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 	outline:0;
 }
 
-div.floatingBox input[type='button'], div.floatingBox input[type='submit'] {
-	margin: 16px auto;
-	width: 66%;
-	cursor: pointer;
-}
-
 div.floatingBox input[type='button']:active, div.floatingBox input[type='submit']:active {
 	background-color: rgba(36,145,255,0.8);
 }
@@ -272,7 +268,9 @@ input[type='button'], input[type='submit'] {
 	margin:0;
 	color:rgba(0,0,0,0.5);
 	display: block;
-	/*color:rgba(255,255,255,0.95);*/
+	cursor: pointer;
+	margin: 16px auto;
+	width: 66%;
 }
 
 input[type='button']:hover, input[type='submit']:hover {

@@ -22,7 +22,7 @@
 		<div id="quantityList">
 
 		</div>
-		<button id="recall">Recall</button>
+		<input type="button" id="recall" value="Recall" >
 		<div class="navigation">
 			<img src="images/prev_arrow.png" alt="Previous Arrow" />
 			<div id="page_number">1/1</div>
