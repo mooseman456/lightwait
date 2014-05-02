@@ -169,6 +169,7 @@ function getActiveOrders() {
 		dataType: "json", // data type of response
 		success: function(data){ 
 			orders = data;
+			console.log(JSON.stringify(data));
 			updateSidebar();
 			updateCurrentWindow();
 		}
