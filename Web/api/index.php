@@ -301,7 +301,6 @@ function logIn($email, $password) {
       $_SESSION['lName'] = $row['lName'];
       $_SESSION['user_id'] = $row['user_id'];
       $_SESSION['email'] = $row['email'];
-      $_SESSION['phoneNumber'] = $row['phoneNumber'];
       $_SESSION['userType'] = $row['userType'];
 
       echo json_encode($arr);
@@ -609,7 +608,7 @@ function logout() {
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='root';
+	$dbpass='arthas77';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
