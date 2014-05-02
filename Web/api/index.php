@@ -192,16 +192,41 @@ function getActiveOrders() {
   $query = "DEALLOCATE PREPARE stmt";
 
   $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+
+  $array = array();
   
   while ($row = $result->fetch_assoc()) {
-           // $row['ingredients'][] = $row['bread_name'];
-           // $row['ingredients'][] = $row['base_name'];
-           // $row['ingredients'][] = $row['cheese_name'];
-           // $row['ingredients'][] = $row['fry_type'];
-           $array[] = $row;
+    //$array[] = $row;
+
+    foreach ($row as $key => $value) {
+      if ($value == $key) {
+        $row['toppings'][] = $key;
+        unset($row[$key]);
+      }
+    }
+
+    // foreach ($row['toppings'] as $key => $value) {
+    //   if ($row[$value] == 'NULL') {
+    //     unset($row['topppings'][$key]);
+    //   }
+    // }
+
+    foreach ($row as $key => $value) {
+      if ($value == NULL) {
+        unset($row[$key]);
+      }
+    }
+    
+    if (array_key_exists("No Toppings", $row)) {
+      unset($row["No Toppings"]);
+      $row['toppings'] = "No Toppings";
+    }
+
+    echo json_encode($row);
+    echo "<hr>";
   }
 
-  $encoded = json_encode($array);
+  //$encoded = json_encode($array);
   printf($encoded);
 
   $mysqli->close();
@@ -301,7 +326,6 @@ function logIn($email, $password) {
       $_SESSION['lName'] = $row['lName'];
       $_SESSION['user_id'] = $row['user_id'];
       $_SESSION['email'] = $row['email'];
-      $_SESSION['phoneNumber'] = $row['phoneNumber'];
       $_SESSION['userType'] = $row['userType'];
 
       echo json_encode($arr);
