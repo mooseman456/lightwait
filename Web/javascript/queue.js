@@ -1,8 +1,6 @@
 //  Queue Javascript
 //	Lightwait Project
-//	Created 4/4/14 by Luke Oglesbee
-
-//	TODO: Display orders as they come.  As it is now you must refresh the page
+//	Created 4/4/14
 
 
 const rootURL = "api/index.php"
@@ -12,6 +10,12 @@ var currentPage=1;
 
 $(document).ready(function() {
     getActiveOrders();
+
+    /** Set height of queueWindow to fill remaining window afer navbar */
+    setHeight();
+    $(window).resize(function() {
+    	setHeight();
+    });
 
     /***********************/
     /*   Event Listeners   */
@@ -49,10 +53,10 @@ $(document).ready(function() {
 // UPDATE CURRENT WINDOW
 // Add items in the order array to the window
 function updateCurrentWindow() {
-	$('div.window').empty();
+	$('div#queueWindow').empty();
 	updatePagenumbers();
 	if (orders.length==0) {
-		$('div.window').append('<h1>No pending orders</h1>');
+		$('div#queueWindow').append('<h1>No pending orders</h1>');
 	} else {
 		for(var i=(currentPage-1)*8; i<currentPage*8 && i < orders.length; i++) {
 			pushOrderToWindow(i);
@@ -67,7 +71,7 @@ function pushOrderToWindow(index) {
 	var userId = orders[index].user_id;
 	var timeStamp = orders[index].timePlaced;
 	var orderElement = $('<section class="queue" id="order'+orderId+'"><h1>Order #'+orderId+'</h1><ul></ul></section>');
-	$('div.window').append(orderElement);
+	$('div#queueWindow').append(orderElement);
 	$.each(orders[index], function(key,val) {
 		if ($.isArray(val)) {
 			val.forEach( function(item) {
@@ -79,9 +83,8 @@ function pushOrderToWindow(index) {
 				$(orderElement.children('ul')).append('<li>'+val+'</li>');
 		}
 	});
-	orderElement.append('<button class="bump">Bump</button>');
 
-	orderElement.children('button').click(function(event) {
+	orderElement.click(function(event) {
 		orderElement.remove();
 		orders.splice(index,1);
 		updateOrder(orderId, userId); //Server stuff
@@ -182,4 +185,13 @@ function updateQuantity(type, id) {
 			console.log(data, textStatus, jqXHR);
 		}
 	});
+}
+
+/*   Random helpers   */
+function setHeight() {
+	var navbarHeight = $('nav').height();
+    var windowHeight = $(window).height();
+    var contentHeight = windowHeight-navbarHeight;
+    $('div#queueWindow').height(contentHeight);
+    $('div#sidebar').height(contentHeight);
 }
