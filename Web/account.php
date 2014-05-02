@@ -11,15 +11,17 @@
     include('include/header.php');
 
 ?>
-	<form id="editAccountForm" method="PUT" action="#">
-        <h2>Edit Account Information</h2>
-		<input type="email" name="email" placeholder="Email">
-		<input type="password" name="password" placeholder="Password">
-		<input type="text" name="fName" placeholder="First Name">
-		<input type="text" name="lName" placeholder="Last Name">
-		<input type="tel" name="phone" placeholder="Phone">
-		<input type="submit" name="submit" value="Submit Changes">
-	</form>
+    <div class="accountWrapper">
+        <div class="floatingBox">
+        	<form id="editAccountForm" method="PUT" action="#">
+        		<input type="email" name="email" placeholder="Email">
+        		<input type="password" name="password" placeholder="Password">
+        		<input type="text" name="fName" placeholder="First Name">
+        		<input type="text" name="lName" placeholder="Last Name">
+        		<input type="submit" name="submit" value="Edit Account">
+        	</form>
+        </div>
+    </div>
 
 </body>
 </html>

@@ -1,8 +1,39 @@
 
 var rootURL = "api/index.php"
+var mMenuData;
+var mCurrType = "Bases";
 
 $(document).ready(function(){
     getMenuData();
+
+    /** Click listeners   */
+    /* Type selector for menu view */
+    $('.typeSelect').click(function(e) {
+        mCurrType=$(this).children().html();
+        inflateAdminMenu();
+    });
+
+    /* Add item  */
+    $('form#addItemToMenuForm input[type=submit]').click(function(e){
+        console.log("add item");
+        console.log(mMenuData);
+        // Get the name and title case it
+        tName = $('input[name=name').val();
+        tName = tName.toLowerCase();
+        tName = tName.replace(/\b./g, function(m){
+            return m.toUpperCase();
+        });
+
+        mCurrType = $('input[name=type]:checked').attr('value');
+        mMenuData[mCurrType].push({
+            'name':tName,
+            'available':true,
+        });
+        mMenuData[mCurrType].sort(stringCompare);
+        $('form#addItemToMenuForm')[0].reset();
+        inflateAdminMenu();
+        addIngredient(mCurrType, tName);
+    });
 });
 
 /************/
@@ -16,11 +47,16 @@ function getMenuData() {
         url: rootURL+"/ingredients",
         dataType: "json", // data type of response
         success: function(data){
-            //console.log(JSON.stringify(data));
+            console.log(JSON.stringify(data));
+            console.log(data.Toppings);
+            for (type in data) {
+                data[type].sort(stringCompare);
+            }
+            mMenuData = data;
             if($('title').html().toLowerCase()=='menu') {
-                inflateAdminMenu(data);
+                inflateAdminMenu();
             } else if($('title').html().toLowerCase()=='availability') {
-                inflateChefMenu(data);
+                inflateChefMenu();
             } else {
                 console.log("ERROR: Could not load menu data for this page.");
             }   
@@ -79,71 +115,42 @@ function deleteItem(type, id) {
 /**************************/
 /*   Inflater functions   */
 /**************************/
-function inflateAdminMenu(data) {
+function inflateAdminMenu() {
     //Menu categories edit pane
-    var pane = $('#menu-categories-edit-pane');
-    var curr;
-    var item;
-    for (var typeName in data) {
-        //console.log(data[typeName]);
-        pane.append('<div id="'+typeName+'" class="box"></div>');
-        curr=pane.children().last();
-        curr.append('<h1>'+typeName+'</h1>');
-        curr.append('<div id=ingredientInfo></div>');
-        ingredientInfo=curr.children().last();
-        for(var index in data[typeName]) {
-            item = data[typeName][index]['name'];
-            ingredientInfo.append('<section><h2>'+item+'</h2></section>');
-            var section = ingredientInfo.children().last();
-            section.append('<label for="'+item+'-available">available</label>');
-            section.append('<input type="checkbox" value="available" id="'+item+'-available"/>');
-            if (data[typeName][index]['available']== true) {
-                section.children().last().prop('checked',true);
-            }
-            //Change availability check action
-            (function() {
-                var checkbox = section.children().last();
-                var type = typeName;
-                var id = data[typeName][index]['id'];
-                checkbox.change(function(e) {
-                    var isChecked = checkbox.prop('checked');
-                    console.log('Box checked: '+isChecked);
-                    updateAvailability(type, isChecked, id);
-                });
-            })();
-
-            section.append('<input type="button" value="delete" />');
-            (function() {
-                var thisSection = section;
-                thisSection.children().last().click(function() {
-                    alert("Delete is not currently supported. Contact lightwait support for assistance.");
-                    //TODO: Delete action
-                });
-            })();
+    pane = $('#menuDisplayTypeView');
+    pane.empty();
+    pane.append('<ul>');
+    for (itemNum in mMenuData[mCurrType]) {
+        itemName = mMenuData[mCurrType][itemNum]["name"];
+        pane.append('<li></li>');
+        list = $('li').last();
+        list.append('<span>'+itemName+'</span>');
+        list.append('<img id="item'+itemNum+'-delete" src="images/delete.png" alt="delete" />');
+        list.append('<label for="item'+itemNum+'-availableCheckbox">Available</label>');
+        list.append('<input type="checkbox" name="item'+itemNum+'-availableCheckbox" value="item'+itemNum+'-availableCheckbox" id="item'+itemNum+'-availableCheckbox"/>');
+        if (mMenuData[mCurrType][itemNum]['available'] == true) {
+            $('input[type=checkbox]').last().prop('checked',true);
         }
-        curr.append('<form id="add'+typeName+'Form"method="PUTS" action="#"</form>');
-        item = curr.children().last();
-        item.append('<input type="text" name="ingredient" placeholder="New Item" />');
-        item.append('<input type="submit" value="Add Item" />');
-        //Add item click action
+        // Availability check changed listener
         (function() {
-            var type = typeName;
-            var form = item;
-            item.submit(function(e) {
-                e.preventDefault();
-                var name = form.children('input[name="ingredient"]').val().toLowerCase();
-                name = name.replace(/\b./g,function(m){ return m.toUpperCase(); });
-                addIngredient(type, name);
-                location.reload();
+            checkbox = $('input[type=checkbox]').last();
+            type = mCurrType;
+            id = mMenuData[mCurrType][itemNum]['id'];
+            checkbox.change(function(e) {
+                isChecked = checkbox.prop('checked');
+                console.log('Box checked: '+isChecked);
+                updateAvailability(type, isChecked, id);
+            });
+        })();
+        (function() {
+            var deleteButton = $('img').last();
+            deleteButton.click(function() {
+                alert("Delete is not currently supported. Contact lightwait support for assistance.");
+                //TODO: Delete action
             });
         })();
     }
-
-    //Edit menu nav bar
-    pane = $('#menu-categories-pane');
-    for(var type in data) {
-        pane.append('<div><a href="#'+type+'">'+type+'</a></div>');
-    }
+    pane.append('</ul>');
 }
 
 
@@ -210,4 +217,14 @@ function inflateChefMenu(data) {
             }
         }
     });*/
+}
+
+var stringCompare = function(a, b) {
+    if (a.name < b.name) {
+        return -1;
+    } if (a.name > b.name) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
