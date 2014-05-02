@@ -221,9 +221,9 @@ function getActiveOrders() {
       unset($row["No Toppings"]);
       $row['toppings'] = "No Toppings";
     }
-  }
 
-  echo json_encode($row);
+    echo json_encode($row);
+  }
 
   $mysqli->close();
 }
@@ -283,8 +283,26 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
 
   if ($row['count'] == 0) {
 
-    $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
-    $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+    try {
+
+      $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
+      $result = $mysqli->query($query);
+
+      if (!$result) {
+       throw new Exception("Could not create account");
+      }
+
+      $user_id = $mysqli->insert_id;
+      //Set SESSION variables
+      $_SESSION['fName'] = $fName;
+      $_SESSION['lName'] = $lName;
+      $_SESSION['user_id'] = $user_id;
+      $_SESSION['email'] = $email;
+      $_SESSION['userType'] = $usertype;
+
+    } catch (Exception $e) {
+      echo json_encode($e);
+    }
 
   } else {
 
