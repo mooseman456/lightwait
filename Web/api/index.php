@@ -651,9 +651,11 @@ function removeIngredient($type, $id) {
 
   $query = "UPDATE $type SET isActive=0 WHERE id=$id";
 
-  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+  $result = $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
   $mysqli->close();
+
+  echo json_encode($result);
 }
 
 function getAllIngredients() {
