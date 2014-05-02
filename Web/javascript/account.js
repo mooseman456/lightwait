@@ -96,19 +96,13 @@ $(document).ready(function() {
             errorString += "Invalid password! Must be 8 - 20 characters long!\n";
             createValid = false;
         }
-        
-        var phone = $('#editAccountForm input[name="phone"]').val();
-        if (phone === "") {
-            errorString += "Phone number empty!\n";
-            createValid = false;
-        }
 
         if (createValid === true) {
             e.preventDefault();
-            updateAccount(password, fName, lName, email, phone);
+            updateAccount(password, fName, lName, email);
         }
-        else
-            alert(errorString);
+        //else
+        //    alert(errorString);
     });
 });
 
@@ -131,10 +125,10 @@ function createAccount(fName, lName, email, password) {
   });
 }
 
-function updateAccount(password, fName, lName, email, phoneNumber) {
+function updateAccount(password, fName, lName, email) {
   $.ajax({
      type: 'PUT',
-     url: rootURL + '/updateaccount/' + password + '/' + fName + '/' + lName + '/' + email + '/' + phoneNumber,
+     url: rootURL + '/updateaccount/' + password + '/' + fName + '/' + lName + '/' + email,
      dataType: "json", // data type of response
      success: function(){
         console.log("Account updated");
