@@ -232,8 +232,8 @@ input[type="text"], input[type="email"], input[type="password"] {
 	border-top: none;
 	border-bottom: 1px solid rgba(0,0,0,0.15);
 	border-collapse: collapse;
-	text-indent: 22px;
-	font-size: 16px;
+	text-indent: 24px;
+	font-size: 18px;
 	font-family: 'Lato';
 }
 
