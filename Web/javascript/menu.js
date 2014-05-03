@@ -81,6 +81,23 @@ function addIngredient(type, name) {
     });
 }
 
+//Remove an ingredient from the database (set isActive = False)
+function removeIngredient(type, id) {
+    $.ajax({
+        type: 'PUT',
+        url: rootURL + '/removeingredient/' + type + '/' + id,
+        dataType: "json", // data type of response
+        async: false,
+        success: function(){
+            console.log("Ingredient removed");
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log("Could not remove ingredient");
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
+}
+
 //Changes the availability of a an ingredient in the database
 //Name is the name of an ingredient and availabilityStatus is a boolean value
 function updateAvailability(type, isChecked, id) {
@@ -96,21 +113,6 @@ function updateAvailability(type, isChecked, id) {
         }
     });
 }
-
-function deleteItem(type, id) {
-    $.ajax({
-        type: 'POST',
-        url: rootURL + '/delete/' + type + '/' + id,
-        success: function(){
-            console.log("Item deleted");
-        },
-            error: function(jqXHR, textStatus, errorThrown){
-            console.log("Item deletion failed");
-            console.log(jqXHR, textStatus, errorThrown);
-        }
-    });
-}
-
 
 /**************************/
 /*   Inflater functions   */
@@ -199,28 +201,6 @@ function inflateChefMenu() {
         }
         //$(".mainForm > div").append("<div class=\"divider\"></div>")
     }
-    /*$(".mainForm").append("<input id=\"availButton\" type=\"submit\">");
-    $("#availButton").click(function(){
-        var switchOn = new Array;
-        var switchOff = new Array;
-        var g=0;
-        for(var key in data){
-            g++;
-            for(var h=0; h<data[key].length; h++){
-                var inputPos="body > div > form > div:nth-child("+(g)+") > div:nth-child("+(h+2)+") > div > input";
-                //console.log(data[key][h].name+",--- "+data[key][h].available+", ---"+$(inputPos).is(":checked"));
-                if(data[key][h].available!=$(inputPos).is(":checked")){
-                    console.log(data[key]);
-                    if(data[key][h].available==1)
-                        updateAvailability(key, false, data[key][h].id);
-                        //switchOff.push(data[key][h].name);
-                    if(data[key][h].available==0)
-                        updateAvailability(key, true, data[key][h].id);
-                        //switchOn.push(data[key][h].name);
-                }
-            }
-        }
-    });*/
 }
 
 var stringCompare = function(a, b) {
