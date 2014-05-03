@@ -19,7 +19,7 @@
 			</form>
 		</div>
 		<div id="fade" class="black_overlay"></div>
-		<div id="light" class="white_content">You're going Down!<a id="popdown">Close</a></div>
+		<div id="light" class="white_content">Isn't this exciting?!!   <a id="popdown">Close</a></div>
 		
 	</div>
 </body>
