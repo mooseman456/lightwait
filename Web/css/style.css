@@ -239,7 +239,8 @@ div#aboutWrapper {
 }
 
 div#aboutWrapper img{
-	max-height: 35%;
+	padding-top: 5%;
+	max-height: 30%;
 	display: block;
     margin-left: auto;
     margin-right: auto;
