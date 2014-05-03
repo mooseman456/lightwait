@@ -354,6 +354,15 @@ div.order-wrapper {
 	margin:0 10%;
 }
 
+.outOfStock{
+	color: red;
+	-moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 /*Popup Stuff*/
 .black_overlay{
 	display: none;
