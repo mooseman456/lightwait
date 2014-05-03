@@ -278,39 +278,37 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   $row = $result->fetch_assoc();
 
-  if ($row['count'] == 0) {
+  try {
+    if ($row['count'] == 0) {
 
-    try {
+        $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
+        $result = $mysqli->query($query);
 
-      $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
-      $result = $mysqli->query($query);
+        if (!$result) {
+         throw new Exception("Could not create account");
+        }
 
-      if (!$result) {
-       throw new Exception("Could not create account");
-      }
+        $user_id = $mysqli->insert_id;
+        //Set SESSION variables
+        if (!isset($_SESSION['userType'])) {
+          $_SESSION['fName'] = $fName;
+          $_SESSION['lName'] = $lName;
+          $_SESSION['user_id'] = $user_id;
+          $_SESSION['email'] = $email;
+          $_SESSION['userType'] = $usertype;
+        }
 
-      $user_id = $mysqli->insert_id;
-      //Set SESSION variables
-      if (!isset($_SESSION['userType'])) {
-        $_SESSION['fName'] = $fName;
-        $_SESSION['lName'] = $lName;
-        $_SESSION['user_id'] = $user_id;
-        $_SESSION['email'] = $email;
-        $_SESSION['userType'] = $usertype;
-      }
-
-    } catch (Exception $e) {
-      echo json_encode($e);
+    } else {
+      throw new Exception("Email already in use");
     }
 
-  } else {
+    echo json_encode($query);
 
-    echo json_encode("Account could not be created");
+    $mysqli->close();
+}
+  catch(Exception $e){
+    echo $e->getMessage();
   }
-
-  echo json_encode($query);
-
-  $mysqli->close();
   
 }
 
@@ -346,7 +344,7 @@ function logIn($email, $password) {
     else
       throw new Exception('Bad login.');
   } catch(Exception $e) {
-    echo 'Caught exception: ', $e->getMessage(), "\n";
+    echo $e->getMessage(), "\n";
   }
 
   $result->free();
@@ -601,24 +599,32 @@ function updateEmail($currentEmail, $newEmail) {
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
     $request = $app->request()->getBody();
+    try {
+      if ($currentEmail != $_SESSION['email'])
+        throw new Exception("Email incorrect");
 
-    if ($currentEmail != $_SESSION['email'])
-      throw new Exception("Email incorrect");
+      $newEmail = $mysqli->escape_string($newEmail);
+      $query = "SELECT COUNT(*) as count FROM Users WHERE email='$newEmail'";
+      $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+      $row = $result->fetch_assoc();
+      //Email is currently available
+      if ($row['count'] === 0) {
 
-    $newEmail = $mysqli->escape_string($newEmail);
-    //Correct email and pass provided
-    if ($_SESSION['user_id']) {
+          $query = "UPDATE Users SET email='$newEmail' WHERE user_id='".$_SESSION['user_id']."' ";
+          $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+          $_SESSION['email'] = $newEmail;
 
-        $query = "UPDATE Users SET email='$newEmail' WHERE user_id='".$_SESSION['user_id']."' ";
-        $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
-        $_SESSION['email'] = $newEmail;
-
-    } else {    //Incorrect email and pass
-
+      } else {    //Email in use
+        throw new Exception("Email already in use");
+      }
+      $result->free();
+      $mysqli->close();
+      echo json_encode($query);
     }
-
-    $mysqli->close();
-    echo json_encode($query); 
+    catch (Exception $e) {
+      echo $e->getMessage();
+    }
+     
 }
 
 function updatePassword($currentPassword, $newPassword){
@@ -626,31 +632,32 @@ function updatePassword($currentPassword, $newPassword){
     $app = \Slim\Slim::getInstance();
     $request = $app->request()->getBody();
 
-    $password = $mysqli->escape_string($currentPassword);
-    $password = hash("sha512", $password);
+    $newPassword = $mysqli->escape_string($newPassword);
+    $newPassword = hash("sha512", $newPassword);
+
+    $currentPassword = $mysqli->escape_string($currentPassword);
+    $currentPassword = hash("sha512", $currentPassword);
 
     //Check if the password is correct
     $query = "SELECT password FROM Users WHERE user_id='".$_SESSION['user_id']."' ";
     $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+    try {
+      $row = $result->fetch_assoc();
+      if ($currentPassword != $row['password'])
+        throw new Exception("Password incorrect");
 
-    $row = $result->fetch_assoc();
-    if ($password != $row['password'])
-      throw new Exception("Password incorrect");
-    //Correct email and pass provided
-    if ($row['user_id']) {
+      $query = "UPDATE Users SET password='$newPassword' WHERE user_id='".$_SESSION['user_id']."' ";
+      $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
 
-        $query = "UPDATE Users SET password='$password' WHERE user_id='".$row['user_id']."' ";
-        $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
-
-    } else {    //Incorrect email and pass
-
+      $mysqli->close();
+      echo json_encode($query); 
     }
-
-    $mysqli->close();
-    echo json_encode($query); 
+    catch (Exception $e) {
+      echo $e->getMessage();
+    }
 }
 
-function updateAccount($password, $fName, $lName, $email) {
+/*function updateAccount($password, $fName, $lName, $email) {
 
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
@@ -682,7 +689,7 @@ function updateAccount($password, $fName, $lName, $email) {
     $result->free();
     echo json_encode($query); 
     $mysqli->close();
-}
+}*/
 
 // Adds a new ingredient to the specified type
 // Example: addIngredient(Topping, Guacamole) would create a new Topping called 
