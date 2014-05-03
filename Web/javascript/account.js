@@ -135,7 +135,7 @@ function createAccount(fName, lName, email, password) {
      error: function(jqXHR, errorThrown){
         console.log("Account creation failed");
         console.log(jqXHR, errorThrown);
-        alert('Account creation failed, sorry.');
+        alert(jqXHR.responseText);
      }
   });
 }
