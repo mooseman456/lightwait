@@ -2,6 +2,8 @@ var rootURL = "api/index.php";
 
 $(document).ready(function(){
     getMenuData();
+
+    
 });
 
 function updateScroller(currentIndex) {

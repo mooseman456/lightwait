@@ -10,6 +10,8 @@ $(document).ready(function(){
     /* Type selector for menu view */
     $('.typeSelect').click(function(e) {
         mCurrType=$(this).children().html();
+        $('.typeSelect').removeClass('selected');
+        $(this).addClass('selected');
         inflateAdminMenu();
     });
 
