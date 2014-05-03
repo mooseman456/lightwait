@@ -154,7 +154,7 @@ function updateEmail(currentEmail, newEmail) {
      error: function(jqXHR, textStatus, errorThrown){
         console.log("Account update failed");
         console.log(jqXHR, textStatus, errorThrown);
-        alert(textStatus);
+        alert(jqXHR.responseText);
      }
   });
 }
@@ -172,7 +172,7 @@ function updatePassword(currentPassword, newPassword) {
      error: function(jqXHR, textStatus, errorThrown){
         console.log("Account update failed");
         console.log(jqXHR, textStatus, errorThrown);
-        alert(textStatus);
+        alert(jqXHR.responseText);
      }
   });
 }
