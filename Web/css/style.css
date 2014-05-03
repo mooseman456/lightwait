@@ -402,17 +402,18 @@ div.order-wrapper {
 	margin: 0 5px;
 	text-align: left;
 	font-size: 24px;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .mainForm > div > div > div{
 	float: right;
+	-webkit-column-break-inside:avoid;
 }
 
 
 .mainForm > div{
-	padding: 10px;
+	/*padding: 10px;*/
 	margin-top: 10px;
 	-webkit-column-count: 3;
 	-webkit-column-gap: 20px;
@@ -426,14 +427,16 @@ div.order-wrapper {
 	border-top: 1px solid rgba(0,0,0,0.15);*/
 }
 
-.mainForm > div > div:first-child{
-	margin-top: 0px;
-}
 
 /*For Switch Buttons*/
 
 .mainForm > div > label{
 	font-size: 16px;
+}
+
+.divider {
+	height:0px;
+	border: 1px solid rgba(0,0,0,0.15);
 }
 
 .onoffswitch {
