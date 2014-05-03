@@ -163,13 +163,14 @@ function recallOrder() {
 
 // Get Active Orders
 function getActiveOrders() {
+	console.log("getActiveOrders");
 	$.ajax({
 		type: 'GET',
 		url: rootURL + "/activeorders",
 		dataType: "json", // data type of response
 		success: function(data){ 
 			orders = data;
-			console.log(JSON.stringify(data));
+			console.log(JSON.stringify("data: " + orders));
 			updateSidebar();
 			updateCurrentWindow();
 		}
