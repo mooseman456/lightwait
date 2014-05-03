@@ -187,12 +187,13 @@ div#sidebar img:hover {
 	float:left;
 }
 
-div.navigation {
-	float:none;
-}
-
 div.navigation > * {
 	display: block;
+}
+
+div#sidebarInputContainer {
+	position: absolute;
+	bottom:16px;
 }
 
 /*******************/
