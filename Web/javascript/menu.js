@@ -81,6 +81,23 @@ function addIngredient(type, name) {
     });
 }
 
+//Remove an ingredient from the database (set isActive = False)
+function removeIngredient(type, id) {
+    $.ajax({
+        type: 'PUT',
+        url: rootURL + '/removeingredient/' + type + '/' + id,
+        dataType: "json", // data type of response
+        async: false,
+        success: function(){
+            console.log("Ingredient removed");
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log("Could not remove ingredient");
+            console.log(jqXHR, textStatus, errorThrown);
+        }
+    });
+}
+
 //Changes the availability of a an ingredient in the database
 //Name is the name of an ingredient and availabilityStatus is a boolean value
 function updateAvailability(type, isChecked, id) {
@@ -96,21 +113,6 @@ function updateAvailability(type, isChecked, id) {
         }
     });
 }
-
-function deleteItem(type, id) {
-    $.ajax({
-        type: 'POST',
-        url: rootURL + '/delete/' + type + '/' + id,
-        success: function(){
-            console.log("Item deleted");
-        },
-            error: function(jqXHR, textStatus, errorThrown){
-            console.log("Item deletion failed");
-            console.log(jqXHR, textStatus, errorThrown);
-        }
-    });
-}
-
 
 /**************************/
 /*   Inflater functions   */

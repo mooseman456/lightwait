@@ -8,7 +8,6 @@ require 'Slim/Slim.php';
 
 $app = new \Slim\Slim();
 
-$app->get('/orders', 'getOrders');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/activeingredients', 'getActiveIngredients');
 $app->get('/recall', 'recallOrder');
@@ -22,7 +21,8 @@ $app->post('/account', 'createMobileAccount');
 $app->put('/account/devicetoken', 'updateDeviceToken');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
-$app->put('/updateaccount/:password/:fName/:lName/:email', 'updateAccount');
+$app->put('/updateemail/:currentEmail/:newEmail', 'updateEmail');
+$app->put('/updatepassword/:currentPassword/:newPassword', 'updatePassword');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
@@ -32,19 +32,6 @@ $app->put('/removeingredient/:type/:id', 'removeIngredient');
 $app->get('/allingredients', 'getAllIngredients');
 
 $app->run();
-
-function getOrders() {
-	$sql = "select * FROM orders ORDER BY name";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);  
-		$orders = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo json_encode($orders);
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
-}
 
 function addWebOrder() {
   $mysqli = getConnection();
@@ -81,6 +68,8 @@ function addWebOrder() {
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
   echo "<a href=../../order.php>New Order</a>";
+  $result->free();
+  $mysqli->close();
 }
 
 function addMobileOrder() {
@@ -107,6 +96,7 @@ function addMobileOrder() {
     
   }
 
+  $result->free();
   $mysqli->close();
 }
 
@@ -142,6 +132,7 @@ function updateOrder($orderID, $userID) {
   $query = "UPDATE Orders SET isActive=0 WHERE order_id=$orderID";
   $mysqli->query($query);
 
+  $result->free();
   $mysqli->close();
 }
 
@@ -152,9 +143,10 @@ function updateAvailability($type, $available, $id) {
   $query = "UPDATE $type SET available=$available WHERE id=$id";
   $mysqli->query($query);
 
-  $mysqli->close();
+  $result->free();
 
   echo json_encode($query); 
+  $mysqli->close();
 }
 
 function recallOrder() {
@@ -224,6 +216,7 @@ function getActiveOrders() {
 
     $array[] = $row;
   }
+  $result->free();
 
   echo json_encode($array);
 
@@ -246,6 +239,8 @@ function createMobileAccount() {
   $userID = $mysqli->insert_id;
 
   $returnArray['userID'] = $userID;
+
+  $result->free();
 
   echo json_encode($returnArray);
 
@@ -296,11 +291,13 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
 
       $user_id = $mysqli->insert_id;
       //Set SESSION variables
-      $_SESSION['fName'] = $fName;
-      $_SESSION['lName'] = $lName;
-      $_SESSION['user_id'] = $user_id;
-      $_SESSION['email'] = $email;
-      $_SESSION['userType'] = $usertype;
+      if (!isset($_SESSION['userType'])) {
+        $_SESSION['fName'] = $fName;
+        $_SESSION['lName'] = $lName;
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['email'] = $email;
+        $_SESSION['userType'] = $usertype;
+      }
 
     } catch (Exception $e) {
       echo json_encode($e);
@@ -351,6 +348,9 @@ function logIn($email, $password) {
   } catch(Exception $e) {
     echo 'Caught exception: ', $e->getMessage(), "\n";
   }
+
+  $result->free();
+  $mysqli->close();
 
 }
 
@@ -408,7 +408,7 @@ function getActiveIngredients() {
   $encoded = json_encode($menuData);
   printf($encoded);
 
-  // Close mysqli connection
+  $result->free();
   $mysqli->close();
 }
 
@@ -518,7 +518,8 @@ function getTableName($name) {
   }
 }
 
-
+// Used for analytics. It returns sumple data from the DB about each ingredient.
+// Just the COUNT of each ingredient
 function simpleQuery($type) {
   $mysqli = getConnection();
 
@@ -551,7 +552,7 @@ function simpleQuery($type) {
   $mysqli->close();
 }
 
-
+// Gets the availabilty of every ingredient offered
 function getAvailability() {
   $mysqli = getConnection();
 
@@ -595,6 +596,59 @@ function getAvailability() {
   // Close mysqli connection
   $mysqli->close();
 }
+function updateEmail($currentEmail, $newEmail) {
+
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
+
+    if ($currentEmail != $_SESSION['email'])
+      throw new Exception("Email incorrect");
+
+    $newEmail = $mysqli->escape_string($newEmail);
+    //Correct email and pass provided
+    if ($_SESSION['user_id']) {
+
+        $query = "UPDATE Users SET email='$newEmail' WHERE user_id='".$_SESSION['user_id']."' ";
+        $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+        $_SESSION['email'] = $newEmail;
+
+    } else {    //Incorrect email and pass
+
+    }
+
+    $mysqli->close();
+    echo json_encode($query); 
+}
+
+function updatePassword($currentPassword, $newPassword){
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
+
+    $password = $mysqli->escape_string($currentPassword);
+    $password = hash("sha512", $password);
+
+    //Check if the password is correct
+    $query = "SELECT password FROM Users WHERE user_id='".$_SESSION['user_id']."' ";
+    $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+
+    $row = $result->fetch_assoc();
+    if ($password != $row['password'])
+      throw new Exception("Password incorrect");
+    //Correct email and pass provided
+    if ($row['user_id']) {
+
+        $query = "UPDATE Users SET password='$password' WHERE user_id='".$row['user_id']."' ";
+        $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+
+    } else {    //Incorrect email and pass
+
+    }
+
+    $mysqli->close();
+    echo json_encode($query); 
+}
 
 function updateAccount($password, $fName, $lName, $email) {
 
@@ -609,13 +663,13 @@ function updateAccount($password, $fName, $lName, $email) {
     $lName = $mysqli->escape_string($lName);
     $email = $mysqli->escape_string($email);
 
-    //Check if the password is correct
+    // Check if the password and email match
     $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
     $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
     $row = $result->fetch_assoc();
 
-    //Correct email and pass provided
+    // if Correct email and password provided
     if ($row['user_id']) {
 
         $query = "UPDATE Users SET fName='$fName', lName='$lName', WHERE user_id='".$row['user_id']."' ";
@@ -625,10 +679,14 @@ function updateAccount($password, $fName, $lName, $email) {
 
     }
 
-    $mysqli->close();
+    $result->free();
     echo json_encode($query); 
+    $mysqli->close();
 }
 
+// Adds a new ingredient to the specified type
+// Example: addIngredient(Topping, Guacamole) would create a new Topping called 
+// Guacamole and set it to active and available for Users to order
 function addIngredient($type, $name) {
     $mysqli = getConnection();
 
@@ -638,24 +696,13 @@ function addIngredient($type, $name) {
     $mysqli->close();
 
     echo json_encode($result);
-    }
-
-function logout() {
-    session_destroy();
+    $result->free();
+    $mysqli->close();
 }
 
-function getConnection() {
-	$dbhost='localhost';
-	$dbuser='root';
-	$dbpass='root';
-	$dbname='lightwait';
-	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-    if($db->connect_errno > 0) {
-        die('Unable to connect to database [' . $db->connect_error . ']');
-    }
-  return $db;
-}
 
+// A function that allows debugging php easily
+// Writes to lightwait_development.log in the log folder
 function writeToLog($message)
 {
   if ($fp = fopen('log/lightwait_development.log', 'at'))
@@ -665,8 +712,11 @@ function writeToLog($message)
   }
 }
 
+// Fills the database with a slew of random orders and random toppings
+// Used for troubleshooting, stress testing, and analytics
 function fillDB() {
   $mysqli = getConnection();
+  //Change this loop time to add more orders to the DB
   for ($i = 0; $i < 30; $i++) {
     $randBread = rand(1, 3);
     $randBase = rand(1, 6);
@@ -688,8 +738,11 @@ function fillDB() {
     }
   }
   echo "Database fill complete";
+  $mysqli->close();
 }
 
+// Removes an item from the database (Sets 'isActive'= False for the specified ingredient)
+// Note: type is the type of ingredient (base, bread, cheese, fry (or fries), and toppings)
 function removeIngredient($type, $id) {
   $mysqli = getConnection();
 
@@ -712,8 +765,12 @@ function removeIngredient($type, $id) {
   $mysqli->close();
 
   echo json_encode($result);
+  $result->free();
+  $mysqli->close();
 }
 
+// Returns a JSON array of all the ingredients whether they are 
+// active or removed
 function getAllIngredients() {
   $mysqli = getConnection();
 
@@ -750,7 +807,26 @@ function getAllIngredients() {
   $encoded = json_encode($menuData);
   printf($encoded);
 
+  $result->free();
   $mysqli->close();
+}
+
+//when the user logs out, the session is destroyed 
+function logout() {
+    session_destroy();
+}
+
+//creates a mysqli connection to the DB with these credentials
+function getConnection() {
+  $dbhost='localhost';
+  $dbuser='root';
+  $dbpass='root';
+  $dbname='lightwait';
+  $db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+    if($db->connect_errno > 0) {
+        die('Unable to connect to database [' . $db->connect_error . ']');
+    }
+  return $db;
 }
 
 
