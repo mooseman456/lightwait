@@ -641,9 +641,21 @@ div#advancedQueryContainer {
 }
 
 
+/****************/
+/* Edit Account */
+/****************/
 
+#passWrap {
+	margin-top:10px;
+}
 
+#emailWrap {
+	margin-bottom:10px;
+}
 
+div form h2{
+	text-align: center;
+}
 
 /******************/
 /*   ORDER PAGE   */
