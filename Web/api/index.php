@@ -613,6 +613,7 @@ function updateEmail($currentEmail, $newEmail) {
 
         $query = "UPDATE Users SET email='$newEmail' WHERE user_id='".$_SESSION['user_id']."' ";
         $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+        $_SESSION['email'] = $newEmail;
 
     } else {    //Incorrect email and pass
 
@@ -636,7 +637,7 @@ function updatePassword($currentPassword, $newPassword){
 
     $row = $result->fetch_assoc();
     if ($password != $row['password'])
-      throw new Excpetion("Password incorrect");
+      throw new Exception("Password incorrect");
     //Correct email and pass provided
     if ($row['user_id']) {
 
