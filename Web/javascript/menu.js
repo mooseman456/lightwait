@@ -167,6 +167,9 @@ function inflateChefMenu() {
         for(var i=0; i<mMenuData[key].length; i++){
             var allPurpose=mMenuData[key][i].name;
             if(allPurpose.indexOf("No ") === -1){
+
+                if(allPurpose==="Regular")
+                    allPurpose="Potato";
                 //$(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
                 //$(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
                 var coolString="<div>"+allPurpose+"<div class=\"onoffswitch\">\
@@ -196,6 +199,7 @@ function inflateChefMenu() {
                 })();
             }
         }
+        //$(".mainForm > div").append("<div class=\"divider\"></div>")
     }
 }
 

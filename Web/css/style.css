@@ -232,10 +232,21 @@ div#aboutWrapper {
 	position: absolute;
 	right: 8%;
 	left:auto;
-	top: 160px;
+	top: 1%;
 	color: rgba(0,0,0,0.65);
 	font-size: 1.2em;
-	line-height: 1.6em;
+	line-height: 1.5em;
+}
+
+div#aboutWrapper img{
+	max-height: 35%;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#aboutWrapper p{
+	margin-top: 0;
 }
 
 /*  Div box thing  */
@@ -429,17 +440,18 @@ div.order-wrapper {
 	margin: 0 5px;
 	text-align: left;
 	font-size: 24px;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .mainForm > div > div > div{
 	float: right;
+	-webkit-column-break-inside:avoid;
 }
 
 
 .mainForm > div{
-	padding: 10px;
+	/*padding: 10px;*/
 	margin-top: 10px;
 	-webkit-column-count: 3;
 	-webkit-column-gap: 20px;
@@ -453,14 +465,16 @@ div.order-wrapper {
 	border-top: 1px solid rgba(0,0,0,0.15);*/
 }
 
-.mainForm > div > div:first-child{
-	margin-top: 0px;
-}
 
 /*For Switch Buttons*/
 
 .mainForm > div > label{
 	font-size: 16px;
+}
+
+.divider {
+	height:0px;
+	border: 1px solid rgba(0,0,0,0.15);
 }
 
 .onoffswitch {
