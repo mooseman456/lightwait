@@ -65,11 +65,12 @@ function addWebOrder() {
   //  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
   //}
 
-  echo "<h2>Thank you for your order!</h2>";
-  echo "<h3>It has been received and is underway!</h3>";
-  echo "<a href=../../order.php>New Order</a>";
+  //echo "<h2>Thank you for your order!</h2>";
+  //echo "<h3>It has been received and is underway!</h3>";
+  //echo "<a href=../../order.php>New Order</a>";
   //$result->free();
   $mysqli->close();
+  //include('/Web/order.php');
 }
 
 function addMobileOrder() {

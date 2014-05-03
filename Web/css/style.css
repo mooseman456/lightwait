@@ -834,3 +834,11 @@ div form h2{
 #orderWrapper .disabled {
 	opacity:0.;
 }
+
+.outOfStock label::after{
+	content:"- (currently unavailable)";
+}
+
+.outOfStock{
+	opacity:0.5;
+}
