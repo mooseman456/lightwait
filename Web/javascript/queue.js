@@ -70,23 +70,26 @@ function pushOrderToWindow(index) {
 	var orderId = orders[index].order_id;
 	var userId = orders[index].user_id;
 	var timeStamp = orders[index].timePlaced;
-	var orderElement = $('<section class="queue" id="order'+orderId+'"><h1>Order #'+orderId+'</h1><ul></ul></section>');
+	var orderElement = $('<section class="queue" id="order'+orderId+'"><ul></ul></section>');
 	$('div#queueWindow').append(orderElement);
-	$.each(orders[index], function(key,val) {
-		if ($.isArray(val)) {
-			val.forEach( function(item) {
-				if (item !== null)
-			   		$(orderElement.children('ul')).append('<li>'+item+'</li>');
-			});
-		} else {
-			if (val !== null)
-				$(orderElement.children('ul')).append('<li>'+val+'</li>');
-		}
-	});
+	var order = orders[index];
+	$(orderElement).children('ul').append('<li class="orderName">'+order['fName']+' '+order['lName']+'</li>');
+	$(orderElement).children('ul').append('<li class="orderBase">'+order['base_name']+'</li>');
+	$(orderElement).children('ul').append('<li class="orderBread">'+order['bread_name']+'</li>');
+	$(orderElement).children('ul').append('<li class="orderCheese">'+order['cheese_name']+'</li>');
+	var toppings = "";
+	for( var i in order['toppings']) {
+		toppings += order['toppings'][i] + ', ';
+		//$(orderElement).children('ul').append('<li>'+order['toppings'][i]+'<li>');
+	}
+	toppings = toppings.slice(0,toppings.length-2);
+	$(orderElement).children('ul').append('<li class="orderToppings">'+toppings+'</li>');
+	$(orderElement).children('ul').append('<span class="orderHelpMessage">click to bump</span>');
 
-	orderElement.click(function(event) {
+	orderElement.click(function(e) {
+		console.log(orderElement);
 		orderElement.remove();
-		orders.splice(index,1);
+		console.log(orderId+' '+userId);
 		updateOrder(orderId, userId); //Server stuff
 		updateSidebar();
 		updateCurrentWindow();
@@ -136,7 +139,7 @@ function updateOrder(orderid, userid) {
 		contentType: 'application/json',
 		url: rootURL + '/' + orderid + '/' + userid,
 		success: function(){
-
+			getActiveOrders();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log("Order upload failed");
@@ -169,7 +172,6 @@ function getActiveOrders() {
 		dataType: 'json', // data type of response
 		success: function(data){ 
 			orders = data;
-			console.log(JSON.stringify("data: " + orders));
 			updateSidebar();
 			updateCurrentWindow();
 		},

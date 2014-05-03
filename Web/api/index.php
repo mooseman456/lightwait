@@ -674,7 +674,7 @@ function fillDB() {
     $randFry = rand(1, 3);
     date_default_timezone_set('America/Chicago');
     $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 0, ".$randBread .", ". $randBase .", ".$randCheese.",
+            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 1, ".$randBread .", ". $randBase .", ".$randCheese.",
             ".$randFry.")";
     $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 

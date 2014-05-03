@@ -195,28 +195,6 @@ function inflateChefMenu() {
             }
         }
     }
-    /*$(".mainForm").append("<input id=\"availButton\" type=\"submit\">");
-    $("#availButton").click(function(){
-        var switchOn = new Array;
-        var switchOff = new Array;
-        var g=0;
-        for(var key in data){
-            g++;
-            for(var h=0; h<data[key].length; h++){
-                var inputPos="body > div > form > div:nth-child("+(g)+") > div:nth-child("+(h+2)+") > div > input";
-                //console.log(data[key][h].name+",--- "+data[key][h].available+", ---"+$(inputPos).is(":checked"));
-                if(data[key][h].available!=$(inputPos).is(":checked")){
-                    console.log(data[key]);
-                    if(data[key][h].available==1)
-                        updateAvailability(key, false, data[key][h].id);
-                        //switchOff.push(data[key][h].name);
-                    if(data[key][h].available==0)
-                        updateAvailability(key, true, data[key][h].id);
-                        //switchOn.push(data[key][h].name);
-                }
-            }
-        }
-    });*/
 }
 
 var stringCompare = function(a, b) {
