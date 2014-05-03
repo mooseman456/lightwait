@@ -298,10 +298,6 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
           $_SESSION['userType'] = $usertype;
         }
 
-      } catch (Exception $e) {
-        echo json_encode($e);
-      }
-
     } else {
       throw new Exception("Email already in use");
     }
@@ -309,6 +305,7 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
     echo json_encode($query);
 
     $mysqli->close();
+}
   catch(Exception $e){
     echo $e->getMessage();
   }
