@@ -22,7 +22,8 @@ $app->post('/account', 'createMobileAccount');
 $app->put('/account/devicetoken', 'updateDeviceToken');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
-$app->put('/updateaccount/:password/:fName/:lName/:email', 'updateAccount');
+$app->put('/updateemail/:currentEmail/:newEmail', 'updateEmail');
+$app->put('/updatepassword/:currentPassword/:newPassword', 'updatePassword');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
@@ -596,6 +597,59 @@ function getAvailability() {
 
   // Close mysqli connection
   $mysqli->close();
+}
+
+function updateEmail($currentEmail, $newEmail) {
+
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
+
+    if ($currentEmail != $_SESSION['email'])
+      throw new Exception("Email incorrect");
+
+    $newEmail = $mysqli->escape_string($newEmail);
+    //Correct email and pass provided
+    if ($_SESSION['user_id']) {
+
+        $query = "UPDATE Users SET email='$newEmail' WHERE user_id='".$_SESSION['user_id']."' ";
+        $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+
+    } else {    //Incorrect email and pass
+
+    }
+
+    $mysqli->close();
+    echo json_encode($query); 
+}
+
+function updatePassword($currentPassword, $newPassword){
+    $mysqli = getConnection();
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request()->getBody();
+
+    $password = $mysqli->escape_string($currentPassword);
+    $password = hash("sha512", $password);
+
+    //Check if the password is correct
+    $query = "SELECT password FROM Users WHERE user_id='".$_SESSION['user_id']."' ";
+    $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
+
+    $row = $result->fetch_assoc();
+    if ($password != $row['password'])
+      throw new Excpetion("Password incorrect");
+    //Correct email and pass provided
+    if ($row['user_id']) {
+
+        $query = "UPDATE Users SET password='$password' WHERE user_id='".$row['user_id']."' ";
+        $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
+
+    } else {    //Incorrect email and pass
+
+    }
+
+    $mysqli->close();
+    echo json_encode($query); 
 }
 
 function updateAccount($password, $fName, $lName, $email) {

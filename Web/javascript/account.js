@@ -71,40 +71,51 @@ $(document).ready(function() {
         //    createAccount(fName, lName, email, password);
     });
 
-    $('#editAccountForm input[type="submit"]').click(function(e) {
+    $('#editEmailForm input[type="submit"]').click(function(e) {
         var errorString = "";
         var createValid = true;
        
-        var fName = $('#editAccountForm input[name="fName"]').val();
-        if (!namePat.test(fName)) {
-            errorString += "Invalid first name! Only letters, apostrophes, commas, and periods allowed!\n";
-            createValid = false;
-        }
-        
-        var lName = $('#editAccountForm input[name="lName"]').val();
-        if (!namePat.test(lName)) {
-            errorString += "Invalid last name! Only letters, apostrophes, commas, and periods allowed!\n";
-            createValid = false;
-        }
-        
-        var email = $('#editAccountForm input[name="email"]').val();
-        if (email === "") {
-            errorString += "Email empty!\n";
-            createValid = false;
-        }
-        
-        var password = $('#editAccountForm input[name="password"]').val();
-        if (!passPat.test(password)) {
-            errorString += "Invalid password! Must be 8 - 20 characters long!\n";
-            createValid = false;
-        }
+        var currentEmail = $('#editEmailForm input[name="currentEmail"]').val();
+        var newEmail = $('#editEmailForm input[name="newEmail"]').val();
+        var confirmEmail = $('#editEmailForm input[name="confirmEmail"]').val();
 
+        if (currentEmail === "" || newEmail === "" || confirmEmail === "") {
+            createValid = false;
+        }
+        else if (confirmEmail !== newEmail) {
+            createValid = false;
+            alert("Emails do not match!");
+        }
         if (createValid === true) {
             e.preventDefault();
-            updateAccount(password, fName, lName, email);
+            updateEmail(currentEmail, newEmail);
         }
-        //else
-        //    alert(errorString);
+
+    });
+
+    $('#editPasswordForm input[type="submit"]').click(function(e) {
+        var errorString = "";
+        var createValid = true;
+       
+        var currentPassword = $('#editPasswordForm input[name="currentPassword"]').val();
+        var newPassword = $('#editPasswordForm input[name="newPassword"]').val();
+        var confirmPassword = $('#editPasswordForm input[name="confirmPassword"]').val();
+
+
+        if (currentPassword === "" || currentPassword == null || newPassword === "" || confirmPassword === "") {
+            createValid = false;
+        }
+        else if (confirmPassword !== newPassword) {
+            createValid = false;
+            alert("Passwords do not match!");
+        }
+        if (createValid === true) {
+            e.preventDefault();
+            updatePassword(currentPassword, newPassword);
+        }
+
+
+
     });
 
 });
@@ -130,18 +141,38 @@ function createAccount(fName, lName, email, password) {
 }
 
 
-function updateAccount(password, fName, lName, email) {
+function updateEmail(currentEmail, newEmail) {
   $.ajax({
      type: 'PUT',
-     url: rootURL + '/updateaccount/' + password + '/' + fName + '/' + lName + '/' + email,
+     url: rootURL + '/updateemail/' + currentEmail + '/' + newEmail,
      dataType: "json", // data type of response
      success: function(){
         console.log("Account updated");
-        document.location.href="index.php"
+        alert("Email successfully updated!");
+        document.location.href="account.php";
      },
      error: function(jqXHR, textStatus, errorThrown){
         console.log("Account update failed");
         console.log(jqXHR, textStatus, errorThrown);
+        alert(textStatus);
+     }
+  });
+}
+
+function updatePassword(currentPassword, newPassword) {
+  $.ajax({
+     type: 'PUT',
+     url: rootURL + '/updatepassword/' + currentPassword + '/' + newPassword,
+     dataType: "json", // data type of response
+     success: function(){
+        console.log("Account updated");
+        alert("Password successfully updated!");
+        document.location.href="account.php";
+     },
+     error: function(jqXHR, textStatus, errorThrown){
+        console.log("Account update failed");
+        console.log(jqXHR, textStatus, errorThrown);
+        alert(textStatus);
      }
   });
 }
