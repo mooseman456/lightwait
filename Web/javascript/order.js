@@ -123,48 +123,50 @@ function getMenuData() {
 }
 
 function inflateOrderMenu(data) {
+    console.log(data);
     $('#basesDiv').append("<h2>Choose Your Base</h2><ul id=\"basesMenu\">");  
     for (var i=0; i<data['Bases'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i]['name'] + "\" value=\"" + data['Bases'][i]['name'] + "\" required> <label for=\"" + data['Bases'][i]['name'] + "\">" + data['Bases'][i]['name'] + "</label></li>");
+        console.log("loadbase base "+ i);
+        $('#basesDiv ul').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i]['name'] + "\" value=\"" + data['Bases'][i]['name'] + "\" required> <label for=\"" + data['Bases'][i]['name'] + "\">" + data['Bases'][i]['name'] + "</label></li>");
         if (data['Bases'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
+            $('#basesDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
+           // $('#basesDiv ul li:last-child').append("(currently unavailable)")
         }
     }
 
     $('#breadsDiv').append("<h2>Choose Your Bread</h2></ul><ul id=\"breadsMenu\">");
     for (var i=0; i<data['Breads'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
+        $('#breadsDiv ul').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
         if (data['Breads'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
+            $('#breadsDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
+            //$('#breadsDiv ul li:last-child').append("(currently unavailable)")
         }    
     }
 
     $('#cheesesDiv').append("<h2>Slap Some Cheese On It</h2></ul><ul id=\"cheeseMenu\">");
     for (var i=0; i<data['Cheeses'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");
+        $('#cheesesDiv ul').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");
         if (data['Cheeses'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
+            $('#cheesesDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
+           // $('#cheesesDiv ul li:last-child').append("(currently unavailable)")
         }
     }
 
     $('#toppingsDiv').append("<h2>Top It Off With Toppings</h2></ul><ul id=\"toppingsMenu\">");
     for (var i=0; i<data['Toppings'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
+        $('#toppingsDiv ul').append("<li> <input type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
         if (data['Toppings'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
+            $('#toppingsDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
+            //$('#toppingsDiv ul li:last-child').append("(currently unavailable)")
         }
     }
 
     $('#friesDiv').append("<h2>Ya Want Fries With That?</h2></ul><ul id=\"fryMenu\">");
     for (var i=0; i<data['Fries'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
+        $('#friesDiv ul').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
         if (data['Fries'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
+            $('#friesDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
+            //$('#friesDiv ul li:last-child').append("(currently unavailable)")
         }
     }
 
