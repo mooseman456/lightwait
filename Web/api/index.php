@@ -144,7 +144,7 @@ function updateAvailability($type, $available, $id) {
   $query = "UPDATE $type SET available=$available WHERE id=$id";
   $mysqli->query($query);
 
-  $result->free();
+  //$result->free();
 
   echo json_encode($query); 
   $mysqli->close();
