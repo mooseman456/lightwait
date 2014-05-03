@@ -8,6 +8,8 @@
 const rootURL = "api/index.php"
 
 $(document).ready(function() {
+    if($('title').html().toLowerCase()=='account')
+        getAccountInfo();
 
 
     /*   LoginForm   */
@@ -117,7 +119,7 @@ function createAccount(fName, lName, email, password) {
      dataType: "json", // data type of response
      success: function(){
         console.log("Account created");
-        location.reload();
+        document.location.href="index.php"
      },
      error: function(jqXHR, errorThrown){
         console.log("Account creation failed");
@@ -169,6 +171,7 @@ function getAccountInfo() {
         success: function(data){
             console.log('Login success');
             console.log(JSON.stringify(data));
+            fillWithUserData($("editAccountForm"), data);
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert("Login failed. Make sure your password and email are correct.");
@@ -182,10 +185,11 @@ function getAccountInfo() {
 /*   Inflater   */
 /****************/
 
-function fillWithUserData(form) {
-    var fName,lName,email,password;
-    form.children('input[name="fName"]').value = fName;
-    form.children('input[name="lName]').value = lName;
-    form.children('input[name="email"]').value = email;
-    form.children('input[name="password"]').value = paswword;
+function fillWithUserData(form, data) {
+
+    //form.children('input[name="fName"]').value = fName;
+    $('#editAccountForm input[name="fName"]').val(data["fName"]);
+    $('#editAccountForm input[name="lName"]').val(data["lName"]);
+    $('#editAccountForm input[name="email"]').val(data["email"]);
+    $('#editAccountForm input[name="password"]').val(data["password"]);
 }
