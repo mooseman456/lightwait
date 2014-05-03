@@ -117,7 +117,7 @@ function createAccount(fName, lName, email, password) {
      dataType: "json", // data type of response
      success: function(){
         console.log("Account created");
-        location.reload();
+        document.location.href="index.php"
      },
      error: function(jqXHR, errorThrown){
         console.log("Account creation failed");
