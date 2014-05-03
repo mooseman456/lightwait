@@ -555,11 +555,11 @@ function simpleQuery($type) {
 function getAvailability() {
   $mysqli = getConnection();
 
-  $query  = "SELECT id, name, available FROM Bases;";
-  $query .= "SELECT id, name, available FROM Breads;";
-  $query .= "SELECT id, name, available FROM Cheeses;";
-  $query .= "SELECT id, name, available FROM Toppings WHERE ID != 12;";
-  $query .= "SELECT id, name, available FROM Fries";
+  $query  = "SELECT id, name, available FROM Bases WHERE isActive = 1;";
+  $query .= "SELECT id, name, available FROM Breads WHERE isActive = 1;";
+  $query .= "SELECT id, name, available FROM Cheeses WHERE isActive = 1;";
+  $query .= "SELECT id, name, available FROM Toppings WHERE ID != 12 AND isActive = 1;";
+  $query .= "SELECT id, name, available FROM Fries WHERE isActive = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
@@ -753,7 +753,7 @@ function fillDB() {
 // Note: type is the type of ingredient (base, bread, cheese, fry (or fries), and toppings)
 function removeIngredient($type, $id) {
   $mysqli = getConnection();
-
+  writeToLog("here");
   if (strtolower($type) == "base") {
     $type = "Bases";
   } else if (strtolower($type) == "bread") {
@@ -768,13 +768,11 @@ function removeIngredient($type, $id) {
 
   $query = "UPDATE $type SET isActive=0 WHERE id=$id";
 
-  $result = $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
-
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+  
   $mysqli->close();
 
-  echo json_encode($result);
-  $result->free();
-  $mysqli->close();
+  echo json_encode("Removed");
 }
 
 // Returns a JSON array of all the ingredients whether they are 
