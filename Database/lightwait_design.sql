@@ -11,7 +11,6 @@ CREATE TABLE Users (
 	lName VARCHAR(255),
 	email VARCHAR(255),
 	password VARCHAR(255),
-	phoneNumber VARCHAR(255),
 	device_token varchar(64),
 	Primary Key (user_id)
 ) ENGINE=InnoDB;
@@ -20,6 +19,7 @@ CREATE TABLE Fries (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key(id)
 ) ENGINE=InnoDB;
 
@@ -27,6 +27,7 @@ CREATE TABLE Breads (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key(id)
 ) Engine=InnoDB;
 
@@ -34,6 +35,7 @@ CREATE TABLE Bases (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key (id)
 ) Engine=InnoDB;
 
@@ -41,6 +43,7 @@ CREATE TABLE Cheeses (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key (id)
 ) Engine=InnoDB;
 
@@ -48,6 +51,7 @@ CREATE TABLE Toppings (
 	id INT(30) NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30),
 	available BOOLEAN DEFAULT 1,
+	isActive BOOLEAN DEFAULT 1,
 	Primary Key (id)
 ) Engine=InnoDB;
 
@@ -136,12 +140,12 @@ INSERT INTO `Toppings` (`name`) VALUES
 ('Chipotle Ranch'),
 ('No Toppings');
 
-INSERT INTO `Users` (`userType`, `fName`, `lName`, `email`, `password`, `phoneNumber`) VALUES
-(1, 'John', 'Pinkerton', 'jpink@poop.com', 'password', '8795468253'),
-(2, 'Charlie', 'Chef', 'charlie@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', '5555555555'),
-(2, 'Charise', 'Chef', 'charise@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', '6666666666'),
-(3, 'Adam', 'Admin', 'adam@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', '7777777777'),
-(3, 'Adele', 'Admin', 'adele@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', '8888888888');
+INSERT INTO `Users` (`userType`, `fName`, `lName`, `email`, `password`) VALUES
+(1, 'John', 'Pinkerton', 'jpink@poop.com', 'password'),
+(2, 'Charlie', 'Chef', 'charlie@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1'),
+(2, 'Charise', 'Chef', 'charise@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1'),
+(3, 'Adam', 'Admin', 'adam@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1'),
+(3, 'Adele', 'Admin', 'adele@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1');
 
 
 INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced) 

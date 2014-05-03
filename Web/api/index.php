@@ -17,17 +17,19 @@ $app->get('/account/:email/:password', 'logIn');
 $app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addMobileOrder');
 $app->post('/webOrder', 'addWebOrder');
-$app->post('/account/:usertype/:fName/:lName/:email/:password/:phoneNumber', 'createAccount');
+$app->post('/account/:usertype/:fName/:lName/:email/:password', 'createAccount');
 $app->post('/account', 'createMobileAccount');
 $app->put('/account/devicetoken', 'updateDeviceToken');
 $app->put('/:orderid/:userid', 'updateOrder');
 $app->put('/updateAvailability/:type/:available/:id', 'updateAvailability');
-$app->put('/updateaccount/:password/:fName/:lName/:email/:phoneNumber', 'updateAccount');
+$app->put('/updateaccount/:password/:fName/:lName/:email', 'updateAccount');
 $app->post('/ingredient/:type/:name', 'addIngredient');
 $app->post('/logout', 'logout');
 $app->post('/dquery', 'dynamicQuery');
 $app->get('/squery/:type', 'simpleQuery');
 $app->get('/fillDB', 'fillDB');
+$app->put('/removeingredient/:type/:id', 'removeIngredient');
+$app->get('/allingredients', 'getAllIngredients');
 
 $app->run();
 
@@ -190,17 +192,40 @@ function getActiveOrders() {
   $query = "DEALLOCATE PREPARE stmt";
 
   $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
+
+  $array = array();
   
   while ($row = $result->fetch_assoc()) {
-           // $row['ingredients'][] = $row['bread_name'];
-           // $row['ingredients'][] = $row['base_name'];
-           // $row['ingredients'][] = $row['cheese_name'];
-           // $row['ingredients'][] = $row['fry_type'];
-           $array[] = $row;
+    //$array[] = $row;
+
+    foreach ($row as $key => $value) {
+      if ($value == $key) {
+        $row['toppings'][] = $key;
+        unset($row[$key]);
+      }
+    }
+
+    // foreach ($row['toppings'] as $key => $value) {
+    //   if ($row[$value] == 'NULL') {
+    //     unset($row['topppings'][$key]);
+    //   }
+    // }
+
+    foreach ($row as $key => $value) {
+      if ($value == NULL) {
+        unset($row[$key]);
+      }
+    }
+    
+    if (array_key_exists("No Toppings", $row)) {
+      unset($row["No Toppings"]);
+      $row['toppings'] = "No Toppings";
+    }
+
+    $array[] = $row;
   }
 
-  $encoded = json_encode($array);
-  printf($encoded);
+  echo json_encode($array);
 
   $mysqli->close();
 }
@@ -242,18 +267,56 @@ function updateDeviceToken() {
   $mysqli->close();
 }
 
-function createAccount($usertype, $fName, $lName, $email, $password, $phoneNumber) {
+function createAccount($usertype, $fName, $lName, $email, $password) {
   $mysqli = getConnection();
+
+  $fName = $mysqli->escape_string($fName);
+  $lName = $mysqli->escape_string($lName);
+  $email = $mysqli->escape_string($email);
+  $password = $mysqli->escape_string($password);
 
   //Salt and Hash the password
   $password = hash("sha512", $password);
 
-  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES ('$usertype', '$fName', '$lName', '$email', '$password', '$phoneNumber')";
+  //Check if email is already used
+  $query = "SELECT COUNT(*) as count FROM Users WHERE email='$email'";
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
-  
-  $mysqli->close();
+  $row = $result->fetch_assoc();
+
+  if ($row['count'] == 0) {
+
+    try {
+
+      $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
+      $result = $mysqli->query($query);
+
+      if (!$result) {
+       throw new Exception("Could not create account");
+      }
+
+      $user_id = $mysqli->insert_id;
+      //Set SESSION variables
+      if (!isset($_SESSION['userType'])) {
+        $_SESSION['fName'] = $fName;
+        $_SESSION['lName'] = $lName;
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['email'] = $email;
+        $_SESSION['userType'] = $usertype;
+      }
+
+    } catch (Exception $e) {
+      echo json_encode($e);
+    }
+
+  } else {
+
+    echo json_encode("Account could not be created");
+  }
 
   echo json_encode($query);
+
+  $mysqli->close();
+  
 }
 
 function logIn($email, $password) {
@@ -281,7 +344,6 @@ function logIn($email, $password) {
       $_SESSION['lName'] = $row['lName'];
       $_SESSION['user_id'] = $row['user_id'];
       $_SESSION['email'] = $row['email'];
-      $_SESSION['phoneNumber'] = $row['phoneNumber'];
       $_SESSION['userType'] = $row['userType'];
 
       echo json_encode($arr);
@@ -302,7 +364,6 @@ function getAccountInfo() {
       $account['lName'] = $_SESSION['lName'];
       $account['user_id'] = $_SESSION['user_id'];
       $account['email'] = $_SESSION['email'];
-      $account['phoneNumber'] = $_SESSION['phoneNumber'];
       $account['userType'] = $_SESSION['userType'];
       echo json_encode($account);
     } else {
@@ -316,11 +377,11 @@ function getAccountInfo() {
 function getActiveIngredients() {
   $mysqli = getConnection();
 
-  $query  = "SELECT name, isAvailable FROM Bases WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Breads WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Cheeses WHERE available = 1;";
-  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1 AND id != 12;";
-  $query .= "SELECT name, isAvailable FROM Fries WHERE available = 1";
+  $query  = "SELECT name, isAvailable FROM Bases WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Breads WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Cheeses WHERE available = 1 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Toppings WHERE available = 1 AND id != 12 AND isActive = 1;";
+  $query .= "SELECT name, isAvailable FROM Fries WHERE available = 1 AND isActive = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
@@ -537,7 +598,7 @@ function getAvailability() {
   $mysqli->close();
 }
 
-function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
+function updateAccount($password, $fName, $lName, $email) {
 
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
@@ -549,7 +610,6 @@ function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
     $fName = $mysqli->escape_string($fName);
     $lName = $mysqli->escape_string($lName);
     $email = $mysqli->escape_string($email);
-    $phoneNumber = $mysqli->escape_string($phoneNumber);
 
     //Check if the password is correct
     $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
@@ -560,7 +620,7 @@ function updateAccount($password, $fName, $lName, $email, $phoneNumber) {
     //Correct email and pass provided
     if ($row['user_id']) {
 
-        $query = "UPDATE Users SET fName='$fName', lName='$lName', phoneNumber='$phoneNumber' WHERE user_id='".$row['user_id']."' ";
+        $query = "UPDATE Users SET fName='$fName', lName='$lName', WHERE user_id='".$row['user_id']."' ";
         $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
 
     } else {    //Incorrect email and pass
@@ -609,7 +669,7 @@ function writeToLog($message)
 
 function fillDB() {
   $mysqli = getConnection();
-  for ($i = 0; $i < 50; $i++) {
+  for ($i = 0; $i < 30; $i++) {
     $randBread = rand(1, 3);
     $randBase = rand(1, 6);
     $randCheese = rand(1,4);
@@ -630,6 +690,69 @@ function fillDB() {
     }
   }
   echo "Database fill complete";
+}
+
+function removeIngredient($type, $id) {
+  $mysqli = getConnection();
+
+  if (strtolower($type) == "base") {
+    $type = "Bases";
+  } else if (strtolower($type) == "bread") {
+    $type = "Breads";
+  } else if (strtolower($type) == "cheese") {
+    $type = "Cheeses";
+  } else if (strtolower($type) == "fry" || strtolower($type) == "fries" ) {
+    $type = "Fries";
+  } else if (strtolower($type) == "topping") {
+    $type = "Toppings";
+  }
+
+  $query = "UPDATE $type SET isActive=0 WHERE id=$id";
+
+  $result = $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+
+  $mysqli->close();
+
+  echo json_encode($result);
+}
+
+function getAllIngredients() {
+  $mysqli = getConnection();
+
+  $query  = "SELECT name, isAvailable FROM Bases;";
+  $query .= "SELECT name, isAvailable FROM Breads;";
+  $query .= "SELECT name, isAvailable FROM Cheeses;";
+  $query .= "SELECT name, isAvailable FROM Toppings;";
+  $query .= "SELECT name, isAvailable FROM Fries";
+
+  // Perform a multiquery to get all the ingredients
+  if ($mysqli->multi_query($query)) {
+    // Arrays that will hold all menu data
+    $menuTypes = array("Bases", "Breads", "Cheeses", "Toppings", "Fries");
+    $baseArray = array();
+    $breadArray = array();
+    $cheeseArray = array();
+    $toppingArray = array();
+    $friesArray = array();
+    $menuData = array("Bases"=>$baseArray, "Breads"=>$breadArray, "Cheeses"=>$cheeseArray, "Toppings"=>$toppingArray, "Fries"=>$friesArray);
+    $menuIndex = -1;
+
+    while ($mysqli->more_results()) {
+      // Store first result set
+      $mysqli->next_result();
+      $menuIndex++;
+      if ($result = $mysqli->store_result()) {
+        while ($row = $result->fetch_row()) {
+          array_push($menuData[$menuTypes[$menuIndex]], $row[0]);
+        }
+        $result->free();
+      }
+    }
+  }
+  $encoded = json_encode($menuData);
+  printf($encoded);
+
+  $mysqli->close();
 }
 
 

@@ -16,26 +16,30 @@
 	$javascript="javascript/users.js";
 	include('include/header.php');
 ?>
+	<div class="accountWrapper">
+		<div class="floatingBox"> 
+			<form id="adminCreateAccountForm" method="POST">
 
-	<h1>Create Chef Account</h1>
-	<form id="createChefAccountForm" method="POST" action="#">
-		<input class="textForm" type="email" name="email" placeholder="Email" required>
-		<input class="textForm" type="password" name="password" pattern=".{8,20}" placeholder="Password" required>
-		<input type="text" name="fName" placeholder="First Name" required>
-		<input type="text" name="lName" placeholder="Last Name" required>
-		<input type="tel" name="phone" placeholder="Phone Number" required>
-		<input class="formSubmit" type="submit" value="Create Account">
-	</form>
+                <input class="textForm tooltip" type="email" name="email" placeholder="Email" title="Please input a valid email address" required>
+                <input class="textForm tooltip" type="password" name="password" pattern=".{8,20}" placeholder="Password" title="Password between 8 and 20 characters" required>                
+				<input class="tooltip" type="text" name="fName" placeholder="First Name" title="Please provide your first name. Only letters, apostrophes, commas, and periods allowed." pattern="^[a-zA-Z ,.'-]+$" required>
+                <input class="tooltip" type="text" name="lName" placeholder="Last Name" title="Plase provide your last name. Only letters, apostrophes, commas, and periods allowed" pattern="^[a-zA-Z ,.'-]+$" required>
 
-	<h1>Create Administrator Account</h1>
-	<form id="createAdminAccountForm" method="POST" action="#">
-		<input class="textForm" type="email" name="email" placeholder="Email" required>
-		<input class="textForm" type="password" name="password" pattern=".{8,20}" placeholder="Password" required>
-		<input type="text" name="fName" placeholder="First Name" required>
-		<input type="text" name="lName" placeholder="Last Name" required>
-		<input type="tel" name="phone" placeholder="Phone Number" required>
-		<input class="formSubmit" type="submit" value="Create Account">
-	</form>
+                <!--
+				<input class="textForm" type="email" name="email" placeholder="Email" required>
+				<input class="textForm" type="password" name="password" pattern=".{8,20}" placeholder="Password" required>
+				<input type="text" name="fName" placeholder="First Name" required>
+				<input type="text" name="lName" placeholder="Last Name" required> -->
+
+
+				<input type="radio" name="accountType" value="chef" id="create-chef-checkbox" required>
+				<label for="create-chef-checkbox">Chef</label>
+				<input type="radio" name="accountType" value="admin" id="create-admin-checkbox" required>
+				<label for="create-admin-checkbox">Administrator</label>
+				<input class="formSubmit" type="submit" value="Create Account">
+			</form>
+		</div>
+	</div>
 </body>
 
 </html>

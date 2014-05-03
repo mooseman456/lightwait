@@ -100,15 +100,22 @@ nav a:hover {
 /********************/
 /*   Queue Window   */
 /********************/
-.window {
+#queueWindow {
 	width:80%;
-	height:100%;
+	height:90%;
 	z-index:1;
+	float:left;
 }
 
-.window > h1 {
+#queueWindow > h1 {
 	color: #AAA;
 	text-align: center;
+}
+
+section.queue:hover {
+	transition: background-color 0.4s ease-out;
+	background-color: rgba(0,32,255,0.03);
+	cursor: pointer;
 }
 
 .queue {
@@ -137,7 +144,7 @@ nav a:hover {
 /***************/
 /*   Sidebar   */
 /***************/
-.sidebar {
+div#sidebar {
 	width:20%;
 	height:100%;
 	position:absolute;
@@ -145,42 +152,48 @@ nav a:hover {
 	right:0;
 	min-width:200px;
 	min-height:600px;
-	background-color: rgba(36,145,255,0.3);
-	background-color: rgba(0,0,0,0.3);
+	background-color: rgba(0,0,150,.02);
+	border-left: 1px solid rgba(0,0,0,0.15);
+
 }
 
-.sidebar #quantityList{
+div#sidebar div#quantityList{
 	margin-left: 5%;
 	font-size: 20px;
 }
 
-.sidebar img {
-	height: 3.5em;
-	width:auto;
-	float: left;
+div#sidebar img {
+	width: 22%;
+	float:left;
 }
 
-.sidebar img:hover {
+div#sidebar img[src*='next'] {
+	margin-right: 10%;
+}
+
+div#sidebar img[src*='prev'] {
+	margin-left: 10%;
+}
+
+div#sidebar img:hover {
 	opacity: .6;
+	cursor: pointer;
 }
 
 #page_number {
 	font-size: 3em;
+	width: 36%;
+	text-align: center;
+	float:left;
 }
 
-.navigation div {
-	float: left;
+div.navigation > * {
+	display: block;
 }
 
-.navigation {
+div#sidebarInputContainer {
 	position: absolute;
-	bottom:0;
-	margin: 0.5em 0;
-}
-
-.sidebar button {
-	width: 80%;
-	margin: 0 10%;
+	bottom:16px;
 }
 
 /*******************/
@@ -195,12 +208,16 @@ div#aboutWrapper {
 	left:auto;
 	top: 160px;
 	color: rgba(0,0,0,0.65);
+	font-size: 1.2em;
+	line-height: 1.6em;
 }
 
 /*  Div box thing  */
 div.floatingBox {
 	border: 1px solid rgba(0,0,0,0.15);
 	background-color: white;
+	box-shadow: 2px 2px 10px rgba(0,0,0,0.035);
+	color:#555;
 }
 
 div.darkFloatingBox h1 {
@@ -230,8 +247,8 @@ input[type="text"], input[type="email"], input[type="password"] {
 	border-top: none;
 	border-bottom: 1px solid rgba(0,0,0,0.15);
 	border-collapse: collapse;
-	text-indent: 22px;
-	font-size: 16px;
+	text-indent: 24px;
+	font-size: 1.3em;
 	font-family: 'Lato';
 }
 
@@ -247,10 +264,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 	outline:0;
 }
 
-div.floatingBox input[type='button'], div.floatingBox input[type='submit'] {
-	margin: 16px auto;
-	width: 66%;
-	cursor: pointer;
+div.floatingBox input[type='button']:active, div.floatingBox input[type='submit']:active {
+	background-color: rgba(36,145,255,0.8);
 }
 
 input[type='button'], input[type='submit'] {
@@ -259,11 +274,13 @@ input[type='button'], input[type='submit'] {
 	border:none;
 	height:3em;
 	font-family: 'Ubuntu';
-	font-size: 16px;
+	font-size: 1.2em;
 	margin:0;
 	color:rgba(0,0,0,0.5);
 	display: block;
-	/*color:rgba(255,255,255,0.95);*/
+	cursor: pointer;
+	margin: 16px auto;
+	width: 66%;
 }
 
 input[type='button']:hover, input[type='submit']:hover {
@@ -271,49 +288,22 @@ input[type='button']:hover, input[type='submit']:hover {
 }
 
 
+/********************/
+/*   Edit Account   */
+/********************/
 
-
-
-/*.content {
-	display: block:;
-	width:50%;
-	min-height: wrap;
-	margin: 0 auto;
-	height: 90%;
-	border-right: 1px solid rgba(0,0,0,0.15);
-	border-left: 1px solid rgba(0,0,0,0.15);
+/*   Customers   */
+div.accountWrapper {
+	width:460px;
+	display: block;
+	margin: 36px auto auto auto;
 }
 
-.content > div {
-	border-bottom: 1px solid rgba(0,0,0,0.15);
+/*   Admin   */
+label {
+	font-family:'Lato';
+	color:#999;
 }
-
-.content >div:last-child {
-	border-bottom: none;
-}
-
-.accountForm {
-	display:block;
-	text-align: center;
-	padding:1em;
-	width:100;
-}
-
-.accountForm input[type="submit"] {
-	clear:left;
-	display:block;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-.login h1 {
-	margin:0.4em;
-	padding:0;
-}
-
-.textForm{
-	margin-bottom: 10px;
-}*/
 
 /*************/
 /*   Order   */
@@ -365,7 +355,20 @@ div.order-wrapper {
 	margin:0 10%;
 }
 
+<<<<<<< HEAD
 /*Popup Stuff
+=======
+.outOfStock{
+	color: red;
+	-moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+/*Popup Stuff*/
+>>>>>>> FETCH_HEAD
 .black_overlay{
 	display: none;
 	position: absolute;
@@ -488,44 +491,89 @@ div.order-wrapper {
 
 
 /**************************/
-/*		  Account         */
-/**************************/
-#editAccountForm{
-	margin: 0 auto;
-	padding-bottom: 1px;
-	width: 25%;
-	text-align: center;
-	background-color: #EBF5FF;
-	border-radius: 10px; 
-}
-
-#editAccountForm input{
-	display:block;
-	margin: 10px auto;
-
-}
-
-#editAccountForm h2{
-	background-color:#2491FF;
-	color: #FFFFFF;
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
-}
-
-
-
-
-/**************************/
 /*   Administrator Menu   */
 /**************************/
 
 
-div.wrapper {
+div#adminMenuWrapper {
 	width:80%;
-	margin:25px auto;
+	margin: 24px auto;
+	display: block;
 }
 
-div.box {
+div#menuDisplayWrapper img {
+	height:22px;
+	vertical-align: text-bottom;
+	float:right;
+	margin-left: 8px;
+}
+
+div#menuDisplayWrapper img:hover {
+	opacity:0.7;
+	cursor:pointer;
+}
+
+div#menuDisplayWrapper div {
+	float:left;
+}
+
+div#menuDisplayTypeView {
+	width:75%;
+}
+
+div#menuDisplayTypeView li {
+	list-style: none;
+	margin: 14px;
+}
+
+div#menuDisplayTypeView div.floatingBox {
+	padding: 10px;
+}
+
+div#menuDisplayTypeView input, div#menuDisplayTypeView label {
+	float:right;
+}
+
+div#menuDisplayTypeSelector {
+	width:25%;
+	border-right: none;
+	padding-top: 12px;
+}
+
+div#menuDisplayWrapper {
+	width:59.5%;
+	float:right;
+	display: block;
+	margin-right: 0.5%;
+}
+
+div#addItemFormWrapper {
+	width:40%;
+	float:right;
+	display: block;
+}
+
+div.typeSelect:hover {
+	transition: all 0.3s ease-out;
+	text-indent: 9px;
+	cursor: pointer;
+	background: rgba(0,0,0,0.02);
+}
+
+div.typeSelect {
+	width:100%;
+	height:1.8em;
+	font-size: 18px;
+	text-indent: 8px;
+}
+
+div.typeSelect span {
+	vertical-align: middle;
+	display: inline-block;
+	line-height: 1.8em;
+}
+
+/*div.box {
 	border: 1px solid rgba(0,0,0,0.15);
 	box-sizing:border-box;
 	float: left;
@@ -543,7 +591,7 @@ div#menu-categories-edit-pane{
 
 div#menu-categories-edit-pane > div {
 	width:100%;
-}
+}*/
 
 /*****************/
 /*   Data Page   */
