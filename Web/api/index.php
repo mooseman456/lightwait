@@ -222,8 +222,10 @@ function getActiveOrders() {
       $row['toppings'] = "No Toppings";
     }
 
-    echo json_encode($row);
+    $array[] = $row;
   }
+
+  echo json_encode($array);
 
   $mysqli->close();
 }

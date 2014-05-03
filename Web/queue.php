@@ -22,12 +22,15 @@
 		<div id="quantityList">
 
 		</div>
-		<input type="button" id="recall" value="Recall" >
-		<div class="navigation">
-			<img src="images/prev_arrow.png" alt="Previous Arrow" />
-			<div id="page_number">1/1</div>
-			<img src="images/next_arrow.png" alt="Next Arrow" />
-		</div>
+		
+		<div id="sidebarInputContainer">
+			<input type="button" id="recall" value="Recall" />
+			<div class="navigation">
+				<img src="images/prev_arrow.png" alt="Previous Arrow" />
+				<div id="page_number">1/1</div>
+				<img src="images/next_arrow.png" alt="Next Arrow" />
+			</div>
+		<div>
 	</div>
 </body>
 

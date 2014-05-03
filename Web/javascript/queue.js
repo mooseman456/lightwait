@@ -149,7 +149,7 @@ function updateOrder(orderid, userid) {
 function recallOrder() {
 	$.ajax({
 		type: 'GET',
-		url: rootURL + "/recall",
+		url: rootURL + '/recall',
 		async: false,
 		success: function(){
 
@@ -165,15 +165,22 @@ function recallOrder() {
 function getActiveOrders() {
 	$.ajax({
 		type: 'GET',
-		url: rootURL + "/activeorders",
-		dataType: "json", // data type of response
+		url: rootURL + '/activeorders',
+		dataType: 'json', // data type of response
 		success: function(data){ 
 			orders = data;
-			console.log(JSON.stringify(data));
+			console.log(JSON.stringify("data: " + orders));
 			updateSidebar();
 			updateCurrentWindow();
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log('Could not get orders from database');
+			console.log(textStatus);
+			console.log(errorThrown);
+			console.log(jqXHR);
 		}
 	});
+	console.log("done");
 }
 
 function updateQuantity(type, id) {

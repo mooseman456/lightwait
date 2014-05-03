@@ -155,15 +155,15 @@ function inflateAdminMenu() {
 
 
 
-function inflateChefMenu(data) {
-    console.log(data);
+function inflateChefMenu() {
+    console.log(mMenuData);
     $(".mainForm").append("<div></div>");
     var currentItem=".mainForm > div:last-child";
-    for(var key in data){
+    for(var key in mMenuData){
       
         //$(currentItem).append("<h2>"+key+"</h2>");
-        for(var i=0; i<data[key].length; i++){
-            var allPurpose=data[key][i].name;
+        for(var i=0; i<mMenuData[key].length; i++){
+            var allPurpose=mMenuData[key][i].name;
             if(allPurpose.indexOf("No ") === -1){
                 //$(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
                 //$(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
@@ -175,17 +175,17 @@ function inflateChefMenu(data) {
                 </label>\
                 </div></div>";
                 $(currentItem).append(coolString);
-                if(data[key][i].available==1){
+                if(mMenuData[key][i].available==1){
                     
                     var evil=$(currentItem+" > div:nth-last-child(1) > div > input");
-                    //console.log(data[key][i].name);
+                    //console.log(mMenuData[key][i].name);
                     //console.log($(evil));
                     $(evil).prop("checked", true);
                 }
                 (function() {
                     var checkbox = $(currentItem+" > div:last-child > div > input");
                     var type = key;
-                    var id = data[key][i].id;
+                    var id = mMenuData[key][i].id;
                     checkbox.change(function(e) {
                         var isChecked = checkbox.prop('checked');
                         console.log('Box checked: '+isChecked);
