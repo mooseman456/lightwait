@@ -45,5 +45,8 @@ include('include/header.php');
 	<p>Add items to your order by clicking on them in the menu!</p>
 </form>
 
+<div id="fade" class="black_overlay"></div>
+<div id="light" class="white_content">You're going Down!<a id="popdown">Close</a></div>
+
 </body>
 </html>
