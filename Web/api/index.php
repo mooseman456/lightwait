@@ -8,7 +8,6 @@ require 'Slim/Slim.php';
 
 $app = new \Slim\Slim();
 
-$app->get('/orders', 'getOrders');
 $app->get('/activeorders', 'getActiveOrders');
 $app->get('/activeingredients', 'getActiveIngredients');
 $app->get('/recall', 'recallOrder');
@@ -32,21 +31,6 @@ $app->put('/removeingredient/:type/:id', 'removeIngredient');
 $app->get('/allingredients', 'getAllIngredients');
 
 $app->run();
-
-function getOrders() {
-	$sql = "select * FROM orders ORDER BY name";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);  
-		$orders = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo json_encode($orders);
-	} catch(PDOException $e) {
-		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-	}
-	$result->free();
-	$mysqli->close();
-}
 
 function addWebOrder() {
   $mysqli = getConnection();
@@ -535,7 +519,8 @@ function getTableName($name) {
   }
 }
 
-
+// Used for analytics. It returns sumple data from the DB about each ingredient.
+// Just the COUNT of each ingredient
 function simpleQuery($type) {
   $mysqli = getConnection();
 
@@ -568,7 +553,7 @@ function simpleQuery($type) {
   $mysqli->close();
 }
 
-
+// Gets the availabilty of every ingredient offered
 function getAvailability() {
   $mysqli = getConnection();
 
@@ -613,6 +598,9 @@ function getAvailability() {
   $mysqli->close();
 }
 
+
+// Edit/Changes the User's account information
+// Only fields that can be changed: fName, lName
 function updateAccount($password, $fName, $lName, $email) {
 
     $mysqli = getConnection();
@@ -626,13 +614,13 @@ function updateAccount($password, $fName, $lName, $email) {
     $lName = $mysqli->escape_string($lName);
     $email = $mysqli->escape_string($email);
 
-    //Check if the password is correct
+    // Check if the password and email match
     $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";
     $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
 
     $row = $result->fetch_assoc();
 
-    //Correct email and pass provided
+    // if Correct email and password provided
     if ($row['user_id']) {
 
         $query = "UPDATE Users SET fName='$fName', lName='$lName', WHERE user_id='".$row['user_id']."' ";
@@ -647,6 +635,9 @@ function updateAccount($password, $fName, $lName, $email) {
     $mysqli->close();
 }
 
+// Adds a new ingredient to the specified type
+// Example: addIngredient(Topping, Guacamole) would create a new Topping called 
+// Guacamole and set it to active and available for Users to order
 function addIngredient($type, $name) {
     $mysqli = getConnection();
 
@@ -660,22 +651,8 @@ function addIngredient($type, $name) {
     $mysqli->close();
 }
 
-function logout() {
-    session_destroy();
-}
-
-function getConnection() {
-	$dbhost='localhost';
-	$dbuser='root';
-	$dbpass='arthas77';
-	$dbname='lightwait';
-	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-    if($db->connect_errno > 0) {
-        die('Unable to connect to database [' . $db->connect_error . ']');
-    }
-  return $db;
-}
-
+// A function that allows debugging php easily
+// Writes to lightwait_development.log in the log folder
 function writeToLog($message)
 {
   if ($fp = fopen('log/lightwait_development.log', 'at'))
@@ -685,8 +662,11 @@ function writeToLog($message)
   }
 }
 
+// Fills the database with a slew of random orders and random toppings
+// Used for troubleshooting, stress testing, and analytics
 function fillDB() {
   $mysqli = getConnection();
+  //Change this loop time to add more orders to the DB
   for ($i = 0; $i < 30; $i++) {
     $randBread = rand(1, 3);
     $randBase = rand(1, 6);
@@ -711,6 +691,8 @@ function fillDB() {
   $mysqli->close();
 }
 
+// Removes an item from the database (Sets 'isActive'= False for the specified ingredient)
+// Note: type is the type of ingredient (base, bread, cheese, fry (or fries), and toppings)
 function removeIngredient($type, $id) {
   $mysqli = getConnection();
 
@@ -737,6 +719,8 @@ function removeIngredient($type, $id) {
   $mysqli->close();
 }
 
+// Returns a JSON array of all the ingredients whether they are 
+// active or removed
 function getAllIngredients() {
   $mysqli = getConnection();
 
@@ -775,6 +759,24 @@ function getAllIngredients() {
 
   $result->free();
   $mysqli->close();
+}
+
+//when the user logs out, the session is destroyed 
+function logout() {
+    session_destroy();
+}
+
+//creates a mysqli connection to the DB with these credentials
+function getConnection() {
+  $dbhost='localhost';
+  $dbuser='root';
+  $dbpass='root';
+  $dbname='lightwait';
+  $db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+    if($db->connect_errno > 0) {
+        die('Unable to connect to database [' . $db->connect_error . ']');
+    }
+  return $db;
 }
 
 
