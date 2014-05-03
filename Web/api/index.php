@@ -308,8 +308,6 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
     echo json_encode("Account could not be created");
   }
 
-  $result->free();
-
   echo json_encode($query);
 
   $mysqli->close();
