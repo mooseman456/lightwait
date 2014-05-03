@@ -160,11 +160,11 @@ li.orderName {
 }
 
 li.orderToppings {
-	font-size: 1.05em;
+	font-size: 1.1em;
 }
 
 li.orderBase, li.orderBread, li.orderCheese {
-	font-size: 1.25em;
+	font-size: 1.3em;
 }
 
 /***************/
@@ -184,7 +184,6 @@ div#sidebar {
 }
 
 div#sidebar div#quantityList{
-	margin-left: 5%;
 	font-size: 20px;
 }
 
@@ -220,6 +219,10 @@ div.navigation > * {
 div#sidebarInputContainer {
 	position: absolute;
 	bottom:16px;
+}
+
+div#quantityList span {
+	float:right;
 }
 
 /*******************/

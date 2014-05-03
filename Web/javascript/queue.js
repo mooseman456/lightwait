@@ -115,7 +115,7 @@ function updateSidebar() {
 	}
 	for(var key in baseTypeCount) {
 		var value = baseTypeCount[key];
-		$("#quantityList").append("<span>"+key+"="+value+"</span><br/>");
+		$("#quantityList").append('<div>'+key+'<span>'+value+'</span></div>');
 	}
 }
 
