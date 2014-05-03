@@ -296,11 +296,13 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
 
       $user_id = $mysqli->insert_id;
       //Set SESSION variables
-      $_SESSION['fName'] = $fName;
-      $_SESSION['lName'] = $lName;
-      $_SESSION['user_id'] = $user_id;
-      $_SESSION['email'] = $email;
-      $_SESSION['userType'] = $usertype;
+      if (!isset($_SESSION['userType'])) {
+        $_SESSION['fName'] = $fName;
+        $_SESSION['lName'] = $lName;
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['email'] = $email;
+        $_SESSION['userType'] = $usertype;
+      }
 
     } catch (Exception $e) {
       echo json_encode($e);

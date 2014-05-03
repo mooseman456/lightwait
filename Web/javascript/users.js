@@ -13,19 +13,19 @@ $(document).ready(function() {
         var createValid = true;
         var errorString = "";
 
-        var email = $('#createAccountForm input[name="email"]').val();
+        var email = $('input[name="email"]').val();
         if (email === "") {
             createValid = false;
         }
-        var password = $('#createAccountForm input[name="password"]').val();
+        var password = $('input[name="password"]').val();
         if (!passPat.test(password)) {
             createValid = false;
         }
-        var fName = $('#createAccountForm input[name="fName"]').val();
+        var fName = $('input[name="fName"]').val();
         if (!namePat.test(fName)) {
             createValid = false;
         }
-        var lName = $('#createAccountForm input[name="lName"]').val();
+        var lName = $('input[name="lName"]').val();
         if (!namePat.test(lName)) {
             createValid = false;
         }
@@ -54,7 +54,8 @@ function adminCreateAccount(fName, lName, email, password, type) {
      dataType: "json", // data type of response
      success: function(){
         console.log("Account created");
-        document.location.href="index.php";
+        alert("Account succesfully created!");
+        document.location.href="users.php";
      },
      error: function(jqXHR, errorThrown){
         console.log("Account creation failed");
