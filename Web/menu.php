@@ -19,7 +19,7 @@
 	<div id="adminMenuWrapper">
 		<div class="floatingBox" id="addItemFormWrapper">
 			<form id="addItemToMenuForm">
-				<input type="text" name="name" placeholder="Name" required pattern="[a-zA-Z]+">
+				<input class="textForm tooltip" type="text" name="name" placeholder="Name" title="Max of 20 characters, letters only" required pattern="[a-zA-Z]{1,20}">
 				<input type="radio" name="type" value="Bases" id="addItemForm-typeBase" required>
 				<label for="addItemForm-typeBase">Base</label>
 				<input type="radio" name="type" value="Breads" id="addItemForm-typeBread" required>
