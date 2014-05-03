@@ -45,6 +45,8 @@ function getOrders() {
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
+	$result->free();
+	$mysqli->close();
 }
 
 function addWebOrder() {
@@ -82,6 +84,8 @@ function addWebOrder() {
   echo "<h2>Thank you for your order!</h2>";
   echo "<h3>It has been received and is underway!</h3>";
   echo "<a href=../../order.php>New Order</a>";
+  $result->free();
+  $mysqli->close();
 }
 
 function addMobileOrder() {
@@ -108,6 +112,7 @@ function addMobileOrder() {
     
   }
 
+  $result->free();
   $mysqli->close();
 }
 
@@ -143,6 +148,7 @@ function updateOrder($orderID, $userID) {
   $query = "UPDATE Orders SET isActive=0 WHERE order_id=$orderID";
   $mysqli->query($query);
 
+  $result->free();
   $mysqli->close();
 }
 
@@ -153,9 +159,10 @@ function updateAvailability($type, $available, $id) {
   $query = "UPDATE $type SET available=$available WHERE id=$id";
   $mysqli->query($query);
 
-  $mysqli->close();
+  $result->free();
 
   echo json_encode($query); 
+  $mysqli->close();
 }
 
 function recallOrder() {
@@ -225,6 +232,7 @@ function getActiveOrders() {
 
     $array[] = $row;
   }
+  $result->free();
 
   echo json_encode($array);
 
@@ -247,6 +255,8 @@ function createMobileAccount() {
   $userID = $mysqli->insert_id;
 
   $returnArray['userID'] = $userID;
+
+  $result->free();
 
   echo json_encode($returnArray);
 
@@ -314,6 +324,8 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
     echo json_encode("Account could not be created");
   }
 
+  $result->free();
+
   echo json_encode($query);
 
   $mysqli->close();
@@ -354,6 +366,9 @@ function logIn($email, $password) {
   } catch(Exception $e) {
     echo 'Caught exception: ', $e->getMessage(), "\n";
   }
+
+  $result->free();
+  $mysqli->close();
 
 }
 
@@ -411,7 +426,7 @@ function getActiveIngredients() {
   $encoded = json_encode($menuData);
   printf($encoded);
 
-  // Close mysqli connection
+  $result->free();
   $mysqli->close();
 }
 
@@ -681,8 +696,9 @@ function updateAccount($password, $fName, $lName, $email) {
 
     }
 
-    $mysqli->close();
+    $result->free();
     echo json_encode($query); 
+    $mysqli->close();
 }
 
 function addIngredient($type, $name) {
@@ -694,7 +710,9 @@ function addIngredient($type, $name) {
     $mysqli->close();
 
     echo json_encode($result);
-    }
+    $result->free();
+    $mysqli->close();
+}
 
 function logout() {
     session_destroy();
@@ -703,7 +721,7 @@ function logout() {
 function getConnection() {
 	$dbhost='localhost';
 	$dbuser='root';
-	$dbpass='root';
+	$dbpass='arthas77';
 	$dbname='lightwait';
 	$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($db->connect_errno > 0) {
@@ -744,6 +762,7 @@ function fillDB() {
     }
   }
   echo "Database fill complete";
+  $mysqli->close();
 }
 
 function removeIngredient($type, $id) {
@@ -768,6 +787,8 @@ function removeIngredient($type, $id) {
   $mysqli->close();
 
   echo json_encode($result);
+  $result->free();
+  $mysqli->close();
 }
 
 function getAllIngredients() {
@@ -806,6 +827,7 @@ function getAllIngredients() {
   $encoded = json_encode($menuData);
   printf($encoded);
 
+  $result->free();
   $mysqli->close();
 }
 

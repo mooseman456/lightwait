@@ -308,11 +308,12 @@ label {
 /*************/
 /*   Order   */
 /*************/
+/*
 div.order-page {
-	/*border: 2px solid rgba(0,0,0,0.15);*/
+	/*border: 2px solid rgba(0,0,0,0.15);
 	width:40%;
 	margin:2em auto;
-	/*box-sizing:border-box;*/
+	/*box-sizing:border-box;
 	background-color: #EBF5FF;
 	border-radius: 10px;
 }
@@ -354,6 +355,15 @@ div.order-wrapper {
 	margin:0 10%;
 }
 
+.outOfStock{
+	color: red;
+	-moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 /*Popup Stuff*/
 .black_overlay{
 	display: none;
@@ -379,7 +389,7 @@ div.order-wrapper {
 	background-color: white;
 	z-index:1002;
 	overflow: auto;
-}
+}*/
 
 /********************/
 /*   Availability   */
@@ -647,6 +657,124 @@ div form h2{
 	text-align: center;
 }
 
+/******************/
+/*   ORDER PAGE   */
+/******************/
+#orderWrapper {
+    overflow-x:scroll;
+    overflow:hidden;
+    margin:2em 10em;
+    width:71em;
+    border: 1px solid rgba(0,0,0,0.15);
+    height:35em;
+}
 
+#orderWrapper div {
+    display:table-cell;
+    min-width:50em;
+    text-align: center;
+    width:40em;
+}
 
+#orderWrapper + p {
+    text-align: center;
+}
 
+#orderWrapper div:nth-child(odd){
+	background:rgba(23,118,255,0.05);
+}
+
+#orderWrapper div:nth-child(even){
+	background:rgba(255,255,255,0.05);
+}
+
+#orderWrapper div:not(:last-child){
+	border-right: 1px solid rgba(0,0,0,0.15);
+}
+
+#orderWrapper .beside:hover {
+	background:rgba(23,118,255,0.15);
+}
+
+/* Ingredients list/buttons */
+#orderWrapper div ul{
+	text-indent: none;
+	padding:0px;
+}
+
+#orderWrapper div ul li{
+	margin:1em 0;
+
+}
+
+#orderWrapper div ul li label{
+	background-color: rgba(36,145,255,0.76);
+	border: 1px solid rgba(0,0,0,0.15);
+	padding:0.4em 0.3em;
+	font-family: 'Ubuntu';
+	font-size: 1.25em;
+	color:rgba(255,255,255,1);
+	width:10em;
+	display: block;
+	-webkit-padding-start:0px;
+	margin:0 auto;
+}
+
+#orderWrapper div ul li label:hover {
+    background-color: lightgray;
+
+}
+
+#orderWrapper div ul {
+	list-style-type: none;
+}
+
+#orderWrapper input[type='radio']:checked + label, #orderWrapper input[type='checkbox']:checked + label {
+    background-color:rgba(0,0,255,0.85);
+}
+
+#orderWrapper input[type='radio'], #orderWrapper input[type='checkbox'] {
+    display:none; 
+}
+
+#orderWrapper input[type='submit'], #orderWrapper input[type='checkbox'] {
+    text-align: center;
+    margin:auto;
+}
+
+/* Ingredient icon */
+#orderWrapper div img {
+	width:10em;
+	margin-top: 2em;
+}
+
+/* Arrows */
+#orderWrapper .arrow {
+	position:absolute;
+	width: 6em;
+	top:21em;
+	z-index: -1;
+	opacity: 0.5;
+	-webkit-transition: opacity 0.1s ease-in;
+}
+
+#orderWrapper .left {
+	-webkit-transform: rotate(180deg);
+	left:11em;
+}
+
+#orderWrapper .right {
+	right:11em;
+}
+
+#orderWrapper .fade-out {
+	opacity:0;
+}
+
+#orderWrapper .fade-in {
+	opacity:0.5;
+}
+
+#orderWrapper .disabled {
+	opacity:0.;
+}
