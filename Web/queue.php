@@ -20,7 +20,7 @@
 
 	<div id="sidebar">
 		<div id="quantityList">
-
+		
 		</div>
 		
 		<div id="sidebarInputContainer">
