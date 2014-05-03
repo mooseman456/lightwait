@@ -137,9 +137,9 @@ function inflateAdminMenu() {
         }
         // Availability check changed listener
         (function() {
-            checkbox = $('input[type=checkbox]').last();
-            type = mCurrType;
-            id = mMenuData[mCurrType][itemNum]['id'];
+            var checkbox = $('input[type=checkbox]').last();
+            var type = mCurrType;
+            var id = mMenuData[mCurrType][itemNum]['id'];
             checkbox.change(function(e) {
                 isChecked = checkbox.prop('checked');
                 console.log('Box checked: '+isChecked);
