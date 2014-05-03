@@ -360,7 +360,6 @@ function getAccountInfo() {
       $account['lName'] = $_SESSION['lName'];
       $account['user_id'] = $_SESSION['user_id'];
       $account['email'] = $_SESSION['email'];
-      $account['phoneNumber'] = $_SESSION['phoneNumber'];
       $account['userType'] = $_SESSION['userType'];
       echo json_encode($account);
     } else {
@@ -607,7 +606,6 @@ function updateAccount($password, $fName, $lName, $email) {
     $fName = $mysqli->escape_string($fName);
     $lName = $mysqli->escape_string($lName);
     $email = $mysqli->escape_string($email);
-    $phoneNumber = $mysqli->escape_string($phoneNumber);
 
     //Check if the password is correct
     $query = "SELECT * FROM Users WHERE email='$email' AND password='$password'";

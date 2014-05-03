@@ -42,7 +42,9 @@
         </div>
     </div>
     <div id="aboutWrapper">
-        <p>This is text about lightwait.  Later I'll probably ask Joe to write more here, but for now I'm just going to be rambling for a bit.  Lightwait is amazing and you should order things here.  Lightwait has a very high potiential to change your life.  Just saying...</p>
+        <p>Are you tired of waiting around in Mac's Place just to pick up a burger and some fries? Are you exhausted from having to be in a public place for longer than 2 minutes? Are you a professor who is examining a website made by some students in order to judge whether they are competent in the field that you are teaching? Then we have the product for you!</br></br>
+        Lightwait is the premier ordering service for both customers and managers of Mac's Place! We bring you the greatest part about Mac's Place, without the literal worst thing in the world! Waiting and doing nothing! Now you can wait and do nothing in the comfort of your own residence! Just place an order and be on your merry way!</p>
+        <img src="http://www.maxburgers.com/Templates/Int/Images/promo-frisco.jpg">
     </div>
 
 </body>
