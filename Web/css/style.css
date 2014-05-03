@@ -355,9 +355,6 @@ div.order-wrapper {
 	margin:0 10%;
 }
 
-<<<<<<< HEAD
-/*Popup Stuff
-=======
 .outOfStock{
 	color: red;
 	-moz-user-select: -moz-none;
@@ -368,7 +365,6 @@ div.order-wrapper {
 }
 
 /*Popup Stuff*/
->>>>>>> FETCH_HEAD
 .black_overlay{
 	display: none;
 	position: absolute;
