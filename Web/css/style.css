@@ -803,7 +803,7 @@ div.accountWrapper div.floatingBox {
     margin:2em 10em;
     width:71em;
     border: 1px solid rgba(0,0,0,0.15);
-    height:35em;
+    height:70%;
 }
 
 #orderWrapper div {
@@ -889,7 +889,8 @@ div.accountWrapper div.floatingBox {
 }
 
 #orderWrapper input[type='radio']:checked + label, #orderWrapper input[type='checkbox']:checked + label {
-    background-color:rgba(0,0,255,0.85);
+    background-color:rgba(14,31,255,0.85);
+    color: orange;
 }
 
 #orderWrapper input[type='radio'], #orderWrapper input[type='checkbox'] {
