@@ -52,7 +52,8 @@
     [self.logInButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
     [self.signOutButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
     [self.createAccountButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
-    [self.textField setFont:[UIFont fontWithName: @"Lato-Light" size:16]];
+    [self.copyrightTextLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.copyrightTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
 }
 
 - (void)setUpBackgroundView:(BOOL)isSignedIn

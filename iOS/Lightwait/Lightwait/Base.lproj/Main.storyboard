@@ -93,13 +93,24 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="© Lightwait 2014" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyP-BW-8nX">
+                                <rect key="frame" x="20" y="439" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="DyP-BW-8nX" secondAttribute="bottom" constant="20" id="Otl-Fn-x4u"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="Krj-Jm-5dM"/>
                     <connections>
                         <outlet property="bottomBorderImage" destination="TZd-73-sHi" id="nfr-Rv-VZo"/>
                         <outlet property="bottomView" destination="NN3-PU-FeJ" id="dSa-BL-Aib"/>
+                        <outlet property="copyrightTextLabel" destination="DyP-BW-8nX" id="sJZ-kv-QKi"/>
                         <outlet property="createAccountButton" destination="Haq-UX-sLo" id="t5q-en-zo2"/>
                         <outlet property="customOrderButton" destination="5hh-WZ-A0l" id="457-ZQ-d9d"/>
                         <outlet property="lightwaitTextLabel" destination="dQo-om-uBR" id="bNp-g0-ke4"/>
