@@ -3,6 +3,8 @@ var rootURL = "api/index.php"
 var mMenuData;
 var mCurrType = "Bases";
 
+console.log("test");
+
 $(document).ready(function(){
     getMenuData();
 
