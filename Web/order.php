@@ -9,6 +9,7 @@ if (!isset($_SESSION['userType']) && $_SESSION['userType'] != 1){
 
 $pageTitle = "Order";
 $navElements=array(
+	"order"=>"order.php",
 	"account"=>"account.php",
 	"logout"=>"index.php");
 $javascript = 'javascript/order.js';
