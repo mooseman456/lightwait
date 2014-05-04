@@ -14,6 +14,8 @@
 
 @implementation LogInViewController
 
+#pragma mark - View Controller
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -65,7 +67,17 @@
     [self.passwordTextField setLeftView:spacerView1];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+#pragma mark - Actions
+
+- (IBAction)pushLogInButton:(id)sender
+{
+    [self attemptLogIn];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     if (textField == self.usernameTextField) {
         [self.passwordTextField becomeFirstResponder];
     }
@@ -76,10 +88,7 @@
     return YES;
 }
 
-- (IBAction)pushLogInButton:(id)sender
-{
-    [self attemptLogIn];
-}
+#pragma mark - Database methods
 
 - (void)attemptLogIn
 {
@@ -95,6 +104,8 @@
         [self showAlert:@"Log In Failed" message:@"Email and password did not match"];
     }
 }
+
+#pragma mark - Alerts
 
 - (void)showAlert:(NSString *)title message:(NSString *)messageString
 {

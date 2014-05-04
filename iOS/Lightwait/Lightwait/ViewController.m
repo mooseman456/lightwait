@@ -14,6 +14,8 @@
 
 @implementation ViewController
 
+#pragma mark - View Controller
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -21,7 +23,7 @@
     
     [self customizeAppearance];
     
-    // Defaults to yes - FOR TESTING PURPOSES ONLY
+    // Defaults to yes
     isOnCampus = YES;
     hasConnection = false;
     [self testMenuConnection];
@@ -39,6 +41,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Customizes the appearance of the view
 - (void)customizeAppearance
 {
     [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0f green:238.0/255.0f blue:250.0/255.0f alpha:1.0f]];
@@ -52,10 +55,27 @@
     [self.textField setFont:[UIFont fontWithName: @"Lato-Light" size:16]];
 }
 
-- (void)testMenuConnection
+- (void)setUpBackgroundView:(BOOL)isSignedIn
 {
-    // Attempt to connect to the website
-    hasConnection = [REST_API testConnection:kConnetionTestLink];
+    if (isSignedIn) {
+        self.middleBorderImage.hidden = false;
+        self.bottomBorderImage.hidden = true;
+        self.bottomView.hidden = true;
+    }
+    else {
+        self.middleBorderImage.hidden = true;
+        self.bottomBorderImage.hidden = false;
+        self.bottomView.hidden = false;
+    }
+}
+
+#pragma mark - Actions
+
+- (IBAction)pushSignOut:(id)sender
+{
+    [self showAlert:@"Account" message:@"You have logged out"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userID"];
+    [self checkUserSignIn];
 }
 
 // Location testing is commented out for testing
@@ -81,21 +101,12 @@
     }
 }
 
-- (IBAction)pushSignOut:(id)sender
-{
-    [self showAlert:@"Account" message:@"You have logged out"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userID"];
-    [self checkUserSignIn];
-}
+#pragma mark - Database Methods
 
-- (void)showAlert:(NSString *)title message:(NSString *)messageString
+- (void)testMenuConnection
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
-                                                        message:messageString
-                                                       delegate:self
-                                              cancelButtonTitle:@"Dismiss"
-                                              otherButtonTitles:nil, nil];
-    [alertView show];
+    // Attempt to connect to the website
+    hasConnection = [REST_API testConnection:kConnetionTestLink];
 }
 
 - (void)checkUserSignIn
@@ -115,31 +126,29 @@
     }
 }
 
-- (void)setUpBackgroundView:(BOOL)isSignedIn
+#pragma mark - Miscellaneous
+
+- (void)showAlert:(NSString *)title message:(NSString *)messageString
 {
-    if (isSignedIn) {
-        self.middleBorderImage.hidden = false;
-        self.bottomBorderImage.hidden = true;
-        self.bottomView.hidden = true;
-    }
-    else {
-        self.middleBorderImage.hidden = true;
-        self.bottomBorderImage.hidden = false;
-        self.bottomView.hidden = false;
-    }
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+                                                        message:messageString
+                                                       delegate:self
+                                              cancelButtonTitle:@"Dismiss"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
 }
+
+#pragma mark - CLLocationManagerDelegate
 
 - (void)initializeLocationManager
 {
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
-    NSLog(@"Initializing");
     [_locationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    NSLog(@"Starting");
     CLLocation *currentLocation = [locations lastObject];
     
     // Break down the user's location into latitude and longitude
