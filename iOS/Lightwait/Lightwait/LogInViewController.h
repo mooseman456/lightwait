@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DataManager.h"
 
-@interface LogInViewController : UIViewController
+@interface LogInViewController : UIViewController <UITextFieldDelegate>
 {
     bool successfulLogIn;
 }

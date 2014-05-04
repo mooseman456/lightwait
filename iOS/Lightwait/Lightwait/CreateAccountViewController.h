@@ -10,7 +10,7 @@
 #import "DataManager.h"
 #import "PushHandler.h"
 
-@interface CreateAccountViewController : UIViewController
+@interface CreateAccountViewController : UIViewController <UITextFieldDelegate>
 {
     NSString *deviceTokenString;
     bool successfulAccountCreation;
