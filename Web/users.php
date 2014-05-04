@@ -15,7 +15,9 @@
 	$javascript="javascript/users.js";
 	include('include/header.php');
 ?>
+    <h2>Create an administrator or chef account</h2>
 	<div class="accountWrapper">
+
 		<div class="floatingBox"> 
 			<form id="adminCreateAccountForm" method="POST">
 

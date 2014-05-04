@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self customizeAppearance];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,7 +37,15 @@
     // Dispose of any resources that can be recreated.
 }
 
-#warning Add error checking
+- (void)customizeAppearance
+{
+    [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0f green:238.0/255.0f blue:250.0/255.0f alpha:1.0f]];
+    [self.lightwaitTextLabel setFont:[UIFont fontWithName: @"Ubuntu-Bold" size:42]];
+    [self.lightwaitTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
+    [self.usernameTextField setFont:[UIFont fontWithName: @"Lato-Light" size:16]];
+    [self.passwordTextField setFont:[UIFont fontWithName: @"Lato-Light" size:16]];
+    [self.logInButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+}
 
 - (IBAction)pushLogInButton:(id)sender
 {
