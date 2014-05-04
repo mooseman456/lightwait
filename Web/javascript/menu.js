@@ -209,49 +209,6 @@ function inflateChefMenu() {
         })();
         itemCount++;
     }
-
-
-    // $(".mainForm").append("<div></div>");
-    // var currentItem=".mainForm > div:last-child";
-    // for(var key in mMenuData){
-    //     //$(currentItem).append("<h2>"+key+"</h2>");
-    //     for(var i in mMenuData[key]){
-    //         var allPurpose=mMenuData[key][i].name;
-    //         if(allPurpose.indexOf("No ") === -1){
-
-    //             if(allPurpose==="Regular")
-    //                 allPurpose="Potato";
-    //             //$(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
-    //             //$(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
-    //             var coolString="<div>"+allPurpose+"<div class=\"onoffswitch\">\
-    //             <input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\""+allPurpose+"\">\
-    //             <label class=\"onoffswitch-label\" for=\""+allPurpose+"\">\
-    //                 <div class=\"onoffswitch-inner\"></div>\
-    //                 <div class=\"onoffswitch-switch\"></div>\
-    //             </label>\
-    //             </div></div>";
-    //             $(currentItem).append(coolString);
-    //             if(mMenuData[key][i].available==1){
-                    
-    //                 var evil=$(currentItem+" > div:nth-last-child(1) > div > input");
-    //                 //console.log(mMenuData[key][i].name);
-    //                 //console.log($(evil));
-    //                 $(evil).prop("checked", true);
-    //             }
-    //             (function() {
-    //                 var checkbox = $(currentItem+" > div:last-child > div > input");
-    //                 var type = key;
-    //                 var id = mMenuData[key][i].id;
-    //                 checkbox.change(function(e) {
-    //                     var isChecked = checkbox.prop('checked');
-    //                     console.log('Box checked: '+isChecked);
-    //                     updateAvailability(type, isChecked, id);
-    //                 });
-    //             })();
-    //         }
-    //     }
-    //     //$(".mainForm > div").append("<div class=\"divider\"></div>")
-    // }
 }
 
 var nameCompare = function(a, b) {
