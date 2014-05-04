@@ -33,6 +33,27 @@ function updateScroller(currentIndex) {
         }
         });
 
+        if (currentIndex === $('#orderWrapper div').length-2) {
+            $('#pickedItems').append("<li>" + $('#basesDiv input[type="radio"]:checked').val() + "</li>");
+            $('#pickedItems').append("<li>" + $('#breadsDiv input[type="radio"]:checked').val() + "</li>");
+            $('#pickedItems').append("<li>" + $('#cheesesDiv input[type="radio"]:checked').val()+ "</li>");
+            $('#pickedItems').append("<li>" + $('#friesDiv input[type="radio"]:checked').val() + "</li>");
+            $('#toppingsDiv input[type="checkbox"]:checked').each(function() {
+                $('#pickedItems').append("<li>" + $(this).val() + "</li>");
+            });
+
+            //var base = $('#basesDiv input[type="radio"]:checked').val();
+        //var bread = $('#breadsDiv input[type="radio"]:checked').val();
+        //var cheese = $('#cheesesDiv input[type="radio"]:checked').val();
+        //var toppings = new Array();
+        //$('#toppingsDiv input[type="checkbox"]:checked').each(function() {
+        //    toppings.push($(this).val());
+        //});
+        //var fries = $('#friesDiv input[type="radio"]:checked').val();
+        }
+        else{
+            $('#pickedItems').html("");
+        }
         // $('#orderWrapper').children().eq(currentIndex).find('input[type="radio"]').click(function() {
         //     console.log("current");
         //     var finalPageIndex = $('#orderWrapper div').length-2;

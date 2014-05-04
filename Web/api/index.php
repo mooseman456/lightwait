@@ -93,11 +93,12 @@ function addMobileOrder() {
   $mysqli->query($query);
 
   $orderID = $mysqli->insert_id;
-
+  if ($order['Toppings']) {
   foreach($order['Toppings'] as $key=>$val) {
     $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
     $mysqli->query($query); 
   }
+}
 
   echo json_encode("Success");
 

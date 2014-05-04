@@ -412,8 +412,8 @@
     // were selected or not
     [orderDictionary setObject:[NSNull null] forKey:@"Base"];
     [orderDictionary setObject:[NSNull null] forKey:@"Bread"];
-    [orderDictionary setObject:@"None" forKey:@"Cheese"];
-    [orderDictionary setObject:@"None" forKey:@"Toppings"];
+    [orderDictionary setObject:[NSNull null] forKey:@"Toppings"];
+    [orderDictionary setObject:@"No Cheese" forKey:@"Cheese"];
     [orderDictionary setObject:@"No Fries" forKey:@"Fries"];
 }
 
