@@ -51,6 +51,9 @@ function updateScroller(currentIndex) {
         //});
         //var fries = $('#friesDiv input[type="radio"]:checked').val();
         }
+        else{
+            $('#pickedItems').html("");
+        }
         // $('#orderWrapper').children().eq(currentIndex).find('input[type="radio"]').click(function() {
         //     console.log("current");
         //     var finalPageIndex = $('#orderWrapper div').length-2;
