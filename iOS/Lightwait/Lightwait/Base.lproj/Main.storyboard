@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--View Controller - lightwait-->
+        <!--View Controller - Home-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
@@ -89,7 +89,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="lightwait" id="Krj-Jm-5dM"/>
+                    <navigationItem key="navigationItem" title="Home" id="Krj-Jm-5dM"/>
                     <connections>
                         <outlet property="createAccountButton" destination="Haq-UX-sLo" id="t5q-en-zo2"/>
                         <outlet property="customOrderButton" destination="5hh-WZ-A0l" id="457-ZQ-d9d"/>
