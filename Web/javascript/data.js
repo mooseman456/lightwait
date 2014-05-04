@@ -5,6 +5,7 @@ const maxNumQueryGroups=8;
 var mMenuData;
 var mCurrentData = null;
 var mCurrentType;
+var mCurrentChart = 0;
 
 $(document).ready(function(){
 	getMenuData(); //Data in mMenu
@@ -13,11 +14,13 @@ $(document).ready(function(){
 	$('#pieChart').click(function(e) {
 		if (mCurrentData !== null) {
 			drawPieChart(mCurrentData);
+			mCurrentChart = 0;
 		}
 	});
 	$('#barGraph').click(function(e) {
 		if (mCurrentData !== null) {
 			drawBarGraph(mCurrentData);
+			mCurrentChart = 1;
 		}
 	});	
 
@@ -37,11 +40,18 @@ $(document).ready(function(){
 function inflateForm(menu) {
 	var hasField = $('fieldset#hasIngredientsFormArea');
 	var hasNotField = $('fieldset#hasNotIngredientsFormArea');
+	var first = true;
 	for(var type in menu) {
 		for(var item in type) {
 			if(typeof menu[type][item] === "object") {
 				var id = menu[type][item]['name']+"Checkbox";
-				hasField.append('<input type="checkbox" name="ingredients" id="'+id+'" />');
+				if (first) {
+					hasField.append('<input type="checkbox" name="ingredients" id="'+id+'" checked/>');
+					first = false;
+				}
+				else
+					hasField.append('<input type="checkbox" name="ingredients" id="'+id+'" />');
+
 				hasField.append('<label for="'+id+'"">'+menu[type][item]['name']+'</label>');
 				id += "Not";
 				hasNotField.append('<input type="checkbox" name="ingredients" id="'+id+'" />');
@@ -53,8 +63,15 @@ function inflateForm(menu) {
 
 function inflateSimpleQuery(menu) {
 	var field = $('fieldset#simpleQuery-types');
+	var first = true;
 	for(var type in menu) {
-		field.append('<input type="radio" name="type" id="simpleQuery-types-'+type+'"value="'+type+'"/>');
+		if (first) {
+			field.append('<input checked type="radio" name="type" id="simpleQuery-types-'+type+'"value="'+type+'"/>');
+			first = false;
+		}
+		else
+			field.append('<input type="radio" name="type" id="simpleQuery-types-'+type+'"value="'+type+'"/>');
+		
 		field.append('<label for="simpleQuery-types-'+type+'">'+type+'</label>');
 	}
 }
@@ -86,7 +103,10 @@ function simpleQuery(typeId) {
 		url: rootURL+"/squery/"+typeId,
 		dataType: "json",
 		success: function(data) {
-			drawPieChart(data);
+			if (mCurrentChart === 0)
+				drawPieChart(data);
+			else
+				drawBarGraph(data);
 			mCurrentData = data;
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
