@@ -41,6 +41,7 @@
 
 - (void)customizeAppearance
 {
+    
     [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0f green:238.0/255.0f blue:250.0/255.0f alpha:1.0f]];
     [self.lightwaitTextLabel setFont:[UIFont fontWithName: @"Ubuntu-Bold" size:42]];
     [self.lightwaitTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
@@ -50,16 +51,79 @@
     [self.passwordTextField setFont:[UIFont fontWithName:@"Lato-Light" size:16]];
     [self.confirmPasswordTextField setFont:[UIFont fontWithName:@"Lato-Light" size:16]];
     [self.createAccountButton.titleLabel setFont:[UIFont fontWithName:@"Lato-Bold" size:16]];
+
+    self.firstNameTextField.layer.borderColor = [[UIColor colorWithRed:201.0/255.0f green:201.0/255.0f blue:203.0/255.0f alpha:1.0f] CGColor];
+    self.lastNameTextField.layer.borderColor = [[UIColor colorWithRed:201.0/255.0f green:201.0/255.0f blue:203.0/255.0f alpha:1.0f] CGColor];
+    self.emailTextField.layer.borderColor = [[UIColor colorWithRed:201.0/255.0f green:201.0/255.0f blue:203.0/255.0f alpha:1.0f] CGColor];
+    self.passwordTextField.layer.borderColor = [[UIColor colorWithRed:201.0/255.0f green:201.0/255.0f blue:203.0/255.0f alpha:1.0f] CGColor];
+    self.confirmPasswordTextField.layer.borderColor = [[UIColor colorWithRed:201.0/255.0f green:201.0/255.0f blue:203.0/255.0f alpha:1.0f] CGColor];
+    self.firstNameTextField.layer.borderColor = [[UIColor colorWithRed:201.0/255.0f green:201.0/255.0f blue:203.0/255.0f alpha:1.0f] CGColor];
+    
+    self.firstNameTextField.layer.borderWidth = 1;
+    self.lastNameTextField.layer.borderWidth = 1;
+    self.emailTextField.layer.borderWidth = 1;
+    self.passwordTextField.layer.borderWidth = 1;
+    self.confirmPasswordTextField.layer.borderWidth = 1;
+    
+    self.firstNameTextField.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+    self.lastNameTextField.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+    self.emailTextField.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+    self.passwordTextField.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+    self.confirmPasswordTextField.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+    
+    UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [self.firstNameTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.firstNameTextField setLeftView:spacerView];
+    
+    UIView *spacerView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [self.lastNameTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.lastNameTextField setLeftView:spacerView1];
+
+    UIView *spacerView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [self.emailTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.emailTextField setLeftView:spacerView2];
+
+    UIView *spacerView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [self.passwordTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.passwordTextField setLeftView:spacerView3];
+
+    UIView *spacerView4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [self.confirmPasswordTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.confirmPasswordTextField setLeftView:spacerView4];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.firstNameTextField) {
+        [self.lastNameTextField becomeFirstResponder];
+    }
+    else if (textField == self.lastNameTextField) {
+        [self.emailTextField becomeFirstResponder];
+    }
+    else if (textField == self.emailTextField) {
+        [self.passwordTextField becomeFirstResponder];
+    }
+    else if (textField == self.passwordTextField) {
+        [self.confirmPasswordTextField becomeFirstResponder];
+    }
+    else if (textField == self.confirmPasswordTextField) {
+        [self attemptAccountCreation];
+    }
+    return YES;
 }
 
 - (IBAction)pushCreateAccount:(id)sender
+{
+    [self attemptAccountCreation];
+}
+
+- (void)attemptAccountCreation
 {
     NSString *firstNameString = [self.firstNameTextField text];
     NSString *lastNameString = [self.lastNameTextField text];
     NSString *emailString = [self.emailTextField text];
     NSString *passwordString = [self.passwordTextField text];
     NSString *confirmPasswordString = [self.confirmPasswordTextField text];
-
+    
     if ([self checkIfCompleteInformation:firstNameString lastName:lastNameString email:emailString password:passwordString]) {
         if ([self checkIfPasswordsMatch:passwordString password2:confirmPasswordString] && [self checkIfPasswordLengthCorrect:passwordString]) {
             successfulAccountCreation = true;

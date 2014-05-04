@@ -15,7 +15,7 @@ $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
 $app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addMobileOrder');
-$app->post('/webOrder', 'addWebOrder');
+$app->post('/weborder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password', 'createAccount');
 $app->post('/account', 'createMobileAccount');
 $app->put('/account/devicetoken', 'updateDeviceToken');
@@ -34,22 +34,25 @@ $app->get('/allingredients', 'getAllIngredients');
 $app->run();
 
 function addWebOrder() {
-  header('../completeOrder.php');
   $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $order = json_decode($request, true);
+
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
-            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
-            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
+            (SELECT id FROM Bases WHERE name = \"". $order['base'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$order['cheese']."\"),
+            (SELECT id FROM Fries WHERE name = \"".$order['fries']."\"))";
   //echo $query;
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
 
 
 	$orderID = $mysqli->insert_id;
 
-	if (!empty($_POST['toppingType']))
+	if (!empty($order['toppings']))
 	{
-		foreach($_POST['toppingType'] as $topping) {
+		foreach($order['toppings'] as $topping) {
 			$query = "INSERT INTO OrderToppings(order_id, topping_id)
 					VALUES(".$orderID.", "."(SELECT id FROM Toppings WHERE name = \"". $topping."\"))";
 					$mysqli->query($query);
@@ -60,6 +63,8 @@ function addWebOrder() {
     $query = "INSERT INTO OrderToppings(order_id, topping_id) VALUES(".$orderID.", 12);";
     $mysqli->query($query);
   }
+
+  echo json_encode("Success");
 
   //foreach($_POST['toppingType'] as $key=>$val){
   //  $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
