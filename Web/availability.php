@@ -9,6 +9,7 @@
 	$pageTitle = "Availability";
 	$navElements = array(
         "queue"=>"queue.php",
+        "availability"=>"availability.php",
         "account"=>"account.php",
         "logout"=>"index.php");
 	$javascript = 'javascript/menu.js';
