@@ -48,7 +48,7 @@ h2 {
     border-radius: 5px;
     bottom: 26px;
     color: #fff;
-    content: attr(title);
+    content: attr(name);
     left: 20%;
     padding: 5px 15px;
     position: absolute;
@@ -850,6 +850,7 @@ div.accountWrapper div.floatingBox {
 
 #orderWrapper input[type='submit'], #orderWrapper input[type='checkbox'] {
     text-align: center;
+    width: 50%;
     margin:auto;
 }
 
