@@ -1,12 +1,26 @@
 <?php
     session_cache_limiter(false);
     session_start();
-    if (!isset($_SESSION['userType']) || $_SESSION['userType'] != 1) {
-        header('Location: index.php');
-        die();
+    $pageTitle="Account";
+    if ($_SESSION['userType'] == 1) {
+        $navElements = array(
+            "order" => "order.php",
+            "logout"=>"index.php");
+    }
+    else if ($_SESSION['userType'] == 3) {
+        $navElements=array(
+        "data"=>"data.php",
+        "users"=>"users.php",
+        "menu"=>"menu.php",
+        "logout"=>"index.php");
+    }
+    else {
+        $navElements=array(
+            "queue"=>"queue.php",
+            "availability"=>"availability.php",
+            "logout"=>"index.php",);
     }
     $pageTitle="Account";
-    $navElements = Array("order" => "order.php","logout"=>"index.php");
     $javascript = 'javascript/account.js';
     include('include/header.php');
 

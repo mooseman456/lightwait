@@ -8,7 +8,10 @@
     }
     */
 
-	$navElements=array("availability"=>"availability.php","logout"=>"index.php",);
+	$navElements=array(
+        "account"=>"account.php",
+        "availability"=>"availability.php",
+        "logout"=>"index.php",);
 	$pageTitle = "Queue";
 	$javascript='javascript/queue.js';
 	include('include/header.php');

@@ -7,7 +7,7 @@
     }
 	
     $navElements=array(
-		"data"=>"data.php",
+    	"account"=>"account.php",
 		"users"=>"users.php",
 		"menu"=>"menu.php",
 		"logout"=>"index.php");
