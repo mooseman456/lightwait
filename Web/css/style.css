@@ -852,6 +852,7 @@ div.accountWrapper div.floatingBox {
 /*   ORDER PAGE   */
 /******************/
 #orderWrapper {
+	display:relative;
     overflow-x:scroll;
     overflow:hidden;
     margin:2em 10em;
@@ -974,15 +975,16 @@ div.accountWrapper div.floatingBox {
 	z-index: -1;
 	opacity: 0.5;
 	-webkit-transition: opacity 0.1s ease-in;
+
 }
 
 #orderWrapper .left {
 	-webkit-transform: rotate(180deg);
-	left:6em;
+	margin-left:1%;
 }
 
 #orderWrapper .right {
-	left: 67em;
+	margin-left: 77%;
 }
 
 #orderWrapper .fade-out {
