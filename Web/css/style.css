@@ -158,7 +158,7 @@ section.queue:hover {
 	font-family: 'Lato';
 }
 
-li.orderName {
+li.orderName, li.orderTime {
 	width: 100%;
 	text-align: right;
 }

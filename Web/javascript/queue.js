@@ -74,6 +74,11 @@ function pushOrderToWindow(index) {
 	$('div#queueWindow').append(orderElement);
 	var order = orders[index];
 	$(orderElement).children('ul').append('<li class="orderName">'+order['fName']+' '+order['lName']+'</li>');
+	$(orderElement).children('ul').append('<li class="orderTime"></li>');
+	var clock = $('li').last();
+	var timeSeed = order['timePlaced'];
+	// startClock(clock, timeStamp);
+	timeWrap(clock,timeSeed);
 	$(orderElement).children('ul').append('<li class="orderBase">'+order['base_name']+'</li>');
 	$(orderElement).children('ul').append('<li class="orderBread">'+order['bread_name']+'</li>');
 	$(orderElement).children('ul').append('<li class="orderCheese">'+order['cheese_name']+'</li>');
@@ -94,6 +99,65 @@ function pushOrderToWindow(index) {
 		updateSidebar();
 		updateCurrentWindow();
 	});
+}
+function timeWrap(clock, timeSeed) {
+	timeSeed = new Date(timeSeed);
+	startTime();
+	console.log(timeSeed);
+	function startTime() {
+	    var today=new Date();
+	    var waitTime = new Date(today-timeSeed);
+	    var m=waitTime.getMinutes();
+	    var s=waitTime.getSeconds();
+	    m = checkTime(m);
+	    s = checkTime(s);
+	    clock.html(m+":"+s);
+	    var t = setTimeout(function(){startTime()},500);
+	}
+
+	function checkTime(i) {
+	    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+	    return i;
+	}
+}
+
+
+function startClock(clock, startTime) {
+	startTime = startTime.split(' ');
+	var date = startTime[0].split('-');
+	var time = startTime[1].split(':');
+	var today = new Date;
+	for(var i=0; i< 100; i++) {
+		console.log(today);
+		var orderTime = new Date(date[0],date[1]-1,date[2],time[0],time[1],time[2]);
+		var waitTime = Math.round((today - orderTime)/1000);
+		console.log(orderTime);
+		console.log(waitTime);
+		waitMinutes = Math.round(waitTime/60);
+		waitSeconds = waitTime%60;
+		console.log(waitMinutes+':'+waitSeconds);
+
+		clock.html(waitMinutes+':'+waitSeconds);
+		setTimeout(function(){}, 3000);
+	}
+
+	// var tYear = today.getFullYear();
+	// var tMonth = today.getMonth() +1;
+	// var tDay = today.getDay();
+	// var tHour= today.getHours();
+	// var tMinutes = today.getMinutes();
+	// var tSeconds = today.getSeconds();
+	// today = new Date(tYear, tMonth, tDay, tHour, tMinutes, tSeconds);
+	// if (date[0] !== tYear || date[1] !== tMonth || date[2] !== tDay) {
+	// 	clock.html("too old");
+	// } else {
+	// 	clock.html()
+	// }
+
+	// while (true) {
+	// 	time = 0;
+	// 	clock.html(""+time);
+	// }
 }
 
 // UPDATE SIDEBAR
@@ -181,6 +245,7 @@ function getActiveOrders() {
 		url: rootURL + '/activeorders',
 		dataType: 'json', // data type of response
 		success: function(data){ 
+			console.log(JSON.stringify(data));
 			orders = data;
 			updateSidebar();
 			updateCurrentWindow();
