@@ -125,6 +125,7 @@ function inflateAdminMenu() {
     pane.empty();
     pane.append('<ul>');
     for (itemNum in mMenuData[mCurrType]) {
+        var itemId = mMenuData[mCurrType]
         itemName = mMenuData[mCurrType][itemNum]["name"];
         pane.append('<li></li>');
         list = $('li').last();
@@ -142,19 +143,19 @@ function inflateAdminMenu() {
             var id = mMenuData[mCurrType][itemNum]['id'];
             checkbox.change(function(e) {
                 isChecked = checkbox.prop('checked');
-                console.log('Box checked: '+isChecked);
                 updateAvailability(type, isChecked, id);
+                getMenuData();
             });
-        })();
-        (function() {
             var deleteButton = $('img').last();
             deleteButton.click(function() {
-                alert("Delete is not currently supported. Contact lightwait support for assistance.");
-                //TODO: Delete action
+                confirm('Are you sure you want to delete '+mMenuData[type][itemNum]['name']+'?');
+                removeIngredient(type,id);
+                getMenuData();
             });
         })();
     }
     pane.append('</ul>');
+    $('')
 }
 
 

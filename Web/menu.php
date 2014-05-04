@@ -35,7 +35,7 @@
 
 		<div id="menuDisplayWrapper">
 			<div id="menuDisplayTypeSelector">
-				<div class="typeSelect"><span>Bases</span></div>
+				<div class="typeSelect selected"><span>Bases</span></div>
 				<div class="typeSelect"><span>Breads</span></div>
 				<div class="typeSelect"><span>Cheeses</span></div>
 				<div class="typeSelect"><span>Toppings</span></div>

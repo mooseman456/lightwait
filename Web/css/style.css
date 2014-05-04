@@ -548,8 +548,8 @@ div#adminMenuWrapper {
 }
 
 div#menuDisplayWrapper img {
-	height:1.4em;
-	vertical-align: text-bottom;
+	height:1.6em;
+	vertical-align:center;
 	float:right;
 	margin-left: 8px;
 }
@@ -570,6 +570,7 @@ div#menuDisplayTypeView {
 div#menuDisplayTypeView li {
 	list-style: none;
 	margin: 14px;
+	line-height: 1.6em;
 }
 
 div#menuDisplayTypeView span {
