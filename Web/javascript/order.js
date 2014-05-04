@@ -83,7 +83,7 @@ function updateScroller(currentIndex) {
                 $("#orderWrapper + p").text("Add items to your order by clicking on them in the menu!");
                 console.log("Oh happy day!");
             }
-            else
+            else if(currentIndex!== finalPageIndex)
                 $("#orderWrapper + p").text("Please select an item first.");
 
             if (currentIndex != finalPageIndex && (choicePicked === true || currentIndex === 4)) {
