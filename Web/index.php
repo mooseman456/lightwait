@@ -45,7 +45,7 @@
     <div id="aboutWrapper">
         <img src="http://3.bp.blogspot.com/_zrYqLNVtWxs/TDUs_9wk30I/AAAAAAAAGYE/y8TKo3EQIXQ/s1600/backyard++burger.png">
         <p>Are you tired of waiting around in a restaraunt just to pick up a burger and some fries? Are you exhausted from having to be in a public place for longer than 2 minutes? Are you a professor who is examining a website made by some students in order to judge whether they are competent in the field that you are teaching? Then we have the product for you!</br></br>
-        Lightwait is the premier ordering service for both customers and managers of Mac's Place! We bring you the greatest part about Mac's Place, without the literal worst thing in the world! Waiting and doing nothing! Now you can wait and do nothing in the comfort of your own residence! Just place an order and be on your merry way!</p>
+        Lightwait is the premier ordering service for both customers and managers of restaraunts! We bring you the greatest part about getting food, without the literal worst thing in the world! Waiting and doing nothing! Now you can wait and do nothing in the comfort of your own residence! Just place an order and be on your merry way!</p>
 
     </div>
 
