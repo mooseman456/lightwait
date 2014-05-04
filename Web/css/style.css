@@ -739,16 +739,16 @@ div#advancedQueryContainer {
 /* Edit Account */
 /****************/
 
-#passWrap {
-	margin-top:10px;
+/*   Customers   */
+div.accountWrapper {
+	width:36%;
+	min-width: 420px;
+	display: block;
+	margin: 36px auto auto auto;
 }
 
-#emailWrap {
-	margin-bottom:10px;
-}
-
-div form h2{
-	text-align: center;
+div.accountWrapper div.floatingBox {
+	margin: 2em 0;
 }
 
 /******************/
