@@ -97,6 +97,7 @@
     if (accountInformation) {
         [[NSUserDefaults standardUserDefaults] setObject:[accountInformation objectForKey:@"userID"] forKey:@"userID"];
         [self showAlert:[@"Hello " stringByAppendingString:[accountInformation objectForKey:@"fName"]] message:@"You have logged in"];
+        [PushHandler registerForNotifications];
         successfulLogIn = TRUE;
     }
     else {
