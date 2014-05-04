@@ -553,6 +553,18 @@ function simpleQuery($type) {
     $result->free();
   } else {
     $dQuery = "SELECT Toppings.name, COUNT(*) AS count FROM OrderToppings JOIN Toppings ON OrderToppings.topping_id=Toppings.id GROUP BY topping_id";
+
+    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
+
+    $finalResults = array();
+    $resultRow = array();
+    while ($row = $result->fetch_assoc()) {
+          $resultRow[0]=$row['name'];
+          $resultRow[1]=(int)$row['count'];
+          array_push($finalResults, $resultRow);
+    }
+
+    $result->free();
   }
 
   echo json_encode($finalResults);
