@@ -20,6 +20,7 @@
 
 + (NSString *)orderBuilder:(NSMutableDictionary *)dictionary
 {
+    [dictionary setObject:[[NSUserDefaults standardUserDefaults] stringForKey:@"userID"] forKey:@"user_id"];
     return [JSONConverter convertNSDictionaryToJSON:dictionary];
 }
 
