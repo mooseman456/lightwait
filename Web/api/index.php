@@ -34,6 +34,7 @@ $app->get('/allingredients', 'getAllIngredients');
 $app->run();
 
 function addWebOrder() {
+  header('../completeOrder.php');
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
@@ -70,7 +71,7 @@ function addWebOrder() {
   //echo "<a href=../../order.php>New Order</a>";
   //$result->free();
   $mysqli->close();
-  //include('/Web/order.php');
+
 }
 
 function addMobileOrder() {

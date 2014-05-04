@@ -13,7 +13,7 @@ $javascript = 'javascript/order.js';
 include('include/header.php');
 ?>
 
-<form id="menuForm" method="POST" action="api/index.php/webOrder">
+<form id="menuForm">
 	<div id="orderWrapper">
 		<div class="beside">
 			This is an empty div
