@@ -890,7 +890,6 @@ div.accountWrapper div.floatingBox {
 
 #orderWrapper input[type='radio']:checked + label, #orderWrapper input[type='checkbox']:checked + label {
     background-color:rgba(14,31,255,0.85);
-    color: orange;
 }
 
 #orderWrapper input[type='radio'], #orderWrapper input[type='checkbox'] {
