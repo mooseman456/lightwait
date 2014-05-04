@@ -7,13 +7,18 @@
     }
 
 	$pageTitle = "Availability";
-	$navElements = array("back"=>"queue.php","logout"=>"index.php");
+	$navElements = array(
+        "queue"=>"queue.php",
+        "availability"=>"availability.php",
+        "account"=>"account.php",
+        "logout"=>"index.php");
 	$javascript = 'javascript/menu.js';
 	include 'include/header.php';
 ?>
-	<div class="chartHolder">
-		<form class="mainForm" method="POST" onsubmit="return false;">
-
+	<div class='floatingBox availability'>
+		<form id='chefChangeAvailabilityForm'>
+			<ul id='available-column1'></ul>
+			<ul id='available-column2'></ul>
 		</form>
 	</div>
 </body>

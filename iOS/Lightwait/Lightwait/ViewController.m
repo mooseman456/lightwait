@@ -19,6 +19,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    [self customizeAppearance];
+    
     // Defaults to yes - FOR TESTING PURPOSES ONLY
     isOnCampus = YES;
     hasConnection = false;
@@ -35,6 +37,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)customizeAppearance
+{
+    [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0f green:238.0/255.0f blue:250.0/255.0f alpha:1.0f]];
+    [self.lightwaitTextLabel setFont:[UIFont fontWithName: @"Ubuntu-Bold" size:42]];
+    [self.lightwaitTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
+    [self.customOrderButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.savedOrdersButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.logInButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.signOutButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.createAccountButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.textField setFont:[UIFont fontWithName: @"Lato-Light" size:16]];
 }
 
 - (void)testMenuConnection
@@ -90,11 +105,27 @@
         self.logInButton.hidden = TRUE;
         self.createAccountButton.hidden = TRUE;
         self.signOutButton.hidden = FALSE;
+        [self setUpBackgroundView:true];
     }
     else {
         self.logInButton.hidden = FALSE;
         self.createAccountButton.hidden = FALSE;
         self.signOutButton.hidden = TRUE;
+        [self setUpBackgroundView:false];
+    }
+}
+
+- (void)setUpBackgroundView:(BOOL)isSignedIn
+{
+    if (isSignedIn) {
+        self.middleBorderImage.hidden = false;
+        self.bottomBorderImage.hidden = true;
+        self.bottomView.hidden = true;
+    }
+    else {
+        self.middleBorderImage.hidden = true;
+        self.bottomBorderImage.hidden = false;
+        self.bottomView.hidden = false;
     }
 }
 

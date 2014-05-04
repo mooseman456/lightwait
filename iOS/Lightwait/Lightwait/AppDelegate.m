@@ -17,6 +17,8 @@
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
+    [self customizeAppearance];
+    
     return YES;
 }
 
@@ -67,9 +69,20 @@
 	NSLog(@"Failed to get token, error: %@", error);
 }
 
-- (void)updateDeviceTokenInDatabase
+- (void)customizeAppearance
 {
+    //custom navigation bar
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:23.0/255.0f green:118.0/255.0f blue:255.0/255.0f alpha:1.0f]];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName: @"Ubuntu-Bold" size:18], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName: @"Ubuntu-Bold" size:18]} forState:UIControlStateNormal];
 }
+
 
 @end

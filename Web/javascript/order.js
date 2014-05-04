@@ -2,6 +2,7 @@ var rootURL = "api/index.php";
 
 $(document).ready(function(){
     getMenuData();
+  
 });
 
 function updateScroller(currentIndex) {
@@ -22,7 +23,8 @@ function updateScroller(currentIndex) {
         // Add new click listeners
         // Scroll left when left pointing arrow clicked
         $('#orderWrapper').children().eq(currentIndex-1).click(function() {
-            console.log("prev");
+            console.log("prev"+currentIndex);
+            
             if (currentIndex !== 1) {
             hideArrows();
             scrollLeft(currentIndex);
@@ -31,6 +33,27 @@ function updateScroller(currentIndex) {
         }
         });
 
+        if (currentIndex === $('#orderWrapper div').length-2) {
+            $('#pickedItems').append("<li>" + $('#basesDiv input[type="radio"]:checked').val() + "</li>");
+            $('#pickedItems').append("<li>" + $('#breadsDiv input[type="radio"]:checked').val() + "</li>");
+            $('#pickedItems').append("<li>" + $('#cheesesDiv input[type="radio"]:checked').val()+ "</li>");
+            $('#pickedItems').append("<li>" + $('#friesDiv input[type="radio"]:checked').val() + "</li>");
+            $('#toppingsDiv input[type="checkbox"]:checked').each(function() {
+                $('#pickedItems').append("<li>" + $(this).val() + "</li>");
+            });
+
+            //var base = $('#basesDiv input[type="radio"]:checked').val();
+        //var bread = $('#breadsDiv input[type="radio"]:checked').val();
+        //var cheese = $('#cheesesDiv input[type="radio"]:checked').val();
+        //var toppings = new Array();
+        //$('#toppingsDiv input[type="checkbox"]:checked').each(function() {
+        //    toppings.push($(this).val());
+        //});
+        //var fries = $('#friesDiv input[type="radio"]:checked').val();
+        }
+        else{
+            $('#pickedItems').html("");
+        }
         // $('#orderWrapper').children().eq(currentIndex).find('input[type="radio"]').click(function() {
         //     console.log("current");
         //     var finalPageIndex = $('#orderWrapper div').length-2;
@@ -44,9 +67,26 @@ function updateScroller(currentIndex) {
 
         // Scroll right when right pointing arrow clicked
         $('#orderWrapper').children().eq(currentIndex+1).click(function() {
-            console.log("next");
+            console.log("next"+currentIndex);
             var finalPageIndex = $('#orderWrapper div').length-2;
-            if (currentIndex != finalPageIndex) {
+            var currCategory="#orderWrapper > div:nth-of-type("+(currentIndex+1)+")";
+            var choicePicked=false;
+            for(var i=1; i<=$(currCategory+" > ul > li").length; i++){
+                //console.log($(currCategory+" > ul > li:nth-of-type("+i+") > label").html());;
+
+                if($(currCategory+" > ul > li:nth-of-type("+i+") > input").prop("checked")===true){
+                    //console.log(i+" is a winner");
+                    choicePicked=true;
+                }
+            }
+            if(choicePicked){
+                $("#orderWrapper + p").text("Add items to your order by clicking on them in the menu!");
+                console.log("Oh happy day!");
+            }
+            else
+                $("#orderWrapper + p").text("Please select an item first.");
+
+            if (currentIndex != finalPageIndex && (choicePicked === true || currentIndex === 4)) {
             hideArrows();
             scrollRight(currentIndex);
             currentIndex++;
@@ -123,50 +163,95 @@ function getMenuData() {
 }
 
 function inflateOrderMenu(data) {
+    console.log(data);
     $('#basesDiv').append("<h2>Choose Your Base</h2><ul id=\"basesMenu\">");  
     for (var i=0; i<data['Bases'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i]['name'] + "\" value=\"" + data['Bases'][i]['name'] + "\" required> <label for=\"" + data['Bases'][i]['name'] + "\">" + data['Bases'][i]['name'] + "</label></li>");
-        if (data['Bases'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
-        }
+        console.log("loadbase base "+ i);
+
+        if (data['Bases'][i]['available'] === '0')
+            $('#basesDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i]['name'] + "\" value=\"" + data['Bases'][i]['name'] + "\" required> <label for=\"" + data['Bases'][i]['name'] + "\">" + data['Bases'][i]['name'] + "</label></li>");
+        else
+            $('#basesDiv ul').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i]['name'] + "\" value=\"" + data['Bases'][i]['name'] + "\" required> <label for=\"" + data['Bases'][i]['name'] + "\">" + data['Bases'][i]['name'] + "</label></li>");
+
+            //$('#basesDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
+            //$('#basesDiv ul li:last-child').append("(currently unavailable)")
+        
     }
 
     $('#breadsDiv').append("<h2>Choose Your Bread</h2></ul><ul id=\"breadsMenu\">");
     for (var i=0; i<data['Breads'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
-        if (data['Breads'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
-        }    
+
+        if (data['Breads'][i]['available'] === '0')
+            $('#breadsDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
+        else
+            $('#breadsDiv ul').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");            
     }
 
     $('#cheesesDiv').append("<h2>Slap Some Cheese On It</h2></ul><ul id=\"cheeseMenu\">");
     for (var i=0; i<data['Cheeses'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");
-        if (data['Cheeses'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
-        }
+        if (data['Cheeses'][i]['available'] === '0')
+            $('#cheesesDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");
+        else
+            $('#cheesesDiv ul').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");  
     }
 
     $('#toppingsDiv').append("<h2>Top It Off With Toppings</h2></ul><ul id=\"toppingsMenu\">");
     for (var i=0; i<data['Toppings'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
-        if (data['Toppings'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
-        }
+        if (data['Toppings'][i]['available'] === '0')
+            $('#toppingsDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
+        else
+            $('#toppingsDiv ul').append("<li> <input type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
     }
 
     $('#friesDiv').append("<h2>Ya Want Fries With That?</h2></ul><ul id=\"fryMenu\">");
     for (var i=0; i<data['Fries'].length; i++){
-        $('#menuForm ul:last-child').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
-        if (data['Fries'][i]['available'] === '0'){
-            $('#menuForm ul:last-child li:last-child input').prop("disabled", true).addClass("outOfStock");
-            $('#menuForm ul:last-child li:last-child label').append("(currently unavailable)")
-        }
+        if (data['Fries'][i]['available'] === '0')
+            $('#friesDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
+        else
+            $('#friesDiv ul').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
     }
 
     $('#submitDiv').append("</ul><input type=\"submit\" value=\"Submit Order\">");
+
+    $('#submitDiv input[type="submit"]').click(function(e) {
+        e.preventDefault();
+        var base = $('#basesDiv input[type="radio"]:checked').val();
+        var bread = $('#breadsDiv input[type="radio"]:checked').val();
+        var cheese = $('#cheesesDiv input[type="radio"]:checked').val();
+        var toppings = new Array();
+        $('#toppingsDiv input[type="checkbox"]:checked').each(function() {
+            toppings.push($(this).val());
+        });
+        var fries = $('#friesDiv input[type="radio"]:checked').val();
+
+        console.log("Base " + base);
+        console.log("Bread " + bread);
+        console.log("Cheese " + cheese);
+        console.log("Toppings " + toppings);
+        console.log("Fries " + fries);
+
+        var order = {"base": base, "bread": bread, "cheese": cheese, "toppings": toppings, "fries": fries};
+        //addOrder(base, bread, cheese, toppings, fries);
+        console.log(order)
+        order = JSON.stringify(order);
+        addOrder(order);
+    })
+}
+
+function addOrder(order) {
+  $.ajax({
+     type: 'POST',
+     url: rootURL + '/weborder',
+     dataType: "json", // data type of response
+     data:order,
+     success: function(){
+        alert("Thank you for your order! It has been received and is underway!");
+        document.location.href="index.php"
+     },
+     error: function(jqXHR, errorThrown){
+        console.log("Account creation failed");
+        console.log(jqXHR, errorThrown);
+        alert(jqXHR.responseText);
+     }
+  });
 }

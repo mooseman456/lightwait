@@ -6,10 +6,10 @@
         die();
     }
 	$navElements=array(
-		"home"=>"administrator.php",
 		"data"=>"data.php",
-		"users"=>"users.php",
 		"menu"=>"menu.php",
+		"users"=>"users.php",
+		"account"=>"account.php",
 		"logout"=>"index.php");
 	$pageTitle="Menu";
 	$javascript="javascript/menu.js";
@@ -19,7 +19,7 @@
 	<div id="adminMenuWrapper">
 		<div class="floatingBox" id="addItemFormWrapper">
 			<form id="addItemToMenuForm">
-				<input type="text" name="name" placeholder="Name" required pattern="[a-zA-Z]+">
+				<input class="textForm tooltip" type="text" name="name" placeholder="Name" title="Max of 20 characters, letters only" maxlength="30" required pattern="[a-zA-Z]">
 				<input type="radio" name="type" value="Bases" id="addItemForm-typeBase" required>
 				<label for="addItemForm-typeBase">Base</label>
 				<input type="radio" name="type" value="Breads" id="addItemForm-typeBread" required>
@@ -36,7 +36,7 @@
 
 		<div id="menuDisplayWrapper">
 			<div id="menuDisplayTypeSelector">
-				<div class="typeSelect"><span>Bases</span></div>
+				<div class="typeSelect selected"><span>Bases</span></div>
 				<div class="typeSelect"><span>Breads</span></div>
 				<div class="typeSelect"><span>Cheeses</span></div>
 				<div class="typeSelect"><span>Toppings</span></div>

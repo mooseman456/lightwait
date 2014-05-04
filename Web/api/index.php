@@ -15,7 +15,7 @@ $app->get('/ingredients', 'getAvailability');
 $app->get('/account/:email/:password', 'logIn');
 $app->get('/accountinfo', 'getAccountInfo');
 $app->post('/order', 'addMobileOrder');
-$app->post('/webOrder', 'addWebOrder');
+$app->post('/weborder', 'addWebOrder');
 $app->post('/account/:usertype/:fName/:lName/:email/:password', 'createAccount');
 $app->post('/account', 'createMobileAccount');
 $app->put('/account/devicetoken', 'updateDeviceToken');
@@ -35,20 +35,24 @@ $app->run();
 
 function addWebOrder() {
   $mysqli = getConnection();
+  $app = \Slim\Slim::getInstance();
+  $request = $app->request()->getBody();
+  $order = json_decode($request, true);
+
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$_POST['breadType'] ."\"), 
-            (SELECT id FROM Bases WHERE name = \"". $_POST['baseType'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$_POST['cheeseType']."\"),
-            (SELECT id FROM Fries WHERE name = \"".$_POST['friesType']."\"))";
+            VALUES (".$_SESSION['user_id'].", "."\"" . date('Y/m/d H:i:s') ."\", 1, (SELECT id FROM Breads WHERE name = \"".$order['bread'] ."\"), 
+            (SELECT id FROM Bases WHERE name = \"". $order['base'] ."\"), (SELECT id FROM Cheeses WHERE name = \"".$order['cheese']."\"),
+            (SELECT id FROM Fries WHERE name = \"".$order['fries']."\"))";
   //echo $query;
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]");
 
 
 	$orderID = $mysqli->insert_id;
 
-	if (!empty($_POST['toppingType']))
+	if (!empty($order['toppings']))
 	{
-		foreach($_POST['toppingType'] as $topping) {
+		foreach($order['toppings'] as $topping) {
 			$query = "INSERT INTO OrderToppings(order_id, topping_id)
 					VALUES(".$orderID.", "."(SELECT id FROM Toppings WHERE name = \"". $topping."\"))";
 					$mysqli->query($query);
@@ -60,16 +64,19 @@ function addWebOrder() {
     $mysqli->query($query);
   }
 
+  echo json_encode("Success");
+
   //foreach($_POST['toppingType'] as $key=>$val){
   //  $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
   //  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
   //}
 
-  echo "<h2>Thank you for your order!</h2>";
-  echo "<h3>It has been received and is underway!</h3>";
-  echo "<a href=../../order.php>New Order</a>";
+  //echo "<h2>Thank you for your order!</h2>";
+  //echo "<h3>It has been received and is underway!</h3>";
+  //echo "<a href=../../order.php>New Order</a>";
   //$result->free();
   $mysqli->close();
+
 }
 
 function addMobileOrder() {
@@ -81,22 +88,20 @@ function addMobileOrder() {
   date_default_timezone_set('America/Chicago');
 
   $query = "INSERT INTO Orders (user_id, timePlaced, bread_id, base_id, cheese_id, fry_id)
-            VALUES (" . $order['user_id'] . ", '" . date('Y/m/d H:i:s') . "', " . $order['bread'] . ", " . $order['base'] . ", " . $order['cheese'] . ", " . $order['fries'].")";
-
+            VALUES (" . $order['user_id'] . ", '" . date('Y/m/d H:i:s') . "', " . $order['Bread'] . ", " . $order['Base'] . ", " . $order['Cheese'] . ", " . $order['Fries'].")";
 
   $mysqli->query($query);
 
-  echo json_encode($query);
-
   $orderID = $mysqli->insert_id;
-
-  foreach($order['toppings'] as $key=>$val) {
+  if ($order['Toppings']) {
+  foreach($order['Toppings'] as $key=>$val) {
     $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
-    $mysqli->query($query);
-    
+    $mysqli->query($query); 
   }
+}
 
-  $result->free();
+  echo json_encode("Success");
+
   $mysqli->close();
 }
 
@@ -143,7 +148,7 @@ function updateAvailability($type, $available, $id) {
   $query = "UPDATE $type SET available=$available WHERE id=$id";
   $mysqli->query($query);
 
-  $result->free();
+  //$result->free();
 
   echo json_encode($query); 
   $mysqli->close();
@@ -232,15 +237,12 @@ function createMobileAccount() {
   //Salt and Hash the password
   $password = hash("sha512", $accountInfo['password']);
 
-  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "')";
+  $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "')";
 
   $mysqli->query($query);
 
   $userID = $mysqli->insert_id;
-
   $returnArray['userID'] = $userID;
-
-  $result->free();
 
   echo json_encode($returnArray);
 
@@ -278,39 +280,37 @@ function createAccount($usertype, $fName, $lName, $email, $password) {
   $result = $mysqli->query($query)  or trigger_error($mysqli->error."[$query]"); 
   $row = $result->fetch_assoc();
 
-  if ($row['count'] == 0) {
+  try {
+    if ($row['count'] == 0) {
 
-    try {
+        $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
+        $result = $mysqli->query($query);
 
-      $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES ('$usertype', '$fName', '$lName', '$email', '$password')";
-      $result = $mysqli->query($query);
+        if (!$result) {
+         throw new Exception("Could not create account");
+        }
 
-      if (!$result) {
-       throw new Exception("Could not create account");
-      }
+        $user_id = $mysqli->insert_id;
+        //Set SESSION variables
+        if (!isset($_SESSION['userType'])) {
+          $_SESSION['fName'] = $fName;
+          $_SESSION['lName'] = $lName;
+          $_SESSION['user_id'] = $user_id;
+          $_SESSION['email'] = $email;
+          $_SESSION['userType'] = $usertype;
+        }
 
-      $user_id = $mysqli->insert_id;
-      //Set SESSION variables
-      if (!isset($_SESSION['userType'])) {
-        $_SESSION['fName'] = $fName;
-        $_SESSION['lName'] = $lName;
-        $_SESSION['user_id'] = $user_id;
-        $_SESSION['email'] = $email;
-        $_SESSION['userType'] = $usertype;
-      }
-
-    } catch (Exception $e) {
-      echo json_encode($e);
+    } else {
+      throw new Exception("Email already in use");
     }
 
-  } else {
+    echo json_encode($query);
 
-    echo json_encode("Account could not be created");
+    $mysqli->close();
+}
+  catch(Exception $e){
+    echo $e->getMessage();
   }
-
-  echo json_encode($query);
-
-  $mysqli->close();
   
 }
 
@@ -346,7 +346,7 @@ function logIn($email, $password) {
     else
       throw new Exception('Bad login.');
   } catch(Exception $e) {
-    echo 'Caught exception: ', $e->getMessage(), "\n";
+    echo $e->getMessage(), "\n";
   }
 
   $result->free();
@@ -564,11 +564,11 @@ function simpleQuery($type) {
 function getAvailability() {
   $mysqli = getConnection();
 
-  $query  = "SELECT id, name, available FROM Bases;";
-  $query .= "SELECT id, name, available FROM Breads;";
-  $query .= "SELECT id, name, available FROM Cheeses;";
-  $query .= "SELECT id, name, available FROM Toppings WHERE ID != 12;";
-  $query .= "SELECT id, name, available FROM Fries";
+  $query  = "SELECT id, name, available FROM Bases WHERE isActive = 1;";
+  $query .= "SELECT id, name, available FROM Breads WHERE isActive = 1;";
+  $query .= "SELECT id, name, available FROM Cheeses WHERE isActive = 1;";
+  $query .= "SELECT id, name, available FROM Toppings WHERE ID != 12 AND isActive = 1;";
+  $query .= "SELECT id, name, available FROM Fries WHERE isActive = 1";
 
   // Perform a multiquery to get all the ingredients
   if ($mysqli->multi_query($query)) {
@@ -655,15 +655,9 @@ function updatePassword($currentPassword, $newPassword){
       $row = $result->fetch_assoc();
       if ($currentPassword != $row['password'])
         throw new Exception("Password incorrect");
-      //Correct email and pass provided
-      //if ($row['user_id']) {
 
-          $query = "UPDATE Users SET password='$newPassword' WHERE user_id='".$_SESSION['user_id']."' ";
-          $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
-
-      //} else {    //Incorrect email and pass
-
-      //}
+      $query = "UPDATE Users SET password='$newPassword' WHERE user_id='".$_SESSION['user_id']."' ";
+      $mysqli->query($query) or trigger_error($mysqli->error."[$query]"); 
 
       $mysqli->close();
       echo json_encode($query); 
@@ -673,7 +667,7 @@ function updatePassword($currentPassword, $newPassword){
     }
 }
 
-function updateAccount($password, $fName, $lName, $email) {
+/*function updateAccount($password, $fName, $lName, $email) {
 
     $mysqli = getConnection();
     $app = \Slim\Slim::getInstance();
@@ -705,7 +699,7 @@ function updateAccount($password, $fName, $lName, $email) {
     $result->free();
     echo json_encode($query); 
     $mysqli->close();
-}
+}*/
 
 // Adds a new ingredient to the specified type
 // Example: addIngredient(Topping, Guacamole) would create a new Topping called 
@@ -783,13 +777,11 @@ function removeIngredient($type, $id) {
 
   $query = "UPDATE $type SET isActive=0 WHERE id=$id";
 
-  $result = $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
-
+  $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
+  
   $mysqli->close();
 
-  echo json_encode($result);
-  $result->free();
-  $mysqli->close();
+  echo json_encode("Removed");
 }
 
 // Returns a JSON array of all the ingredients whether they are 

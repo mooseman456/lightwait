@@ -8,12 +8,15 @@ if (!isset($_SESSION['userType']) && $_SESSION['userType'] != 1){
 }
 
 $pageTitle = "Order";
-$navElements=array("account"=>"account.php","logout"=>"index.php");
+$navElements=array(
+	"order"=>"order.php",
+	"account"=>"account.php",
+	"logout"=>"index.php");
 $javascript = 'javascript/order.js';
 include('include/header.php');
 ?>
 
-<form id="menuForm" method="POST" action="api/index.php/webOrder">
+<form id="menuForm">
 	<div id="orderWrapper">
 		<div class="beside">
 			This is an empty div
@@ -35,6 +38,9 @@ include('include/header.php');
 		</div>
 		<div id="submitDiv">
 			<img src="images/chef_icon.png" alt="Chef"/>
+			<h2>Your Order</h2>
+			<ul id="pickedItems">
+			</ul>
 		</div>
 		<div class="beside">
 			This is another empty div

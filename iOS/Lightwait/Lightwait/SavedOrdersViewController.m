@@ -27,9 +27,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
-    savedOrdersArray = [SavedOrdersManager getOrderNames];
     
+    [self customizeAppearance];
+    
+    savedOrdersArray = [SavedOrdersManager getOrderNames];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     [self checkForEmptyArray];
 }
 
@@ -37,6 +42,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)customizeAppearance
+{
+    [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0f green:238.0/255.0f blue:250.0/255.0f alpha:1.0f]];
+    [self.lightwaitTextLabel setFont:[UIFont fontWithName: @"Ubuntu-Bold" size:42]];
+    [self.lightwaitTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
 }
 
 #pragma mark - UITableView Datasource
@@ -51,6 +65,20 @@
     return [savedOrdersArray count];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(10, 2, 320, 20);
+    label.font = [UIFont fontWithName: @"Lato-Bold" size:16];
+    label.text = [self tableView:tableView titleForHeaderInSection:section];
+    
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [headerView addSubview:label];
+    
+    return headerView;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"Cell";
@@ -62,6 +90,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    cell.textLabel.font = [UIFont fontWithName: @"Lato-Light" size:16];
     cell.textLabel.text = [savedOrdersArray objectAtIndex:[indexPath row]];
     
     return cell;

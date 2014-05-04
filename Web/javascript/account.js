@@ -36,7 +36,7 @@ $(document).ready(function() {
     $('#createAccountForm input[type="submit"]').click(function(e) {
         var createValid = true;
         var errorString = "";
-
+        var passwordMismatch = false;
         
         var email = $('#createAccountForm input[name="email"]').val();
         if (email === "") {
@@ -49,7 +49,13 @@ $(document).ready(function() {
             errorString += "Invalid password! Must be 8 - 20 characters long!\n";
             createValid = false;
         }
-        
+
+        var passConfirm = $('#createAccountForm input[name="confirmPassword"]').val();
+        if (passConfirm !== password) {
+            createValid = false;
+            passwordMismatch = true;
+        }
+
         var fName = $('#createAccountForm input[name="fName"]').val();
         if (!namePat.test(fName)) {
             errorString += "Invalid first name! Only letters, apostrophes, commas, and periods allowed!\n";
@@ -65,6 +71,9 @@ $(document).ready(function() {
         if (createValid === true) {
             e.preventDefault();
             createAccount(fName, lName, email, password);
+        }
+        if (passwordMismatch === true ) {
+            alert("Passwords do not match!");
         }
 
         //else
@@ -135,7 +144,7 @@ function createAccount(fName, lName, email, password) {
      error: function(jqXHR, errorThrown){
         console.log("Account creation failed");
         console.log(jqXHR, errorThrown);
-        alert('Account creation failed, sorry.');
+        alert(jqXHR.responseText);
      }
   });
 }
