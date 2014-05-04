@@ -10,7 +10,7 @@ var currentPage=1;
 
 $(document).ready(function() {
 	getActiveOrders();
-    setInterval(function(){getActiveOrders(); console.log("refresh");},5000);
+    setInterval(function(){getActiveOrders();},5000);
 
     /** Set height of queueWindow to fill remaining window afer navbar */
     setHeight();
