@@ -233,18 +233,15 @@ function createMobileAccount() {
   //Salt and Hash the password
   $password = hash("sha512", $accountInfo['password']);
 
-  $query = "INSERT INTO Users (userType, fName, lName, email, password, phoneNumber) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "', '" . $accountInfo['phoneNumber'] . "')";
+  $query = "INSERT INTO Users (userType, fName, lName, email, password) VALUES (1, '" . $accountInfo['fName'] . "', '" . $accountInfo['lName'] . "', '" . $accountInfo['email'] . "', '" . $password . "')";
 
   $mysqli->query($query);
 
   $userID = $mysqli->insert_id;
-
   $returnArray['userID'] = $userID;
 
-  $result->free();
-
   echo json_encode($returnArray);
-
+  writeToLog($returnArray);
   $mysqli->close();
 }
 

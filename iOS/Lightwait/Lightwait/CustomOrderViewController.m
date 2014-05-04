@@ -30,6 +30,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self customizeAppearance];
     [self initializeMenuArrays];
     [self initializeOrderDictionary];
     [self createPagingScrollView];
@@ -44,6 +45,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)customizeAppearance
+{
+    [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0f green:238.0/255.0f blue:250.0/255.0f alpha:1.0f]];
+    [self.lightwaitTextLabel setFont:[UIFont fontWithName: @"Ubuntu-Bold" size:42]];
+    [self.lightwaitTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
+    [self.toolbar setBarTintColor:[UIColor colorWithRed:23.0/255.0f green:118.0/255.0f blue:255.0/255.0f alpha:1.0f]];
 }
 
 #pragma mark - UIScrollView Delegate
@@ -177,6 +186,9 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    cell.textLabel.font = [UIFont fontWithName: @"Ubuntu-Light" size:16];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     // Use the table's tag to retrieve the index of the array within menuDataArray, then set the
     // cell's title to be the object at the index of the table's row
     cell.textLabel.text = [[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row] ]objectForKey:@"name"];
@@ -189,6 +201,20 @@
     return [headerArray objectAtIndex:tableView.tag];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(10, 2, 320, 20);
+    label.font = [UIFont fontWithName: @"Ubuntu-Bold" size:16];
+    label.text = [self tableView:tableView titleForHeaderInSection:section];
+    
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [headerView addSubview:label];
+    
+    return headerView;
+}
+
 #pragma mark UITableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -197,6 +223,7 @@
     if (tableView.allowsMultipleSelection == FALSE) {
         // Add the selected item as the object and the type of item for the key
         [orderDictionary setObject:[[[menuDataArray objectAtIndex:tableView.tag] objectAtIndex:[indexPath row]] objectForKey:@"id"] forKey:[headerArray objectAtIndex:tableView.tag]];
+        [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
         [self scrollToNextPage];
     }
     // If selecting from toppings page, extra logic is required to handle selecting and deselecting
@@ -228,7 +255,9 @@
                 // Re-add the updated array to the dictionary
                 [orderDictionary setObject:selectedToppings forKey:[headerArray objectAtIndex:tableView.tag]];
             }
-
+            
+            [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
+            
             // Deselect all other cells
             [tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[toppingsArray indexOfObject:@"None"] inSection:0] animated:YES];
         }
@@ -242,6 +271,8 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryNone];
+    
     // If deselecting from the toppings page
     if (tableView.allowsMultipleSelection == TRUE) {
         // Remove the deselected item from the toppings array
