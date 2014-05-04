@@ -26,7 +26,10 @@
     NSMutableDictionary *uploadDictionary;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *lightwaitTextLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightButton;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageIndicator;
 

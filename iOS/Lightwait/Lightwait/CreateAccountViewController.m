@@ -28,6 +28,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self customizeAppearance];
+    
     deviceTokenString = @"";
 }
 
@@ -37,21 +39,33 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)customizeAppearance
+{
+    [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0f green:238.0/255.0f blue:250.0/255.0f alpha:1.0f]];
+    [self.lightwaitTextLabel setFont:[UIFont fontWithName: @"Ubuntu-Bold" size:42]];
+    [self.lightwaitTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
+    [self.firstNameTextField setFont:[UIFont fontWithName:@"Lato-Light" size:16]];
+    [self.lastNameTextField setFont:[UIFont fontWithName:@"Lato-Light" size:16]];
+    [self.emailTextField setFont:[UIFont fontWithName:@"Lato-Light" size:16]];
+    [self.passwordTextField setFont:[UIFont fontWithName:@"Lato-Light" size:16]];
+    [self.confirmPasswordTextField setFont:[UIFont fontWithName:@"Lato-Light" size:16]];
+    [self.createAccountButton.titleLabel setFont:[UIFont fontWithName:@"Lato-Bold" size:16]];
+}
+
 - (IBAction)pushCreateAccount:(id)sender
 {
     NSString *firstNameString = [self.firstNameTextField text];
     NSString *lastNameString = [self.lastNameTextField text];
     NSString *emailString = [self.emailTextField text];
-    NSString *phoneNumberString = [self.phoneNumberTextField text];
     NSString *passwordString = [self.passwordTextField text];
     NSString *confirmPasswordString = [self.confirmPasswordTextField text];
 
-    if ([self checkIfCompleteInformation:firstNameString lastName:lastNameString email:emailString phoneNumber:phoneNumberString password:passwordString]) {
+    if ([self checkIfCompleteInformation:firstNameString lastName:lastNameString email:emailString password:passwordString]) {
         if ([self checkIfPasswordsMatch:passwordString password2:confirmPasswordString] && [self checkIfPasswordLengthCorrect:passwordString]) {
             successfulAccountCreation = true;
             [self showAlert:@"Account Created" message:@"You are now logged in"];
             
-            [self createAccount:firstNameString lastName:lastNameString email:emailString phoneNumber:phoneNumberString password:passwordString];
+            [self createAccount:firstNameString lastName:lastNameString email:emailString password:passwordString];
         }
         else {
             successfulAccountCreation = false;
@@ -59,14 +73,13 @@
     }
 }
 
-- (void)createAccount:(NSString *)firstNameString lastName:(NSString *)lastNameString email:(NSString *)emailString phoneNumber:(NSString *)phoneNumberString password:(NSString*)passwordString
+- (void)createAccount:(NSString *)firstNameString lastName:(NSString *)lastNameString email:(NSString *)emailString password:(NSString*)passwordString
 {
     NSMutableDictionary *accountInformation = [[NSMutableDictionary alloc] init];
     
     [accountInformation setObject:firstNameString forKey:@"fName"];
     [accountInformation setObject:lastNameString forKey:@"lName"];
     [accountInformation setObject:emailString forKey:@"email"];
-    [accountInformation setObject:phoneNumberString forKey:@"phoneNumber"];
     [accountInformation setObject:passwordString forKey:@"password"];
     
     NSDictionary* accountIDDictionary = [DataManager createAccount:accountInformation];
@@ -74,7 +87,7 @@
     [PushHandler registerForNotifications];
 }
 
-- (BOOL)checkIfCompleteInformation:(NSString *)firstNameString lastName:(NSString *)lastNameString email:(NSString *)emailString phoneNumber:(NSString *)phoneNumberString password:(NSString*)passwordString
+- (BOOL)checkIfCompleteInformation:(NSString *)firstNameString lastName:(NSString *)lastNameString email:(NSString *)emailString password:(NSString*)passwordString
 {
     if ([firstNameString isEqualToString:@""]) {
         [self showAlert:@"Incomplete" message:@"Please enter your first name"];
@@ -86,10 +99,6 @@
     }
     else if ([emailString isEqualToString:@""]) {
         [self showAlert:@"Incomplete" message:@"Please enter your email address"];
-        return false;
-    }
-    else if ([phoneNumberString isEqualToString:@""]) {
-        [self showAlert:@"Incomplete" message:@"Please enter your phone number"];
         return false;
     }
     else if ([passwordString isEqualToString:@""]) {

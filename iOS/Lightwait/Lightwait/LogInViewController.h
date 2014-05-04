@@ -14,8 +14,11 @@
     bool successfulLogIn;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *lightwaitTextLabel;
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *logInButton;
+
 
 - (IBAction)pushLogInButton:(id)sender;
 

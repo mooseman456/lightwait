@@ -16,12 +16,13 @@
     bool successfulAccountCreation;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *lightwaitTextLabel;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
-@property (weak, nonatomic) IBOutlet UITextField *phoneNumberTextField;
+@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 - (IBAction)pushCreateAccount:(id)sender;
 @end

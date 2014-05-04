@@ -13,7 +13,7 @@
         } 
         
         else if ($_SESSION['userType'] == 3){
-            header('Location: administrator.php');
+            header('Location: menu.php');
             die();
         }
     }

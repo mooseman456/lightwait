@@ -24,6 +24,16 @@
     hasConnection = false;
     [self testMenuConnection];
     [self initializeLocationManager];
+    [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0f green:238.0/255.0f blue:250.0/255.0f alpha:1.0f]];
+    self.title = @"Home";
+    [self.lightwaitTextLabel setFont:[UIFont fontWithName: @"Ubuntu-Bold" size:42]];
+    [self.lightwaitTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
+    [self.customOrderButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.savedOrdersButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.logInButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.signOutButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.createAccountButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
+    [self.textField setFont:[UIFont fontWithName: @"Lato-Light" size:16]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
