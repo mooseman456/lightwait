@@ -733,6 +733,23 @@ div form h2{
     width:40em;
 }
 
+#orderWrapper > div > ul{
+	/*padding-left: 20%;
+	padding-right: 20%;*/
+	width: 58%;
+	margin-right: auto;
+	margin-left: auto;
+
+}
+
+#orderWrapper > div > ul > li{
+	float: left;
+	margin-right: 2%;
+	margin-left: 2%;
+	margin-bottom: 1%;
+}
+
+
 #orderWrapper + p {
     text-align: center;
 }
@@ -759,10 +776,10 @@ div form h2{
 	padding:0px;
 }
 
-#orderWrapper div ul li{
+/*#orderWrapper div ul li{
 	margin:1em 0;
 
-}
+}*/
 
 #orderWrapper div ul li label{
 	background-color: rgba(36,145,255,0.76);
@@ -837,9 +854,10 @@ div form h2{
 }
 
 .outOfStock label::after{
-	content:"- (currently unavailable)";
+	/*content:"- (currently unavailable)";*/
 }
 
 .outOfStock{
 	opacity:0.5;
 }
+

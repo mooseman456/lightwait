@@ -2,8 +2,17 @@ var rootURL = "api/index.php";
 
 $(document).ready(function(){
     getMenuData();
+    /*Remove if popups aren't used
+    /*$("#popup").click(function(){
+        $("#light").fadeIn( 300 , null );
+        $("#fade").fadeIn( 300 , null );
+    });*/
 
-    
+    $("#popdown").click(function(){
+        $("#light").fadeOut( 300 , null );
+        $("#fade").fadeOut( 300 , null );
+    });
+
 });
 
 function updateScroller(currentIndex) {
@@ -24,7 +33,8 @@ function updateScroller(currentIndex) {
         // Add new click listeners
         // Scroll left when left pointing arrow clicked
         $('#orderWrapper').children().eq(currentIndex-1).click(function() {
-            console.log("prev");
+            console.log("prev"+currentIndex);
+            
             if (currentIndex !== 1) {
             hideArrows();
             scrollLeft(currentIndex);
@@ -46,9 +56,27 @@ function updateScroller(currentIndex) {
 
         // Scroll right when right pointing arrow clicked
         $('#orderWrapper').children().eq(currentIndex+1).click(function() {
-            console.log("next");
+            console.log("next"+currentIndex);
             var finalPageIndex = $('#orderWrapper div').length-2;
-            if (currentIndex != finalPageIndex) {
+            var currCategory="#orderWrapper > div:nth-of-type("+(currentIndex+1)+")";
+            console.log($(currCategory));
+            var choicePicked=false;
+            for(var i=1; i<=$(currCategory+" > ul > li").length; i++){
+                console.log(i);
+                console.log($(currCategory+" > ul > li:nth-of-type("+i+") > label").html());;
+
+                if($(currCategory+" > ul > li:nth-of-type("+i+") > input").prop("checked")===true){
+                    //$(currCategory+" > ul > li:nth-of-type("+i+")").css("font-size","40px");
+                    console.log(i+" is a winner");
+                    choicePicked=true;
+                }
+            }
+            if(choicePicked)
+                console.log("Oh happy day!");
+            else
+                console.log("Winter is coming");
+
+            if (currentIndex != finalPageIndex && (choicePicked === true || currentIndex === 4)) {
             hideArrows();
             scrollRight(currentIndex);
             currentIndex++;
@@ -132,7 +160,7 @@ function inflateOrderMenu(data) {
         $('#basesDiv ul').append("<li> <input type=\"radio\" name=\"baseType\" id=\"" + data['Bases'][i]['name'] + "\" value=\"" + data['Bases'][i]['name'] + "\" required> <label for=\"" + data['Bases'][i]['name'] + "\">" + data['Bases'][i]['name'] + "</label></li>");
         if (data['Bases'][i]['available'] === '0'){
             $('#basesDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
-           // $('#basesDiv ul li:last-child').append("(currently unavailable)")
+            //$('#basesDiv ul li:last-child').append("(currently unavailable)")
         }
     }
 
