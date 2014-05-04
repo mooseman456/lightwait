@@ -65,8 +65,8 @@
     return [savedOrdersArray count];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(10, 2, 320, 20);
     label.font = [UIFont fontWithName: @"Lato-Bold" size:16];
@@ -110,13 +110,7 @@
     [self showAlert:@"Order Placed" message:@"Thank you for order. It will be ready shortly."];
 }
 
-- (void)checkForEmptyArray
-{
-    // If the array returned is empty, alert the user
-    if ([savedOrdersArray count] == 0) {
-        [self showAlert:@"Alert" message:@"You have not saved any orders yet"];
-    }
-}
+#pragma mark - Alerts
 
 - (void)showAlert:(NSString *)title message:(NSString *)messageString
 {
@@ -129,6 +123,16 @@
     if (buttonIndex == 0) {
         // Successful account creation
         [self.navigationController popToRootViewControllerAnimated:TRUE];
+    }
+}
+
+#pragma mark - Miscellaneous
+
+- (void)checkForEmptyArray
+{
+    // If the array returned is empty, alert the user
+    if ([savedOrdersArray count] == 0) {
+        [self showAlert:@"Alert" message:@"You have not saved any orders yet"];
     }
 }
 

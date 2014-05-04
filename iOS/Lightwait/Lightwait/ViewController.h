@@ -18,6 +18,7 @@
     bool hasConnection;
 }
 
+// View properties
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UIButton *savedOrdersButton;
 @property (weak, nonatomic) IBOutlet UILabel *lightwaitTextLabel;
@@ -30,7 +31,26 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bottomBorderImage;
 @property (weak, nonatomic) IBOutlet UIImageView *middleBorderImage;
 
+// Actions
 - (IBAction)pushCustomOrder:(id)sender;
 - (IBAction)pushSignOut:(id)sender;
+
+// Customizes the appearance of the view
+- (void)customizeAppearance;
+- (void)setUpBackgroundView:(BOOL)isSignedIn;
+
+// Database methods
+- (void)testMenuConnection;
+- (void)checkUserSignIn;
+
+// Alert method
+- (void)showAlert:(NSString *)title message:(NSString *)messageString;
+
+// Location manager
+- (void)initializeLocationManager;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations;
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error;
+- (void)stopCheckingLocation:(CLLocationManager *)manager;
+
 
 @end
