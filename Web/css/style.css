@@ -978,11 +978,11 @@ div.accountWrapper div.floatingBox {
 
 #orderWrapper .left {
 	-webkit-transform: rotate(180deg);
-	left:11em;
+	left:6em;
 }
 
 #orderWrapper .right {
-	left: 72em;
+	left: 67em;
 }
 
 #orderWrapper .fade-out {
