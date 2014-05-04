@@ -33,6 +33,7 @@
 
 // Actions
 - (IBAction)pushCustomOrder:(id)sender;
+- (IBAction)pushSavedOrders:(id)sender;
 - (IBAction)pushSignOut:(id)sender;
 
 // Customizes the appearance of the view

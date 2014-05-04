@@ -78,7 +78,6 @@
     [self checkUserSignIn];
 }
 
-// Location testing is commented out for testing
 - (IBAction)pushCustomOrder:(id)sender
 {
     // Check to see if the menu can be loaded,
@@ -98,6 +97,16 @@
     } else {
         // Alert the user that
         [self showAlert:@"Connection Failure" message:@"Failed to load the menu"];
+    }
+}
+
+- (IBAction)pushSavedOrders:(id)sender
+{
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userID"]) {
+        [self performSegueWithIdentifier:@"savedOrdersSegue" sender:self];
+    }
+    else {
+        [self showAlert:@"Sign In" message:@"Sign in to view your saved orders"];
     }
 }
 
