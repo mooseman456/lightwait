@@ -53,7 +53,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="wQK-Hv-DhC" kind="push" id="zQD-EL-Pc3"/>
+                                    <action selector="pushSavedOrders:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wam-FG-Jmp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="taW-mU-tfB">
@@ -108,6 +108,7 @@
                         <outlet property="savedOrdersButton" destination="N8b-RW-pam" id="X7i-ge-NRd"/>
                         <outlet property="signOutButton" destination="taW-mU-tfB" id="Lrx-iF-LXe"/>
                         <segue destination="7lg-Ef-jQT" kind="push" identifier="customOrderSegue" id="oQS-C6-Oln"/>
+                        <segue destination="wQK-Hv-DhC" kind="push" identifier="savedOrdersSegue" id="6Sg-JI-Uui"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

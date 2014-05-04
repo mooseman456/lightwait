@@ -827,6 +827,10 @@ div.boxy {
 	background-color: #2491DD;
 }
 
+#dataExplain {
+	text-align: center;
+	color: rgba(0, 0, 0, .50);
+}
 
 /****************/
 /* Edit Account */

@@ -14,6 +14,8 @@
 
 @implementation CreateAccountViewController
 
+#pragma mark - View Controller
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -92,7 +94,17 @@
     [self.confirmPasswordTextField setLeftView:spacerView4];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+#pragma mark - Actions
+
+- (IBAction)pushCreateAccount:(id)sender
+{
+    [self attemptAccountCreation];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     if (textField == self.firstNameTextField) {
         [self.lastNameTextField becomeFirstResponder];
     }
@@ -111,10 +123,7 @@
     return YES;
 }
 
-- (IBAction)pushCreateAccount:(id)sender
-{
-    [self attemptAccountCreation];
-}
+#pragma mark - Account creation methods
 
 - (void)attemptAccountCreation
 {
@@ -220,6 +229,8 @@
         return true;
     }
 }
+
+#pragma mark - Alerts
 
 - (void)showAlert:(NSString *)title message:(NSString *)messageString
 {

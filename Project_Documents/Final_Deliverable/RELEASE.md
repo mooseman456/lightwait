@@ -33,22 +33,27 @@ within the website. There are customers, chefs, and adminstrators. We have the f
 
 CREATING AN ACCOUNT
 
-On the home page, you are only allowed to create a customer account. This is to prevent anyone from being able to 
+On the home page, you are only allowed to create a customer account. 
+
+This is to prevent anyone from being able to 
 manipulate things that they don't have clearance for. As such, only administrators who navigate to the "users" page
 will be able to create either chef or adminstrator accounts. 
 
 
 PLACING AN ORDER
 
-This functionality is only available to customer accounts. To place an order, choose which of the toppings available
-that you want. You cannot move on to the next page unless you pick one of the items, except for the page that says, 
-"Top it off with toppings." You are allowed to have as many or none of the toppings that you want. When you're done,
-click "Submit Order." A pop-up will tell you that your order has been received.
+This functionality is only available to customer accounts. 
+
+To place an order, choose which of the toppings available that you want. You cannot move on to the next page unless you pick
+one of the items, except for the page that says, "Top it off with toppings." You are allowed to have as many or none of the
+toppings that you want. When you're done, click "Submit Order." A pop-up will tell you that your order has been received.
 
 
 MANAGING THE QUEUE
 
-This functionality is only available to chef accounts. On the "queue" screen, there will be a list of orders that need
+This functionality is only available to chef accounts. 
+
+On the "queue" screen, there will be a list of orders that need
 to be prepared. When they are prepared, simply clicking anywhere inside of the order will cause it to be "bumped" from
 the queue. Mobile users will be notified that their order is complete when this is done. On the right side, there is a
 simple list of the main ingredients for each item in the queue so that preparation can be streamlined. The "recall" 
@@ -58,7 +63,7 @@ If there are more than 8 orderrs, than the arrows on the lower right can be used
 
 MANAGING INGREDIENTS
 
-This functionality is available to both chef and administartor accounts. 
+This functionality is available to both chef and administrator accounts. 
 
 As a chef: Navigate to the "availability" page. Turn on or off any of the ingredients by clicking on the blue sliders. 
 This will automatically update the menu to let users know that the chosen ingredients are currently out of stock and 
@@ -72,3 +77,10 @@ You can also choose to add ingredients by using the text-field to the right. Typ
 specify which type of ingredient you want this to be specified as. 
 
 
+VIEWING ANALYTICS
+
+This functionality is only available to administrator accounts.
+
+Navigate to the "data" page. By default, a pie chart showing the percentages of bases chosen by customers is displayed.
+This can be changed by using the buttons on the left hand side to specify a different type of ingredient and/or a 
+different type of graph.

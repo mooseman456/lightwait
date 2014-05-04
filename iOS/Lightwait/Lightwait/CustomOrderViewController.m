@@ -14,7 +14,7 @@
 
 @implementation CustomOrderViewController
 
-#pragma mark - View Lifecycle
+#pragma mark - View Controller
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,6 +53,40 @@
     [self.lightwaitTextLabel setFont:[UIFont fontWithName: @"Ubuntu-Bold" size:42]];
     [self.lightwaitTextLabel setTextColor:[UIColor colorWithRed:157.0/255.0f green:157.0/255.0f blue:157.0/255.0f alpha:1.0f]];
     [self.toolbar setBarTintColor:[UIColor colorWithRed:23.0/255.0f green:118.0/255.0f blue:255.0/255.0f alpha:1.0f]];
+}
+
+- (void)updateRightButton
+{
+    // Check to see if the user is on the last page - TRUE when selecting fries
+    // Update the next button to equal done if true or next if false
+    if (self.pageIndicator.currentPage == 4) {
+        self.rightButton.title = @"Done";
+    }
+    else {
+        self.rightButton.title = @"Next";
+    }
+}
+
+#pragma mark - Actions
+
+- (IBAction)pushLeftButton:(id)sender
+{
+    // Scroll to the previous page and then set the right button label
+    [self scrollToPreviousPage];
+    [self updateRightButton];
+}
+
+- (IBAction)pushRightButton:(id)sender
+{
+    // If the user is on the last page and selected all required items
+    if (self.pageIndicator.currentPage == 4 && [self checkForCompleteOrder]) {
+        [self askUserToSaveOrder];
+    }
+    else {
+        // Scroll to the previous page and then set the right button label
+        [self scrollToNextPage];
+        [self updateRightButton];
+    }
 }
 
 #pragma mark - UIScrollView Delegate
@@ -202,8 +236,8 @@
     return [headerArray objectAtIndex:tableView.tag];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{    
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(10, 2, 320, 20);
     label.font = [UIFont fontWithName: @"Ubuntu-Bold" size:16];
@@ -281,40 +315,6 @@
         
         // Re-add the updated array to the dictionary
         [orderDictionary setObject:selectedToppings forKey:[headerArray objectAtIndex:tableView.tag]];
-    }
-}
-
-#pragma mark - Buttons
-
-- (IBAction)pushLeftButton:(id)sender
-{
-    // Scroll to the previous page and then set the right button label
-    [self scrollToPreviousPage];
-    [self updateRightButton];
-}
-
-- (IBAction)pushRightButton:(id)sender
-{
-    // If the user is on the last page and selected all required items
-    if (self.pageIndicator.currentPage == 4 && [self checkForCompleteOrder]) {
-        [self askUserToSaveOrder];
-    }
-    else {
-        // Scroll to the previous page and then set the right button label
-        [self scrollToNextPage];
-        [self updateRightButton];
-    }
-}
-
-- (void)updateRightButton
-{
-    // Check to see if the user is on the last page - TRUE when selecting fries
-    // Update the next button to equal done if true or next if false
-    if (self.pageIndicator.currentPage == 4) {
-        self.rightButton.title = @"Done";
-    }
-    else {
-        self.rightButton.title = @"Next";
     }
 }
 

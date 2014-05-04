@@ -26,7 +26,7 @@
 			</fieldset>
 
 		</form>
-			<form action="#" name="graphTypes">
+		<form action="#" name="graphTypes">
 			<fieldset id="graphSelector">
 				
 				<input type="radio" name="graphs" id="pieChart" value="Pie Chart" checked>
@@ -34,7 +34,8 @@
 				<input type="radio" name="graphs" id="barGraph" value="Bar Graph">
 				<label for="barGraph">Bar Graph</label>
 			</fieldset>
-			</form>
+		</form>
+		<h2 id="dataExplain">Choose the ingredient and type </br> of chart you would like to see</h2>
 	</div>
 
 
