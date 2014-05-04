@@ -207,8 +207,13 @@ div#sidebar img[src*='prev'] {
 }
 
 div#sidebar img:hover {
-	opacity: .6;
+	opacity: .8;
 	cursor: pointer;
+}
+
+div#sidebar img.inactive {
+	opacity: 0.6;
+	cursor: default;
 }
 
 #page_number {
@@ -480,7 +485,7 @@ div.order-wrapper {
 /********************/
 
 div.availability form {
-	width:100%;
+	width:100%;;
 }
 
 div.availability {
@@ -491,8 +496,8 @@ div.availability {
 div.availability ul{
 	list-style:none;
 	margin: 0;
-	padding: 2%;
-	width: 48%;
+	padding: 0 1em;
+	width: 49.8%;
 	display: inline-block;
 	vertical-align: top;
 	box-sizing: border-box;

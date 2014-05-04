@@ -52,11 +52,6 @@ function getMenuData() {
             console.log(JSON.stringify(data));
             console.log(data.Toppings);
             for (type in data) {
-                for(item in data[type]) {
-                    if (data[type][item]['name'].indexOf('No ') > -1) {
-                        data[type].splice(item,1);
-                    }
-                }
                 data[type].sort(nameCompare);
             }
             mMenuData = data;
@@ -170,40 +165,47 @@ function inflateChefMenu() {
     var ingredientNames = [];
     var list = $('ul#available-column1');
     var itemCount = 0;
-    var totalItemCount= 0;
     var itemList = [];
     for (var type in mMenuData) {
-        totalItemCount += mMenuData[type].length;
-    }
-    for(var type in mMenuData) {
         for (var item in mMenuData[type]) {
-            if (itemCount > totalItemCount/2) {
-                list=$('ul#available-column2')
+            if (mMenuData[type][item]['name'].indexOf('No ') !== 0) {
+                itemList.push(
+                    {'name':mMenuData[type][item]['name'],
+                    'id':mMenuData[type][item]['id'],
+                    'type':type,
+                    'available':mMenuData[type][item]['available']});
             }
-            var itemName = mMenuData[type][item]['name'];
-            var checkboxHtml='<li><span>'+itemName+'</span><div class="onoffswitch">\
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="'+itemName+'">\
-                <label class="onoffswitch-label" for="'+itemName+'">\
-                    <div class="onoffswitch-inner"></div>\
-                    <div class="onoffswitch-switch"></div>\
-                </label>\
-                </div></li>';
-            list.append(checkboxHtml);
-            if (mMenuData[type][item]['available'] == true) {
-                $('input[type=checkbox]').last().prop('checked',true);
-            }
-            (function() {
-                var checkbox = $('input[type=checkbox]').last();
-                var thisType = type;
-                var id = mMenuData[type][item].id;
-                checkbox.change(function(e) {
-                    var isChecked = checkbox.prop('checked');
-                    console.log('Box checked: '+isChecked);
-                    updateAvailability(thisType, isChecked, id);
-                });
-            })();
-            itemCount++;
         }
+    }
+    itemList.sort(nameCompare);
+    console.log(itemList);
+    for(var item in itemList) {
+        if (itemCount > itemList.length/2) {
+            list=$('ul#available-column2')
+        }
+        var itemName = itemList[item]['name'];
+        var checkboxHtml='<li><span>'+itemName+'</span><div class="onoffswitch">\
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="'+itemName+'">\
+            <label class="onoffswitch-label" for="'+itemName+'">\
+                <div class="onoffswitch-inner"></div>\
+                <div class="onoffswitch-switch"></div>\
+            </label>\
+            </div></li>';
+        list.append(checkboxHtml);
+        if (itemList[item]['available'] == true) {
+            $('input[type=checkbox]').last().prop('checked',true);
+        }
+        (function() {
+            var checkbox = $('input[type=checkbox]').last();
+            var thisType = itemList[item]['type'];
+            var id = itemList[item]['id'];
+            checkbox.change(function(e) {
+                var isChecked = checkbox.prop('checked');
+                console.log('Box checked: '+isChecked);
+                updateAvailability(thisType, isChecked, id);
+            });
+        })();
+        itemCount++;
     }
 
 
