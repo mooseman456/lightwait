@@ -6,8 +6,9 @@
         die();
     }
 	$navElements=array(
+		"account"=>"account.php",
+		"data"=>"data.php",
 		"users"=>"users.php",
-		"menu"=>"menu.php",
 		"logout"=>"index.php");
 	$pageTitle="Menu";
 	$javascript="javascript/menu.js";

@@ -7,7 +7,10 @@
     }
 
 	$pageTitle = "Availability";
-	$navElements = array("queue"=>"queue.php","logout"=>"index.php");
+	$navElements = array(
+        "queue"=>"queue.php",
+        "account"=>"account.php",
+        "logout"=>"index.php");
 	$javascript = 'javascript/menu.js';
 	include 'include/header.php';
 ?>
