@@ -69,11 +69,6 @@
 	NSLog(@"Failed to get token, error: %@", error);
 }
 
-- (void)updateDeviceTokenInDatabase
-{
-    
-}
-
 - (void)customizeAppearance
 {
     //custom navigation bar
