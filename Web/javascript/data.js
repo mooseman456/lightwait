@@ -5,104 +5,29 @@ const maxNumQueryGroups=8;
 var mMenuData;
 var mCurrentData = null;
 var mCurrentType;
-var samplePieData = '[["Hamburger", 50],["Black Bean", 20],["Turkey", 60],["Chicken", 52]]';
-var jSamplePieData = JSON.parse(samplePieData);
-var sampleChartData = '[["Hamburger", 50],["Black Bean", 20],["Turkey", 60],["Chicken", 52]]';
-var jSampleChartData = JSON.parse(sampleChartData);
+var mCurrentChart = 0;
 
 $(document).ready(function(){
 	getMenuData(); //Data in mMenu
 
 	// Chart types navigation
-	$('a#pieChart').click(function(e) {
-		e.preventDefault();
+	$('#pieChart').click(function(e) {
 		if (mCurrentData !== null) {
 			drawPieChart(mCurrentData);
+			mCurrentChart = 0;
 		}
 	});
-	$('a#barGraph').click(function(e) {
-		e.preventDefault();
+	$('#barGraph').click(function(e) {
 		if (mCurrentData !== null) {
 			drawBarGraph(mCurrentData);
+			mCurrentChart = 1;
 		}
 	});	
-	$('a#lineGraph').click(function(e){
-		e.preventDefault();
-		if (mCurrentData !== null) {
-			drawLineGraph(mCurrentData);
-		}
-	});
-	$('a#table').click(function(e){
-		e.preventDefault();
-		drawTable();
-	});
-
-	// Query type navigation
-	$('a#simpleQuery').click(function(e){
-		e.preventDefault();
-		$('div#advancedQueryContainer').hide();
-		$('div#simpleQueryContainer').show();
-	});
-	$('a#advancedQuery').click(function(e){
-		$('div#simpleQueryContainer').hide();
-		$('div#advancedQueryContainer').show();
-		e.preventDefault();
-	});
-
-	/*   Advanced Query Form   */
-	// Add new query group
-	$('input[type=button][name=add]').click(function(e) {
-		console.log("add");
-		if (mNumQueryGroups < maxNumQueryGroups) {
-			mNumQueryGroups++;
-			var htmlQueryGroupForm = advancedQueryFromTemplate.replace(/idNum/g,++mQueryGroupId);
-			$(e.target).before(htmlQueryGroupForm);
-			$(e.target).prev().children('[name=delete]').click(function(e) {
-				console.log("remove");
-				if (mNumQueryGroups > 1) {
-					$(e.target).parent().remove();
-					mNumQueryGroups--;
-				}
-			});
-		} else {
-			alert("You can only have "+maxNumQueryGroups+" query groups.");
-		}
-		console.log("groups: "+mNumQueryGroups);
-	});
-
-	// Delete query group
-	// Will remove query group as long as there is more than 1 query group
-	$('input[type=button][name=delete').click(function(e) {
-		console.log("remove");
-		if (mNumQueryGroups > 1) {
-			$(e.target).parent().remove();
-			mNumQueryGroups--;
-		}
-		console.log("groups: "+mNumQueryGroups);
-	});
-	// Submit advanced query
-	$('div#advancedQueryContainer input[name=query]').click(function(e) {
-		e.preventDefault();
-		var forms = $('div#advancedQueryContainer form');
-		forms.each(function(i) {
-			console.log(this);
-			var after = $(this).find('input[name=dateGT][type=date]').val();
-			after += " "+$(this).find('input[name=timeGT][type=time]').val();
-			var before = $(this).find('input[name=dateLT][type=date]').val();
-			before += " "+$(this).find('input[name=timeLT][type=time]').val();
-			var withConjunction = $('input[name=withAndor]:checked').val();
-			var withoutConjunction = $('input[name=withoutAndor]:checked').val();
-
-			//TODO: ajax call and chart filling
-		});
-
-		// Get info from form
-	});
 
 	/*   Simple Query Form   */
-	// Submit simple query 
-	$('form[name=simpleQuery] input[name=query]').click(function(e) {
-		e.preventDefault();
+	simpleQuery('Bases');
+
+	$('#simpleQueryContainer form[name=simpleQuery]').change(function(e) {
 		mCurrentType = $('input[name=type]:checked').val();
 		simpleQuery(mCurrentType);
 	});
@@ -115,13 +40,18 @@ $(document).ready(function(){
 function inflateForm(menu) {
 	var hasField = $('fieldset#hasIngredientsFormArea');
 	var hasNotField = $('fieldset#hasNotIngredientsFormArea');
+	var first = true;
 	for(var type in menu) {
-		//console.log(typeof type);
 		for(var item in type) {
-			//console.log(typeof menu[type][item]);
 			if(typeof menu[type][item] === "object") {
 				var id = menu[type][item]['name']+"Checkbox";
-				hasField.append('<input type="checkbox" name="ingredients" id="'+id+'" />');
+				if (first) {
+					hasField.append('<input type="checkbox" name="ingredients" id="'+id+'" checked/>');
+					first = false;
+				}
+				else
+					hasField.append('<input type="checkbox" name="ingredients" id="'+id+'" />');
+
 				hasField.append('<label for="'+id+'"">'+menu[type][item]['name']+'</label>');
 				id += "Not";
 				hasNotField.append('<input type="checkbox" name="ingredients" id="'+id+'" />');
@@ -132,10 +62,16 @@ function inflateForm(menu) {
 }
 
 function inflateSimpleQuery(menu) {
-	console.log("inflate");
 	var field = $('fieldset#simpleQuery-types');
+	var first = true;
 	for(var type in menu) {
-		field.append('<input type="radio" name="type" id="simpleQuery-types-'+type+'"value="'+type+'"/>');
+		if (first) {
+			field.append('<input checked type="radio" name="type" id="simpleQuery-types-'+type+'"value="'+type+'"/>');
+			first = false;
+		}
+		else
+			field.append('<input type="radio" name="type" id="simpleQuery-types-'+type+'"value="'+type+'"/>');
+		
 		field.append('<label for="simpleQuery-types-'+type+'">'+type+'</label>');
 	}
 }
@@ -155,29 +91,26 @@ function getMenuData() {
         url: rootURL+"/ingredients",
         dataType: "json", // data type of response
         success: function(data){
-            //console.log(JSON.stringify(data));
             inflateSimpleQuery(data);
             mMenuData = data;
-            console.log(JSON.stringify(data));
-            console.log(data);
         }
    });
 }
 
 function simpleQuery(typeId) {
-	console.log("simpleQuery AJAX");
 	$.ajax({
 		type: 'GET',
 		url: rootURL+"/squery/"+typeId,
 		dataType: "json",
 		success: function(data) {
-			console.log("Done!");
-			console.log(JSON.stringify(data));
-			drawPieChart(data);
+			if (mCurrentChart === 0)
+				drawPieChart(data);
+			else
+				drawBarGraph(data);
 			mCurrentData = data;
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			console.log("You effed up.");
+			console.log("Error loading data.");
 		}
 	});
 }

@@ -17,24 +17,30 @@
 	include('include/header.php');
 ?>
 
-<div class="boxy data" id="queryInput">
 	<div id="simpleQueryContainer">
 		<form action="#" name="simpleQuery">
 			<fieldset id="simpleQuery-types">
-				<legend>Query by type</legend>
+				
+
+
 			</fieldset>
-			<input type="submit" name="query" value="Query" />
+
 		</form>
+			<form action="#" name="graphTypes">
+			<fieldset id="graphSelector">
+				
+				<input type="radio" name="graphs" id="pieChart" value="Pie Chart" checked>
+				<label for="pieChart">Pie Chart</label>
+				<input type="radio" name="graphs" id="barGraph" value="Bar Graph">
+				<label for="barGraph">Bar Graph</label>
+			</fieldset>
+			</form>
 	</div>
-</div>
+
+
+
 
 <div class="boxy" id="visuals">
-	<div class="floatingNavigation">
-		<a id="pieChart">Pie Chart</a>
-		<a id="barGraph">Bar Graph</a>
-		<a id="lineGraph">Line Graph</a>
-		<!-- <a id="table">Table</a> -->
-	</div>
 	<div class="chart" id="chart">
 		<p>Submit a query to the left in order to see a visualization.</p>
 	</div> 
