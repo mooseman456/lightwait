@@ -746,14 +746,14 @@ function writeToLog($message)
 function fillDB() {
   $mysqli = getConnection();
   //Change this loop time to add more orders to the DB
-  for ($i = 0; $i < 30; $i++) {
+  for ($i = 0; $i < 150; $i++) {
     $randBread = rand(1, 3);
     $randBase = rand(1, 6);
     $randCheese = rand(1,4);
     $randFry = rand(1, 3);
     date_default_timezone_set('America/Chicago');
     $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
-            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 1, ".$randBread .", ". $randBase .", ".$randCheese.",
+            VALUES (1, "."\"" . date('Y/m/d H:i:s') ."\", 0, ".$randBread .", ". $randBase .", ".$randCheese.",
             ".$randFry.")";
     $mysqli->query($query) or trigger_error($mysqli->error."[$query]");
 
