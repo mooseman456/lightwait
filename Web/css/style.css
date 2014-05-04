@@ -48,7 +48,7 @@ h2 {
     border-radius: 5px;
     bottom: 26px;
     color: #fff;
-    content: attr(title);
+    content: attr(name);
     left: 20%;
     padding: 5px 15px;
     position: absolute;
@@ -473,100 +473,107 @@ div.order-wrapper {
 	background-color: white;
 	z-index:1002;
 	overflow: auto;
-}*/
+}
 
 /********************/
 /*   Availability   */
 /********************/
-.avail div h2{
-	margin: 1px; 
-	text-align: center;
+
+div.availability form {
+	width:100%;
 }
 
-.mainForm > div > div{
-	margin: 0 5px;
-	text-align: left;
-	font-size: 24px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+div.availability {
+	width:86%;
+	margin: 2em auto;
 }
 
-.mainForm > div > div > div{
+div.availability ul{
+	list-style:none;
+	margin: 0;
+	padding: 2%;
+	width: 48%;
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+}
+
+div.availability ul:first-child {
+	border-right: 1px solid rgba(0,0,0,0.15);
+}
+
+div.availability li {
+	margin:14px 0;
+}
+
+div.availability div.onoffswitch {
+	display: inline-block;
 	float: right;
-	-webkit-column-break-inside:avoid;
 }
 
-
-.mainForm > div{
-	/*padding: 10px;*/
-	margin-top: 10px;
-	-webkit-column-count: 3;
-	-webkit-column-gap: 20px;
-	-webkit-column-rule-color:  #ccc;
-    -webkit-column-rule-style:  solid;
-    -webkit-column-rule-width:  1px;
-	display: block;
-	float: left;
-	/*border-right: 1px solid rgba(0,0,0,0.15);
-	border-bottom: 1px solid rgba(0,0,0,0.15);
-	border-top: 1px solid rgba(0,0,0,0.15);*/
+div.availability li > span {
+	vertical-align: middle;
+	font-size: 1.6em;
 }
-
 
 /*For Switch Buttons*/
-
-.mainForm > div > label{
-	font-size: 16px;
-}
-
-.divider {
-	height:0px;
-	border: 1px solid rgba(0,0,0,0.15);
-}
-
 .onoffswitch {
-    position: relative; width: 90px;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-    margin-bottom: 5px;
+    position: relative;
+    width: 100px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select: none;
+    margin:0 4px;
 }
 .onoffswitch-checkbox {
     display: none;
 }
 .onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #999999; border-radius: 20px;
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #BBB;
+    border-radius: 30px;
 }
 .onoffswitch-inner {
     width: 200%; margin-left: -100%;
-    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
-    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+    transition: margin 0.2s ease-in 0s;
 }
 .onoffswitch-inner:before, .onoffswitch-inner:after {
-    float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    float: left;
+    width: 50%;
+    height: 32px;
+    padding: 0;
+    line-height: 32px;
+    font-size: 16px;
+    color: white;
+    font-family:'Ubuntu';
     -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
 .onoffswitch-inner:before {
     content: "STOCK";
     padding-left: 10px;
-    background-color: #2491FF; color: #FFFFFF;
+    background-color: rgba(36,145,255,0.76);
+    color: #FEFEFE;
 }
 .onoffswitch-inner:after {
     content: "OUT";
-    padding-right: 10px;
-    background-color: #EEEEEE; color: #999999;
+    padding-right: 20px;
+    background-color: rgba(0,0,6,.08); color: #555;
     text-align: right;
 }
 .onoffswitch-switch {
-    width: 18px; margin: 6px;
-    background: #FFFFFF;
-    border: 2px solid #999999; border-radius: 20px;
-    position: absolute; top: 0; bottom: 0; right: 56px;
-    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
-    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+    width: 28px; margin: 3px;
+    /*background: rgba(255,255,255,0.25);*/
+    background-color: #FEFEFE;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 50%;
+    position: absolute; top: 0; bottom: 0; right: 66px;
+    -moz-transition: all 0.2s ease-in 0s; -webkit-transition: all 0.2s ease-in 0s;
+    -o-transition: all 0.2s ease-in 0s; transition: all 0.2s ease-in 0s; 
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
+    margin-left: 0px;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
@@ -836,6 +843,11 @@ div.accountWrapper div.floatingBox {
 
 }
 
+#orderWrapper div ul li.outOfStock label:hover {
+	background-color: rgba(36,145,255,0.76);
+
+}
+
 #orderWrapper div ul {
 	list-style-type: none;
 }
@@ -850,6 +862,7 @@ div.accountWrapper div.floatingBox {
 
 #orderWrapper input[type='submit'], #orderWrapper input[type='checkbox'] {
     text-align: center;
+    width: 50%;
     margin:auto;
 }
 
@@ -890,11 +903,13 @@ div.accountWrapper div.floatingBox {
 	opacity:0.;
 }
 
-.outOfStock label::after{
-	/*content:"- (currently unavailable)";*/
-}
 
 .outOfStock{
 	opacity:0.5;
+}
+
+.outOfStock > label:hover {
+	background-color: rgba(36,145,255,0.76);
+	height: 100%;
 }
 

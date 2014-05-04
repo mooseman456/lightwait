@@ -31,7 +31,7 @@ $(document).ready(function(){
             'name':tName,
             'available':true,
         });
-        mMenuData[mCurrType].sort(stringCompare);
+        mMenuData[mCurrType].sort(nameCompare);
         $('form#addItemToMenuForm')[0].reset();
         inflateAdminMenu();
         addIngredient(mCurrType, tName);
@@ -52,7 +52,12 @@ function getMenuData() {
             console.log(JSON.stringify(data));
             console.log(data.Toppings);
             for (type in data) {
-                data[type].sort(stringCompare);
+                for(item in data[type]) {
+                    if (data[type][item]['name'].indexOf('No ') > -1) {
+                        data[type].splice(item,1);
+                    }
+                }
+                data[type].sort(nameCompare);
             }
             mMenuData = data;
             if($('title').html().toLowerCase()=='menu') {
@@ -128,7 +133,7 @@ function inflateAdminMenu() {
         var itemId = mMenuData[mCurrType]
         itemName = mMenuData[mCurrType][itemNum]["name"];
         pane.append('<li></li>');
-        list = $('li').last();
+        var list = $('li').last();
         list.append('<span>'+itemName+'</span>');
         list.append('<img id="item'+itemNum+'-delete" src="images/delete.png" alt="delete" />');
         list.append('<label for="item'+itemNum+'-availableCheckbox">Available</label>');
@@ -162,51 +167,90 @@ function inflateAdminMenu() {
 
 function inflateChefMenu() {
     console.log(mMenuData);
-    $(".mainForm").append("<div></div>");
-    var currentItem=".mainForm > div:last-child";
-    for(var key in mMenuData){
-      
-        //$(currentItem).append("<h2>"+key+"</h2>");
-        for(var i=0; i<mMenuData[key].length; i++){
-            var allPurpose=mMenuData[key][i].name;
-            if(allPurpose.indexOf("No ") === -1){
-
-                if(allPurpose==="Regular")
-                    allPurpose="Potato";
-                //$(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
-                //$(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
-                var coolString="<div>"+allPurpose+"<div class=\"onoffswitch\">\
-                <input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\""+allPurpose+"\">\
-                <label class=\"onoffswitch-label\" for=\""+allPurpose+"\">\
-                    <div class=\"onoffswitch-inner\"></div>\
-                    <div class=\"onoffswitch-switch\"></div>\
-                </label>\
-                </div></div>";
-                $(currentItem).append(coolString);
-                if(mMenuData[key][i].available==1){
-                    
-                    var evil=$(currentItem+" > div:nth-last-child(1) > div > input");
-                    //console.log(mMenuData[key][i].name);
-                    //console.log($(evil));
-                    $(evil).prop("checked", true);
-                }
-                (function() {
-                    var checkbox = $(currentItem+" > div:last-child > div > input");
-                    var type = key;
-                    var id = mMenuData[key][i].id;
-                    checkbox.change(function(e) {
-                        var isChecked = checkbox.prop('checked');
-                        console.log('Box checked: '+isChecked);
-                        updateAvailability(type, isChecked, id);
-                    });
-                })();
-            }
-        }
-        //$(".mainForm > div").append("<div class=\"divider\"></div>")
+    var ingredientNames = [];
+    var list = $('ul#available-column1');
+    var itemCount = 0;
+    var totalItemCount= 0;
+    var itemList = [];
+    for (var type in mMenuData) {
+        totalItemCount += mMenuData[type].length;
     }
+    for(var type in mMenuData) {
+        for (var item in mMenuData[type]) {
+            if (itemCount > totalItemCount/2) {
+                list=$('ul#available-column2')
+            }
+            var itemName = mMenuData[type][item]['name'];
+            var checkboxHtml='<li><span>'+itemName+'</span><div class="onoffswitch">\
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="'+itemName+'">\
+                <label class="onoffswitch-label" for="'+itemName+'">\
+                    <div class="onoffswitch-inner"></div>\
+                    <div class="onoffswitch-switch"></div>\
+                </label>\
+                </div></li>';
+            list.append(checkboxHtml);
+            if (mMenuData[type][item]['available'] == true) {
+                $('input[type=checkbox]').last().prop('checked',true);
+            }
+            (function() {
+                var checkbox = $('input[type=checkbox]').last();
+                var thisType = type;
+                var id = mMenuData[type][item].id;
+                checkbox.change(function(e) {
+                    var isChecked = checkbox.prop('checked');
+                    console.log('Box checked: '+isChecked);
+                    updateAvailability(thisType, isChecked, id);
+                });
+            })();
+            itemCount++;
+        }
+    }
+
+
+    // $(".mainForm").append("<div></div>");
+    // var currentItem=".mainForm > div:last-child";
+    // for(var key in mMenuData){
+    //     //$(currentItem).append("<h2>"+key+"</h2>");
+    //     for(var i in mMenuData[key]){
+    //         var allPurpose=mMenuData[key][i].name;
+    //         if(allPurpose.indexOf("No ") === -1){
+
+    //             if(allPurpose==="Regular")
+    //                 allPurpose="Potato";
+    //             //$(currentItem).append("<label for=\""+allPurpose+"\">"+allPurpose+"</label>");
+    //             //$(currentItem).append("<input id=\""+allPurpose+"\" type=\"checkbox\"><br/>");
+    //             var coolString="<div>"+allPurpose+"<div class=\"onoffswitch\">\
+    //             <input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\""+allPurpose+"\">\
+    //             <label class=\"onoffswitch-label\" for=\""+allPurpose+"\">\
+    //                 <div class=\"onoffswitch-inner\"></div>\
+    //                 <div class=\"onoffswitch-switch\"></div>\
+    //             </label>\
+    //             </div></div>";
+    //             $(currentItem).append(coolString);
+    //             if(mMenuData[key][i].available==1){
+                    
+    //                 var evil=$(currentItem+" > div:nth-last-child(1) > div > input");
+    //                 //console.log(mMenuData[key][i].name);
+    //                 //console.log($(evil));
+    //                 $(evil).prop("checked", true);
+    //             }
+    //             (function() {
+    //                 var checkbox = $(currentItem+" > div:last-child > div > input");
+    //                 var type = key;
+    //                 var id = mMenuData[key][i].id;
+    //                 checkbox.change(function(e) {
+    //                     var isChecked = checkbox.prop('checked');
+    //                     console.log('Box checked: '+isChecked);
+    //                     updateAvailability(type, isChecked, id);
+    //                 });
+    //             })();
+    //         }
+    //     }
+    //     //$(".mainForm > div").append("<div class=\"divider\"></div>")
+    // }
 }
 
-var stringCompare = function(a, b) {
+var nameCompare = function(a, b) {
     if (a.name < b.name) {
         return -1;
     } if (a.name > b.name) {
