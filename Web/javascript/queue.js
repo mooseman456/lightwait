@@ -125,6 +125,16 @@ function updatePagenumbers() {
 	if (maxPage < 1) {
 		maxPage = 1;
 	}
+	if (currentPage > maxPage) {
+		currentPage--;
+	}
+	$('div.navigation img').removeClass('inactive');
+	if (currentPage===1) {
+		$('img[src*=prev]').addClass('inactive');
+	}
+	if(currentPage === maxPage) {
+		$('img[src*=next]').addClass('inactive');
+	}
  	$('#page_number').html((currentPage) + "/" + maxPage);
 }
 

@@ -69,7 +69,7 @@
     
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(10, 2, 320, 20);
-    label.font = [UIFont fontWithName: @"Ubuntu-Bold" size:16];
+    label.font = [UIFont fontWithName: @"Lato-Bold" size:16];
     label.text = [self tableView:tableView titleForHeaderInSection:section];
     
     UIView *headerView = [[UIView alloc] init];
@@ -90,7 +90,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.textLabel.font = [UIFont fontWithName: @"Ubuntu-Light" size:16];
+    cell.textLabel.font = [UIFont fontWithName: @"Lato-Light" size:16];
     cell.textLabel.text = [savedOrdersArray objectAtIndex:[indexPath row]];
     
     return cell;

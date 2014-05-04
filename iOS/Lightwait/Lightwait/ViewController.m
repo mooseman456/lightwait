@@ -105,11 +105,27 @@
         self.logInButton.hidden = TRUE;
         self.createAccountButton.hidden = TRUE;
         self.signOutButton.hidden = FALSE;
+        [self setUpBackgroundView:true];
     }
     else {
         self.logInButton.hidden = FALSE;
         self.createAccountButton.hidden = FALSE;
         self.signOutButton.hidden = TRUE;
+        [self setUpBackgroundView:false];
+    }
+}
+
+- (void)setUpBackgroundView:(BOOL)isSignedIn
+{
+    if (isSignedIn) {
+        self.middleBorderImage.hidden = false;
+        self.bottomBorderImage.hidden = true;
+        self.bottomView.hidden = true;
+    }
+    else {
+        self.middleBorderImage.hidden = true;
+        self.bottomBorderImage.hidden = false;
+        self.bottomView.hidden = false;
     }
 }
 

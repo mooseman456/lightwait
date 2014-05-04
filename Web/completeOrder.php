@@ -1,13 +1,11 @@
 <?php
-    session_cache_limiter(false);
-    session_start();
-    if (!isset($_SESSION['userType']) || $_SESSION['userType'] != 1) {
-        header('Location: index.php');
-        die();
-    }
+
+    if ($_SESSION['user_id'] != 1)
+        header('index.php');
     
-    $pageTitle="Thank you!";
-    $navElements=array("account"=>"account.php","logout"=>"index.php");
+    $pageTitle = "Home";
+    $navElements = null;
+    $javascript = 'javascript/account.js';
     include('include/header.php');
 ?>
     <h1>Thank you for your order!</h1>
