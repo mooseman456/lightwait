@@ -523,6 +523,8 @@ function getTableName($name) {
 function simpleQuery($type) {
   $mysqli = getConnection();
 
+  $isToppings = false;
+
   if ($type == "Bases") {
     $selector = "base_id";
   } else if ($type == "Breads") {
@@ -531,21 +533,39 @@ function simpleQuery($type) {
     $selector = "cheese_id";
   } else if ($type == "Fries") {
     $selector = "fry_id";
+  } else if ($type == "Toppings") {
+    $isToppings = true;
   }
 
-  $dQuery = "SELECT $type.name " . ", COUNT(*) AS count FROM Orders JOIN $type ON Orders.". $selector ."= $type.id GROUP BY " . $selector;
+  if (!$isToppings) {
+    $dQuery = "SELECT $type.name " . ", COUNT(*) AS count FROM Orders JOIN $type ON Orders.". $selector ."= $type.id GROUP BY " . $selector;
 
-  $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
+    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
 
-  $finalResults = array();
-  $resultRow = array();
-  while ($row = $result->fetch_assoc()) {
-        $resultRow[0]=$row['name'];
-        $resultRow[1]=(int)$row['count'];
-        array_push($finalResults, $resultRow);
+    $finalResults = array();
+    $resultRow = array();
+    while ($row = $result->fetch_assoc()) {
+          $resultRow[0]=$row['name'];
+          $resultRow[1]=(int)$row['count'];
+          array_push($finalResults, $resultRow);
+    }
+
+    $result->free();
+  } else {
+    $dQuery = "SELECT Toppings.name, COUNT(*) AS count FROM OrderToppings JOIN Toppings ON OrderToppings.topping_id=Toppings.id GROUP BY topping_id";
+
+    $result = $mysqli->query($dQuery) or trigger_error($mysqli->error."[$dQuery]"); 
+
+    $finalResults = array();
+    $resultRow = array();
+    while ($row = $result->fetch_assoc()) {
+          $resultRow[0]=$row['name'];
+          $resultRow[1]=(int)$row['count'];
+          array_push($finalResults, $resultRow);
+    }
+
+    $result->free();
   }
-
-  $result->free();
 
   echo json_encode($finalResults);
 

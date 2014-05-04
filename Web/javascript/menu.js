@@ -163,8 +163,6 @@ function inflateAdminMenu() {
     $('')
 }
 
-
-
 function inflateChefMenu() {
     console.log(mMenuData);
     var ingredientNames = [];
@@ -185,13 +183,13 @@ function inflateChefMenu() {
     itemList.sort(nameCompare);
     console.log(itemList);
     for(var item in itemList) {
-        if (itemCount > itemList.length/2) {
+        if (itemCount > itemList.length/2-1) {
             list=$('ul#available-column2')
         }
         var itemName = itemList[item]['name'];
         var checkboxHtml='<li><span>'+itemName+'</span><div class="onoffswitch">\
             <input type="checkbox" name="available" class="onoffswitch-checkbox" id="chef-'+itemName+'">\
-            <label class="onoffswitch-label" for="'+itemName+'">\
+            <label class="onoffswitch-label" for="chef-'+itemName+'">\
                 <div class="onoffswitch-inner"></div>\
                 <div class="onoffswitch-switch"></div>\
             </label>\
@@ -205,6 +203,7 @@ function inflateChefMenu() {
             var thisType = itemList[item]['type'];
             var id = itemList[item]['id'];
             checkbox.change(function(e) {
+                console.log('click registered');
                 var isChecked = checkbox.prop('checked');
                 console.log('Box checked: '+isChecked);
                 updateAvailability(thisType, isChecked, id);
