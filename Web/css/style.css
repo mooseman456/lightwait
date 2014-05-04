@@ -940,6 +940,8 @@ div.accountWrapper div.floatingBox {
 
 #orderWrapper input[type='radio']:checked + label, #orderWrapper input[type='checkbox']:checked + label {
     background-color:rgba(14,31,255,0.85);
+    border: 1px solid rgba(0,0,0,0.7);
+
 }
 
 #orderWrapper input[type='radio'], #orderWrapper input[type='checkbox'] {
@@ -975,7 +977,7 @@ div.accountWrapper div.floatingBox {
 }
 
 #orderWrapper .right {
-	right:11em;
+	right: 3%;
 }
 
 #orderWrapper .fade-out {
