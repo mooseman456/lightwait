@@ -597,7 +597,7 @@ div#adminMenuWrapper {
 }
 
 div#menuDisplayWrapper img {
-	height:1.6em;
+	height:2em;
 	vertical-align:center;
 	float:right;
 	margin-left: 8px;
@@ -608,7 +608,7 @@ div#menuDisplayWrapper img:hover {
 	cursor:pointer;
 }
 
-div#menuDisplayWrapper div {
+div#menuDisplayWrapper > div {
 	float:left;
 }
 
@@ -618,12 +618,12 @@ div#menuDisplayTypeView {
 
 div#menuDisplayTypeView li {
 	list-style: none;
-	margin: 14px;
+	margin: 18px;
 	line-height: 1.6em;
 }
 
 div#menuDisplayTypeView span {
-	font-size: 1.4em;
+	font-size: 1.4em;	
 }
 
 div#menuDisplayTypeView label {
@@ -634,7 +634,7 @@ div#menuDisplayTypeView div.floatingBox {
 	padding: 10px;
 }
 
-div#menuDisplayTypeView input, div#menuDisplayTypeView label {
+div#menuDisplayTypeView input[type='checkbox'], div#menuDisplayTypeView label {
 	float:right;
 }
 

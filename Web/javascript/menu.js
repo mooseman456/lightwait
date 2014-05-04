@@ -141,6 +141,7 @@ function inflateAdminMenu() {
             var checkbox = $('input[type=checkbox]').last();
             var type = mCurrType;
             var id = mMenuData[mCurrType][itemNum]['id'];
+            var num = itemNum;
             checkbox.change(function(e) {
                 isChecked = checkbox.prop('checked');
                 updateAvailability(type, isChecked, id);
@@ -148,9 +149,10 @@ function inflateAdminMenu() {
             });
             var deleteButton = $('img').last();
             deleteButton.click(function() {
-                confirm('Are you sure you want to delete '+mMenuData[type][itemNum]['name']+'?');
-                removeIngredient(type,id);
-                getMenuData();
+                if (confirm('Are you sure you want to delete '+mMenuData[type][num]['name']+'?') ) {
+                    removeIngredient(type,id);
+                    getMenuData();
+                }
             });
         })();
     }
@@ -185,7 +187,7 @@ function inflateChefMenu() {
         }
         var itemName = itemList[item]['name'];
         var checkboxHtml='<li><span>'+itemName+'</span><div class="onoffswitch">\
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="'+itemName+'">\
+            <input type="checkbox" name="available" class="onoffswitch-checkbox" id="chef-'+itemName+'">\
             <label class="onoffswitch-label" for="'+itemName+'">\
                 <div class="onoffswitch-inner"></div>\
                 <div class="onoffswitch-switch"></div>\
