@@ -36,8 +36,10 @@ $(document).ready(function() {
             val = 2;
         else if (type === "admin")
             val = 3;
-        else
+        else {
             createValid = false;
+            alert("Please choose either chef or administrator");
+        }
 
         if (createValid === true) {
             e.preventDefault();
