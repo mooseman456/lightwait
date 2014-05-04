@@ -140,13 +140,15 @@ INSERT INTO `Toppings` (`name`) VALUES
 ('Chipotle Ranch'),
 ('No Toppings');
 
-INSERT INTO `Users` (`userType`, `fName`, `lName`, `email`, `password`) VALUES
-(1, 'Christopher', 'Raley', 'profRaley@smu.edu', '4bfef0102474eb210fd57f73b4bc0e217602e27311eb97b310613e4e48bf791f0d0ea19be279765b809a3cef88216c7937111b912928f1e9f2033ffb8eeb165d'),
-(1, 'Anurhe', 'Nagar', 'profNagar@smu.edu', '708ba3195d297a5e721a865e565c54776fae2685f9e9295d9028687ec526c5185dd6d81e1ed6c7cfbbc0757575f2385ca10d907b5af35ea2c9bbf72294e8b75b')
-(2, 'Charlie', 'Chef', 'charlie@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1'),
-(2, 'Charise', 'Chef', 'charise@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1'),
-(3, 'Adam', 'Admin', 'adam@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1'),
-(3, 'Adele', 'Admin', 'adele@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1');
+
+INSERT INTO `Users` (`userType`, `fName`, `lName`, `email`, `password`, `device_token`) VALUES
+(2, 'Charlie', 'Chef', 'charlie@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', NULL),
+(2, 'Charise', 'Chef', 'charise@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', NULL),
+(3, 'Adam', 'Admin', 'adam@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', NULL),
+(3, 'Adele', 'Admin', 'adele@smu.edu', '320f3d06fc64b15dc19201eb1504ecc4f886fc57abba23ff07c82a803b5559926b43ca354337d4dbeaf46e5f9b338c7a050a8cfa10e0a8660267817fbe94f9c1', NULL),
+(1, 'Andy', 'Nagar', 'profNagar@smu.edu', '708ba3195d297a5e721a865e565c54776fae2685f9e9295d9028687ec526c5185dd6d81e1ed6c7cfbbc0757575f2385ca10d907b5af35ea2c9bbf72294e8b75b', NULL),
+(1, 'Christopher', 'Raley', 'profRaley@smu.edu', '4bfef0102474eb210fd57f73b4bc0e217602e27311eb97b310613e4e48bf791f0d0ea19be279765b809a3cef88216c7937111b912928f1e9f2033ffb8eeb165d', NULL);
+
 
 
 INSERT INTO Orders (user_id, bread_id, base_id, cheese_id, fry_id, timePlaced) 

@@ -984,7 +984,9 @@ div.accountWrapper div.floatingBox {
 }
 
 #orderWrapper .right {
-	margin-left: 77%;
+	right:0px;
+	margin-right: 10%;
+	
 }
 
 #orderWrapper .fade-out {
