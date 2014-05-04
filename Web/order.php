@@ -35,6 +35,8 @@ include('include/header.php');
 		</div>
 		<div id="submitDiv">
 			<img src="images/chef_icon.png" alt="Chef"/>
+			<ul id="pickedItems">
+			</ul>
 		</div>
 		<div class="beside">
 			This is another empty div
