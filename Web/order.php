@@ -35,6 +35,7 @@ include('include/header.php');
 		</div>
 		<div id="submitDiv">
 			<img src="images/chef_icon.png" alt="Chef"/>
+			<h2>Your Order</h2>
 			<ul id="pickedItems">
 			</ul>
 		</div>
@@ -46,10 +47,6 @@ include('include/header.php');
 	</div>
 	<p>Add items to your order by clicking on them in the menu!</p>
 </form>
-<!-- Popup stuff, delete if nessesary-->
-<span id="hoverOver"></span>
-<div id="fade" class="black_overlay"></div>
-<div id="light" class="white_content">How exciting!!! !<a id="popdown">Close</a></div>
 
 </body>
 </html>
