@@ -10,4 +10,4 @@ charlie@smu.edu 		lightwait		Chef
 charise@smu.edu 		lightwait		Chef
 
 adam@smu.edu 			lightwait		Administrator
-adelesmu.edu 			lightwait		Administrator
+adele@smu.edu 			lightwait		Administrator
