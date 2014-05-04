@@ -47,8 +47,6 @@
     [self.logInButton.titleLabel setFont:[UIFont fontWithName: @"Lato-Bold" size:16]];
 }
 
-#warning Add error checking
-
 - (IBAction)pushLogInButton:(id)sender
 {
     NSDictionary* accountInformation = [DataManager logIn:self.usernameTextField.text password:self.passwordTextField.text];

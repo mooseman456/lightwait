@@ -80,6 +80,7 @@
     {
         // Sets the origin location of each page by multiplying the width by the number of frames
         frame.origin.x = self.scrollView.frame.size.width * i;
+        frame.origin.y = 0;
         
         // Creates a new tableView and sets the delegate and data souce to self
         UITableView *tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
@@ -186,7 +187,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.textLabel.font = [UIFont fontWithName: @"Ubuntu-Light" size:16];
+    cell.textLabel.font = [UIFont fontWithName: @"Lato-Light" size:16];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     // Use the table's tag to retrieve the index of the array within menuDataArray, then set the
@@ -334,7 +335,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (alertView.tag) {
-            // askUserToSaveOrder alert
+        // askUserToSaveOrder alert
         case 1:
             // If the user clicked save
             if (buttonIndex == 1) {

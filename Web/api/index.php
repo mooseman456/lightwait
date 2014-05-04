@@ -34,6 +34,7 @@ $app->get('/allingredients', 'getAllIngredients');
 $app->run();
 
 function addWebOrder() {
+  header('../completeOrder.php');
   $mysqli = getConnection();
   date_default_timezone_set('America/Chicago');
   $query = "INSERT INTO Orders (user_id, timePlaced, isActive, bread_id, base_id, cheese_id, fry_id) 
@@ -70,7 +71,7 @@ function addWebOrder() {
   //echo "<a href=../../order.php>New Order</a>";
   //$result->free();
   $mysqli->close();
-  //include('/Web/order.php');
+
 }
 
 function addMobileOrder() {
@@ -82,22 +83,19 @@ function addMobileOrder() {
   date_default_timezone_set('America/Chicago');
 
   $query = "INSERT INTO Orders (user_id, timePlaced, bread_id, base_id, cheese_id, fry_id)
-            VALUES (" . $order['user_id'] . ", '" . date('Y/m/d H:i:s') . "', " . $order['bread'] . ", " . $order['base'] . ", " . $order['cheese'] . ", " . $order['fries'].")";
-
+            VALUES (" . $order['user_id'] . ", '" . date('Y/m/d H:i:s') . "', " . $order['Bread'] . ", " . $order['Base'] . ", " . $order['Cheese'] . ", " . $order['Fries'].")";
 
   $mysqli->query($query);
 
-  echo json_encode($query);
-
   $orderID = $mysqli->insert_id;
 
-  foreach($order['toppings'] as $key=>$val) {
+  foreach($order['Toppings'] as $key=>$val) {
     $query = "INSERT INTO OrderToppings (order_id, topping_id) VALUES ('".$orderID."', '".$val."')";
-    $mysqli->query($query);
-    
+    $mysqli->query($query); 
   }
 
-  $result->free();
+  echo json_encode("Success");
+
   $mysqli->close();
 }
 
@@ -241,7 +239,7 @@ function createMobileAccount() {
   $returnArray['userID'] = $userID;
 
   echo json_encode($returnArray);
-  writeToLog($returnArray);
+
   $mysqli->close();
 }
 
@@ -750,7 +748,7 @@ function fillDB() {
 // Note: type is the type of ingredient (base, bread, cheese, fry (or fries), and toppings)
 function removeIngredient($type, $id) {
   $mysqli = getConnection();
-  writeToLog("here");
+
   if (strtolower($type) == "base") {
     $type = "Bases";
   } else if (strtolower($type) == "bread") {
