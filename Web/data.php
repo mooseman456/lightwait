@@ -7,9 +7,10 @@
     }
 	
     $navElements=array(
-    	"account"=>"account.php",
-		"users"=>"users.php",
+    	"data"=>"data.php",
 		"menu"=>"menu.php",
+		"users"=>"users.php",
+		"account"=>"account.php",
 		"logout"=>"index.php");
 	$pageTitle="Data";
 	$javascript= ["https://www.google.com/jsapi","javascript/data.js"];

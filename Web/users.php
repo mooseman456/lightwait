@@ -7,9 +7,10 @@
     }
     
 	$navElements=array(
-        "account"=>"account.php",
         "data"=>"data.php",
         "menu"=>"menu.php",
+        "users"=>"users.php",
+        "account"=>"account.php",
         "logout"=>"index.php");
 	$pageTitle="Menu";
 	$javascript="javascript/users.js";

@@ -5,6 +5,7 @@
     if ($_SESSION['userType'] == 1) {
         $navElements = array(
             "order" => "order.php",
+            "account"=>"account.php",
             "logout"=>"index.php");
     }
     else if ($_SESSION['userType'] == 3) {
@@ -12,12 +13,14 @@
         "data"=>"data.php",
         "users"=>"users.php",
         "menu"=>"menu.php",
+        "account"=>"account.php",
         "logout"=>"index.php");
     }
     else {
         $navElements=array(
             "queue"=>"queue.php",
             "availability"=>"availability.php",
+            "account"=>"account.php",
             "logout"=>"index.php",);
     }
     $pageTitle="Account";
