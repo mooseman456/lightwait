@@ -2,17 +2,7 @@ var rootURL = "api/index.php";
 
 $(document).ready(function(){
     getMenuData();
-    /*Remove if popups aren't used
-    /*$("#popup").click(function(){
-        $("#light").fadeIn( 300 , null );
-        $("#fade").fadeIn( 300 , null );
-    });*/
-
-    $("#popdown").click(function(){
-        $("#light").fadeOut( 300 , null );
-        $("#fade").fadeOut( 300 , null );
-    });
-
+  
 });
 
 function updateScroller(currentIndex) {
@@ -59,15 +49,12 @@ function updateScroller(currentIndex) {
             console.log("next"+currentIndex);
             var finalPageIndex = $('#orderWrapper div').length-2;
             var currCategory="#orderWrapper > div:nth-of-type("+(currentIndex+1)+")";
-            console.log($(currCategory));
             var choicePicked=false;
             for(var i=1; i<=$(currCategory+" > ul > li").length; i++){
-                console.log(i);
-                console.log($(currCategory+" > ul > li:nth-of-type("+i+") > label").html());;
+                //console.log($(currCategory+" > ul > li:nth-of-type("+i+") > label").html());;
 
                 if($(currCategory+" > ul > li:nth-of-type("+i+") > input").prop("checked")===true){
-                    //$(currCategory+" > ul > li:nth-of-type("+i+")").css("font-size","40px");
-                    console.log(i+" is a winner");
+                    //console.log(i+" is a winner");
                     choicePicked=true;
                 }
             }
@@ -174,11 +161,7 @@ function inflateOrderMenu(data) {
         if (data['Breads'][i]['available'] === '0')
             $('#breadsDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
         else
-            $('#breadsDiv ul').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");
-
-            //$('#breadsDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
-            //$('#breadsDiv ul li:last-child').append("(currently unavailable)")
-            
+            $('#breadsDiv ul').append("<li> <input type=\"radio\" name=\"breadType\" id=\"" + data['Breads'][i]['name'] + "\" value=\"" + data['Breads'][i]['name'] + "\" required> <label for=\"" + data['Breads'][i]['name'] + "\">" + data['Breads'][i]['name'] + "</label></li>");            
     }
 
     $('#cheesesDiv').append("<h2>Slap Some Cheese On It</h2></ul><ul id=\"cheeseMenu\">");
@@ -186,11 +169,7 @@ function inflateOrderMenu(data) {
         if (data['Cheeses'][i]['available'] === '0')
             $('#cheesesDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");
         else
-            $('#cheesesDiv ul').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");
-
-            //$('#cheesesDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
-           // $('#cheesesDiv ul li:last-child').append("(currently unavailable)")
-        
+            $('#cheesesDiv ul').append("<li> <input type=\"radio\" name=\"cheeseType\" id=\"" + data['Cheeses'][i]['name'] + "\" value=\"" + data['Cheeses'][i]['name'] + "\" required> <label for=\"" + data['Cheeses'][i]['name'] + "\">" + data['Cheeses'][i]['name'] + "</label></li>");  
     }
 
     $('#toppingsDiv').append("<h2>Top It Off With Toppings</h2></ul><ul id=\"toppingsMenu\">");
@@ -199,9 +178,6 @@ function inflateOrderMenu(data) {
             $('#toppingsDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
         else
             $('#toppingsDiv ul').append("<li> <input type=\"checkbox\" name=\"toppingType[]\" id=\"" + data['Toppings'][i]['name'] + "\" value=\"" + data['Toppings'][i]['name'] + "\"> <label for=\"" + data['Toppings'][i]['name'] + "\">" + data['Toppings'][i]['name'] + "</label></li>");
-
-            //$('#toppingsDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
-            //$('#toppingsDiv ul li:last-child').append("(currently unavailable)")
     }
 
     $('#friesDiv').append("<h2>Ya Want Fries With That?</h2></ul><ul id=\"fryMenu\">");
@@ -210,9 +186,6 @@ function inflateOrderMenu(data) {
             $('#friesDiv ul').append("<li class=\" outOfStock tooltip\" name=\"Currently unavailable\"> <input disabled class=\"outOfStock\" type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
         else
             $('#friesDiv ul').append("<li> <input type=\"radio\" name=\"friesType\" id=\"" + data['Fries'][i]['name'] + "\" value=\"" + data['Fries'][i]['name'] + "\" required> <label for=\"" + data['Fries'][i]['name'] + "\">" + data['Fries'][i]['name'] + "</label></li>");
-
-            //$('#friesDiv ul li:last-child').prop("disabled", true).addClass("outOfStock");
-            //$('#friesDiv ul li:last-child').append("(currently unavailable)")
     }
 
     $('#submitDiv').append("</ul><input type=\"submit\" value=\"Submit Order\">");
