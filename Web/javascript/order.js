@@ -192,16 +192,43 @@ function inflateOrderMenu(data) {
 
     $('#submitDiv input[type="submit"]').click(function(e) {
         e.preventDefault();
-        var base = $('#baseDiv input[type="radio"]:checked').val();
+        var base = $('#basesDiv input[type="radio"]:checked').val();
         var bread = $('#breadsDiv input[type="radio"]:checked').val();
         var cheese = $('#cheesesDiv input[type="radio"]:checked').val();
-        var toppings = $('#toppingsDiv input[type="checkbox"]:checked').val();
-        var fries = $('#friesDiv input [type="radio"]:checked').val();
+        var toppings = new Array();
+        $('#toppingsDiv input[type="checkbox"]:checked').each(function() {
+            toppings.push($(this).val());
+        });
+        var fries = $('#friesDiv input[type="radio"]:checked').val();
 
         console.log("Base " + base);
         console.log("Bread " + bread);
         console.log("Cheese " + cheese);
         console.log("Toppings " + toppings);
         console.log("Fries " + fries);
+
+        var order = {"base": base, "bread": bread, "cheese": cheese, "toppings": toppings, "fries": fries};
+        //addOrder(base, bread, cheese, toppings, fries);
+        console.log(order)
+        order = JSON.stringify(order);
+        addOrder(order);
     })
+}
+
+function addOrder(order) {
+  $.ajax({
+     type: 'POST',
+     url: rootURL + '/weborder',
+     dataType: "json", // data type of response
+     data:order,
+     success: function(){
+        alert("Thank you for your order! It has been received and is underway!");
+        document.location.href="index.php"
+     },
+     error: function(jqXHR, errorThrown){
+        console.log("Account creation failed");
+        console.log(jqXHR, errorThrown);
+        alert(jqXHR.responseText);
+     }
+  });
 }
